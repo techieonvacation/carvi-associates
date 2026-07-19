@@ -1,0 +1,50 @@
+/* Newsletter — advanced blob-shape / overlap / merged-pill effects only
+   (layout, type, and color live as Tailwind utilities in Newsletter.tsx). */
+
+/* Oversized yellow blob: extreme border-radius pulled down over whatever
+   section follows (the footer) via a large negative bottom margin. The
+   section itself carries position:relative + z-index so the blob paints
+   in front of the footer background in the overlapping strip. */
+.newsletter-one__inner {
+  border-radius: 500px;
+  margin-bottom: -153px;
+}
+
+@media (max-width: 991px) {
+  .newsletter-one__inner {
+    border-radius: 150px;
+  }
+}
+
+@media (max-width: 767px) {
+  .newsletter-one__inner {
+    border-radius: 50px;
+  }
+}
+
+@media (max-width: 412px) {
+  .newsletter-one__inner {
+    border-radius: 30px;
+  }
+}
+
+/* Faint wavy texture from the reference shape asset, clipped to the blob. */
+.newsletter-one__bg {
+  border-radius: inherit;
+  background-image: url("/images/shapes/newsletter-shape-1-1.png");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+}
+
+/* Email input + submit button merge into one continuous pill: the button
+   sits absolutely over the input's right edge from the sm breakpoint up,
+   stacking as a full-width block below the input on phones. */
+@media (min-width: 576px) {
+  .newsletter-one__submit {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+  }
+}

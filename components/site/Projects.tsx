@@ -5,12 +5,18 @@ import Image from "next/image";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Container } from "./Container";
-import { Carousel } from "./Carousel";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { FindoxButton } from "./FindoxButton";
 import { PROJECTS, PROJECT_FILTERS } from "./home-data";
+import "./css/projects.css";
 
+/**
+ * Projects — the `.projects-one` case-studies band: a dark textured top
+ * (heading + owl-style filter tabs), a horizontally scrolling strip of
+ * tall `.project-card`s whose tags/icon/title flip into view on hover,
+ * sitting on top of the mint `.projects__bottom` banner.
+ */
 export function Projects() {
   const [filter, setFilter] = useState("all");
 
@@ -20,106 +26,140 @@ export function Projects() {
   );
 
   return (
-    <section className="bg-[#131111] py-16 sm:py-20">
-      <Container>
-        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading light tagline={PROJECTS.tagline} lines={PROJECTS.title} />
+    <section className="projects-one projects projects--two relative pt-30 max-md:pt-25 max-sm:pt-20">
+      {/* Dark, accent-tinted textured band behind the heading + filter row. */}
+      <div
+        className="projects-one__bg absolute top-0 left-0 h-93.75 w-full bg-cover bg-top max-xl:h-175 max-md:h-187.5 max-[430px]:h-200"
+        style={{ backgroundImage: "url(/images/shapes/projects-bg-shape-1-1.png)" }}
+        aria-hidden="true"
+      />
 
-          <Reveal direction="up">
-            <div className="flex flex-wrap gap-2">
-              {PROJECT_FILTERS.map((f) => (
-                <button
-                  key={f.value}
-                  type="button"
-                  onClick={() => setFilter(f.value)}
-                  className={cn(
-                    "rounded-full border px-4 py-1.5 text-xs font-semibold tracking-wide uppercase transition-colors",
-                    f.value === filter
-                      ? "border-primary bg-primary text-primary-foreground"
-                      : "border-white/20 text-white/70 hover:border-white/50 hover:text-white",
-                  )}
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
-          </Reveal>
+      <Container className="relative z-1">
+        <div className="projects__top mb-32.25 max-xl:mb-15">
+          <div className="grid gap-y-10 xl:grid-cols-2 xl:items-center">
+            <SectionHeading light taglineBg="#ffffff" tagline={PROJECTS.tagline} lines={PROJECTS.title} />
+
+            <Reveal direction="up" duration={1300}>
+              <ul className="projects__filter__list m-0 flex list-none flex-wrap items-center justify-center gap-0 xl:justify-end">
+                {PROJECT_FILTERS.map((f) => (
+                  <li
+                    key={f.value}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setFilter(f.value)}
+                    onKeyDown={(e) => e.key === "Enter" && setFilter(f.value)}
+                    className={cn(
+                      "item cursor-pointer border px-7.5 py-[9.5px] text-center font-heading text-base font-semibold capitalize transition-all duration-500 hover:border-primary hover:bg-primary hover:text-primary-foreground",
+                      f.value === filter
+                        ? "active border-primary bg-primary text-primary-foreground"
+                        : "border-[#dddddd] bg-transparent text-white",
+                    )}
+                  >
+                    <span>{f.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
         </div>
+      </Container>
 
-        <div className="mt-12">
-          <Carousel
-            key={filter}
-            autoplay={3800}
-            itemClassName="basis-full sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
-            items={items.map((project) => (
-              <div key={project.title} className="h-full px-1 pb-1">
-                <div className="group relative h-80 overflow-hidden rounded-3xl">
+      <div className="projects-one__container relative z-1 mx-auto w-full max-w-300 px-4 sm:px-6 md:max-w-full md:px-7.5">
+        <div className="scrollbar-hide flex gap-7.5 overflow-x-auto">
+          {items.map((project, i) => (
+            <Reveal
+              key={project.title}
+              direction="up"
+              duration={1300}
+              delay={(i + 1) * 100}
+              className="w-[78%] shrink-0 sm:w-[55%] md:w-[calc(50%-15px)] lg:w-[calc(50%-15px)] xl:w-[calc(33.333%-20px)] 2xl:w-[calc(25%-22.5px)]"
+            >
+              <div className="project-card relative overflow-hidden">
+                <div className="project-card__image relative min-h-142.75 w-full bg-cover bg-top">
                   <Image
                     src={project.image}
-                    alt=""
+                    alt={project.title}
                     fill
-                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(min-width: 1400px) 25vw, (min-width: 1200px) 33vw, (min-width: 768px) 50vw, 80vw"
+                    className="object-cover object-top"
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/30 to-transparent" />
 
-                  <div className="relative flex h-full flex-col justify-between p-6">
-                    <div className="flex items-center justify-between">
-                      <span className="flex size-11 items-center justify-center rounded-full bg-white/15 text-lg text-white backdrop-blur-sm">
-                        <i className={project.icon} aria-hidden="true" />
-                      </span>
-                      <div className="flex flex-wrap justify-end gap-1.5">
-                        {project.tags.map((tag, tagIdx) => (
-                          <span
-                            key={`${tag}-${tagIdx}`}
-                            className="rounded-full bg-white/15 px-2.5 py-1 text-[0.6rem] font-semibold tracking-wide text-white uppercase backdrop-blur-sm"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                    <div>
-                      <h4 className="font-heading text-xl font-bold text-white!">
-                        <Link href="#" className="transition-colors hover:text-primary">
-                          {project.title}
-                        </Link>
-                      </h4>
-                      <p className="mt-1 text-sm text-white/70">{project.text}</p>
-                    </div>
+                  <div className="project-card__category-group absolute top-0 left-0 flex w-full flex-wrap items-start gap-x-3 gap-y-3.75 p-5">
+                    {project.tags.map((tag, tagIdx) => (
+                      <Link
+                        key={`${tag}-${tagIdx}`}
+                        href="#"
+                        className={cn(
+                          "project-card__category rounded-[10px] px-3.75 py-2 text-base leading-snug font-semibold text-[#131111] uppercase",
+                          tagIdx === 0 ? "bg-primary" : "bg-white",
+                        )}
+                      >
+                        {tag}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="project-card__content absolute bottom-0 left-0 w-full px-7.5 pb-13.25">
+                  <span className="project-card__icon relative mx-auto flex size-20 items-center justify-center rounded-t-[100px] bg-white text-[38px] leading-none text-primary">
+                    <i className={project.icon} aria-hidden="true" />
+                  </span>
+                  <div className="project-card__inner relative rounded-[20px] bg-primary px-7.5 pt-6.5 pb-5.75 text-center">
+                    <h3 className="project-card__title mb-1.5 text-[22px] leading-[1.318] font-bold text-[#222222] capitalize">
+                      <Link href="#">{project.title}</Link>
+                    </h3>
+                    <p className="project-card__text mb-4 text-[#444444]">{project.text}</p>
+                    <Link
+                      href="#"
+                      className="project-card__btn absolute -bottom-6 left-1/2 flex size-12.25 -translate-x-1/2 items-center justify-center rounded-full bg-white text-2xl text-primary"
+                    >
+                      <i className="icon-right" aria-hidden="true" />
+                    </Link>
                   </div>
                 </div>
               </div>
-            ))}
-          />
+            </Reveal>
+          ))}
         </div>
+      </div>
 
-        <Reveal direction="up">
-          <div className="relative mt-16 overflow-hidden rounded-3xl bg-accent p-10 sm:p-14">
-            <div className="grid gap-8 lg:grid-cols-[auto_1fr_auto] lg:items-center lg:gap-14">
-              <p className="font-heading text-4xl font-bold text-primary sm:text-5xl">
-                {PROJECTS.bottomBanner.stat}
-              </p>
-              <div>
-                <h3 className="font-heading text-xl leading-snug font-bold text-white! sm:text-2xl">
-                  {PROJECTS.bottomBanner.title[0]}
-                  <br />
-                  {PROJECTS.bottomBanner.title[1]}
-                </h3>
-                <ul className="mt-3 space-y-2">
-                  {PROJECTS.bottomBanner.checklist.map((line) => (
-                    <li key={line} className="flex items-center gap-2 text-sm text-white/80">
-                      <i className="icon-check text-primary" aria-hidden="true" />
-                      {line}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <FindoxButton href="#" text={PROJECTS.bottomBanner.button} />
-            </div>
+      <div className="projects__bottom relative z-1 mt-7.5">
+        <div
+          className="projects__bg absolute inset-0 bg-cover bg-top"
+          style={{ backgroundImage: "url(/images/shapes/projects-bg-shape-1-2.png)" }}
+          aria-hidden="true"
+        />
+        <Container className="relative z-1">
+          <div className="projects__bottom__inner grid gap-y-7.5 py-20.75 max-lg:pb-21.75 lg:grid-cols-[1fr_auto] lg:items-center lg:gap-x-14">
+            <Reveal
+              direction="up"
+              duration={1300}
+              delay={100}
+              className="projects__info relative pl-15 max-lg:pl-0 max-lg:text-center"
+            >
+              <h3 className="projects__info__title mb-2.75 text-[22px] leading-[1.272] font-bold text-black max-[430px]:text-xl">
+                {PROJECTS.bottomBanner.stat} {PROJECTS.bottomBanner.title[0]}
+                <br />
+                {PROJECTS.bottomBanner.title[1]}
+              </h3>
+              <ul className="projects__info__list m-0 list-none">
+                {PROJECTS.bottomBanner.checklist.map((line) => (
+                  <li key={line} className="font-medium text-[#333333]">
+                    <span className="projects__info__list__icon relative -top-px mr-2.5 inline-flex size-5.25 items-center justify-center rounded-full bg-primary text-[11px] text-accent">
+                      <i className="icon-check" aria-hidden="true" />
+                    </span>
+                    {line}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal direction="up" duration={1300} delay={200} className="projects__button text-center lg:text-right">
+              <FindoxButton variant="base" href="#" text={PROJECTS.bottomBanner.button} />
+            </Reveal>
           </div>
-        </Reveal>
-      </Container>
+        </Container>
+      </div>
     </section>
   );
 }

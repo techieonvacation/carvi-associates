@@ -1,0 +1,169 @@
+/* About — advanced effects only (layout/type/colour/position are Tailwind). */
+
+/* Floating collage shapes bounce continuously. */
+.about-one__image__shape-1 {
+  animation: zump 2s linear infinite;
+}
+.about-one__image__shape-2 {
+  animation: zumpBottom 2s linear infinite;
+}
+@keyframes zump {
+  0% {
+    transform: translateZ(0);
+  }
+  50% {
+    transform: translate3d(0, -15px, 0);
+  }
+  100% {
+    transform: translateZ(0);
+  }
+}
+@keyframes zumpBottom {
+  0% {
+    transform: translateZ(0);
+  }
+  50% {
+    transform: translate3d(0, 10px, 0);
+  }
+  100% {
+    transform: translateZ(0);
+  }
+}
+
+/* Dashed ring inset within the "37+" yellow badge dome. */
+.about-one__experience__year::after {
+  content: "";
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: inherit;
+  border: 1px dashed var(--findox-base);
+}
+
+/* Green "flag" tucked under a tab button, revealed while active. */
+.about-one .tab-btn::after {
+  content: "";
+  width: 56.49px;
+  height: 25.067px;
+  position: absolute;
+  right: -9px;
+  bottom: -7px;
+  z-index: -1;
+  opacity: 0;
+  transform: rotate(129.56deg);
+  border-radius: inherit;
+  background-color: var(--findox-base);
+  transition: all 500ms ease;
+}
+.about-one .tab-btn.active-btn::after {
+  opacity: 1;
+}
+
+/* Two-tone accent bars peeking from the left edge of the tab content box. */
+.about-one .tabs-content__inner::before,
+.about-one .tabs-content__inner::after {
+  content: "";
+  width: 40px;
+  height: 50%;
+  position: absolute;
+  left: 0px;
+  z-index: -1;
+}
+.about-one .tabs-content__inner::before {
+  top: 0px;
+  background-color: var(--findox-base);
+}
+.about-one .tabs-content__inner::after {
+  bottom: 0px;
+  background-color: var(--findox-primary);
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .about-one .tabs-content__inner::before,
+  .about-one .tabs-content__inner::after {
+    display: none;
+  }
+}
+@media (max-width: 767px) {
+  .about-one .tabs-content__inner::before,
+  .about-one .tabs-content__inner::after {
+    display: none;
+  }
+}
+
+/* White rounded pill the checklist sits on, overlapping the accent bars. */
+.about-one .tabs-content__list::before {
+  content: "";
+  width: 34px;
+  height: calc(100% + 38px);
+  position: absolute;
+  top: 50%;
+  left: -9px;
+  border-radius: 50px;
+  transform: translateY(-50%);
+  background-color: var(--findox-white);
+}
+
+/* Checklist hover: link colour + a small arrow cue + check/dot-grid swap. */
+.about-one .tabs-content__list li:hover a {
+  color: var(--findox-primary);
+  text-decoration: underline;
+}
+.about-one .tabs-content__list__icon::after {
+  content: "";
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  top: calc(50% + 1px);
+  right: -14px;
+  opacity: 0;
+  transform: translateY(-50%);
+  border-style: solid;
+  border-width: 8.5px 0 8.5px 9px;
+  border-color: transparent transparent transparent var(--findox-base);
+  transition: all 500ms ease;
+}
+.about-one .tabs-content__list li:hover .tabs-content__list__icon::after {
+  opacity: 1;
+}
+.about-one .tabs-content__list svg {
+  width: 19px;
+  height: 17px;
+  flex-shrink: 0;
+  transition: all 500ms ease;
+}
+.about-one .tabs-content__list svg path:first-child {
+  fill: var(--findox-base);
+  transition: all 500ms ease;
+}
+.about-one .tabs-content__list svg path:not(:first-child) {
+  fill: var(--findox-primary);
+  transition: all 500ms ease;
+}
+.about-one .tabs-content__list li:hover svg path:first-child {
+  fill: var(--findox-primary);
+}
+.about-one .tabs-content__list li:hover svg path:not(:first-child) {
+  fill: var(--findox-base);
+}
+
+/* Tab-panel swap: only the active tab is shown, sliding/fading in. */
+.about-one .tabs-content .tab {
+  display: none;
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 600ms ease;
+}
+.about-one .tabs-content .tab.active-tab {
+  display: block;
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+/* Rotating dot-grid shape bottom-right of the section (keyframe `rotate` is
+   defined globally in app/findox.css and shared across sections). */
+.about-one__shape {
+  animation: rotate 7s linear infinite;
+}

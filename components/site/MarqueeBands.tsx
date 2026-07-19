@@ -1,68 +1,79 @@
 import { cn } from "@/lib/utils";
 import { MARQUEE_WORDS } from "./home-data";
+import "./css/slidetext.css";
 
-function MarqueeRow({
+/**
+ * MarqueeBands — the reference `slide-text` section: two full-bleed ribbons
+ * skewed in opposite directions so they cross in an X (green skewed
+ * up-left, yellow skewed down-right), each carrying an infinitely-scrolling
+ * row of the hashtag words — separated by the loop shape — scrolling in
+ * opposite directions. Mirrors `.slide-text` / `.slide-text__one` /
+ * `.slide-text__two` / `.slide-text__scroll`.
+ */
+
+const SHAPES: Record<"one" | "two", { src: string; width: number; height: number }> = {
+  one: { src: "/images/shapes/slidet-text-shape-1.png", width: 60, height: 38 },
+  two: { src: "/images/shapes/slidet-text-shape-2.png", width: 59, height: 38 },
+};
+
+function MarqueeTrack({
   direction,
-  textClassName,
-  strokeColor,
-  shape,
+  variant,
 }: {
   direction: "left" | "right";
-  textClassName: string;
-  strokeColor: string;
-  shape: string;
+  variant: "one" | "two";
 }) {
+  const shape = SHAPES[variant];
+
   return (
-    <div className="overflow-hidden">
-      <div
-        className={cn(
-          "flex w-max shrink-0 items-center gap-10",
-          direction === "left" ? "animate-marquee-left" : "animate-marquee-right",
-          "hover:[animation-play-state:paused]",
-        )}
-      >
-        {[0, 1].map((dupe) => (
-          <div key={dupe} className="flex shrink-0 items-center gap-10">
-            {MARQUEE_WORDS.map((word, i) => (
-              <span key={`${dupe}-${word}`} className="flex shrink-0 items-center gap-10">
-                <span
-                  className={cn(
-                    "font-heading text-2xl font-bold whitespace-nowrap uppercase sm:text-3xl",
-                    i % 2 === 1 ? "text-stroke" : textClassName,
-                  )}
-                  style={i % 2 === 1 ? ({ "--stroke-color": strokeColor } as React.CSSProperties) : undefined}
-                >
-                  {word}
-                </span>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={shape} alt="" aria-hidden="true" className="h-4 w-4 shrink-0" />
+    <div
+      className={cn(
+        "slide-text__scroll font-heading flex w-max items-center gap-7.5 whitespace-nowrap",
+        variant === "two" && "slide-text__scroll--right",
+        direction === "left" ? "animate-marquee-left" : "animate-marquee-right",
+        "hover:[animation-play-state:paused]",
+      )}
+    >
+      {[0, 1].map((dupe) => (
+        <div key={dupe} className="flex w-max shrink-0 items-center gap-7.5" aria-hidden={dupe === 1}>
+          {MARQUEE_WORDS.map((word, i) => (
+            <span
+              key={`${dupe}-${word}`}
+              className="slide-text__item flex shrink-0 items-center gap-7.5"
+            >
+              <span className={i % 2 === 1 ? "slide-text__scroll__outline" : undefined}>
+                {word}
               </span>
-            ))}
-          </div>
-        ))}
-      </div>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={shape.src}
+                alt=""
+                aria-hidden="true"
+                width={shape.width}
+                height={shape.height}
+                className="shrink-0"
+              />
+            </span>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
 
 export function MarqueeBands() {
   return (
-    <section className="overflow-hidden py-10">
-      <div className="-rotate-2 bg-accent py-5 shadow-lg">
-        <MarqueeRow
-          direction="left"
-          textClassName="text-white"
-          strokeColor="#ffffff"
-          shape="/images/shapes/slidet-text-shape-1.png"
-        />
-      </div>
-      <div className="mt-4 rotate-2 bg-primary py-5 shadow-lg">
-        <MarqueeRow
-          direction="right"
-          textClassName="text-accent"
-          strokeColor="var(--accent)"
-          shape="/images/shapes/slidet-text-shape-2.png"
-        />
+    <section
+      className="slide-text relative z-1 my-23.5 overflow-hidden max-[1599px]:my-16 max-[1199px]:my-9.25 max-[991px]:my-5"
+      aria-hidden="true"
+    >
+      <div className="slide-text__container">
+        <div className="slide-text__one overflow-hidden py-8">
+          <MarqueeTrack direction="left" variant="one" />
+        </div>
+        <div className="slide-text__two overflow-hidden py-8">
+          <MarqueeTrack direction="right" variant="two" />
+        </div>
       </div>
     </section>
   );

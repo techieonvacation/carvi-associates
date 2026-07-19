@@ -135,6 +135,15 @@
    what Tailwind itself cannot express).
    ------------------------------------------------------------- */
 @theme {
+  /* Bootstrap breakpoints — the reference theme's media queries key off
+     these exact widths, so named Tailwind variants (md/lg/xl/2xl) map 1:1
+     to the reference and every section stays faithfully responsive. */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-2xl: 1400px;
+
   --animate-marquee-left: marquee-left 34s linear infinite;
   --animate-marquee-right: marquee-right 34s linear infinite;
   --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;

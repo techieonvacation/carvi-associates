@@ -1,0 +1,107 @@
+/* WorkingProcess — advanced effects only (layout is Tailwind):
+   the zig-zag connecting-line network behind the step badges, the yellow
+   start-dot, and the arrow flourish after the last column. Hidden below
+   `lg` (992px), where the grid drops to 1/2 columns and stacks normally.
+
+   Geometry note: badges sit at a *fixed* height (h-9 = 36px) and are
+   always the first child of `__content`, so `--wp-badge-half` (18px) is
+   the true vertical centre of a badge measured from the top of whichever
+   element it's the first child of — this holds for every column whether
+   its content block renders at the top (up columns) or bottom (down
+   columns) of the item. The verticals are anchored to the *down* columns'
+   image box (always the item's first, i.e. top, element), so
+   `height: calc(100% + var(--wp-gap))` reaches the neighbouring column's
+   badge height with no need to know the (fluid) image height in pixels. */
+
+.working-process {
+  --wp-gap: 30px; /* matches the row's gap-x-[30px] */
+  --wp-badge-half: 18px; /* half of the h-9 step badge */
+  --wp-line-color: var(--findox-border-color, #dddddd);
+}
+
+.working-process__image__overlay {
+  transition: opacity 500ms ease;
+}
+
+@media (min-width: 992px) {
+  /* Full-width line through every badge's own vertical centre. */
+  .working-process__content::before {
+    content: "";
+    position: absolute;
+    top: var(--wp-badge-half);
+    right: 0;
+    left: 0;
+    height: 1px;
+    background-color: var(--wp-line-color);
+  }
+
+  /* Vertical risers in the gutters, hung off the down columns' image box. */
+  .working-process__image--right::after,
+  .working-process__image--left::before {
+    content: "";
+    position: absolute;
+    top: var(--wp-badge-half);
+    width: 1px;
+    height: calc(100% + var(--wp-gap));
+    background-color: var(--wp-line-color);
+  }
+  .working-process__image--right::after {
+    right: calc(var(--wp-gap) / -2);
+  }
+  .working-process__image--left::before {
+    left: calc(var(--wp-gap) / -2);
+  }
+
+  /* Yellow dot + stub before column 1, at its own (down) badge height.
+     This lives on a dedicated `__dot` anchor span (inset over the image)
+     rather than the image's own ::before/::after — column 1's image also
+     carries the `--right` riser on ::after, and an element only gets one
+     ::before/::after each, so sharing a slot would make the two rules'
+     left/right/width fight over the same box. */
+  .working-process__dot::before {
+    content: "";
+    position: absolute;
+    left: -34px;
+    top: calc(100% + var(--wp-gap) + var(--wp-badge-half) - 5px);
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background-color: var(--findox-primary, #f5c835);
+    z-index: 1;
+  }
+  .working-process__dot::after {
+    content: "";
+    position: absolute;
+    left: -24px;
+    top: calc(100% + var(--wp-gap) + var(--wp-badge-half));
+    width: 24px;
+    height: 1px;
+    background-color: var(--wp-line-color);
+  }
+
+  /* Arrow flourish rising away from the last column's badge — likewise on
+     its own `__arrow` anchor span so it doesn't collide with the shared
+     `__content::before` line for the same slot. */
+  .working-process__arrow::after {
+    content: "";
+    position: absolute;
+    top: var(--wp-badge-half);
+    right: -34px;
+    width: 26px;
+    height: 1px;
+    background-color: var(--wp-line-color);
+    transform-origin: left center;
+    transform: rotate(-30deg);
+  }
+  .working-process__arrow::before {
+    content: "";
+    position: absolute;
+    top: 3px;
+    right: -42px;
+    width: 9px;
+    height: 9px;
+    border-top: 2px solid var(--findox-primary, #f5c835);
+    border-right: 2px solid var(--findox-primary, #f5c835);
+    transform: rotate(45deg);
+  }
+}

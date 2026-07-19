@@ -1,0 +1,111 @@
+/* Projects — advanced hover reveal, pill two-tone swap, dark-bg overlay and
+   banner decoration only (layout/type/color/spacing is Tailwind). */
+
+/* Dark textured band behind the section top (heading + filter row): the
+   photo is tinted with a 90%-opacity accent wash via ::after. */
+.projects-one__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 102, 84, 0.9);
+}
+
+/* Category pills: first is primary yellow (set inline via Tailwind), the
+   last swaps to white at rest and back to yellow on its own :hover, or
+   whenever the whole card is hovered. */
+.project-card__category:last-child {
+  background-color: var(--findox-white, #ffffff);
+}
+.project-card__category:hover {
+  background-color: var(--findox-primary, #f5c835) !important;
+}
+.project-card:hover .project-card__category:last-child {
+  background-color: var(--findox-primary, #f5c835);
+}
+
+/* Green wash that slides up to fill the lower part of the card on hover. */
+.project-card__content::after {
+  content: "";
+  width: 100%;
+  height: calc(100% - 137px);
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  opacity: 0;
+  transform: translateY(100%);
+  background-color: var(--findox-base, #006654);
+  transition: all 500ms ease;
+}
+.project-card:hover .project-card__content::after {
+  opacity: 1;
+  transform: translateY(0%);
+  transition-delay: 300ms;
+}
+
+/* Icon badge drops in from above the card content. */
+.project-card__icon {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-100%);
+  transition: all 500ms ease;
+}
+.project-card:hover .project-card__icon {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0%);
+  transition-delay: 300ms;
+}
+
+/* Title/text/button panel flips down into view like a hinged lid. */
+.project-card__inner {
+  opacity: 0;
+  visibility: hidden;
+  transform: rotateX(-90deg);
+  transform-origin: 50% 50%;
+  transition: transform 0.5s ease-in-out, opacity 0.5s, visibility 0.5s;
+}
+.project-card:hover .project-card__inner {
+  opacity: 1;
+  visibility: visible;
+  transform: rotateX(0deg);
+}
+
+.project-card__title a {
+  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0 95% / 0 1px no-repeat;
+  transition: all 500ms ease;
+}
+.project-card__title a:hover {
+  background-size: 100% 1px;
+}
+
+/* Decorative vertical bar + arrow beside the bottom-banner heading. */
+.projects__info::before {
+  content: "";
+  width: 6px;
+  height: 100%;
+  background-color: var(--findox-base, #006654);
+  position: absolute;
+  top: 50%;
+  left: 0;
+  border-radius: 50px;
+  transform: translateY(-50%);
+}
+.projects__info::after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 12px 0 12px 19px;
+  border-color: transparent transparent transparent var(--findox-primary, #f5c835);
+  position: absolute;
+  top: 50%;
+  left: 6px;
+  transform: translateY(-50%);
+}
+@media (max-width: 991px) {
+  .projects__info::before,
+  .projects__info::after {
+    display: none;
+  }
+}

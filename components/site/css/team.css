@@ -1,0 +1,123 @@
+/* Team — advanced hover effects only (layout/type/colour are Tailwind). */
+
+/* Share button (bottom-right of the photo) fans a horizontal row of social
+   links out to its left on hover. Overrides the global `.social-links`
+   (flex row / 38px circles) with the tighter 35px, borderless variant. */
+.team-card__social .social-links {
+  gap: 8px;
+  flex-wrap: nowrap;
+  position: absolute;
+  top: calc(50% - 6px);
+  right: 90%;
+  z-index: 1;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-70%) translateY(-50%);
+  transition: all 500ms ease;
+}
+.team-card__social .social-links a {
+  width: 35px;
+  height: 35px;
+  border: none;
+  background-color: var(--findox-white);
+}
+.team-card__social .social-links a:hover {
+  background-color: var(--findox-primary);
+}
+.team-card__social .social-links a .social-links__icon {
+  color: var(--findox-base);
+}
+.team-card__social:hover .social-links {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0%) translateY(-50%);
+}
+
+/* Colour-tint overlay masked to the member cutout's own silhouette; the
+   mask-image itself is set inline per-member (see Team.tsx). */
+.team-card__overlay {
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-size: cover;
+}
+.team-card:hover .team-card__overlay {
+  height: 100%;
+  opacity: 1;
+}
+
+/* Decorative blob behind the cutout, masked to the reference blob shape,
+   with two accent/primary rings that solidify on hover. */
+.team-card__shape {
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270.000000 242.000000"><g transform="translate(0.000000,242.000000) scale(0.050000,-0.050000)" stroke="none"> <path d="M3850 4821 c-382 -83 -750 -370 -1140 -891 -583 -777 -954 -975 -1692 -902 -384 39 -853 -161 -976 -414 -41 -85 -42 -110 -42 -1350 l0 -1264 2700 0 2700 0 0 1947 0 1947 -45 83 c-297 548 -1014 950 -1505 844z"/> </g> </svg>');
+  mask: url('data:image/svg+xml;utf8,<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270.000000 242.000000"><g transform="translate(0.000000,242.000000) scale(0.050000,-0.050000)" stroke="none"> <path d="M3850 4821 c-382 -83 -750 -370 -1140 -891 -583 -777 -954 -975 -1692 -902 -384 39 -853 -161 -976 -414 -41 -85 -42 -110 -42 -1350 l0 -1264 2700 0 2700 0 0 1947 0 1947 -45 83 c-297 548 -1014 950 -1505 844z"/> </g> </svg>');
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: top center;
+  mask-position: top center;
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+.team-card__shape::before,
+.team-card__shape::after {
+  content: "";
+  width: 231px;
+  height: 236px;
+  position: absolute;
+  border-radius: 50%;
+  border: 20px solid;
+  transition: all 500ms ease;
+}
+.team-card__shape::before {
+  left: -96px;
+  bottom: 50px;
+  z-index: 1;
+  border-color: rgba(var(--findox-base-rgb), 0.3);
+}
+.team-card__shape::after {
+  top: -138px;
+  right: -43px;
+  border-color: rgba(var(--findox-primary-rgb), 0.3);
+}
+.team-card:hover .team-card__shape::before {
+  border-color: var(--findox-base);
+}
+.team-card:hover .team-card__shape::after {
+  border-color: var(--findox-primary);
+}
+
+/* Info panel: base fill wipes up from the bottom on card hover. */
+.team-card__info {
+  filter: drop-shadow(0 2px 4.4px rgba(0, 0, 0, 0.15));
+}
+.team-card__info::before {
+  content: "";
+  width: 100%;
+  height: 0%;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  background-color: var(--findox-base);
+  transition: all 500ms ease;
+}
+.team-card:hover .team-card__info::before {
+  height: 100%;
+  top: 0;
+}
+
+/* Name underline sweep (self-hover on the link, same trick as Features). */
+.team-card__name a {
+  color: inherit;
+  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0 95% / 0 1px no-repeat;
+  transition: all 500ms ease;
+}
+.team-card__name a:hover {
+  background-size: 100% 1px;
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .team-card__social .social-links {
+    right: 70%;
+  }
+}

@@ -1,0 +1,89 @@
+/* BookAppointment — advanced effects only (layout/type/colour live in Tailwind). */
+
+/* Green brand overlay over the parallax photo (jarallax `data-speed` bg).
+   Exact reference value: rgba(base, 0.93). */
+.book-appointment__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--findox-base-rgb), 0.93);
+}
+
+/* "Contact Now" button — yellow fill by default, wipes to white on hover. */
+.book-appointment__btn-2::before {
+  background-color: var(--findox-primary);
+}
+.book-appointment__btn-2::after {
+  background-color: var(--findox-white);
+}
+.book-appointment__btn-2:hover .findox-btn__text {
+  color: var(--findox-black4);
+}
+
+/* "Get Started" white button variant (not present in the base findox.css). */
+.findox-btn--white {
+  background-color: var(--findox-white);
+}
+.findox-btn--white::before,
+.findox-btn--white::after {
+  background-color: var(--findox-primary);
+}
+.findox-btn--white .findox-btn__text,
+.findox-btn--white:hover .findox-btn__text {
+  color: var(--findox-black4);
+}
+.findox-btn--white .findox-btn__icon {
+  color: var(--findox-base);
+}
+.findox-btn--white:hover .findox-btn__icon {
+  color: var(--findox-white);
+}
+.findox-btn--white .findox-btn__icon-box {
+  background-color: var(--findox-primary);
+}
+.findox-btn--white:hover .findox-btn__icon-box {
+  background-color: var(--findox-base);
+}
+
+/* Decorative yellow masked corner blobs (hidden below xl, like the source). */
+.book-appointment__shape-1,
+.book-appointment__shape-2 {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  background-color: var(--findox-primary);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+.book-appointment__shape-1 {
+  width: 301px;
+  height: 293px;
+  left: 0;
+  bottom: 0;
+  -webkit-mask-image: url("/images/shapes/book-appointment-shape-1-1.png");
+  mask-image: url("/images/shapes/book-appointment-shape-1-1.png");
+}
+.book-appointment__shape-2 {
+  width: 266px;
+  height: 272px;
+  top: 0;
+  right: 0;
+  -webkit-mask-image: url("/images/shapes/book-appointment-shape-1-2.png");
+  mask-image: url("/images/shapes/book-appointment-shape-1-2.png");
+}
+@media (max-width: 1299px) {
+  .book-appointment__shape-1 {
+    left: -50px;
+  }
+  .book-appointment__shape-2 {
+    right: -50px;
+  }
+}
+@media (max-width: 1199px) {
+  .book-appointment__shape-1,
+  .book-appointment__shape-2 {
+    display: none;
+  }
+}

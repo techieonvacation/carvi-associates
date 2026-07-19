@@ -101,29 +101,26 @@ export function Carousel({
       </div>
 
       {(showArrows || showDots) && (
-        <div className="mt-8 flex items-center justify-center gap-4">
+        <div className="mt-[50px] flex items-center justify-center gap-[15px]">
           {showArrows && (
             <button
               type="button"
               aria-label="Previous slide"
               onClick={() => goTo(active - 1)}
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
+              className="findox-nav-btn"
             >
-              <ChevronLeft className="size-4" />
+              <i className="icon-arrow-left" aria-hidden="true" />
             </button>
           )}
           {showDots && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-[11px]">
               {items.map((_, i) => (
                 <button
                   key={i}
                   type="button"
                   aria-label={`Go to slide ${i + 1}`}
                   onClick={() => goTo(i)}
-                  className={cn(
-                    "h-2 rounded-full transition-all",
-                    i === active ? "w-6 bg-accent" : "w-2 bg-border",
-                  )}
+                  className={cn("findox-dot", i === active && "findox-dot--active")}
                 />
               ))}
             </div>
@@ -133,9 +130,9 @@ export function Carousel({
               type="button"
               aria-label="Next slide"
               onClick={() => goTo(active + 1)}
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground"
+              className="findox-nav-btn"
             >
-              <ChevronRight className="size-4" />
+              <i className="icon-arrow-right" aria-hidden="true" />
             </button>
           )}
         </div>

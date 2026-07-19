@@ -8,42 +8,76 @@ import { SectionHeading } from "./SectionHeading";
 import { SocialLinks } from "./SocialLinks";
 import { TEAM } from "./home-data";
 import { SOCIALS } from "./nav-data";
+import "./css/team.css";
 
+/**
+ * Team — the `.team-one` owl carousel of `.team-card`s (1 / 2 / 3 / 4 items
+ * at 0 / 576 / 992 / 1200, matching the reference's owl-responsive config).
+ * Each card is a transparent member cutout over a masked decorative blob,
+ * a share button that fans a row of social links out on hover, and an
+ * info panel that fills in with the base colour on card hover. Mirrors
+ * Features.tsx: layout/type/colour as Tailwind, masks/pseudo-elements/hover
+ * choreography in css/team.css.
+ */
 export function Team() {
   return (
-    <section className="py-16 sm:py-20">
+    <section className="team-one section-space bg-white py-30 max-md:py-25 max-sm:py-20">
       <Container>
-        <SectionHeading align="center" tagline={TEAM.tagline} lines={TEAM.title} />
+        <SectionHeading
+          tagline={TEAM.tagline}
+          lines={TEAM.title}
+          align="center"
+          taglineBg="#ecf5f4"
+        />
 
-        <div className="mt-14">
+        <div className="team-one__carousel mt-[60px]">
           <Carousel
-            autoplay={4200}
-            itemClassName="basis-[85%] sm:basis-1/2 lg:basis-1/3 xl:basis-1/4"
+            autoplay={false}
+            showDots
+            showArrows={false}
+            gapClassName="gap-[30px]"
+            itemClassName="basis-full sm:basis-[calc(50%-15px)] lg:basis-[calc(33.333%-20px)] xl:basis-[calc(25%-22.5px)]"
             items={TEAM.members.map((member, i) => (
-              <Reveal key={member.name} direction="up" delay={(i % 4) * 100} className="h-full px-1 pb-1">
-                <div className="group relative h-full overflow-hidden rounded-3xl bg-secondary/60 shadow-sm">
-                  <div className="relative aspect-4/5 overflow-hidden">
+              <Reveal key={member.name} direction="up" duration={1300} delay={(i + 1) * 100}>
+                <div className="team-card group relative">
+                  <div className="team-card__image relative overflow-hidden text-center">
                     <Image
                       src={member.image}
                       alt={member.name}
-                      fill
-                      sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33vw, (min-width: 640px) 50vw, 85vw"
-                      className="object-contain object-bottom p-4"
+                      width={270}
+                      height={322}
+                      className="relative z-[1] mx-auto h-auto w-auto max-w-full"
                     />
-                    <span className="absolute top-4 right-4 flex size-9 items-center justify-center rounded-full bg-white text-accent shadow">
-                      <Share2 className="size-4" aria-hidden="true" />
-                    </span>
-                    <div className="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-center bg-accent/95 px-4 py-3 transition-transform duration-300 group-hover:translate-y-0">
+
+                    <div className="team-card__social absolute right-0 bottom-0 z-[3] h-[45px] w-20">
+                      <span className="team-card__social__icon absolute right-0 bottom-0 flex size-[45px] cursor-pointer items-center justify-center rounded-tl-[20px] bg-accent text-white transition-all duration-500 hover:bg-primary hover:text-accent">
+                        <Share2 className="size-[18px]" aria-hidden="true" />
+                      </span>
                       <SocialLinks socials={SOCIALS} />
                     </div>
+
+                    <div
+                      className="team-card__overlay absolute top-0 left-0 z-[1] h-0 w-full bg-accent/50 opacity-0 transition-all duration-500"
+                      style={{
+                        WebkitMaskImage: `url(${member.image})`,
+                        maskImage: `url(${member.image})`,
+                      }}
+                      aria-hidden="true"
+                    />
+
+                    <span
+                      className="team-card__shape absolute bottom-0 left-0 h-[242px] w-full bg-[#e2edec]"
+                      aria-hidden="true"
+                    />
                   </div>
-                  <div className="border-t border-border bg-card p-5 text-center">
-                    <h4 className="font-heading text-lg font-bold text-foreground!">
-                      <Link href="#" className="hover:text-accent">
-                        {member.name}
-                      </Link>
-                    </h4>
-                    <p className="text-sm text-muted-foreground">{member.role}</p>
+
+                  <div className="team-card__info relative z-[1] overflow-hidden rounded-b-[50px] bg-white px-[25px] pt-5 pb-[17px] text-center">
+                    <h3 className="team-card__name mb-1.5 text-[22px] leading-[1.318] font-bold text-[#222222] capitalize transition-colors duration-500 group-hover:text-white sm:max-md:text-[19px]">
+                      <Link href="#">{member.name}</Link>
+                    </h3>
+                    <p className="team-card__designation m-0 capitalize text-muted-foreground transition-colors duration-500 group-hover:text-white">
+                      {member.role}
+                    </p>
                   </div>
                 </div>
               </Reveal>

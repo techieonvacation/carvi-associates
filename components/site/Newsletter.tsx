@@ -1,37 +1,51 @@
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { NEWSLETTER } from "./home-data";
+import "./css/newsletter.css";
 
+/**
+ * Newsletter — a huge yellow "blob" (extreme border-radius + negative
+ * bottom margin) that straddles the boundary with whatever section
+ * follows (the footer), overlapping down into it. Mirrors the reference
+ * `.newsletter-one` markup/CSS.
+ */
 export function Newsletter() {
   return (
-    <section className="py-4">
+    <section className="newsletter-one relative z-[1]">
       <Container>
-        <Reveal direction="up">
-          <div className="rounded-3xl bg-secondary/60 p-10 sm:p-14">
-            <div className="grid gap-8 lg:grid-cols-2 lg:items-center lg:gap-16">
-              <div>
-                <h3 className="font-heading text-2xl font-bold text-foreground! sm:text-3xl">
-                  {NEWSLETTER.title}
-                </h3>
-                <p className="mt-3 text-muted-foreground">{NEWSLETTER.text}</p>
-              </div>
-              <form className="flex flex-col gap-3 sm:flex-row">
+        <Reveal direction="up" duration={1300}>
+          <div className="newsletter-one__inner relative overflow-hidden bg-primary px-[120px] pt-[70px] pb-[77px] max-xl:px-[100px] max-lg:px-[80px] max-md:px-[40px] max-md:pt-[50px] max-md:pb-[57px] max-[412px]:px-[30px]">
+            <div
+              className="newsletter-one__bg absolute inset-0"
+              aria-hidden="true"
+            />
+            <div className="newsletter-one__content relative z-[1] mx-auto max-w-[694px] text-center">
+              <h3 className="newsletter-one__title mb-[13px] text-[35px] leading-[1.314] font-bold text-[#222222] max-md:text-[32px] max-[440px]:text-[30px]">
+                {NEWSLETTER.title}
+              </h3>
+              <p className="newsletter-one__text mb-[23px] text-[18px] leading-[1.444] text-[#333333] max-[440px]:text-[16px]">
+                {NEWSLETTER.text}
+              </p>
+              <form
+                action="#"
+                className="newsletter-one__form relative mx-auto max-w-[470px]"
+              >
                 <label htmlFor="newsletter-email" className="sr-only">
                   Email address
                 </label>
                 <input
                   id="newsletter-email"
-                  type="email"
-                  required
-                  placeholder="Enter your email"
-                  className="w-full rounded-full border border-border bg-background px-5 py-3 text-sm text-foreground outline-none focus:border-accent"
+                  type="text"
+                  name="EMAIL"
+                  placeholder="Your Email"
+                  className="newsletter-one__input h-[45px] w-full rounded-full border-none bg-white pr-[5px] pl-[30px] text-sm text-[#636363] outline-none transition-colors duration-500 focus:text-[#131111]"
                 />
                 <button
                   type="submit"
-                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold tracking-wide text-white uppercase transition-colors hover:bg-accent/90"
+                  className="newsletter-one__submit mt-[17px] flex w-full items-center justify-center gap-1.5 rounded-full bg-accent px-[30px] py-[9.5px] text-[15px] font-bold text-white uppercase transition-colors hover:bg-accent/90 sm:mt-0 sm:w-auto sm:px-6"
                 >
-                  Send Request
-                  <i className="icon-paper-plane" aria-hidden="true" />
+                  SEND REQUEST
+                  <i className="icon-paper-plane text-sm" aria-hidden="true" />
                 </button>
               </form>
             </div>

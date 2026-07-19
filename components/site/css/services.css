@@ -1,0 +1,68 @@
+/* Services — advanced effects only (layout/type/color/spacing/grid live in
+   Tailwind on the element). Everything below is either a masked shape
+   (Tailwind has no mask utilities) or a pseudo-element the reference relies
+   on for the corner-flag hover flourish and the title underline sweep. */
+
+/* Masked white card shape (the "notch" that the circular button sits in). */
+.service-card__bg {
+  -webkit-mask-image: url("/images/shapes/service-card-shape-1-1.png");
+  mask-image: url("/images/shapes/service-card-shape-1-1.png");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* Small yellow corner flag that flies in from the right once the photo
+   has wiped across on hover. */
+.service-card__bg__main::before {
+  content: "";
+  width: 95px;
+  height: 68px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  opacity: 0;
+  transform: translateX(100%);
+  background-color: var(--findox-primary, #f5c835);
+  -webkit-mask-image: url("/images/shapes/service-card-shape-1-2.png");
+  mask-image: url("/images/shapes/service-card-shape-1-2.png");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  transition:
+    opacity 500ms ease,
+    transform 500ms ease;
+}
+
+.service-card:hover .service-card__bg__main::before {
+  opacity: 1;
+  transform: translateX(0%);
+  transition-delay: 500ms;
+}
+
+@media (max-width: 1199px) {
+  .service-card__bg__main::before {
+    display: none;
+  }
+}
+
+/* Green wash over the revealed photo. */
+.service-card__bg__main::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--findox-base-rgb, 0, 102, 84), 0.89);
+}
+
+/* Title link underline sweep (matches the features-one__card__title pattern). */
+.service-card__title a {
+  color: inherit;
+  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0 95% / 0 1px no-repeat;
+  transition: all 500ms ease;
+}
+.service-card__title a:hover {
+  background-size: 100% 1px;
+}

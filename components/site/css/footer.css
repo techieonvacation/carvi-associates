@@ -1,0 +1,25 @@
+/* Footer — advanced effects only (layout is Tailwind). */
+
+/* Background photo tinted with the dark-green base colour (94% opacity),
+   letting a hint of the texture show through — matches the reference
+   `.main-footer__bg::after` overlay. */
+.main-footer__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--findox-base-rgb), 0.94);
+}
+
+/* Link underline sweep — shared by the widget link lists, the blog
+   titles, and the bottom copyright-bar links. */
+.footer-widget__links a,
+.footer-widget__blog__title a,
+.main-footer__page a {
+  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0 95% / 0 1px no-repeat;
+  transition: background-size 500ms ease, color 500ms ease;
+}
+.footer-widget__links a:hover,
+.footer-widget__blog__title a:hover,
+.main-footer__page a:hover {
+  background-size: 100% 1px;
+}

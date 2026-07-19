@@ -1,0 +1,67 @@
+/* MarqueeBands (`.slide-text`) — two full-bleed ribbons skewed in opposite
+   directions so they cross in an X; each carries an infinitely-scrolling
+   row of hashtag words. Mirrors the reference `.slide-text__one` /
+   `.slide-text__two` / `.slide-text__scroll` rules. Everything that can be
+   expressed as a plain utility (overflow-hidden, flex, gap, py-8, the
+   marquee keyframes) stays in the component as Tailwind; only the band
+   rotation/overlap, band background and word typography live here. */
+
+.slide-text__container {
+  position: relative;
+}
+
+/* Band one: green, skewed up-left, sets the section's flow height. */
+.slide-text__one {
+  position: relative;
+  background-color: var(--findox-base, #006654);
+  transform: skewY(-7.412deg);
+}
+
+/* Band two: yellow, skewed down-right, overlaid on top of band one so the
+   two ribbons cross. */
+.slide-text__two {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--findox-primary, #f5c835);
+  transform: skewY(7.412deg);
+}
+
+/* Below the tablet breakpoint the ribbons stack instead of overlapping —
+   band two returns to normal flow and skews the same way as band one. */
+@media (max-width: 991px) {
+  .slide-text__two {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    transform: skewY(-7.412deg);
+  }
+}
+
+/* Word typography — band one (on green): solid/outline white. */
+.slide-text__scroll {
+  margin: 0;
+  font-size: 35px;
+  font-weight: 700;
+  line-height: 1.192;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  color: var(--findox-white, #ffffff);
+}
+
+.slide-text__scroll__outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--findox-white, #ffffff);
+}
+
+/* Band two (on yellow): solid/outline green instead of white. */
+.slide-text__scroll--right {
+  color: var(--findox-base, #006654);
+}
+
+.slide-text__scroll--right .slide-text__scroll__outline {
+  color: transparent;
+  -webkit-text-stroke-color: var(--findox-base, #006654);
+}

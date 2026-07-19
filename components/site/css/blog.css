@@ -1,0 +1,108 @@
+/* Blog — advanced effects only (layout/type/color/spacing is Tailwind). */
+
+/* Mint gradient wash behind the "home1" blog section, fading out ~568px down. */
+.blog-one--home1::before {
+  content: "";
+  width: 100%;
+  height: 568px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background: linear-gradient(180deg, #ecf5f4 14.98%, rgba(217, 217, 217, 0) 100%);
+  pointer-events: none;
+}
+
+/* Circular author badge: relatively positioned + left:50%/translateX(-50%)
+   centers it over the card regardless of its own width, while the negative
+   top margin pulls it up to overlap the image's bottom edge. */
+.blog-card__admin {
+  position: relative;
+  top: 0px;
+  left: 50%;
+  z-index: 1;
+  margin: -36px 0px 19px;
+  transform: translateX(-50%);
+}
+
+/* Card lift + shadow on hover, border brightens to the brand green. */
+.blog-card {
+  transition: transform 500ms ease, box-shadow 500ms ease;
+}
+.blog-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 45px -15px rgba(0, 0, 0, 0.18);
+}
+.blog-card:hover .blog-card__border {
+  border-color: var(--findox-base, #006654);
+}
+
+/* Image zoom-in on hover. */
+.blog-card__image img {
+  transition: transform 500ms ease;
+}
+.blog-card:hover .blog-card__image img {
+  transform: scale(1.08);
+}
+
+/* Full-image link overlay: dark scrim + a "+" (two crossed bars) fades in,
+   sliding down from above — same treatment as the reference's other blog
+   card variants. */
+.blog-card__image__link {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(19, 17, 17, 0.5);
+  opacity: 0;
+  transform: translateY(-30%);
+  transition: opacity 500ms ease, transform 500ms ease;
+}
+.blog-card__image__link::before,
+.blog-card__image__link::after {
+  content: "";
+  width: 32px;
+  height: 2px;
+  background-color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.blog-card__image__link::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+.blog-card:hover .blog-card__image__link {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Title link underline sweep (same treatment as features-one__card__title a). */
+.blog-card__title a {
+  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0px 95%/0px 1px no-repeat;
+  transition: all 500ms ease;
+}
+.blog-card__title a:hover {
+  background-size: 100% 1px;
+}
+
+/* Hovering anywhere on the card also plays the "learn more" pill's own
+   hover state (fill wipe + icon-box swap + arrow flick), matching the
+   reference's card-triggered .findox-btn overrides. */
+.blog-card:hover .findox-btn::after {
+  width: 100%;
+  left: 0px;
+}
+.blog-card:hover .findox-btn__text {
+  color: var(--findox-black4, #131111);
+}
+.blog-card:hover .findox-btn__icon-box {
+  background-color: var(--findox-base, #006654);
+}
+.blog-card:hover .findox-btn__icon {
+  color: var(--findox-white, #ffffff);
+}
+.blog-card:hover .findox-btn__icon i {
+  transform: translate(15px, -15px);
+  transition: all 0.5s ease-out;
+}
+.blog-card:hover .findox-btn__icon i:last-child {
+  visibility: visible;
+}

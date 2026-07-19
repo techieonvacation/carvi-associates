@@ -4,57 +4,106 @@ import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { SERVICES } from "./home-data";
+import "./css/services.css";
 
+/**
+ * Services — the "services-one" grid of six white service-card tiles on a
+ * mint section background. Each card layers a masked white background shape
+ * (service-card__bg) with a photo that wipes in from the left on hover
+ * (service-card__bg__main, via next/image sized to its animated-width
+ * wrapper so object-cover reproduces the reference's background-size:cover
+ * reveal), a yellow line-art icon + huge outline number above a divider
+ * tick, and a circular findox-style arrow button pinned to the notch at the
+ * card's bottom-right corner. Mirrors the reference `.services-one` /
+ * `.service-card` markup 1:1.
+ */
 export function Services() {
   return (
-    <section className="py-16 sm:py-20">
+    <section className="services-one section-space bg-secondary py-30 max-md:py-25 max-sm:py-20">
       <Container>
-        <SectionHeading align="center" tagline={SERVICES.tagline} lines={SERVICES.title} />
+        <SectionHeading
+          align="center"
+          tagline={SERVICES.tagline}
+          lines={SERVICES.title}
+          taglineBg="#ffffff"
+        />
 
-        <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-[30px] md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.items.map((service, i) => (
-            <Reveal key={service.title.join(" ")} direction="up" delay={(i % 3) * 100}>
-              <div className="group relative h-96 overflow-hidden rounded-3xl">
-                <Image
-                  src={service.image}
-                  alt=""
-                  fill
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/85 via-black/40 to-black/10" />
-
-                <div className="relative flex h-full flex-col justify-between p-7">
-                  <div className="flex items-center justify-between">
-                    <span className="flex size-12 items-center justify-center rounded-full bg-white/15 text-xl text-white backdrop-blur-sm">
-                      <i className={service.icon} aria-hidden="true" />
-                    </span>
-                    <span className="font-heading text-3xl font-bold text-white/20">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
+            <Reveal key={service.title.join(" ")} direction="up" delay={(i + 1) * 100} duration={1300}>
+              <div className="service-card group relative overflow-hidden rounded-[20px]">
+                <div className="service-card__bg absolute inset-0 rounded-[inherit] bg-white">
+                  <div className="service-card__bg__main absolute top-0 left-0 h-full w-0 overflow-hidden transition-[width] duration-600 group-hover:w-full">
+                    <Image
+                      src={service.image}
+                      alt=""
+                      fill
+                      sizes="(min-width: 992px) 33vw, (min-width: 768px) 50vw, 100vw"
+                      className="object-cover object-top"
+                    />
                   </div>
+                </div>
 
-                  <div>
-                    <p className="mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-primary uppercase">
-                      <span className="inline-block size-1.5 rotate-45 bg-primary" aria-hidden="true" />
+                <div
+                  className="service-card__content relative z-[1] pt-[43.5px] px-[38px] pb-[49.5px] transition-all duration-500 max-[375px]:pt-[30px] max-[375px]:px-[25px] min-[376px]:max-[412px]:pt-[30px] min-[376px]:max-[412px]:px-[30px] md:pt-[30px] md:px-[30px] lg:pt-[30px] lg:px-[25px] xl:pt-[43.5px] xl:px-[38px]"
+                >
+                  <div className="service-card__tagline mb-[19px] flex items-start gap-2.5">
+                    <svg
+                      width="23"
+                      height="23"
+                      viewBox="0 0 23 23"
+                      fill="none"
+                      className="mt-0.5 h-[23px] w-[23px] shrink-0"
+                      aria-hidden="true"
+                    >
+                      <rect
+                        x="11.5"
+                        y="3.01463"
+                        width="12"
+                        height="12"
+                        transform="rotate(45 11.5 3.01463)"
+                        strokeWidth={3}
+                        className="stroke-accent transition-colors duration-500 group-hover:stroke-primary"
+                      />
+                    </svg>
+                    <p className="service-card__tagline__text m-0 text-[#636363] transition-colors duration-500 group-hover:text-primary">
                       {SERVICES.tagline2}
                     </p>
-                    <h4 className="font-heading text-xl leading-tight font-bold text-white!">
-                      <Link href="#" className="transition-colors hover:text-primary">
-                        {service.title[0]}
-                        <br />
-                        {service.title[1]}
-                      </Link>
-                    </h4>
-                    <p className="mt-2 text-sm text-white/70">{service.text}</p>
-                    <Link
-                      href="#"
-                      aria-label={`Learn more about ${service.title.join(" ")}`}
-                      className="mt-4 inline-flex size-10 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform group-hover:translate-x-1 group-hover:-translate-y-1"
-                    >
-                      <i className="icon-right-2" aria-hidden="true" />
-                    </Link>
                   </div>
+
+                  <h3 className="service-card__title mb-3 text-[22px] leading-[1.272] font-bold text-[#222222] capitalize transition-colors duration-500 group-hover:text-white max-[375px]:text-[21px] lg:text-[20px] xl:text-[22px]">
+                    <Link href="#">
+                      {service.title[0]}
+                      <br />
+                      {service.title[1]}
+                    </Link>
+                  </h3>
+
+                  <p className="service-card__text mb-[22px] text-[#636363] transition-colors duration-500 group-hover:text-white">
+                    {service.text}
+                  </p>
+
+                  <div className="service-card__bottom relative flex items-center gap-[68px] max-[360px]:gap-[40px] lg:gap-[43px] xl:gap-[68px]">
+                    <span className="service-card__icon inline-flex shrink-0 text-[70px] leading-none text-primary transition-colors duration-500 group-hover:text-white">
+                      <i className={service.icon} aria-hidden="true" />
+                    </span>
+                    <h4 className="service-card__number relative m-0 leading-none after:absolute after:bottom-[-68px] after:left-1/2 after:h-[45px] after:w-[2px] after:-translate-x-1/2 after:rounded-full after:bg-[#dddddd] after:transition-colors after:duration-500 after:content-[''] group-hover:after:bg-primary">
+                      {/* Real text in an inner span (not directly on the h4) so the
+                          transparent fill isn't clobbered by the `.findox-scope h4`
+                          color rule — mirrors the reference's decoupled ::before glyph. */}
+                      <span className="text-stroke inline-block text-[40px] font-semibold [--stroke-color:#dddddd] [writing-mode:sideways-lr] transition-colors duration-500 group-hover:[--stroke-color:#f5c835]">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
+                    </h4>
+                  </div>
+
+                  <Link
+                    href="#"
+                    aria-label={`Learn more about ${service.title.join(" ")}`}
+                    className="service-card__btn absolute right-0 bottom-0 flex size-[71px] items-center justify-center rounded-full bg-accent text-[36px] text-white transition-all duration-500 group-hover:bg-primary group-hover:text-accent hover:rotate-45 max-[375px]:bottom-[16px] max-[375px]:size-[60px] max-[375px]:text-[28px] lg:bottom-[16px] lg:size-[60px] lg:text-[28px] xl:bottom-0 xl:size-[71px] xl:text-[36px]"
+                  >
+                    <i className="icon-arrow-right-up" aria-hidden="true" />
+                  </Link>
                 </div>
               </div>
             </Reveal>

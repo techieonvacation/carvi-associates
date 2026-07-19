@@ -1,0 +1,20 @@
+/* Client carousel — advanced effects only (layout/type/colour are Tailwind). */
+
+/* Thin divider lines flanking the centred headline. Pseudo-elements can't be
+   expressed as Tailwind utilities, so they live here. Each runs from the
+   section edge to 180px short of centre (leaving a ~360px gap for the title). */
+.client-carousel::before,
+.client-carousel::after {
+  content: "";
+  width: calc(50% - 180px);
+  height: 2px;
+  background-color: #dddddd;
+  position: absolute;
+  top: 12px;
+  left: 0;
+}
+
+.client-carousel::after {
+  left: auto;
+  right: 0;
+}
