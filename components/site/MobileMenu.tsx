@@ -1,52 +1,33 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { MENU, CONTACT, SOCIALS, type NavLink } from "./nav-data";
 import { SocialLinks } from "./SocialLinks";
 import { Logo } from "./Logo";
+import type { PublicNavItem } from "./DesktopMenu";
 
-function MobileNavItem({ item }: { item: NavLink }) {
-  const [expanded, setExpanded] = useState(false);
-  const hasChildren = !!item.children?.length;
-
-  return (
-    <li>
-      {hasChildren ? (
-        <div className="mobile-nav__row">
-          <Link href={item.href}>{item.label}</Link>
-          <button
-            type="button"
-            className={`mobile-nav__expander${expanded ? " expanded" : ""}`}
-            aria-label={`Toggle ${item.label} submenu`}
-            aria-expanded={expanded}
-            onClick={() => setExpanded((v) => !v)}
-          >
-            <i className="icon-arrow-right" aria-hidden="true" />
-          </button>
-        </div>
-      ) : (
-        <Link href={item.href}>{item.label}</Link>
-      )}
-
-      {hasChildren && (
-        <ul className={expanded ? "expanded" : undefined}>
-          {item.children!.map((child) => (
-            <MobileNavItem key={child.label} item={child} />
-          ))}
-        </ul>
-      )}
-    </li>
-  );
-}
+type MobileMenuProps = {
+  open: boolean;
+  onClose: () => void;
+  items: PublicNavItem[];
+  contact: {
+    email: string;
+    phone: string;
+    phoneHref: string;
+  };
+  socials: Array<{
+    label: string;
+    href: string;
+    icon: string;
+  }>;
+};
 
 export function MobileMenu({
   open,
   onClose,
-}: {
-  open: boolean;
-  onClose: () => void;
-}) {
+  items,
+  contact,
+  socials,
+}: MobileMenuProps) {
   return (
     <div className={`mobile-nav__wrapper${open ? " expanded" : ""}`}>
       <button
@@ -72,8 +53,12 @@ export function MobileMenu({
 
         <div className="mobile-nav__container">
           <ul className="main-menu__list">
-            {MENU.map((item) => (
-              <MobileNavItem key={item.label} item={item} />
+            {items.map((item) => (
+              <li key={item.label}>
+                <Link href={item.href} onClick={onClose}>
+                  {item.label}
+                </Link>
+              </li>
             ))}
           </ul>
         </div>
@@ -83,17 +68,17 @@ export function MobileMenu({
             <span className="mobile-nav__contact__icon">
               <i className="icon-email" aria-hidden="true" />
             </span>
-            <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+            <a href={`mailto:${contact.email}`}>{contact.email}</a>
           </li>
           <li>
             <span className="mobile-nav__contact__icon">
               <i className="icon-location" aria-hidden="true" />
             </span>
-            <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+            <a href={contact.phoneHref}>{contact.phone}</a>
           </li>
         </ul>
 
-        <SocialLinks socials={SOCIALS} />
+        <SocialLinks socials={socials} />
       </div>
     </div>
   );

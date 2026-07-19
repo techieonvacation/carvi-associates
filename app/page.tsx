@@ -13,13 +13,23 @@ import { WorkingProcess } from "@/components/site/WorkingProcess";
 import { Blog } from "@/components/site/Blog";
 import { Newsletter } from "@/components/site/Newsletter";
 import { Footer } from "@/components/site/Footer";
+import { getSiteContent } from "@/lib/cms/queries";
 
-export default function Home() {
+export const dynamic = "force-dynamic";
+
+export default async function Home() {
+  const content = await getSiteContent();
+
   return (
     <div className="findox-scope page-wrapper">
-      <Header />
+      <Header
+        navItems={content.navItems}
+        socialLinks={content.socialLinks}
+        topbar={content.topbar}
+        header={content.header}
+      />
       <main>
-        <Hero />
+        <Hero hero={content.hero} />
         <Features />
         <About />
         <ClientLogos />

@@ -43,13 +43,15 @@ export function Blog() {
 
                 <div className="blog-card__content relative z-1 px-5 pb-7.5 max-[412px]:px-2.5 max-[412px]:pb-3.75 md:max-xl:px-2.5 md:max-xl:pb-3.75">
                   <div className="blog-card__admin inline-flex items-center gap-3.25 rounded-full border border-[#dddddd] bg-white py-2.5 pr-6.25 pl-2.5">
-                    <Image
-                      src={post.avatar}
-                      alt={post.author}
-                      width={50}
-                      height={50}
-                      className="blog-card__admin__image size-12.5 shrink-0 rounded-full object-cover"
-                    />
+                    <div className="relative size-12.5 shrink-0 overflow-hidden rounded-full">
+                      <Image
+                        src={post.avatar}
+                        alt={post.author}
+                        fill
+                        sizes="50px"
+                        className="object-cover"
+                      />
+                    </div>
                     <div className="blog-card__admin__info">
                       <h4 className="blog-card__admin__name mb-0.75 text-base leading-tight font-bold text-[#222222] capitalize">
                         {post.author}

@@ -1,4 +1,3 @@
-import { CONTACT, SOCIALS, WHATSAPP_CHANNEL } from "./nav-data";
 import { SocialLinks } from "./SocialLinks";
 
 function WhatsAppIcon() {
@@ -9,7 +8,27 @@ function WhatsAppIcon() {
   );
 }
 
-export function Topbar() {
+type TopbarProps = {
+  email: string;
+  address: string;
+  addressMapUrl: string;
+  whatsappLabel: string;
+  whatsappHref: string;
+  socials: Array<{
+    label: string;
+    href: string;
+    icon: string;
+  }>;
+};
+
+export function Topbar({
+  email,
+  address,
+  addressMapUrl,
+  whatsappLabel,
+  whatsappHref,
+  socials,
+}: TopbarProps) {
   return (
     <div className="topbar">
       <div className="findox-container">
@@ -20,28 +39,24 @@ export function Topbar() {
                 <i className="icon-email" aria-hidden="true" />
               </span>
               <span>
-                <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+                <a href={`mailto:${email}`}>{email}</a>
               </span>
             </li>
-           
+            
             <li>
               <span className="topbar__info__icon">
                 <WhatsAppIcon />
               </span>
               <span>
-                <a
-                  href={WHATSAPP_CHANNEL.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {WHATSAPP_CHANNEL.label}
+                <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
+                  {whatsappLabel}
                 </a>
               </span>
             </li>
           </ul>
 
           <div className="topbar__right">
-            <SocialLinks socials={SOCIALS} />
+            <SocialLinks socials={socials} />
           </div>
         </div>
       </div>

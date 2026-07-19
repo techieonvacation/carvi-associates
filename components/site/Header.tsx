@@ -7,15 +7,30 @@ import { MobileMenu } from "./MobileMenu";
 import { SearchPopup } from "./SearchPopup";
 import { FindoxButton } from "./FindoxButton";
 import { Logo } from "./Logo";
+import type { SiteContent } from "@/lib/cms/queries";
 
-/** The white navigation bar — reused for the in-flow header and the sticky clone. */
+type HeaderProps = Pick<
+  SiteContent,
+  "navItems" | "socialLinks" | "topbar" | "header"
+>;
+
 function MainHeaderBar({
   onSearch,
   onMobile,
+  navItems,
+  contactCtaText,
+  contactCtaHref,
 }: {
   onSearch: () => void;
   onMobile: () => void;
+  navItems: HeaderProps["navItems"];
+  contactCtaText: string;
+  contactCtaHref: string;
 }) {
+  const visibleItems = navItems
+    .filter((item) => item.visible)
+    .map((item) => ({ label: item.label, href: item.href }));
+
   return (
     <div className="findox-container">
       <div className="main-header__inner">
@@ -24,7 +39,7 @@ function MainHeaderBar({
         </div>
         <div className="main-header__right">
           <nav className="main-header__nav main-menu" aria-label="Primary">
-            <DesktopMenu />
+            <DesktopMenu items={visibleItems} />
           </nav>
 
           <button
@@ -48,8 +63,8 @@ function MainHeaderBar({
           </button>
 
           <FindoxButton
-            href="#"
-            text="Contact Us"
+            href={contactCtaHref}
+            text={contactCtaText}
             className="main-header__btn"
           />
         </div>
@@ -58,12 +73,23 @@ function MainHeaderBar({
   );
 }
 
-export function Header() {
+export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
 
-  // Slide-in the sticky clone once the original header scrolls away.
+  const visibleNavItems = navItems
+    .filter((item) => item.visible)
+    .map((item) => ({ label: item.label, href: item.href }));
+
+  const visibleSocials = socialLinks
+    .filter((item) => item.visible)
+    .map((item) => ({
+      label: item.label,
+      href: item.href,
+      icon: item.icon,
+    }));
+
   useEffect(() => {
     const onScroll = () => setSticky(window.scrollY > 240);
     onScroll();
@@ -71,17 +97,15 @@ export function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Lock body scroll while an overlay is open.
   useEffect(() => {
     const locked = mobileOpen || searchOpen;
     document.body.classList.toggle("findox-locked", locked);
     return () => document.body.classList.remove("findox-locked");
   }, [mobileOpen, searchOpen]);
 
-  // Close overlays on Escape.
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
         setMobileOpen(false);
         setSearchOpen(false);
       }
@@ -93,24 +117,46 @@ export function Header() {
   return (
     <>
       <div className="header">
-        <Topbar />
+        <Topbar
+          email={topbar.email}
+          address={topbar.address}
+          addressMapUrl={topbar.addressMapUrl}
+          whatsappLabel={topbar.whatsappLabel}
+          whatsappHref={topbar.whatsappHref}
+          socials={visibleSocials}
+        />
         <header className="main-header">
           <MainHeaderBar
             onSearch={() => setSearchOpen(true)}
             onMobile={() => setMobileOpen(true)}
+            navItems={navItems}
+            contactCtaText={header.contactCtaText}
+            contactCtaHref={header.contactCtaHref}
           />
         </header>
       </div>
 
-      {/* Sticky clone that slides down on scroll */}
       <div className={`main-header sticky-header--clone${sticky ? " active" : ""}`}>
         <MainHeaderBar
           onSearch={() => setSearchOpen(true)}
           onMobile={() => setMobileOpen(true)}
+          navItems={navItems}
+          contactCtaText={header.contactCtaText}
+          contactCtaHref={header.contactCtaHref}
         />
       </div>
 
-      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} />
+      <MobileMenu
+        open={mobileOpen}
+        onClose={() => setMobileOpen(false)}
+        items={visibleNavItems}
+        contact={{
+          email: topbar.email,
+          phone: topbar.phone,
+          phoneHref: topbar.phoneHref,
+        }}
+        socials={visibleSocials}
+      />
       <SearchPopup open={searchOpen} onClose={() => setSearchOpen(false)} />
     </>
   );

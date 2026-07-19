@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  MANAGER
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  role         Role     @default(MANAGER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model NavItem {
+  id        String   @id @default(cuid())
+  label     String
+  href      String
+  sortOrder Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
+model SocialLink {
+  id        String   @id @default(cuid())
+  label     String
+  href      String
+  icon      String
+  sortOrder Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
+model TopbarSettings {
+  id            String   @id @default("default")
+  email         String
+  address       String
+  addressMapUrl String
+  phone         String
+  phoneHref     String
+  whatsappLabel String
+  whatsappHref  String
+  updatedAt     DateTime @updatedAt
+}
+
+model HeroSettings {
+  id               String   @id @default("default")
+  tagline          String
+  titleBeforeVideo String
+  titleHighlight   String
+  titleAfterVideo  String
+  ctaText          String
+  ctaHref          String
+  videoId          String?
+  heroImageUrl     String
+  activeUserCount  Int      @default(125)
+  activeUserSuffix String   @default("k+")
+  activeUserLabel  String   @default("Active Users")
+  activeUserImages Json     @default("[]")
+  updatedAt        DateTime @updatedAt
+}
+
+model HeaderSettings {
+  id             String   @id @default("default")
+  contactCtaText String   @default("Contact Us")
+  contactCtaHref String   @default("#")
+  updatedAt      DateTime @updatedAt
+}
