@@ -609,7 +609,7 @@
   height: 42px;
   border-radius: 10px;
   font-family: var(--findox-heading-font);
-  font-size: 20px;
+  font-size: 25px;
   font-weight: 700;
   background-color: var(--findox-base);
   color: var(--findox-white);
@@ -660,7 +660,7 @@
   .site-logo__mark {
     width: 34px;
     height: 34px;
-    font-size: 16px;
+    font-size: 24px;
     border-radius: 8px;
   }
   .site-logo__primary {
