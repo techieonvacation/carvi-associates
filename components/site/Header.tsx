@@ -1,30 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import { Topbar } from "./Topbar";
 import { DesktopMenu } from "./DesktopMenu";
 import { MobileMenu } from "./MobileMenu";
 import { SearchPopup } from "./SearchPopup";
 import { FindoxButton } from "./FindoxButton";
-
-function Logo() {
-  return (
-    <div className="main-header__logo logo-retina">
-      <Link href="/" aria-label="Carvi Associates home">
-        {/* <Image
-          src="/images/logo-dark.png"
-          alt="Carvi Associates"
-          width={200}
-          height={50}
-          priority
-        /> */}
-         <span className="text-base lg:text-2xl font-medium">Carvi Associates</span>
-      </Link>
-    </div>
-  );
-}
+import { Logo } from "./Logo";
 
 /** The white navigation bar — reused for the in-flow header and the sticky clone. */
 function MainHeaderBar({
@@ -37,7 +19,9 @@ function MainHeaderBar({
   return (
     <div className="findox-container">
       <div className="main-header__inner">
-        <Logo />
+        <div className="main-header__logo logo-retina">
+          <Logo tone="light" />
+        </div>
         <div className="main-header__right">
           <nav className="main-header__nav main-menu" aria-label="Primary">
             <DesktopMenu />

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { MENU, CONTACT, SOCIALS, type NavLink } from "./nav-data";
 import { SocialLinks } from "./SocialLinks";
+import { Logo } from "./Logo";
 
 function MobileNavItem({ item }: { item: NavLink }) {
   const [expanded, setExpanded] = useState(false);
@@ -66,10 +67,7 @@ export function MobileMenu({
         </button>
 
         <div className="logo-box">
-          <Link href="/" aria-label="Carvi Associates home" onClick={onClose}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/images/logo-light.png" width={200} height={50} alt="Carvi Associates" />
-          </Link>
+          <Logo tone="dark" onClick={onClose} />
         </div>
 
         <div className="mobile-nav__container">
