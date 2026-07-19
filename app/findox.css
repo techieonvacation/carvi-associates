@@ -34,16 +34,68 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-abstract-shape:before { content: "\e900"; }
+.icon-advertisig-agency:before { content: "\e901"; }
+.icon-agreement:before { content: "\e902"; }
+.icon-analysis:before { content: "\e903"; }
+.icon-analytics:before { content: "\e904"; }
+.icon-approach:before { content: "\e905"; }
+.icon-bank:before { content: "\e906"; }
+.icon-bubble-chat:before { content: "\e907"; }
+.icon-business-and-finance:before { content: "\e908"; }
+.icon-circular-pattern:before { content: "\e909"; }
+.icon-clock:before { content: "\e90a"; }
+.icon-data-visualization:before { content: "\e90b"; }
+.icon-delete:before { content: "\e90c"; }
+.icon-financial-consultant:before { content: "\e90d"; }
 .icon-financial-presentation:before { content: "\e90e"; }
+.icon-flower:before { content: "\e90f"; }
+.icon-folder:before { content: "\e910"; }
+.icon-mail:before { content: "\e911"; }
+.icon-market-research:before { content: "\e912"; }
+.icon-phone-call:before { content: "\e913"; }
+.icon-planning:before { content: "\e914"; }
+.icon-right:before { content: "\e915"; }
 .icon-risk:before { content: "\e916"; }
+.icon-round-arrow:before { content: "\e917"; }
+.icon-salary:before { content: "\e918"; }
+.icon-satisfaction:before { content: "\e919"; }
+.icon-stats:before { content: "\e91a"; }
+.icon-stats-2:before { content: "\e91b"; }
+.icon-support:before { content: "\e91c"; }
+.icon-tag:before { content: "\e91d"; }
+.icon-technical-team:before { content: "\e91e"; }
+.icon-trophy:before { content: "\e91f"; }
+.icon-user:before { content: "\e920"; }
+.icon-zoom-in:before { content: "\e921"; }
 .icon-arrow-right-up:before { content: "\e922"; }
 .icon-close:before { content: "\e923"; }
 .icon-arrow-left:before { content: "\e924"; }
 .icon-location:before { content: "\e925"; }
 .icon-arrow-right:before { content: "\e926"; }
+.icon-plus:before { content: "\e927"; }
 .icon-email:before { content: "\e928"; }
+.icon-paper-plane:before { content: "\e929"; }
+.icon-comment:before { content: "\e92a"; }
+.icon-arrow-right-2:before { content: "\e92b"; }
+.icon-down-arrow:before { content: "\e92c"; }
+.icon-up-arrow:before { content: "\e92d"; }
+.icon-calendar:before { content: "\e92e"; }
 .icon-search:before { content: "\e92f"; }
+.icon-comment-2:before { content: "\e930"; }
+.icon-arrow-bottom:before { content: "\e931"; }
+.icon-profile:before { content: "\e932"; }
+.icon-cross:before { content: "\e933"; }
+.icon-check:before { content: "\e934"; }
+.icon-right-2:before { content: "\e935"; }
+.icon-check2:before { content: "\e936"; }
+.icon-eye:before { content: "\e937"; }
+.icon-loop:before { content: "\e938"; }
+.icon-heart:before { content: "\e939"; }
 .icon-play:before { content: "\e93a"; }
+.icon-left:before { content: "\e93b"; }
+.icon-arrow-left-up:before { content: "\e93c"; }
+.icon-left-2:before { content: "\e93d"; }
 
 /* -------------------------------------------------------------
    Findox palette (mirrors globals.css :root, kept fixed)

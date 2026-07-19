@@ -128,3 +128,56 @@
     @apply font-sans;
   }
 }
+
+/* -------------------------------------------------------------
+   Homepage section primitives (Tailwind v4 @theme animations +
+   @utility custom utilities — no bespoke component CSS beyond
+   what Tailwind itself cannot express).
+   ------------------------------------------------------------- */
+@theme {
+  --animate-marquee-left: marquee-left 34s linear infinite;
+  --animate-marquee-right: marquee-right 34s linear infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(2rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility text-stroke {
+  -webkit-text-stroke: 1.5px var(--stroke-color, currentColor);
+  color: transparent;
+}
