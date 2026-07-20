@@ -19,19 +19,22 @@ const adapter = new PrismaNeon({ connectionString });
 const prisma = new PrismaClient({ adapter });
 
 async function main() {
+  const adminEmail = process.env.ADMIN_EMAIL ?? "admin@carviassociates.com";
   const adminPassword = process.env.ADMIN_PASSWORD ?? "Admin@123456";
+  const managerEmail = process.env.MANAGER_EMAIL ?? "manager@carviassociates.com";
+  const managerPassword = process.env.MANAGER_PASSWORD ?? "Manager@123456";
   const adminHash = await bcrypt.hash(adminPassword, 12);
-  const managerHash = await bcrypt.hash("Manager@123456", 12);
+  const managerHash = await bcrypt.hash(managerPassword, 12);
 
   await prisma.user.upsert({
-    where: { email: "admin@carviassociates.com" },
+    where: { email: adminEmail },
     update: {
       passwordHash: adminHash,
       name: "Site Admin",
       role: Role.ADMIN,
     },
     create: {
-      email: "admin@carviassociates.com",
+      email: adminEmail,
       passwordHash: adminHash,
       name: "Site Admin",
       role: Role.ADMIN,
@@ -39,14 +42,14 @@ async function main() {
   });
 
   await prisma.user.upsert({
-    where: { email: "manager@carviassociates.com" },
+    where: { email: managerEmail },
     update: {
       passwordHash: managerHash,
       name: "Content Manager",
       role: Role.MANAGER,
     },
     create: {
-      email: "manager@carviassociates.com",
+      email: managerEmail,
       passwordHash: managerHash,
       name: "Content Manager",
       role: Role.MANAGER,
