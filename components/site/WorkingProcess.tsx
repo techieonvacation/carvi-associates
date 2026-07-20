@@ -57,7 +57,7 @@ export function WorkingProcess() {
                         <Link
                           href="#"
                           aria-label={`Learn more about ${step.title}`}
-                          className="flex size-12.25 items-center justify-center rounded-full bg-white text-2xl text-primary transition-colors duration-500 hover:bg-primary hover:text-accent"
+                          className="flex size-12.25 items-center justify-center rounded-full bg-white text-2xl text-accent transition-colors duration-500 hover:bg-primary hover:text-accent"
                         >
                           <i className="icon-right" aria-hidden="true" />
                         </Link>
@@ -72,7 +72,7 @@ export function WorkingProcess() {
                     <span className="working-process__step relative z-1 inline-flex h-9 items-center justify-center rounded-full bg-accent px-6 text-sm font-bold tracking-wide text-white uppercase">
                       {step.step}
                     </span>
-                    <h3 className="working-process__title mt-6 mb-2.5 text-[22px] leading-[1.272] font-bold text-[#222222] capitalize">
+                    <h3 className="working-process__title mt-6 mb-2.5 text-[22px] leading-[1.272] font-bold text-foreground capitalize">
                       <Link href="#">{step.title}</Link>
                     </h3>
                     <p className="working-process__text m-0 text-muted-foreground">{step.text}</p>

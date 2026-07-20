@@ -103,31 +103,31 @@
 .findox-scope {
   --findox-font: var(--font-sans), "DM Sans", sans-serif;
   --findox-heading-font: var(--font-sora), "Sora", sans-serif;
-  --findox-text: #636363;
-  --findox-text-rgb: 99, 99, 99;
-  --findox-base: #006654;
-  --findox-base-rgb: 0, 102, 84;
-  --findox-primary: #f5c835;
-  --findox-primary-rgb: 245, 200, 53;
-  --findox-gray: #92918f;
-  --findox-gray-rgb: 146, 145, 143;
-  --findox-white: #ffffff;
-  --findox-white-rgb: 255, 255, 255;
-  --findox-white3: #ecf5f4;
-  --findox-white3-rgb: 236, 245, 244;
-  --findox-white4: #e2edec;
-  --findox-white4-rgb: 226, 237, 236;
-  --findox-black: #000000;
-  --findox-black-rgb: 0, 0, 0;
-  --findox-black2: #222222;
-  --findox-black2-rgb: 34, 34, 34;
-  --findox-black3: #333333;
-  --findox-black3-rgb: 51, 51, 51;
-  --findox-black4: #131111;
-  --findox-black4-rgb: 19, 17, 17;
-  --findox-black5: #444444;
-  --findox-border-color: #dddddd;
-  --findox-border-color-rgb: 221, 221, 221;
+  --findox-text: #6b5b40;
+  --findox-text-rgb: 107, 91, 64;
+  --findox-base: #5c6b45;
+  --findox-base-rgb: 92, 107, 69;
+  --findox-primary: #e3c9a0;
+  --findox-primary-rgb: 227, 201, 160;
+  --findox-gray: #a89b80;
+  --findox-gray-rgb: 168, 155, 128;
+  --findox-white: #fffdf8;
+  --findox-white-rgb: 255, 253, 248;
+  --findox-white3: #f4ebd8;
+  --findox-white3-rgb: 244, 235, 216;
+  --findox-white4: #ede0c4;
+  --findox-white4-rgb: 237, 224, 196;
+  --findox-black: #3a3020;
+  --findox-black-rgb: 58, 48, 32;
+  --findox-black2: #3a3020;
+  --findox-black2-rgb: 58, 48, 32;
+  --findox-black3: #4a3f2a;
+  --findox-black3-rgb: 74, 63, 42;
+  --findox-black4: #3a3020;
+  --findox-black4-rgb: 58, 48, 32;
+  --findox-black5: #5a4d38;
+  --findox-border-color: #cdae7c;
+  --findox-border-color-rgb: 205, 174, 124;
 
   font-family: var(--findox-font);
   color: var(--findox-text);
@@ -758,7 +758,7 @@
   }
 }
 .main-header__search:hover {
-  color: var(--findox-primary);
+  color: var(--findox-base);
 }
 .main-header__search::before {
   content: "";
@@ -877,7 +877,7 @@
 }
 .main-menu .main-menu__list > li.current > a,
 .main-menu .main-menu__list > li:hover > a {
-  color: var(--findox-primary);
+  color: var(--findox-base);
 }
 .main-menu .main-menu__list > li.megamenu > a,
 .main-menu .main-menu__list > li.dropdown > a {
@@ -899,7 +899,7 @@
 .main-menu .main-menu__list > li.current > a::after,
 .main-menu .main-menu__list > li.megamenu:hover > a::after,
 .main-menu .main-menu__list > li.dropdown:hover > a::after {
-  color: var(--findox-primary);
+  color: var(--findox-base);
 }
 .main-menu .main-menu__list li ul {
   position: absolute;
@@ -1722,7 +1722,7 @@
 .hero-one__tagline__text {
   margin: 0px;
   font-size: 18px;
-  color: var(--findox-primary);
+  color: var(--findox-base);
   font-weight: 600;
   line-height: 1.277;
   text-transform: uppercase;
@@ -1789,7 +1789,7 @@
   }
 }
 .hero-one__title span span {
-  color: var(--findox-primary);
+  color: var(--findox-base);
 }
 .hero-one__video {
   width: 45px;
@@ -2020,7 +2020,7 @@ body.findox-locked {
   gap: 8px;
   margin-bottom: 17px;
   padding: 13px 37px 11px 30px;
-  background-color: var(--tagline-bg, #ecf5f4);
+  background-color: var(--tagline-bg, #f4ebd8);
   clip-path: polygon(0 0, 85% 0, 100% 50%, 85% 100%, 0 100%);
 }
 .findox-scope .sec-title__shape {
@@ -2032,7 +2032,7 @@ body.findox-locked {
 .findox-scope .sec-title__tagline {
   margin: 0;
   font-size: 18px;
-  color: var(--findox-primary);
+  color: var(--findox-base);
   font-weight: 600;
   line-height: 1.277;
   text-transform: uppercase;

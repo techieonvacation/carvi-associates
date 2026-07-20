@@ -108,7 +108,7 @@
 
 /* Checklist hover: link colour + a small arrow cue + check/dot-grid swap. */
 .about-one .tabs-content__list li:hover a {
-  color: var(--findox-primary);
+  color: var(--findox-base);
   text-decoration: underline;
 }
 .about-one .tabs-content__list__icon::after {

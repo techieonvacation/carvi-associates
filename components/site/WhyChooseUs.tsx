@@ -21,7 +21,7 @@ export function WhyChooseUs() {
       <Container>
         <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 lg:gap-x-6 lg:items-center">
           <div className="why-choose__content">
-            <SectionHeading tagline={WHY_CHOOSE.tagline} lines={WHY_CHOOSE.title} taglineBg="#ecf5f4" />
+            <SectionHeading tagline={WHY_CHOOSE.tagline} lines={WHY_CHOOSE.title} taglineBg="#f4ebd8" />
 
             <Reveal direction="up" duration={1300}>
               <p className="why-choose__text mb-[25px] text-muted-foreground">{WHY_CHOOSE.text}</p>
@@ -44,7 +44,7 @@ export function WhyChooseUs() {
                     </div>
                     <div className="why-choose__item__content flex w-[calc(100%-90px)] items-center justify-between gap-[30px] max-sm:w-full max-sm:flex-col max-sm:items-start max-sm:justify-start max-sm:gap-5">
                       <div className="why-choose__item__inner">
-                        <h3 className="why-choose__item__title mb-1.5 text-[22px] leading-[1.272] font-bold text-[#222222] capitalize lg:max-xl:text-[19px]">
+                        <h3 className="why-choose__item__title mb-1.5 text-[22px] leading-[1.272] font-bold text-foreground capitalize lg:max-xl:text-[19px]">
                           <Link href="#">{item.title}</Link>
                         </h3>
                         <p className="why-choose__item__text m-0 text-muted-foreground">{item.text}</p>
@@ -74,7 +74,7 @@ export function WhyChooseUs() {
                         </Link>
                       </div>
                       <div className="why-choose__item__inner">
-                        <h3 className="why-choose__item__title mb-1.5 text-[22px] leading-[1.272] font-bold text-[#222222] capitalize">
+                        <h3 className="why-choose__item__title mb-1.5 text-[22px] leading-[1.272] font-bold text-foreground capitalize">
                           <Link href="#">{item.title}</Link>
                         </h3>
                         <p className="why-choose__item__text m-0 text-muted-foreground">{item.text}</p>

@@ -27,10 +27,10 @@ export function Features() {
                   </span>
                 </div>
                 <div className="features-one__card__content">
-                  <h4 className="features-one__card__title mb-1.5 text-[22px] leading-[1.272] font-bold text-[#222222] capitalize md:max-lg:text-[20px]">
+                  <h4 className="features-one__card__title mb-1.5 text-[22px] leading-[1.272] font-bold text-foreground capitalize md:max-lg:text-[20px]">
                     <Link href="#">{feature.title}</Link>
                   </h4>
-                  <p className="features-one__card__text m-0 text-[#636363]">
+                  <p className="features-one__card__text m-0 text-muted-foreground">
                     {feature.text}
                   </p>
                 </div>

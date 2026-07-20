@@ -21,7 +21,7 @@ export function ClientLogos() {
     <section className="client-carousel relative bg-white">
       <Container>
         <div className="client-carousel__content text-center">
-          <h4 className="client-carousel__title m-0 text-[16px] leading-[1.625] font-medium text-[#333333] uppercase">
+          <h4 className="client-carousel__title m-0 text-[16px] leading-[1.625] font-medium text-muted-foreground uppercase">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/shapes/sec-title-shape-1-1.png"
@@ -30,8 +30,8 @@ export function ClientLogos() {
               height={18}
               className="client-carousel__title__shape relative top-[-2px] inline-block max-w-full"
             />{" "}
-            Over <span className="text-primary">330+</span> Projects With{" "}
-            <span className="text-primary">200+</span> Clients{" "}
+            Over <span className="text-accent">330+</span> Projects With{" "}
+            <span className="text-accent">200+</span> Clients{" "}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/shapes/sec-title-shape-1-1.png"

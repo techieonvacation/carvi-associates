@@ -25,7 +25,7 @@ export function Services() {
           align="center"
           tagline={SERVICES.tagline}
           lines={SERVICES.title}
-          taglineBg="#ffffff"
+          taglineBg="#fffdf8"
         />
 
         <div className="grid grid-cols-1 gap-[30px] md:grid-cols-2 lg:grid-cols-3">
@@ -66,12 +66,12 @@ export function Services() {
                         className="stroke-accent transition-colors duration-500 group-hover:stroke-primary"
                       />
                     </svg>
-                    <p className="service-card__tagline__text m-0 text-[#636363] transition-colors duration-500 group-hover:text-primary">
+                    <p className="service-card__tagline__text m-0 text-muted-foreground transition-colors duration-500 group-hover:text-white">
                       {SERVICES.tagline2}
                     </p>
                   </div>
 
-                  <h3 className="service-card__title mb-3 text-[22px] leading-[1.272] font-bold text-[#222222] capitalize transition-colors duration-500 group-hover:text-white max-[375px]:text-[21px] lg:text-[20px] xl:text-[22px]">
+                  <h3 className="service-card__title mb-3 text-[22px] leading-[1.272] font-bold text-foreground capitalize transition-colors duration-500 group-hover:text-white max-[375px]:text-[21px] lg:text-[20px] xl:text-[22px]">
                     <Link href="#">
                       {service.title[0]}
                       <br />
@@ -79,19 +79,19 @@ export function Services() {
                     </Link>
                   </h3>
 
-                  <p className="service-card__text mb-[22px] text-[#636363] transition-colors duration-500 group-hover:text-white">
+                  <p className="service-card__text mb-[22px] text-muted-foreground transition-colors duration-500 group-hover:text-white">
                     {service.text}
                   </p>
 
                   <div className="service-card__bottom relative flex items-center gap-[68px] max-[360px]:gap-[40px] lg:gap-[43px] xl:gap-[68px]">
-                    <span className="service-card__icon inline-flex shrink-0 text-[70px] leading-none text-primary transition-colors duration-500 group-hover:text-white">
+                    <span className="service-card__icon inline-flex shrink-0 text-[70px] leading-none text-accent transition-colors duration-500 group-hover:text-white">
                       <i className={service.icon} aria-hidden="true" />
                     </span>
-                    <h4 className="service-card__number relative m-0 leading-none after:absolute after:bottom-[-68px] after:left-1/2 after:h-[45px] after:w-[2px] after:-translate-x-1/2 after:rounded-full after:bg-[#dddddd] after:transition-colors after:duration-500 after:content-[''] group-hover:after:bg-primary">
+                    <h4 className="service-card__number relative m-0 leading-none after:absolute after:bottom-[-68px] after:left-1/2 after:h-[45px] after:w-[2px] after:-translate-x-1/2 after:rounded-full after:bg-border after:transition-colors after:duration-500 after:content-[''] group-hover:after:bg-primary">
                       {/* Real text in an inner span (not directly on the h4) so the
                           transparent fill isn't clobbered by the `.findox-scope h4`
                           color rule — mirrors the reference's decoupled ::before glyph. */}
-                      <span className="text-stroke inline-block text-[40px] font-semibold [--stroke-color:#dddddd] [writing-mode:sideways-lr] transition-colors duration-500 group-hover:[--stroke-color:#f5c835]">
+                      <span className="text-stroke inline-block text-[40px] font-semibold [--stroke-color:#cdae7c] [writing-mode:sideways-lr] transition-colors duration-500 group-hover:[--stroke-color:#e3c9a0]">
                         {String(i + 1).padStart(2, "0")}
                       </span>
                     </h4>

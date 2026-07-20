@@ -27,7 +27,7 @@ export function Team() {
           tagline={TEAM.tagline}
           lines={TEAM.title}
           align="center"
-          taglineBg="#ecf5f4"
+          taglineBg="#f4ebd8"
         />
 
         <div className="team-one__carousel mt-[60px]">
@@ -66,13 +66,13 @@ export function Team() {
                     />
 
                     <span
-                      className="team-card__shape absolute bottom-0 left-0 h-[242px] w-full bg-[#e2edec]"
+                      className="team-card__shape absolute bottom-0 left-0 h-[242px] w-full bg-muted"
                       aria-hidden="true"
                     />
                   </div>
 
                   <div className="team-card__info relative z-[1] overflow-hidden rounded-b-[50px] bg-white px-[25px] pt-5 pb-[17px] text-center">
-                    <h3 className="team-card__name mb-1.5 text-[22px] leading-[1.318] font-bold text-[#222222] capitalize transition-colors duration-500 group-hover:text-white sm:max-md:text-[19px]">
+                    <h3 className="team-card__name mb-1.5 text-[22px] leading-[1.318] font-bold text-foreground capitalize transition-colors duration-500 group-hover:text-white sm:max-md:text-[19px]">
                       <Link href="#">{member.name}</Link>
                     </h3>
                     <p className="team-card__designation m-0 capitalize text-muted-foreground transition-colors duration-500 group-hover:text-white">

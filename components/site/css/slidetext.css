@@ -13,7 +13,7 @@
 /* Band one: green, skewed up-left, sets the section's flow height. */
 .slide-text__one {
   position: relative;
-  background-color: var(--findox-base, #006654);
+  background-color: var(--findox-base, #5c6b45);
   transform: skewY(-7.412deg);
 }
 
@@ -24,7 +24,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  background-color: var(--findox-primary, #f5c835);
+  background-color: var(--findox-primary, #e3c9a0);
   transform: skewY(7.412deg);
 }
 
@@ -58,10 +58,10 @@
 
 /* Band two (on yellow): solid/outline green instead of white. */
 .slide-text__scroll--right {
-  color: var(--findox-base, #006654);
+  color: var(--findox-base, #5c6b45);
 }
 
 .slide-text__scroll--right .slide-text__scroll__outline {
   color: transparent;
-  -webkit-text-stroke-color: var(--findox-base, #006654);
+  -webkit-text-stroke-color: var(--findox-base, #5c6b45);
 }

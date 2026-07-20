@@ -113,7 +113,7 @@ export function About() {
                 />
 
                 <div className="about-one__experience absolute top-[-104px] right-0 z-2 text-right">
-                  <h3 className="about-one__experience__year relative z-1 m-0 ml-auto table rounded-t-[100px] bg-primary pt-[38px] pr-[22.5px] pb-[26px] pl-[22.5px] text-center text-[40px] leading-none font-bold text-[#222222]">
+                  <h3 className="about-one__experience__year relative z-1 m-0 ml-auto table rounded-t-[100px] bg-primary pt-[38px] pr-[22.5px] pb-[26px] pl-[22.5px] text-center text-[40px] leading-none font-bold text-foreground">
                     {ABOUT.experience.value}
                   </h3>
                   <h4 className="about-one__experience__title relative z-1 m-0 inline-block border-b-[10px] border-l-[10px] border-white bg-accent px-[15px] py-[5.5px] text-[18px] leading-[1.388] font-bold text-white capitalize">
@@ -138,12 +138,12 @@ export function About() {
             <SectionHeading
               tagline={ABOUT.tagline}
               lines={ABOUT.title}
-              taglineBg="#ecf5f4"
+              taglineBg="#f4ebd8"
               className="mb-[7px]"
             />
 
             <Reveal direction="up" duration={1300}>
-              <p className="about-one__text mb-[27px] text-[#636363]">{ABOUT.text}</p>
+              <p className="about-one__text mb-[27px] text-muted-foreground">{ABOUT.text}</p>
             </Reveal>
 
             <Reveal direction="up" duration={1300}>
@@ -162,8 +162,8 @@ export function About() {
                         }
                       }}
                       className={cn(
-                        "tab-btn relative cursor-pointer rounded-[50px_0px] border border-[#dddddd] bg-white px-[30px] py-[10px] font-heading text-[16px] leading-[1.562] font-semibold text-[#333333] capitalize transition-all duration-500 hover:border-primary hover:bg-primary hover:text-[#131111]",
-                        activeTab === t.id && "active-btn border-primary bg-primary text-[#131111]",
+                        "tab-btn relative cursor-pointer rounded-[50px_0px] border border-border bg-white px-[30px] py-[10px] font-heading text-[16px] leading-[1.562] font-semibold text-foreground capitalize transition-all duration-500 hover:border-primary hover:bg-primary hover:text-foreground",
+                        activeTab === t.id && "active-btn border-primary bg-primary text-foreground",
                       )}
                     >
                       {t.label}
@@ -180,7 +180,7 @@ export function About() {
                             <li
                               key={line}
                               className={cn(
-                                "relative z-1 flex items-start gap-[18px] font-normal text-[#333333] transition-all duration-500",
+                                "relative z-1 flex items-start gap-[18px] font-normal text-foreground transition-all duration-500",
                                 i > 0 && "mt-2.5",
                               )}
                             >

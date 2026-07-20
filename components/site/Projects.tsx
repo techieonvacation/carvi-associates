@@ -37,7 +37,7 @@ export function Projects() {
       <Container className="relative z-1">
         <div className="projects__top mb-32.25 max-xl:mb-15">
           <div className="grid gap-y-10 xl:grid-cols-2 xl:items-center">
-            <SectionHeading light taglineBg="#ffffff" tagline={PROJECTS.tagline} lines={PROJECTS.title} />
+            <SectionHeading light taglineBg="#fffdf8" tagline={PROJECTS.tagline} lines={PROJECTS.title} />
 
             <Reveal direction="up" duration={1300}>
               <ul className="projects__filter__list m-0 flex list-none flex-wrap items-center justify-center gap-0 xl:justify-end">
@@ -52,7 +52,7 @@ export function Projects() {
                       "item cursor-pointer border px-7.5 py-[9.5px] text-center font-heading text-base font-semibold capitalize transition-all duration-500 hover:border-primary hover:bg-primary hover:text-primary-foreground",
                       f.value === filter
                         ? "active border-primary bg-primary text-primary-foreground"
-                        : "border-[#dddddd] bg-transparent text-white",
+                        : "border-border bg-transparent text-white",
                     )}
                   >
                     <span>{f.label}</span>
@@ -90,7 +90,7 @@ export function Projects() {
                         key={`${tag}-${tagIdx}`}
                         href="#"
                         className={cn(
-                          "project-card__category rounded-[10px] px-3.75 py-2 text-base leading-snug font-semibold text-[#131111] uppercase",
+                          "project-card__category rounded-[10px] px-3.75 py-2 text-base leading-snug font-semibold text-foreground uppercase",
                           tagIdx === 0 ? "bg-primary" : "bg-white",
                         )}
                       >
@@ -101,17 +101,17 @@ export function Projects() {
                 </div>
 
                 <div className="project-card__content absolute bottom-0 left-0 w-full px-7.5 pb-13.25">
-                  <span className="project-card__icon relative mx-auto flex size-20 items-center justify-center rounded-t-[100px] bg-white text-[38px] leading-none text-primary">
+                  <span className="project-card__icon relative mx-auto flex size-20 items-center justify-center rounded-t-[100px] bg-white text-[38px] leading-none text-accent">
                     <i className={project.icon} aria-hidden="true" />
                   </span>
                   <div className="project-card__inner relative rounded-[20px] bg-primary px-7.5 pt-6.5 pb-5.75 text-center">
-                    <h3 className="project-card__title mb-1.5 text-[22px] leading-[1.318] font-bold text-[#222222] capitalize">
+                    <h3 className="project-card__title mb-1.5 text-[22px] leading-[1.318] font-bold text-foreground capitalize">
                       <Link href="#">{project.title}</Link>
                     </h3>
-                    <p className="project-card__text mb-4 text-[#444444]">{project.text}</p>
+                    <p className="project-card__text mb-4 text-foreground/80">{project.text}</p>
                     <Link
                       href="#"
-                      className="project-card__btn absolute -bottom-6 left-1/2 flex size-12.25 -translate-x-1/2 items-center justify-center rounded-full bg-white text-2xl text-primary"
+                      className="project-card__btn absolute -bottom-6 left-1/2 flex size-12.25 -translate-x-1/2 items-center justify-center rounded-full bg-white text-2xl text-accent"
                     >
                       <i className="icon-right" aria-hidden="true" />
                     </Link>
@@ -137,14 +137,14 @@ export function Projects() {
               delay={100}
               className="projects__info relative pl-15 max-lg:pl-0 max-lg:text-center"
             >
-              <h3 className="projects__info__title mb-2.75 text-[22px] leading-[1.272] font-bold text-black max-[430px]:text-xl">
+              <h3 className="projects__info__title mb-2.75 text-[22px] leading-[1.272] font-bold text-foreground max-[430px]:text-xl">
                 {PROJECTS.bottomBanner.stat} {PROJECTS.bottomBanner.title[0]}
                 <br />
                 {PROJECTS.bottomBanner.title[1]}
               </h3>
               <ul className="projects__info__list m-0 list-none">
                 {PROJECTS.bottomBanner.checklist.map((line) => (
-                  <li key={line} className="font-medium text-[#333333]">
+                  <li key={line} className="font-medium text-muted-foreground">
                     <span className="projects__info__list__icon relative -top-px mr-2.5 inline-flex size-5.25 items-center justify-center rounded-full bg-primary text-[11px] text-accent">
                       <i className="icon-check" aria-hidden="true" />
                     </span>

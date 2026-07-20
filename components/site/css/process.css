@@ -16,7 +16,7 @@
 .working-process {
   --wp-gap: 30px; /* matches the row's gap-x-[30px] */
   --wp-badge-half: 18px; /* half of the h-9 step badge */
-  --wp-line-color: var(--findox-border-color, #dddddd);
+  --wp-line-color: var(--findox-border-color, #cdae7c);
 }
 
 .working-process__image__overlay {
@@ -66,7 +66,7 @@
     width: 10px;
     height: 10px;
     border-radius: 999px;
-    background-color: var(--findox-primary, #f5c835);
+    background-color: var(--findox-primary, #e3c9a0);
     z-index: 1;
   }
   .working-process__dot::after {
@@ -100,8 +100,8 @@
     right: -42px;
     width: 9px;
     height: 9px;
-    border-top: 2px solid var(--findox-primary, #f5c835);
-    border-right: 2px solid var(--findox-primary, #f5c835);
+    border-top: 2px solid var(--findox-primary, #e3c9a0);
+    border-right: 2px solid var(--findox-primary, #e3c9a0);
     transform: rotate(45deg);
   }
 }

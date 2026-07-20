@@ -8,7 +8,7 @@
   content: "";
   width: calc(50% - 180px);
   height: 2px;
-  background-color: #dddddd;
+  background-color: var(--findox-border-color);
   position: absolute;
   top: 12px;
   left: 0;

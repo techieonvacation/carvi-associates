@@ -7,7 +7,7 @@
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 102, 84, 0.9);
+  background-color: rgba(92, 107, 69, 0.9);
 }
 
 /* Category pills: first is primary yellow (set inline via Tailwind), the
@@ -17,10 +17,10 @@
   background-color: var(--findox-white, #ffffff);
 }
 .project-card__category:hover {
-  background-color: var(--findox-primary, #f5c835) !important;
+  background-color: var(--findox-primary, #e3c9a0) !important;
 }
 .project-card:hover .project-card__category:last-child {
-  background-color: var(--findox-primary, #f5c835);
+  background-color: var(--findox-primary, #e3c9a0);
 }
 
 /* Green wash that slides up to fill the lower part of the card on hover. */
@@ -34,7 +34,7 @@
   z-index: -1;
   opacity: 0;
   transform: translateY(100%);
-  background-color: var(--findox-base, #006654);
+  background-color: var(--findox-base, #5c6b45);
   transition: all 500ms ease;
 }
 .project-card:hover .project-card__content::after {
@@ -84,7 +84,7 @@
   content: "";
   width: 6px;
   height: 100%;
-  background-color: var(--findox-base, #006654);
+  background-color: var(--findox-base, #5c6b45);
   position: absolute;
   top: 50%;
   left: 0;
@@ -97,7 +97,7 @@
   height: 0;
   border-style: solid;
   border-width: 12px 0 12px 19px;
-  border-color: transparent transparent transparent var(--findox-primary, #f5c835);
+  border-color: transparent transparent transparent var(--findox-primary, #e3c9a0);
   position: absolute;
   top: 50%;
   left: 6px;

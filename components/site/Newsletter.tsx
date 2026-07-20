@@ -20,10 +20,10 @@ export function Newsletter() {
               aria-hidden="true"
             />
             <div className="newsletter-one__content relative z-[1] mx-auto max-w-[694px] text-center">
-              <h3 className="newsletter-one__title mb-[13px] text-[35px] leading-[1.314] font-bold text-[#222222] max-md:text-[32px] max-[440px]:text-[30px]">
+              <h3 className="newsletter-one__title mb-[13px] text-[35px] leading-[1.314] font-bold text-foreground max-md:text-[32px] max-[440px]:text-[30px]">
                 {NEWSLETTER.title}
               </h3>
-              <p className="newsletter-one__text mb-[23px] text-[18px] leading-[1.444] text-[#333333] max-[440px]:text-[16px]">
+              <p className="newsletter-one__text mb-[23px] text-[18px] leading-[1.444] text-foreground/85 max-[440px]:text-[16px]">
                 {NEWSLETTER.text}
               </p>
               <form
@@ -38,7 +38,7 @@ export function Newsletter() {
                   type="text"
                   name="EMAIL"
                   placeholder="Your Email"
-                  className="newsletter-one__input h-[45px] w-full rounded-full border-none bg-white pr-[5px] pl-[30px] text-sm text-[#636363] outline-none transition-colors duration-500 focus:text-[#131111]"
+                  className="newsletter-one__input h-[45px] w-full rounded-full border-none bg-white pr-[5px] pl-[30px] text-sm text-muted-foreground outline-none transition-colors duration-500 focus:text-foreground"
                 />
                 <button
                   type="submit"

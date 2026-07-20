@@ -15,7 +15,7 @@ import "./css/book.css";
  */
 export function BookAppointment() {
   return (
-    <section className="book-appointment section-space relative bg-[#222222] py-30 max-md:py-25 max-sm:py-20">
+    <section className="book-appointment section-space relative bg-[#2a2418] py-30 max-md:py-25 max-sm:py-20">
       <div
         className="book-appointment__bg jarallax absolute inset-0 bg-scroll bg-top bg-cover bg-no-repeat md:bg-fixed"
         style={{ backgroundImage: `url(${BOOK_APPOINTMENT.image})` }}
@@ -28,7 +28,7 @@ export function BookAppointment() {
             <SectionHeading
               align="center"
               light
-              taglineBg="#ECF5F4"
+              taglineBg="#f4ebd8"
               tagline={BOOK_APPOINTMENT.tagline}
               lines={BOOK_APPOINTMENT.title}
               className="mb-2.75!"

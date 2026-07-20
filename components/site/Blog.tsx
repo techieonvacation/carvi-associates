@@ -42,7 +42,7 @@ export function Blog() {
                 </div>
 
                 <div className="blog-card__content relative z-1 px-5 pb-7.5 max-[412px]:px-2.5 max-[412px]:pb-3.75 md:max-xl:px-2.5 md:max-xl:pb-3.75">
-                  <div className="blog-card__admin inline-flex items-center gap-3.25 rounded-full border border-[#dddddd] bg-white py-2.5 pr-6.25 pl-2.5">
+                  <div className="blog-card__admin inline-flex items-center gap-3.25 rounded-full border border-border bg-white py-2.5 pr-6.25 pl-2.5">
                     <div className="relative size-12.5 shrink-0 overflow-hidden rounded-full">
                       <Image
                         src={post.avatar}
@@ -53,7 +53,7 @@ export function Blog() {
                       />
                     </div>
                     <div className="blog-card__admin__info">
-                      <h4 className="blog-card__admin__name mb-0.75 text-base leading-tight font-bold text-[#222222] capitalize">
+                      <h4 className="blog-card__admin__name mb-0.75 text-base leading-tight font-bold text-foreground capitalize">
                         {post.author}
                       </h4>
                       <p className="blog-card__admin__date m-0 text-base text-muted-foreground">
@@ -67,7 +67,7 @@ export function Blog() {
                       <span className="blog-card__meta__icon text-lg text-accent">
                         <i className="icon-tag" aria-hidden="true" />
                       </span>
-                      <Link href="#" className="hover:text-primary">
+                      <Link href="#" className="hover:text-accent">
                         Finance Agency
                       </Link>
                     </li>
@@ -75,14 +75,14 @@ export function Blog() {
                       <span className="blog-card__meta__icon text-lg text-accent">
                         <i className="icon-comment" aria-hidden="true" />
                       </span>
-                      <Link href="#" className="hover:text-primary">
+                      <Link href="#" className="hover:text-accent">
                         Comments (3)
                       </Link>
                     </li>
                   </ul>
 
-                  <h3 className="blog-card__title mb-6.75 text-[22px] leading-[1.272] font-bold text-[#222222] max-[375px]:text-xl lg:max-xl:text-xl">
-                    <Link href="#" className="text-inherit hover:text-primary">
+                  <h3 className="blog-card__title mb-6.75 text-[22px] leading-[1.272] font-bold text-foreground max-[375px]:text-xl lg:max-xl:text-xl">
+                    <Link href="#" className="text-inherit hover:text-accent">
                       {post.title}
                     </Link>
                   </h3>
@@ -99,7 +99,7 @@ export function Blog() {
                 </div>
 
                 <div
-                  className="blog-card__border pointer-events-none absolute inset-0 rounded-[inherit] border border-[#dddddd] transition-colors duration-500"
+                  className="blog-card__border pointer-events-none absolute inset-0 rounded-[inherit] border border-border transition-colors duration-500"
                   aria-hidden="true"
                 />
               </div>
