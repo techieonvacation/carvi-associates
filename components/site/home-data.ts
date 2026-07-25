@@ -87,6 +87,47 @@ export const CLIENTS = {
   logoHover: "/images/resources/brand-1-1-hover.png",
 };
 
+export type PartnerMarqueeItem = {
+  name: string;
+  tagline?: string;
+  logoUrl?: string;
+  variant?: "default" | "stacked" | "script" | "dual" | "brand";
+};
+
+export const PARTNER_MARQUEE = {
+  label: "Trusted by Businesses Across India",
+  partners: [
+    {
+      name: "Vasavi",
+      tagline: "The Future Is Here",
+      variant: "stacked",
+    },
+    {
+      name: "Sree Constructions",
+      variant: "script",
+    },
+    {
+      name: "Pranava",
+      tagline: "Constructions",
+      variant: "dual",
+    },
+    {
+      name: "Medi Life",
+      tagline: "Hospitals",
+      variant: "dual",
+    },
+    {
+      name: "UrbanBite",
+      variant: "brand",
+    },
+    {
+      name: "Shree",
+      tagline: "Marbles",
+      variant: "dual",
+    },
+  ] satisfies PartnerMarqueeItem[],
+};
+
 export const SERVICES = {
   tagline: "Our Best Services",
   title: ["Expert Advice For Consulting", "Finance Services."],

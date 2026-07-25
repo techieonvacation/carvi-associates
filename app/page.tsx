@@ -1,5 +1,6 @@
 import { Header } from "@/components/site/Header";
 import { Hero } from "@/components/site/Hero";
+import { PartnerMarquee } from "@/components/site/PartnerMarquee";
 import { Features } from "@/components/site/Features";
 import { About } from "@/components/site/About";
 import { ClientLogos } from "@/components/site/ClientLogos";
@@ -30,6 +31,7 @@ export default async function Home() {
       />
       <main>
         <Hero hero={content.hero} whatsappHref={content.topbar.whatsappHref} />
+        <PartnerMarquee />
         <Features />
         <About />
         <ClientLogos />
