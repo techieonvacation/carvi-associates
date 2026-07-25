@@ -154,7 +154,6 @@
 
 .findox-scope ul {
   list-style: none;
-  margin: 0;
   padding: 0;
 }
 
@@ -1821,7 +1820,7 @@
 .hero-one__text {
   max-width: 560px;
   width: 100%;
-  margin: 0 0 28px;
+  margin: 10px 0 28px;
   font-size: 17px;
   line-height: 1.65;
   color: var(--findox-text);
@@ -1842,10 +1841,8 @@
   width: 100%;
   max-width: 680px;
   list-style: none;
-  margin: 0 0 28px;
+  margin: 10px 0 28px;
   padding: 20px 0;
-  border-top: 1px solid rgba(var(--findox-border-color-rgb), 0.45);
-  border-bottom: 1px solid rgba(var(--findox-border-color-rgb), 0.45);
 }
 @media (min-width: 768px) {
   .hero-one__stats {
