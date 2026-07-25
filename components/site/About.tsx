@@ -7,8 +7,12 @@ import { cn } from "@/lib/utils";
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
-import { ABOUT } from "./home-data";
+import type { AboutContent } from "@/lib/cms/types";
 import "./css/about.css";
+
+type AboutProps = {
+  about: AboutContent;
+};
 
 /**
  * The reference's inline check-mark + dot-grid icon (findox `about01/02/03`
@@ -75,8 +79,12 @@ function CheckIcon() {
  * box ("Data Analysis" / "Team Support" active / "Advertising"). Mirrors the
  * reference `.about-one` section 1:1.
  */
-export function About() {
-  const [activeTab, setActiveTab] = useState(ABOUT.tabs[1].id);
+export function About({ about }: AboutProps) {
+  const initialTabId =
+    about.defaultTabId && about.tabs.some((tab) => tab.id === about.defaultTabId)
+      ? about.defaultTabId
+      : (about.tabs[1]?.id ?? about.tabs[0]?.id ?? "");
+  const [activeTab, setActiveTab] = useState(initialTabId);
 
   return (
     <section className="about-one relative bg-white pb-30 max-md:pb-25 max-sm:pb-20">
@@ -86,8 +94,8 @@ export function About() {
             <div className="about-one__image relative">
               <div className="about-one__image__one relative inline-block">
                 <Image
-                  src={ABOUT.images.collageOne}
-                  alt="Advisors reviewing a financial plan"
+                  src={about.images.collageOne}
+                  alt={about.collageOneAlt}
                   width={497}
                   height={402}
                   className="about-one__image__one__img relative z-1 h-auto max-w-full rounded-bl-[100px]"
@@ -105,8 +113,8 @@ export function About() {
 
               <div className="about-one__image__two relative z-1 mt-[-148px] mr-[15px] ml-auto table border-t-[10px] border-l-[10px] border-white lg:max-xl:mt-10 max-md:mr-0 max-[500px]:m-0">
                 <Image
-                  src={ABOUT.images.collageTwo}
-                  alt="Client consultation in progress"
+                  src={about.images.collageTwo}
+                  alt={about.collageTwoAlt}
                   width={365}
                   height={261}
                   className="about-one__image__two__img relative z-1 h-auto max-w-full"
@@ -114,10 +122,10 @@ export function About() {
 
                 <div className="about-one__experience absolute top-[-104px] right-0 z-2 text-right">
                   <h3 className="about-one__experience__year relative z-1 m-0 ml-auto table rounded-t-[100px] bg-primary pt-[38px] pr-[22.5px] pb-[26px] pl-[22.5px] text-center text-[40px] leading-none font-bold text-foreground">
-                    {ABOUT.experience.value}
+                    {about.experience.value}
                   </h3>
                   <h4 className="about-one__experience__title relative z-1 m-0 inline-block border-b-[10px] border-l-[10px] border-white bg-accent px-[15px] py-[5.5px] text-[18px] leading-[1.388] font-bold text-white capitalize">
-                    {ABOUT.experience.label}
+                    {about.experience.label}
                   </h4>
                 </div>
 
@@ -136,20 +144,20 @@ export function About() {
 
           <div className="about-one__content mt-px max-lg:mt-0">
             <SectionHeading
-              tagline={ABOUT.tagline}
-              lines={ABOUT.title}
-              taglineBg="#f4ebd8"
+              tagline={about.tagline}
+              lines={about.title}
+              taglineBg={about.taglineBg}
               className="mb-[7px]"
             />
 
             <Reveal direction="up" duration={1300}>
-              <p className="about-one__text mb-[27px] text-muted-foreground">{ABOUT.text}</p>
+              <p className="about-one__text mb-[27px] text-muted-foreground">{about.text}</p>
             </Reveal>
 
             <Reveal direction="up" duration={1300}>
               <div className="tabs-box">
                 <ul className="tab-buttons m-0 flex list-none flex-wrap items-center gap-[30px] p-0">
-                  {ABOUT.tabs.map((t) => (
+                  {about.tabs.map((t) => (
                     <li
                       key={t.id}
                       role="button"
@@ -172,13 +180,13 @@ export function About() {
                 </ul>
 
                 <div className="tabs-content relative mt-8">
-                  {ABOUT.tabs.map((t) => (
+                  {about.tabs.map((t) => (
                     <div key={t.id} className={cn("tab", activeTab === t.id && "active-tab")}>
                       <div className="tabs-content__inner relative z-1 grid grid-cols-[1fr_231px] items-center gap-x-[35px] gap-y-[50px] bg-secondary py-[15px] pr-[15px] pl-[31px] lg:max-xl:grid-cols-1 lg:max-xl:px-5 lg:max-xl:pt-[39px] lg:max-xl:pb-5 max-md:grid-cols-1 max-md:px-5 max-md:pt-[39px] max-md:pb-5">
                         <ul className="tabs-content__list relative m-0 list-none p-0">
-                          {ABOUT.checklist.map((line, i) => (
+                          {about.checklist.map((line, i) => (
                             <li
-                              key={line}
+                              key={`${line}-${i}`}
                               className={cn(
                                 "relative z-1 flex items-start gap-[18px] font-normal text-foreground transition-all duration-500",
                                 i > 0 && "mt-2.5",

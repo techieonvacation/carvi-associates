@@ -3,6 +3,8 @@ import { PrismaNeon } from "@prisma/adapter-neon";
 import bcrypt from "bcryptjs";
 import "dotenv/config";
 import {
+  defaultAbout,
+  defaultFeatures,
   defaultHeader,
   defaultHero,
   defaultNavItems,
@@ -156,6 +158,55 @@ async function main() {
         sortOrder: partner.sortOrder,
         visible: partner.visible,
       })),
+    });
+  }
+
+  const featureCount = await prisma.feature.count();
+  if (featureCount === 0) {
+    await prisma.feature.createMany({
+      data: defaultFeatures.map((feature) => ({
+        icon: feature.icon,
+        title: feature.title,
+        text: feature.text,
+        href: feature.href,
+        sortOrder: feature.sortOrder,
+        visible: feature.visible,
+      })),
+    });
+  }
+
+  const existingAbout = await prisma.aboutSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingAbout) {
+    await prisma.aboutSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultAbout.tagline,
+        titleLine1: defaultAbout.title[0],
+        titleLine2: defaultAbout.title[1],
+        text: defaultAbout.text,
+        experienceValue: defaultAbout.experience.value,
+        experienceLabel: defaultAbout.experience.label,
+        collageOneUrl: defaultAbout.images.collageOne,
+        collageTwoUrl: defaultAbout.images.collageTwo,
+        collageOneAlt: defaultAbout.collageOneAlt,
+        collageTwoAlt: defaultAbout.collageTwoAlt,
+        defaultTabId: defaultAbout.defaultTabId,
+        taglineBg: defaultAbout.taglineBg,
+        tabs: defaultAbout.tabs,
+        checklist: defaultAbout.checklist,
+      },
+    });
+  } else {
+    await prisma.aboutSettings.update({
+      where: { id: "default" },
+      data: {
+        ...(isEmptyJsonArray(existingAbout.tabs) ? { tabs: defaultAbout.tabs } : {}),
+        ...(isEmptyJsonArray(existingAbout.checklist)
+          ? { checklist: defaultAbout.checklist }
+          : {}),
+      },
     });
   }
 }

@@ -29,3 +29,60 @@ export type PartnerMarqueeItem = {
   sortOrder: number;
   visible: boolean;
 };
+
+export type FeatureItem = {
+  id?: string;
+  icon: string;
+  title: string;
+  text: string;
+  href: string;
+  sortOrder: number;
+  visible: boolean;
+};
+
+export type AboutTab = {
+  id: string;
+  label: string;
+  image: string;
+};
+
+export type AboutContent = {
+  tagline: string;
+  title: [string, string];
+  text: string;
+  experience: {
+    value: string;
+    label: string;
+  };
+  images: {
+    collageOne: string;
+    collageTwo: string;
+  };
+  collageOneAlt: string;
+  collageTwoAlt: string;
+  defaultTabId: string | null;
+  taglineBg: string;
+  tabs: AboutTab[];
+  checklist: string[];
+};
+
+/** Curated icomoon classes commonly used across the site. */
+export const FEATURE_ICON_OPTIONS = [
+  "icon-risk",
+  "icon-financial-presentation",
+  "icon-approach",
+  "icon-stats-2",
+  "icon-agreement",
+  "icon-bank",
+  "icon-analysis",
+  "icon-planning",
+  "icon-support",
+  "icon-market-research",
+  "icon-data-visualization",
+  "icon-advertisig-agency",
+  "icon-trophy",
+  "icon-business-and-finance",
+  "icon-analytics",
+  "icon-folder",
+  "icon-satisfaction",
+] as const;

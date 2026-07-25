@@ -1,4 +1,10 @@
-import type { HeroStat, HeroTrustItem, PartnerMarqueeItem } from "@/lib/cms/types";
+import type {
+  AboutContent,
+  FeatureItem,
+  HeroStat,
+  HeroTrustItem,
+  PartnerMarqueeItem,
+} from "@/lib/cms/types";
 
 export const defaultNavItems = [
   { label: "Home", href: "/", sortOrder: 0, visible: true },
@@ -139,3 +145,55 @@ export const defaultPartners: Omit<PartnerMarqueeItem, "id">[] = [
     visible: true,
   },
 ];
+
+export const defaultFeatures: Omit<FeatureItem, "id">[] = [
+  {
+    icon: "icon-risk",
+    title: "Financial Growth",
+    text: "Financial Revenue solution in business and enhancing.",
+    href: "#",
+    sortOrder: 0,
+    visible: true,
+  },
+  {
+    icon: "icon-financial-presentation",
+    title: "Finance Planning",
+    text: "Supporting individuals in business challenges, and.",
+    href: "#",
+    sortOrder: 1,
+    visible: true,
+  },
+  {
+    icon: "icon-approach",
+    title: "Business Advisory",
+    text: "Thanks for taking the time to make the website, but i.",
+    href: "#",
+    sortOrder: 2,
+    visible: true,
+  },
+];
+
+export const defaultAbout: AboutContent = {
+  tagline: "Our About Company",
+  title: ["We Provide Professional Advice", "About This Finance."],
+  text: "Business tailored design, management & support services Business business agency elit, sed do eiusmod tempor majority have in some we form, by injected humour solution.",
+  experience: { value: "37+", label: "Years Experience" },
+  images: {
+    collageOne: "/images/about/about-1-1.jpg",
+    collageTwo: "/images/about/about-1-2.jpg",
+  },
+  collageOneAlt: "Advisors reviewing a financial plan",
+  collageTwoAlt: "Client consultation in progress",
+  defaultTabId: "team-support",
+  taglineBg: "#f4ebd8",
+  tabs: [
+    { id: "data-analysis", label: "Data Analysis", image: "/images/about/about-1-3.jpg" },
+    { id: "team-support", label: "Team Support", image: "/images/about/about-1-4.jpg" },
+    { id: "advertising", label: "Advertising", image: "/images/about/about-1-5.jpg" },
+  ],
+  checklist: [
+    "Experienced & Skilled Team.",
+    "Financial Audit Business Files.",
+    "Lending & Credit Services.",
+  ],
+};

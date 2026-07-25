@@ -1,6 +1,8 @@
 import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import {
+  defaultAbout,
+  defaultFeatures,
   defaultHeader,
   defaultHero,
   defaultHeroStats,
@@ -11,7 +13,15 @@ import {
   defaultSocialLinks,
   defaultTopbar,
 } from "@/lib/cms/defaults";
-import type { HeroStat, HeroTrustItem, PartnerMarqueeItem, PartnerVariant } from "@/lib/cms/types";
+import type {
+  AboutContent,
+  AboutTab,
+  FeatureItem,
+  HeroStat,
+  HeroTrustItem,
+  PartnerMarqueeItem,
+  PartnerVariant,
+} from "@/lib/cms/types";
 import { PARTNER_VARIANTS } from "@/lib/cms/types";
 
 export type SiteContent = {
@@ -65,6 +75,8 @@ export type SiteContent = {
     label: string;
     partners: PartnerMarqueeItem[];
   };
+  features: FeatureItem[];
+  about: AboutContent;
 };
 
 function parseActiveUserImages(value: unknown): string[] {
@@ -107,20 +119,97 @@ function parsePartnerVariant(value: unknown): PartnerVariant {
   return "default";
 }
 
+function parseAboutTabs(value: unknown): AboutTab[] {
+  if (!Array.isArray(value) || value.length === 0) return defaultAbout.tabs;
+  const tabs = value.filter((item): item is AboutTab => {
+    if (!item || typeof item !== "object") return false;
+    const candidate = item as Partial<AboutTab>;
+    return (
+      typeof candidate.id === "string" &&
+      typeof candidate.label === "string" &&
+      typeof candidate.image === "string"
+    );
+  });
+  return tabs.length ? tabs : defaultAbout.tabs;
+}
+
+function parseAboutChecklist(value: unknown): string[] {
+  if (!Array.isArray(value) || value.length === 0) return defaultAbout.checklist;
+  const checklist = value.filter((item): item is string => typeof item === "string" && item.length > 0);
+  return checklist.length ? checklist : defaultAbout.checklist;
+}
+
+function mapAboutSettings(row: {
+  tagline: string;
+  titleLine1: string;
+  titleLine2: string;
+  text: string;
+  experienceValue: string;
+  experienceLabel: string;
+  collageOneUrl: string;
+  collageTwoUrl: string;
+  collageOneAlt: string;
+  collageTwoAlt: string;
+  defaultTabId: string | null;
+  taglineBg: string;
+  tabs: unknown;
+  checklist: unknown;
+}): AboutContent {
+  const tabs = parseAboutTabs(row.tabs);
+  const defaultTabId =
+    row.defaultTabId && tabs.some((tab) => tab.id === row.defaultTabId)
+      ? row.defaultTabId
+      : (tabs[1]?.id ?? tabs[0]?.id ?? null);
+
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    text: row.text,
+    experience: {
+      value: row.experienceValue,
+      label: row.experienceLabel,
+    },
+    images: {
+      collageOne: row.collageOneUrl,
+      collageTwo: row.collageTwoUrl,
+    },
+    collageOneAlt: row.collageOneAlt || defaultAbout.collageOneAlt,
+    collageTwoAlt: row.collageTwoAlt || defaultAbout.collageTwoAlt,
+    defaultTabId,
+    taglineBg: row.taglineBg || defaultAbout.taglineBg,
+    tabs,
+    checklist: parseAboutChecklist(row.checklist),
+  };
+}
+
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
-  const [navItems, socialLinks, topbar, hero, header, partnerSettings, partners] =
-    await Promise.all([
-      prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
-      prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
-      prisma.topbarSettings.findUnique({ where: { id: "default" } }),
-      prisma.heroSettings.findUnique({ where: { id: "default" } }),
-      prisma.headerSettings.findUnique({ where: { id: "default" } }),
-      prisma.partnerMarqueeSettings.findUnique({ where: { id: "default" } }),
-      prisma.partner.findMany({
-        where: { visible: true },
-        orderBy: { sortOrder: "asc" },
-      }),
-    ]);
+  const [
+    navItems,
+    socialLinks,
+    topbar,
+    hero,
+    header,
+    partnerSettings,
+    partners,
+    features,
+    about,
+  ] = await Promise.all([
+    prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
+    prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
+    prisma.topbarSettings.findUnique({ where: { id: "default" } }),
+    prisma.heroSettings.findUnique({ where: { id: "default" } }),
+    prisma.headerSettings.findUnique({ where: { id: "default" } }),
+    prisma.partnerMarqueeSettings.findUnique({ where: { id: "default" } }),
+    prisma.partner.findMany({
+      where: { visible: true },
+      orderBy: { sortOrder: "asc" },
+    }),
+    prisma.feature.findMany({
+      where: { visible: true },
+      orderBy: { sortOrder: "asc" },
+    }),
+    prisma.aboutSettings.findUnique({ where: { id: "default" } }),
+  ]);
 
   return {
     navItems: navItems.length
@@ -174,5 +263,20 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
             ...partner,
           })),
     },
+    features: features.length
+      ? features.map((feature) => ({
+          id: feature.id,
+          icon: feature.icon,
+          title: feature.title,
+          text: feature.text,
+          href: feature.href,
+          sortOrder: feature.sortOrder,
+          visible: feature.visible,
+        }))
+      : defaultFeatures.map((feature, index) => ({
+          id: `fallback-feature-${index}`,
+          ...feature,
+        })),
+    about: about ? mapAboutSettings(about) : defaultAbout,
   };
 });

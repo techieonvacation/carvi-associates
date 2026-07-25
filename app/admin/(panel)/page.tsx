@@ -2,6 +2,8 @@ import Link from "next/link";
 import {
   ArrowUpRight,
   Building2,
+  Info,
+  LayoutGrid,
   Navigation,
   PanelTop,
   Share2,
@@ -18,10 +20,11 @@ export default async function AdminDashboardPage() {
   const user = await getSessionUser();
   if (!user) return null;
 
-  const [navCount, socialCount, partnerCount] = await Promise.all([
+  const [navCount, socialCount, partnerCount, featureCount] = await Promise.all([
     prisma.navItem.count(),
     prisma.socialLink.count(),
     prisma.partner.count(),
+    prisma.feature.count(),
   ]);
 
   const cards = [
@@ -48,6 +51,18 @@ export default async function AdminDashboardPage() {
       description: `${partnerCount} partners in the trusted-by strip`,
       href: "/admin/partners",
       icon: Building2,
+    },
+    {
+      title: "Features",
+      description: `${featureCount} feature cards on the homepage`,
+      href: "/admin/features",
+      icon: LayoutGrid,
+    },
+    {
+      title: "About",
+      description: "Collage, experience badge, tabs, and checklist",
+      href: "/admin/about",
+      icon: Info,
     },
     {
       title: "Social Links",

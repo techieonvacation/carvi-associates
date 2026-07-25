@@ -35,9 +35,9 @@ export default async function Home() {
           label={content.partnerMarquee.label}
           partners={content.partnerMarquee.partners}
         />
-        <Features />
-        <About />
-        <ClientLogos />
+        <Features features={content.features} />
+        <About about={content.about} />
+        {/* <ClientLogos /> */}
         <Services />
         <BookAppointment />
         <WhyChooseUs />

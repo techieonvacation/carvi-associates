@@ -12,6 +12,8 @@ import {
   Users,
   ExternalLink,
   Building2,
+  LayoutGrid,
+  Info,
 } from "lucide-react";
 import {
   Sidebar,
@@ -34,6 +36,8 @@ const items = [
   { href: "/admin/navigation", label: "Navigation", icon: Navigation },
   { href: "/admin/hero", label: "Hero Section", icon: Sparkles },
   { href: "/admin/partners", label: "Partner Marquee", icon: Building2 },
+  { href: "/admin/features", label: "Features", icon: LayoutGrid },
+  { href: "/admin/about", label: "About", icon: Info },
   { href: "/admin/header", label: "Header CTA", icon: Megaphone },
   { href: "/admin/socials", label: "Social Links", icon: Share2 },
 ];

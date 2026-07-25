@@ -46,3 +46,43 @@ export const partnersPayloadSchema = z.object({
   label: z.string().min(1),
   partners: z.array(partnerItemSchema),
 });
+
+export const featureItemSchema = z.object({
+  id: z.string().optional(),
+  icon: z.string().min(1),
+  title: z.string().min(1),
+  text: z.string().min(1),
+  href: z.string().min(1),
+  sortOrder: z.number().int(),
+  visible: z.boolean(),
+});
+
+export const featuresPayloadSchema = z.object({
+  features: z.array(featureItemSchema).min(1),
+});
+
+export const aboutTabSchema = z.object({
+  id: z
+    .string()
+    .min(1)
+    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase slug id"),
+  label: z.string().min(1),
+  image: z.string().min(1),
+});
+
+export const aboutSchema = z.object({
+  tagline: z.string().min(1),
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  text: z.string().min(1),
+  experienceValue: z.string().min(1),
+  experienceLabel: z.string().min(1),
+  collageOneUrl: z.string().min(1),
+  collageTwoUrl: z.string().min(1),
+  collageOneAlt: z.string().min(1),
+  collageTwoAlt: z.string().min(1),
+  defaultTabId: z.string().optional().nullable(),
+  taglineBg: z.string().min(1),
+  tabs: z.array(aboutTabSchema).min(1),
+  checklist: z.array(z.string().min(1)).min(1),
+});

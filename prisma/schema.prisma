@@ -106,3 +106,36 @@ model Partner {
 
   @@index([sortOrder])
 }
+
+model Feature {
+  id        String   @id @default(cuid())
+  icon      String
+  title     String
+  text      String
+  href      String   @default("#")
+  sortOrder Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
+}
+
+model AboutSettings {
+  id               String   @id @default("default")
+  tagline          String
+  titleLine1       String
+  titleLine2       String
+  text             String
+  experienceValue  String
+  experienceLabel  String
+  collageOneUrl    String
+  collageTwoUrl    String
+  collageOneAlt    String   @default("Advisors reviewing a financial plan")
+  collageTwoAlt    String   @default("Client consultation in progress")
+  defaultTabId     String?
+  taglineBg        String   @default("#f4ebd8")
+  tabs             Json     @default("[]")
+  checklist        Json     @default("[]")
+  updatedAt        DateTime @updatedAt
+}
