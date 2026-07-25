@@ -1,112 +1,104 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { FindoxButton } from "./FindoxButton";
 import { CountUp } from "./CountUp";
-import { VideoModal } from "./VideoModal";
+import { HERO } from "./home-data";
 import type { SiteContent } from "@/lib/cms/queries";
 
 type HeroProps = {
   hero: SiteContent["hero"];
+  whatsappHref: string;
 };
 
-export function Hero({ hero }: HeroProps) {
-  const [videoOpen, setVideoOpen] = useState(false);
-
+export function Hero({ hero, whatsappHref }: HeroProps) {
   return (
     <section className="hero-one">
       <div
         className="hero-one__bg"
         style={{ backgroundImage: "url(/images/shapes/hero-bg-1-1.png)" }}
+        aria-hidden="true"
       />
 
-      <div className="findox-container">
-        <div className="hero-one__row">
-          <div className="hero-one__col hero-one__col--content">
-            <div className="hero-one__content">
-              <div className="hero-one__tagline" data-aos="fade-right">
-                <img
-                  src="/images/shapes/sec-title-shape-1-1.png"
-                  alt=""
-                  className="hero-one__tagline__shape"
-                  width={18}
-                  height={18}
-                />
-                <p className="hero-one__tagline__text">{hero.tagline}</p>
-              </div>
-
-              <h1 className="hero-one__title" data-aos="fade-left">
-                {hero.titleBeforeVideo}{" "}
-                {hero.videoId ? (
-                  <button
-                    type="button"
-                    className="hero-one__video video-btn"
-                    aria-label="Play intro video"
-                    onClick={() => setVideoOpen(true)}
-                  >
-                    <i className="icon-play" aria-hidden="true" />
-                  </button>
-                ) : null}{" "}
-                <span>
-                  {hero.titleHighlight}
-                  <span>n</span>
-                  {hero.titleAfterVideo}
-                </span>
-              </h1>
-
-              <div className="hero-one__bottom">
-                <div
-                  className="hero-one__button"
-                  data-aos="fade-up"
-                  style={{ animationDelay: "200ms" }}
-                >
-                  <FindoxButton href={hero.ctaHref} text={hero.ctaText} variant="base" />
-                </div>
-
-                <div
-                  className="active-user"
-                  data-aos="fade-up"
-                  style={{ animationDelay: "300ms" }}
-                >
-                  <div className="active-user__image">
-                    {hero.activeUserImages.map((image, index) => (
-                      <img
-                        key={`${image}-${index}`}
-                        src={image}
-                        alt={`Active user ${index + 1}`}
-                        width={46}
-                        height={46}
-                      />
-                    ))}
-                  </div>
-                  <div className="active-user__info">
-                    <h3 className="active-user__count">
-                      <CountUp end={hero.activeUserCount} duration={1500} />
-                      <span>{hero.activeUserSuffix}</span>
-                    </h3>
-                    <p className="active-user__text">{hero.activeUserLabel}</p>
-                  </div>
-                </div>
-              </div>
-
+      <div className="findox-container hero-one__container">
+        <div className="hero-one__grid">
+          <div className="hero-one__content">
+            <div className="hero-one__eyebrow" data-aos="fade-right">
               <img
-                src="/images/shapes/hero-title-shape-1-1.png"
+                src="/images/shapes/sec-title-shape-1-1.png"
                 alt=""
-                className="hero-one__content__shape"
-                width={141}
-                height={147}
+                className="hero-one__eyebrow-shape"
+                width={18}
+                height={18}
               />
+              <p className="hero-one__eyebrow-text">{hero.tagline}</p>
             </div>
+
+            <h1 className="hero-one__title" data-aos="fade-left">
+              <span className="hero-one__title-line">{hero.titleBeforeVideo}</span>
+              <span className="hero-one__title-highlight">{hero.titleHighlight}</span>
+              <span className="hero-one__title-line">{hero.titleAfterVideo}</span>
+            </h1>
+
+            <p className="hero-one__text" data-aos="fade-up">
+              {HERO.description}
+            </p>
+
+            <ul className="hero-one__stats" data-aos="fade-up">
+              {HERO.stats.map((stat) => (
+                <li key={stat.label} className="hero-one__stat">
+                  <span className="hero-one__stat-icon" aria-hidden="true">
+                    <i className={stat.icon} />
+                  </span>
+                  <strong className="hero-one__stat-value">
+                    <CountUp end={stat.end} duration={1600} />
+                    {stat.suffix}
+                  </strong>
+                  <span className="hero-one__stat-label">{stat.label}</span>
+                </li>
+              ))}
+            </ul>
+
+            <div className="hero-one__actions" data-aos="fade-up">
+              <div className="hero-one__button">
+                <FindoxButton href={hero.ctaHref} text={hero.ctaText} variant="base" />
+              </div>
+              <div className="hero-one__button">
+                <FindoxButton
+                  href={whatsappHref}
+                  text={HERO.secondaryCtaText}
+                  external
+                />
+              </div>
+            </div>
+
+            <ul className="hero-one__trust" data-aos="fade-up">
+              {HERO.trust.map((item) => (
+                <li key={item} className="hero-one__trust-item">
+                  <i className="icon-check" aria-hidden="true" />
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+
+            <img
+              src="/images/shapes/hero-title-shape-1-1.png"
+              alt=""
+              className="hero-one__content__shape"
+              width={141}
+              height={147}
+              aria-hidden="true"
+            />
           </div>
 
-          <div className="hero-one__col hero-one__col--image">
-            <div className="hero-one__image" data-aos="fade-up">
+          <div className="hero-one__media" data-aos="fade-up">
+            <div className="hero-one__image">
               <Image
                 src={hero.heroImageUrl}
                 alt="Financial advisor"
                 width={698}
                 height={668}
+                sizes="(max-width: 991px) 90vw, 40vw"
                 priority
                 unoptimized
               />
@@ -121,6 +113,7 @@ export function Hero({ hero }: HeroProps) {
         className="hero-one__shape-1"
         width={168}
         height={168}
+        aria-hidden="true"
       />
       <img
         src="/images/shapes/hero-shape-1-2.png"
@@ -128,6 +121,7 @@ export function Hero({ hero }: HeroProps) {
         className="hero-one__shape-2"
         width={1212}
         height={529}
+        aria-hidden="true"
       />
       <img
         src="/images/shapes/hero-shape-1-3.png"
@@ -135,6 +129,7 @@ export function Hero({ hero }: HeroProps) {
         className="hero-one__shape-3"
         width={431}
         height={291}
+        aria-hidden="true"
       />
       <img
         src="/images/shapes/hero-shape-1-4.png"
@@ -142,15 +137,8 @@ export function Hero({ hero }: HeroProps) {
         className="hero-one__shape-4"
         width={94}
         height={96}
+        aria-hidden="true"
       />
-
-      {hero.videoId ? (
-        <VideoModal
-          open={videoOpen}
-          onClose={() => setVideoOpen(false)}
-          videoId={hero.videoId}
-        />
-      ) : null}
     </section>
   );
 }

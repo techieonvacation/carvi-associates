@@ -10,6 +10,7 @@ type CommonProps = {
 type LinkProps = CommonProps & {
   href: string;
   onClick?: () => void;
+  external?: boolean;
 };
 
 type ButtonProps = CommonProps & {
@@ -45,7 +46,14 @@ export function FindoxButton(props: LinkProps | ButtonProps) {
 
   if ("href" in props) {
     return (
-      <Link href={props.href} className={classes} onClick={props.onClick}>
+      <Link
+        href={props.href}
+        className={classes}
+        onClick={props.onClick}
+        {...(props.external
+          ? { target: "_blank", rel: "noopener noreferrer" }
+          : {})}
+      >
         <Inner text={props.text} />
       </Link>
     );

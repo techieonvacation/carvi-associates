@@ -29,7 +29,7 @@ export default async function Home() {
         header={content.header}
       />
       <main>
-        <Hero hero={content.hero} />
+        <Hero hero={content.hero} whatsappHref={content.topbar.whatsappHref} />
         <Features />
         <About />
         <ClientLogos />

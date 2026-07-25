@@ -112,7 +112,7 @@ export function HeroPageClient({ user }: HeroPageProps) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="titleBeforeVideo">Title before video</Label>
+                    <Label htmlFor="titleBeforeVideo">Title before highlight</Label>
                     <Input
                       id="titleBeforeVideo"
                       value={form.titleBeforeVideo}
@@ -122,7 +122,7 @@ export function HeroPageClient({ user }: HeroPageProps) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="titleHighlight">Highlighted word prefix</Label>
+                    <Label htmlFor="titleHighlight">Highlighted word</Label>
                     <Input
                       id="titleHighlight"
                       value={form.titleHighlight}
@@ -132,7 +132,7 @@ export function HeroPageClient({ user }: HeroPageProps) {
                     />
                   </div>
                   <div className="space-y-2 md:col-span-2">
-                    <Label htmlFor="titleAfterVideo">Title after video</Label>
+                    <Label htmlFor="titleAfterVideo">Title after highlight</Label>
                     <Input
                       id="titleAfterVideo"
                       value={form.titleAfterVideo}
@@ -142,7 +142,7 @@ export function HeroPageClient({ user }: HeroPageProps) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="ctaText">CTA text</Label>
+                    <Label htmlFor="ctaText">Primary CTA text</Label>
                     <Input
                       id="ctaText"
                       value={form.ctaText}

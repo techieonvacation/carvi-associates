@@ -5,6 +5,44 @@
  * page exists in this build.
  */
 
+export const HERO = {
+  description:
+    "Expertise in Audit, Tax, Compliance & Advisory to help you stay compliant, reduce risks and scale your business.",
+  secondaryCtaText: "Talk to an Expert",
+  stats: [
+    {
+      icon: "icon-trophy",
+      end: 24,
+      suffix: "+",
+      label: "Years Experience",
+    },
+    {
+      icon: "icon-bank",
+      end: 500,
+      suffix: "+",
+      label: "Businesses Served",
+    },
+    {
+      icon: "icon-technical-team",
+      end: 50,
+      suffix: "+",
+      label: "Industries",
+    },
+    {
+      icon: "icon-calendar",
+      end: 1000,
+      suffix: "+",
+      label: "Returns Filed",
+    },
+  ],
+  trust: [
+    "Chartered Accountants",
+    "Audit · Tax · Compliance",
+    "Trusted by Growing Businesses",
+    "Pan-India Advisory",
+  ],
+};
+
 export const FEATURES = [
   {
     icon: "icon-risk",

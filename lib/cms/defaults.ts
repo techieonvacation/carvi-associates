@@ -24,13 +24,13 @@ export const defaultTopbar = {
 };
 
 export const defaultHero = {
-  tagline: "SOLUTIONS FOR finance GROWTH",
-  titleBeforeVideo: "Expert Solutions for Corporate",
-  titleHighlight: "Fina",
-  titleAfterVideo: "cial Success.",
-  ctaText: "Get Started",
+  tagline: "YOUR GROWTH. OUR COMMITMENT.",
+  titleBeforeVideo: "Helping Businesses",
+  titleHighlight: "Grow",
+  titleAfterVideo: "with Confidence",
+  ctaText: "Book Free Consultation",
   ctaHref: "#",
-  videoId: "h9MbznbxlLc",
+  videoId: null,
   heroImageUrl: "https://bracketweb.com/findox-laravel/assets/images/hero-slider/hero-1-1.png",
   activeUserCount: 125,
   activeUserSuffix: "k+",
