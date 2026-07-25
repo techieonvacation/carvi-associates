@@ -17,29 +17,28 @@ export const HERO = {
       label: "Years Experience",
     },
     {
-      icon: "icon-bank",
+      icon: "icon-business-and-finance",
       end: 500,
       suffix: "+",
       label: "Businesses Served",
     },
     {
-      icon: "icon-technical-team",
+      icon: "icon-analytics",
       end: 50,
       suffix: "+",
       label: "Industries",
     },
     {
-      icon: "icon-calendar",
+      icon: "icon-folder",
       end: 1000,
       suffix: "+",
       label: "Returns Filed",
     },
   ],
   trust: [
-    "Chartered Accountants",
-    "Audit · Tax · Compliance",
-    "Trusted by Growing Businesses",
-    "Pan-India Advisory",
+    { icon: "icon-satisfaction", label: "Chartered Accountants" },
+    { icon: "icon-analysis", label: "Audit · Tax · Compliance" },
+    { icon: "icon-location", label: "Pan-India Advisory" },
   ],
 };
 

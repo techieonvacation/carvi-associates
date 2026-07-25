@@ -35,9 +35,9 @@ export function Hero({ hero, whatsappHref }: HeroProps) {
             </div>
 
             <h1 className="hero-one__title" data-aos="fade-left">
-              <span className="hero-one__title-line">{hero.titleBeforeVideo}</span>
-              <span className="hero-one__title-highlight">{hero.titleHighlight}</span>
-              <span className="hero-one__title-line">{hero.titleAfterVideo}</span>
+              {hero.titleBeforeVideo}{" "}
+              <span className="hero-one__title-highlight">{hero.titleHighlight}</span>{" "}
+              {hero.titleAfterVideo}
             </h1>
 
             <p className="hero-one__text" data-aos="fade-up">
@@ -50,11 +50,13 @@ export function Hero({ hero, whatsappHref }: HeroProps) {
                   <span className="hero-one__stat-icon" aria-hidden="true">
                     <i className={stat.icon} />
                   </span>
-                  <strong className="hero-one__stat-value">
-                    <CountUp end={stat.end} duration={1600} />
-                    {stat.suffix}
-                  </strong>
-                  <span className="hero-one__stat-label">{stat.label}</span>
+                  <span className="hero-one__stat-body">
+                    <strong className="hero-one__stat-value">
+                      <CountUp end={stat.end} duration={1600} />
+                      {stat.suffix}
+                    </strong>
+                    <span className="hero-one__stat-label">{stat.label}</span>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -74,9 +76,11 @@ export function Hero({ hero, whatsappHref }: HeroProps) {
 
             <ul className="hero-one__trust" data-aos="fade-up">
               {HERO.trust.map((item) => (
-                <li key={item} className="hero-one__trust-item">
-                  <i className="icon-check" aria-hidden="true" />
-                  <span>{item}</span>
+                <li key={item.label} className="hero-one__trust-item">
+                  <span className="hero-one__trust-icon" aria-hidden="true">
+                    <i className={item.icon} />
+                  </span>
+                  <span>{item.label}</span>
                 </li>
               ))}
             </ul>
