@@ -844,8 +844,7 @@
 }
 .main-menu .main-menu__list > li {
   position: relative;
-  padding-top: 48px;
-  padding-bottom: 48px;
+  padding: 40px 0;
 }
 .main-menu .main-menu__list > li.dropdown > a {
   position: relative;
