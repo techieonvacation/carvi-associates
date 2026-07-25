@@ -65,6 +65,8 @@ model HeroSettings {
   titleBeforeVideo String
   titleHighlight   String
   titleAfterVideo  String
+  description      String   @default("Expertise in Audit, Tax, Compliance & Advisory to help you stay compliant, reduce risks and scale your business.")
+  secondaryCtaText String   @default("Talk to an Expert")
   ctaText          String
   ctaHref          String
   videoId          String?
@@ -73,6 +75,8 @@ model HeroSettings {
   activeUserSuffix String   @default("k+")
   activeUserLabel  String   @default("Active Users")
   activeUserImages Json     @default("[]")
+  stats            Json     @default("[]")
+  trust            Json     @default("[]")
   updatedAt        DateTime @updatedAt
 }
 
@@ -81,4 +85,24 @@ model HeaderSettings {
   contactCtaText String   @default("Contact Us")
   contactCtaHref String   @default("#")
   updatedAt      DateTime @updatedAt
+}
+
+model PartnerMarqueeSettings {
+  id        String   @id @default("default")
+  label     String
+  updatedAt DateTime @updatedAt
+}
+
+model Partner {
+  id        String   @id @default(cuid())
+  name      String
+  tagline   String?
+  logoUrl   String?
+  variant   String   @default("default")
+  sortOrder Int      @default(0)
+  visible   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sortOrder])
 }

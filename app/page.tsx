@@ -31,7 +31,10 @@ export default async function Home() {
       />
       <main>
         <Hero hero={content.hero} whatsappHref={content.topbar.whatsappHref} />
-        <PartnerMarquee />
+        <PartnerMarquee
+          label={content.partnerMarquee.label}
+          partners={content.partnerMarquee.partners}
+        />
         <Features />
         <About />
         <ClientLogos />

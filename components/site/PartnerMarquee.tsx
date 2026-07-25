@@ -1,4 +1,9 @@
-import { PARTNER_MARQUEE, type PartnerMarqueeItem } from "./home-data";
+import type { PartnerMarqueeItem } from "@/lib/cms/types";
+
+type PartnerMarqueeProps = {
+  label: string;
+  partners: PartnerMarqueeItem[];
+};
 
 function PartnerLogo({ partner }: { partner: PartnerMarqueeItem }) {
   if (partner.logoUrl) {
@@ -32,12 +37,12 @@ function PartnerSequence({
   duplicate: number;
 }) {
   return (
-    <div
-      className="partner-marquee__sequence"
-      aria-hidden={duplicate === 1}
-    >
+    <div className="partner-marquee__sequence" aria-hidden={duplicate === 1}>
       {partners.map((partner) => (
-        <div key={`${duplicate}-${partner.name}`} className="partner-marquee__item">
+        <div
+          key={`${duplicate}-${partner.id ?? partner.name}-${partner.sortOrder}`}
+          className="partner-marquee__item"
+        >
           <PartnerLogo partner={partner} />
           <span className="partner-marquee__divider" aria-hidden="true" />
         </div>
@@ -46,8 +51,8 @@ function PartnerSequence({
   );
 }
 
-export function PartnerMarquee() {
-  const { label, partners } = PARTNER_MARQUEE;
+export function PartnerMarquee({ label, partners }: PartnerMarqueeProps) {
+  if (!partners.length) return null;
 
   return (
     <section className="partner-marquee" aria-label={label}>

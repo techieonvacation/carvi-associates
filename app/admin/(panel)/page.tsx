@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
+  Building2,
   Navigation,
   PanelTop,
   Share2,
@@ -17,9 +18,10 @@ export default async function AdminDashboardPage() {
   const user = await getSessionUser();
   if (!user) return null;
 
-  const [navCount, socialCount] = await Promise.all([
+  const [navCount, socialCount, partnerCount] = await Promise.all([
     prisma.navItem.count(),
     prisma.socialLink.count(),
+    prisma.partner.count(),
   ]);
 
   const cards = [
@@ -37,9 +39,15 @@ export default async function AdminDashboardPage() {
     },
     {
       title: "Hero Section",
-      description: "Headline, CTA, video, and hero imagery",
+      description: "Headline, stats, trust signals, CTAs, and imagery",
       href: "/admin/hero",
       icon: Sparkles,
+    },
+    {
+      title: "Partner Marquee",
+      description: `${partnerCount} partners in the trusted-by strip`,
+      href: "/admin/partners",
+      icon: Building2,
     },
     {
       title: "Social Links",

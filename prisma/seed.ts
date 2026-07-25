@@ -6,6 +6,8 @@ import {
   defaultHeader,
   defaultHero,
   defaultNavItems,
+  defaultPartnerMarqueeLabel,
+  defaultPartners,
   defaultSocialLinks,
   defaultTopbar,
 } from "../lib/cms/defaults";
@@ -17,6 +19,10 @@ if (!connectionString) {
 
 const adapter = new PrismaNeon({ connectionString });
 const prisma = new PrismaClient({ adapter });
+
+function isEmptyJsonArray(value: unknown): boolean {
+  return Array.isArray(value) && value.length === 0;
+}
 
 async function main() {
   const adminEmail = process.env.ADMIN_EMAIL ?? "admin@carviassociates.com";
@@ -81,30 +87,77 @@ async function main() {
     });
   }
 
-  await prisma.topbarSettings.upsert({
+  const existingTopbar = await prisma.topbarSettings.findUnique({
     where: { id: "default" },
-    update: defaultTopbar,
-    create: { id: "default", ...defaultTopbar },
   });
+  if (!existingTopbar) {
+    await prisma.topbarSettings.create({
+      data: { id: "default", ...defaultTopbar },
+    });
+  }
 
-  await prisma.heroSettings.upsert({
+  const existingHero = await prisma.heroSettings.findUnique({
     where: { id: "default" },
-    update: {
-      ...defaultHero,
-      activeUserImages: defaultHero.activeUserImages,
-    },
-    create: {
-      id: "default",
-      ...defaultHero,
-      activeUserImages: defaultHero.activeUserImages,
-    },
   });
+  if (!existingHero) {
+    await prisma.heroSettings.create({
+      data: {
+        id: "default",
+        ...defaultHero,
+        activeUserImages: defaultHero.activeUserImages,
+        stats: defaultHero.stats,
+        trust: defaultHero.trust,
+      },
+    });
+  } else {
+    // Non-destructive backfill for newly CMS-managed fields only.
+    await prisma.heroSettings.update({
+      where: { id: "default" },
+      data: {
+        ...(isEmptyJsonArray(existingHero.stats) ? { stats: defaultHero.stats } : {}),
+        ...(isEmptyJsonArray(existingHero.trust) ? { trust: defaultHero.trust } : {}),
+        ...(!existingHero.description ? { description: defaultHero.description } : {}),
+        ...(!existingHero.secondaryCtaText
+          ? { secondaryCtaText: defaultHero.secondaryCtaText }
+          : {}),
+      },
+    });
+  }
 
-  await prisma.headerSettings.upsert({
+  const existingHeader = await prisma.headerSettings.findUnique({
     where: { id: "default" },
-    update: defaultHeader,
-    create: { id: "default", ...defaultHeader },
   });
+  if (!existingHeader) {
+    await prisma.headerSettings.create({
+      data: { id: "default", ...defaultHeader },
+    });
+  }
+
+  const existingPartnerSettings = await prisma.partnerMarqueeSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingPartnerSettings) {
+    await prisma.partnerMarqueeSettings.create({
+      data: {
+        id: "default",
+        label: defaultPartnerMarqueeLabel,
+      },
+    });
+  }
+
+  const partnerCount = await prisma.partner.count();
+  if (partnerCount === 0) {
+    await prisma.partner.createMany({
+      data: defaultPartners.map((partner) => ({
+        name: partner.name,
+        tagline: partner.tagline,
+        logoUrl: partner.logoUrl,
+        variant: partner.variant,
+        sortOrder: partner.sortOrder,
+        visible: partner.visible,
+      })),
+    });
+  }
 }
 
 main()

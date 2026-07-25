@@ -1,3 +1,5 @@
+import type { HeroStat, HeroTrustItem, PartnerMarqueeItem } from "@/lib/cms/types";
+
 export const defaultNavItems = [
   { label: "Home", href: "/", sortOrder: 0, visible: true },
   { label: "About Us", href: "#", sortOrder: 1, visible: true },
@@ -23,14 +25,50 @@ export const defaultTopbar = {
   whatsappHref: "https://whatsapp.com/channel/0029VaExampleChannelId",
 };
 
+export const defaultHeroStats: HeroStat[] = [
+  {
+    icon: "icon-trophy",
+    end: 24,
+    suffix: "+",
+    label: "Years Experience",
+  },
+  {
+    icon: "icon-business-and-finance",
+    end: 500,
+    suffix: "+",
+    label: "Businesses Served",
+  },
+  {
+    icon: "icon-analytics",
+    end: 50,
+    suffix: "+",
+    label: "Industries",
+  },
+  {
+    icon: "icon-folder",
+    end: 1000,
+    suffix: "+",
+    label: "Returns Filed",
+  },
+];
+
+export const defaultHeroTrust: HeroTrustItem[] = [
+  { icon: "icon-satisfaction", label: "Chartered Accountants" },
+  { icon: "icon-analysis", label: "Audit · Tax · Compliance" },
+  { icon: "icon-location", label: "Pan-India Advisory" },
+];
+
 export const defaultHero = {
   tagline: "YOUR GROWTH. OUR COMMITMENT.",
   titleBeforeVideo: "Helping Businesses",
   titleHighlight: "Grow",
   titleAfterVideo: "with Confidence",
+  description:
+    "Expertise in Audit, Tax, Compliance & Advisory to help you stay compliant, reduce risks and scale your business.",
+  secondaryCtaText: "Talk to an Expert",
   ctaText: "Book Free Consultation",
   ctaHref: "#",
-  videoId: null,
+  videoId: null as string | null,
   heroImageUrl: "https://bracketweb.com/findox-laravel/assets/images/hero-slider/hero-1-1.png",
   activeUserCount: 125,
   activeUserSuffix: "k+",
@@ -40,9 +78,64 @@ export const defaultHero = {
     "/images/resources/active-user-2.jpg",
     "/images/resources/active-user-3.jpg",
   ],
+  stats: defaultHeroStats,
+  trust: defaultHeroTrust,
 };
 
 export const defaultHeader = {
   contactCtaText: "Contact Us",
   contactCtaHref: "#",
 };
+
+export const defaultPartnerMarqueeLabel = "Trusted by Businesses Across India";
+
+export const defaultPartners: Omit<PartnerMarqueeItem, "id">[] = [
+  {
+    name: "Vasavi",
+    tagline: "The Future Is Here",
+    logoUrl: null,
+    variant: "stacked",
+    sortOrder: 0,
+    visible: true,
+  },
+  {
+    name: "Sree Constructions",
+    tagline: null,
+    logoUrl: null,
+    variant: "script",
+    sortOrder: 1,
+    visible: true,
+  },
+  {
+    name: "Pranava",
+    tagline: "Constructions",
+    logoUrl: null,
+    variant: "dual",
+    sortOrder: 2,
+    visible: true,
+  },
+  {
+    name: "Medi Life",
+    tagline: "Hospitals",
+    logoUrl: null,
+    variant: "dual",
+    sortOrder: 3,
+    visible: true,
+  },
+  {
+    name: "UrbanBite",
+    tagline: null,
+    logoUrl: null,
+    variant: "brand",
+    sortOrder: 4,
+    visible: true,
+  },
+  {
+    name: "Shree",
+    tagline: "Marbles",
+    logoUrl: null,
+    variant: "dual",
+    sortOrder: 5,
+    visible: true,
+  },
+];

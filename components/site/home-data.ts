@@ -3,44 +3,9 @@
  * template's "Home One" copy/structure 1:1 (brand name swapped, filler copy
  * kept as-is). All internal links are "#" placeholders since only the home
  * page exists in this build.
+ *
+ * Hero + Partner Marquee content is CMS-managed via Prisma (`lib/cms/*`).
  */
-
-export const HERO = {
-  description:
-    "Expertise in Audit, Tax, Compliance & Advisory to help you stay compliant, reduce risks and scale your business.",
-  secondaryCtaText: "Talk to an Expert",
-  stats: [
-    {
-      icon: "icon-trophy",
-      end: 24,
-      suffix: "+",
-      label: "Years Experience",
-    },
-    {
-      icon: "icon-business-and-finance",
-      end: 500,
-      suffix: "+",
-      label: "Businesses Served",
-    },
-    {
-      icon: "icon-analytics",
-      end: 50,
-      suffix: "+",
-      label: "Industries",
-    },
-    {
-      icon: "icon-folder",
-      end: 1000,
-      suffix: "+",
-      label: "Returns Filed",
-    },
-  ],
-  trust: [
-    { icon: "icon-satisfaction", label: "Chartered Accountants" },
-    { icon: "icon-analysis", label: "Audit · Tax · Compliance" },
-    { icon: "icon-location", label: "Pan-India Advisory" },
-  ],
-};
 
 export const FEATURES = [
   {
@@ -85,47 +50,6 @@ export const CLIENTS = {
   headline: ["Over 330+ Projects With 200+ Clients"],
   logo: "/images/resources/brand-1-1.png",
   logoHover: "/images/resources/brand-1-1-hover.png",
-};
-
-export type PartnerMarqueeItem = {
-  name: string;
-  tagline?: string;
-  logoUrl?: string;
-  variant?: "default" | "stacked" | "script" | "dual" | "brand";
-};
-
-export const PARTNER_MARQUEE = {
-  label: "Trusted by Businesses Across India",
-  partners: [
-    {
-      name: "Vasavi",
-      tagline: "The Future Is Here",
-      variant: "stacked",
-    },
-    {
-      name: "Sree Constructions",
-      variant: "script",
-    },
-    {
-      name: "Pranava",
-      tagline: "Constructions",
-      variant: "dual",
-    },
-    {
-      name: "Medi Life",
-      tagline: "Hospitals",
-      variant: "dual",
-    },
-    {
-      name: "UrbanBite",
-      variant: "brand",
-    },
-    {
-      name: "Shree",
-      tagline: "Marbles",
-      variant: "dual",
-    },
-  ] satisfies PartnerMarqueeItem[],
 };
 
 export const SERVICES = {

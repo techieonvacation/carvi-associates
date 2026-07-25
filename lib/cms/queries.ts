@@ -3,10 +3,16 @@ import { prisma } from "@/lib/prisma";
 import {
   defaultHeader,
   defaultHero,
+  defaultHeroStats,
+  defaultHeroTrust,
   defaultNavItems,
+  defaultPartnerMarqueeLabel,
+  defaultPartners,
   defaultSocialLinks,
   defaultTopbar,
 } from "@/lib/cms/defaults";
+import type { HeroStat, HeroTrustItem, PartnerMarqueeItem, PartnerVariant } from "@/lib/cms/types";
+import { PARTNER_VARIANTS } from "@/lib/cms/types";
 
 export type SiteContent = {
   navItems: Array<{
@@ -38,6 +44,8 @@ export type SiteContent = {
     titleBeforeVideo: string;
     titleHighlight: string;
     titleAfterVideo: string;
+    description: string;
+    secondaryCtaText: string;
     ctaText: string;
     ctaHref: string;
     videoId: string | null;
@@ -46,10 +54,16 @@ export type SiteContent = {
     activeUserSuffix: string;
     activeUserLabel: string;
     activeUserImages: string[];
+    stats: HeroStat[];
+    trust: HeroTrustItem[];
   };
   header: {
     contactCtaText: string;
     contactCtaHref: string;
+  };
+  partnerMarquee: {
+    label: string;
+    partners: PartnerMarqueeItem[];
   };
 };
 
@@ -58,14 +72,55 @@ function parseActiveUserImages(value: unknown): string[] {
   return value.filter((item): item is string => typeof item === "string");
 }
 
+function parseHeroStats(value: unknown): HeroStat[] {
+  if (!Array.isArray(value) || value.length === 0) return defaultHeroStats;
+  const stats = value.filter((item): item is HeroStat => {
+    if (!item || typeof item !== "object") return false;
+    const candidate = item as Partial<HeroStat>;
+    return (
+      typeof candidate.icon === "string" &&
+      typeof candidate.end === "number" &&
+      typeof candidate.suffix === "string" &&
+      typeof candidate.label === "string"
+    );
+  });
+  return stats.length ? stats : defaultHeroStats;
+}
+
+function parseHeroTrust(value: unknown): HeroTrustItem[] {
+  if (!Array.isArray(value) || value.length === 0) return defaultHeroTrust;
+  const trust = value.filter((item): item is HeroTrustItem => {
+    if (!item || typeof item !== "object") return false;
+    const candidate = item as Partial<HeroTrustItem>;
+    return typeof candidate.icon === "string" && typeof candidate.label === "string";
+  });
+  return trust.length ? trust : defaultHeroTrust;
+}
+
+function parsePartnerVariant(value: unknown): PartnerVariant {
+  if (
+    typeof value === "string" &&
+    (PARTNER_VARIANTS as readonly string[]).includes(value)
+  ) {
+    return value as PartnerVariant;
+  }
+  return "default";
+}
+
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
-  const [navItems, socialLinks, topbar, hero, header] = await Promise.all([
-    prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
-    prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
-    prisma.topbarSettings.findUnique({ where: { id: "default" } }),
-    prisma.heroSettings.findUnique({ where: { id: "default" } }),
-    prisma.headerSettings.findUnique({ where: { id: "default" } }),
-  ]);
+  const [navItems, socialLinks, topbar, hero, header, partnerSettings, partners] =
+    await Promise.all([
+      prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
+      prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
+      prisma.topbarSettings.findUnique({ where: { id: "default" } }),
+      prisma.heroSettings.findUnique({ where: { id: "default" } }),
+      prisma.headerSettings.findUnique({ where: { id: "default" } }),
+      prisma.partnerMarqueeSettings.findUnique({ where: { id: "default" } }),
+      prisma.partner.findMany({
+        where: { visible: true },
+        orderBy: { sortOrder: "asc" },
+      }),
+    ]);
 
   return {
     navItems: navItems.length
@@ -83,10 +138,41 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     topbar: topbar ?? defaultTopbar,
     hero: hero
       ? {
-          ...hero,
+          tagline: hero.tagline,
+          titleBeforeVideo: hero.titleBeforeVideo,
+          titleHighlight: hero.titleHighlight,
+          titleAfterVideo: hero.titleAfterVideo,
+          description: hero.description || defaultHero.description,
+          secondaryCtaText: hero.secondaryCtaText || defaultHero.secondaryCtaText,
+          ctaText: hero.ctaText,
+          ctaHref: hero.ctaHref,
+          videoId: hero.videoId,
+          heroImageUrl: hero.heroImageUrl,
+          activeUserCount: hero.activeUserCount,
+          activeUserSuffix: hero.activeUserSuffix,
+          activeUserLabel: hero.activeUserLabel,
           activeUserImages: parseActiveUserImages(hero.activeUserImages),
+          stats: parseHeroStats(hero.stats),
+          trust: parseHeroTrust(hero.trust),
         }
       : defaultHero,
     header: header ?? defaultHeader,
+    partnerMarquee: {
+      label: partnerSettings?.label ?? defaultPartnerMarqueeLabel,
+      partners: partners.length
+        ? partners.map((partner) => ({
+            id: partner.id,
+            name: partner.name,
+            tagline: partner.tagline,
+            logoUrl: partner.logoUrl,
+            variant: parsePartnerVariant(partner.variant),
+            sortOrder: partner.sortOrder,
+            visible: partner.visible,
+          }))
+        : defaultPartners.map((partner, index) => ({
+            id: `fallback-partner-${index}`,
+            ...partner,
+          })),
+    },
   };
 });

@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { FindoxButton } from "./FindoxButton";
 import { CountUp } from "./CountUp";
-import { HERO } from "./home-data";
 import type { SiteContent } from "@/lib/cms/queries";
 
 type HeroProps = {
@@ -41,11 +40,11 @@ export function Hero({ hero, whatsappHref }: HeroProps) {
             </h1>
 
             <p className="hero-one__text" data-aos="fade-up">
-              {HERO.description}
+              {hero.description}
             </p>
 
             <ul className="hero-one__stats" data-aos="fade-up">
-              {HERO.stats.map((stat) => (
+              {hero.stats.map((stat) => (
                 <li key={stat.label} className="hero-one__stat">
                   <span className="hero-one__stat-icon" aria-hidden="true">
                     <i className={stat.icon} />
@@ -68,14 +67,14 @@ export function Hero({ hero, whatsappHref }: HeroProps) {
               <div className="hero-one__button">
                 <FindoxButton
                   href={whatsappHref}
-                  text={HERO.secondaryCtaText}
+                  text={hero.secondaryCtaText}
                   external
                 />
               </div>
             </div>
 
             <ul className="hero-one__trust" data-aos="fade-up">
-              {HERO.trust.map((item) => (
+              {hero.trust.map((item) => (
                 <li key={item.label} className="hero-one__trust-item">
                   <span className="hero-one__trust-icon" aria-hidden="true">
                     <i className={item.icon} />
