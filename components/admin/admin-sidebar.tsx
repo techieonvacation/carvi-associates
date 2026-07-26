@@ -19,6 +19,7 @@ import {
   BadgeCheck,
   UsersRound,
   Waypoints,
+  PanelBottom,
 } from "lucide-react";
 import {
   Sidebar,
@@ -48,6 +49,7 @@ const items = [
   { href: "/admin/why-choose", label: "Why Choose Us", icon: BadgeCheck },
   { href: "/admin/team", label: "Team", icon: UsersRound },
   { href: "/admin/working-process", label: "Working Process", icon: Waypoints },
+  { href: "/admin/footer", label: "Footer", icon: PanelBottom },
   { href: "/admin/header", label: "Header CTA", icon: Megaphone },
   { href: "/admin/socials", label: "Social Links", icon: Share2 },
 ];

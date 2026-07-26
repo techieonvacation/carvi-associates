@@ -14,6 +14,7 @@ import {
   Users,
   UsersRound,
   Waypoints,
+  PanelBottom,
 } from "lucide-react";
 import { AdminHeader } from "@/components/admin/admin-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -34,6 +35,7 @@ export default async function AdminDashboardPage() {
     whyChooseCount,
     teamCount,
     workingProcessCount,
+    footerLinkCount,
   ] = await Promise.all([
     prisma.navItem.count(),
     prisma.socialLink.count(),
@@ -43,6 +45,7 @@ export default async function AdminDashboardPage() {
     prisma.whyChooseItem.count({ where: { deletedAt: null } }),
     prisma.teamMember.count({ where: { deletedAt: null } }),
     prisma.workingProcessStep.count({ where: { deletedAt: null } }),
+    prisma.footerLink.count({ where: { deletedAt: null } }),
   ]);
 
   const cards = [
@@ -111,6 +114,12 @@ export default async function AdminDashboardPage() {
       description: `${workingProcessCount} timeline steps`,
       href: "/admin/working-process",
       icon: Waypoints,
+    },
+    {
+      title: "Footer",
+      description: `${footerLinkCount} footer links, posts, and social options`,
+      href: "/admin/footer",
+      icon: PanelBottom,
     },
     {
       title: "Social Links",

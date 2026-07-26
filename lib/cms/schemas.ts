@@ -1,5 +1,9 @@
 import { z } from "zod";
-import { PARTNER_VARIANTS, SERVICE_ICON_TYPES } from "@/lib/cms/types";
+import {
+  FOOTER_LINK_COLUMNS,
+  PARTNER_VARIANTS,
+  SERVICE_ICON_TYPES,
+} from "@/lib/cms/types";
 
 export const heroStatSchema = z.object({
   icon: z.string().min(1),
@@ -308,4 +312,75 @@ export const workingProcessStepSchema = z.object({
 
 export const workingProcessStepsPayloadSchema = z.object({
   steps: z.array(workingProcessStepSchema).min(1),
+});
+
+export const footerSectionSchema = z.object({
+  about: z.string().min(1),
+  backgroundImageUrl: z.string().min(1),
+  watermarkText: z.string().min(1),
+  showWatermark: z.boolean(),
+  copyrightText: z.string().min(1),
+  linksTitle: z.string().min(1),
+  exploreTitle: z.string().min(1),
+  blogTitle: z.string().min(1),
+  showAbout: z.boolean(),
+  showSocials: z.boolean(),
+  showLinks: z.boolean(),
+  showExplore: z.boolean(),
+  showRecentBlog: z.boolean(),
+  showBottomBar: z.boolean(),
+  useSiteSocials: z.boolean(),
+  logoTone: z.enum(["light", "dark"]),
+  isVisible: z.boolean(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  twitterImageUrl: optionalUrl,
+  noIndex: z.boolean(),
+});
+
+export const footerLinkSchema = z.object({
+  id: z.string().optional(),
+  label: z.string().min(1),
+  href: z.string().min(1),
+  column: z.enum(FOOTER_LINK_COLUMNS),
+  displayOrder: z.number().int().optional(),
+  isVisible: z.boolean(),
+  isActive: z.boolean(),
+});
+
+export const footerLinksPayloadSchema = z.object({
+  links: z.array(footerLinkSchema),
+});
+
+export const footerRecentPostSchema = z.object({
+  id: z.string().optional(),
+  title: z.string().min(1),
+  dateLabel: z.string().min(1),
+  imageUrl: z.string().min(1),
+  imageAlt: z.string(),
+  href: z.string().min(1),
+  displayOrder: z.number().int().optional(),
+  isVisible: z.boolean(),
+  isActive: z.boolean(),
+});
+
+export const footerRecentPostsPayloadSchema = z.object({
+  posts: z.array(footerRecentPostSchema),
+});
+
+export const footerSocialSchema = z.object({
+  id: z.string().optional(),
+  label: z.string().min(1),
+  href: z.string().min(1),
+  icon: z.string().min(1),
+  displayOrder: z.number().int().optional(),
+  isVisible: z.boolean(),
+  isActive: z.boolean(),
+});
+
+export const footerSocialsPayloadSchema = z.object({
+  socials: z.array(footerSocialSchema),
 });

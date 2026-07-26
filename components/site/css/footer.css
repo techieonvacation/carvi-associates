@@ -10,6 +10,54 @@
   background-color: rgba(var(--findox-base-rgb), 0.94);
 }
 
+/*
+ * Findox global rules force dark headings (`.findox-scope h2/h3`) and
+ * brand-green links (`.findox-scope a`). Those lose contrast on the
+ * olive footer — reassert light cream/white text here with higher
+ * specificity so titles, lists, blog cards, and copyright stay readable.
+ */
+.main-footer,
+.main-footer .footer-widget__text,
+.main-footer .footer-widget__blog__date,
+.main-footer .main-footer__copyright {
+  color: #faf5e9;
+}
+
+.main-footer .footer-widget__title,
+.main-footer .footer-widget__blog__title {
+  color: #ffffff;
+}
+
+.main-footer a,
+.main-footer .footer-widget__links a,
+.main-footer .footer-widget__blog__title a,
+.main-footer .main-footer__page a {
+  color: #ffffff;
+}
+
+.main-footer a:hover,
+.main-footer .footer-widget__links a:hover,
+.main-footer .footer-widget__blog__title a:hover,
+.main-footer .main-footer__page a:hover,
+.main-footer .footer-widget__links li:hover::before {
+  color: var(--findox-primary, #e3c9a0);
+}
+
+.main-footer .footer-widget__links li::before {
+  color: #ffffff;
+}
+
+.main-footer .social-links a {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.55);
+}
+
+.main-footer .social-links a:hover {
+  color: var(--findox-base, #006654);
+  background-color: var(--findox-primary, #e3c9a0);
+  border-color: var(--findox-primary, #e3c9a0);
+}
+
 /* Link underline sweep — shared by the widget link lists, the blog
    titles, and the bottom copyright-bar links. */
 .footer-widget__links a,

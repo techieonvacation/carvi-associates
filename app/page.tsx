@@ -51,7 +51,7 @@ export default async function Home() {
         <Blog />
         <Newsletter />
       </main>
-      <Footer />
+      <Footer footer={content.footer} />
     </div>
   );
 }

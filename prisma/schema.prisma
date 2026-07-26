@@ -354,3 +354,89 @@ model WorkingProcessStep {
   @@index([deletedAt])
   @@index([isVisible, isActive, deletedAt])
 }
+
+enum FooterLinkColumn {
+  LINKS_ONE
+  LINKS_TWO
+  EXPLORE
+  BOTTOM
+}
+
+model FooterSettings {
+  id                 String   @id @default("default")
+  about              String
+  backgroundImageUrl String
+  watermarkText      String   @default("CARVI ASSOCIATES")
+  showWatermark      Boolean  @default(true)
+  copyrightText      String   @default("by Carvi Associates.")
+  linksTitle         String   @default("Links")
+  exploreTitle       String   @default("Explore")
+  blogTitle          String   @default("Recent Blog")
+  showAbout          Boolean  @default(true)
+  showSocials        Boolean  @default(true)
+  showLinks          Boolean  @default(true)
+  showExplore        Boolean  @default(true)
+  showRecentBlog     Boolean  @default(true)
+  showBottomBar      Boolean  @default(true)
+  useSiteSocials     Boolean  @default(true)
+  logoTone           String   @default("dark")
+  isVisible          Boolean  @default(true)
+  seoTitle           String?
+  seoDescription     String?
+  seoKeywords        String?
+  canonicalUrl       String?
+  ogImageUrl         String?
+  twitterImageUrl    String?
+  noIndex            Boolean  @default(false)
+  updatedAt          DateTime @updatedAt
+}
+
+model FooterLink {
+  id           String           @id @default(cuid())
+  label        String
+  href         String           @default("#")
+  column       FooterLinkColumn
+  displayOrder Int              @default(0)
+  isVisible    Boolean          @default(true)
+  isActive     Boolean          @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@index([column, displayOrder])
+  @@index([deletedAt])
+}
+
+model FooterRecentPost {
+  id           String    @id @default(cuid())
+  title        String
+  dateLabel    String
+  imageUrl     String
+  imageAlt     String    @default("")
+  href         String    @default("#")
+  displayOrder Int       @default(0)
+  isVisible    Boolean   @default(true)
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+}
+
+model FooterSocialLink {
+  id           String    @id @default(cuid())
+  label        String
+  href         String
+  icon         String
+  displayOrder Int       @default(0)
+  isVisible    Boolean   @default(true)
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+}

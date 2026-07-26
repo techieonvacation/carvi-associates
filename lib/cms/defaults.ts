@@ -2,6 +2,10 @@ import type {
   AboutContent,
   BookAppointmentContent,
   FeatureItem,
+  FooterContent,
+  FooterNavLink,
+  FooterRecentPostItem,
+  FooterSocialItem,
   HeroStat,
   HeroTrustItem,
   PartnerMarqueeItem,
@@ -593,5 +597,122 @@ export const defaultWorkingProcess: WorkingProcessContent = {
   steps: defaultWorkingProcessSteps.map((step, index) => ({
     id: `fallback-wp-${index}`,
     ...step,
+  })),
+};
+
+function footerLink(
+  id: string,
+  label: string,
+  column: FooterNavLink["column"],
+  displayOrder: number,
+): FooterNavLink {
+  return {
+    id,
+    label,
+    href: "#",
+    column,
+    displayOrder,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  };
+}
+
+export const defaultFooterLinks: FooterNavLink[] = [
+  footerLink("fallback-fl-1", "About Us", "LINKS_ONE", 0),
+  footerLink("fallback-fl-2", "Contact", "LINKS_ONE", 1),
+  footerLink("fallback-fl-3", "Faqs", "LINKS_ONE", 2),
+  footerLink("fallback-fl-4", "Packages", "LINKS_ONE", 3),
+  footerLink("fallback-fl-5", "Maps", "LINKS_ONE", 4),
+  footerLink("fallback-fl-6", "Services", "LINKS_ONE", 5),
+  footerLink("fallback-fl-7", "Team", "LINKS_TWO", 0),
+  footerLink("fallback-fl-8", "Projects", "LINKS_TWO", 1),
+  footerLink("fallback-fl-9", "Video", "LINKS_TWO", 2),
+  footerLink("fallback-fl-10", "Gallery", "LINKS_TWO", 3),
+  footerLink("fallback-fl-11", "Brand", "LINKS_TWO", 4),
+  footerLink("fallback-fl-12", "Blog", "LINKS_TWO", 5),
+  footerLink("fallback-fl-13", "What We Offer", "EXPLORE", 0),
+  footerLink("fallback-fl-14", "Our Story", "EXPLORE", 1),
+  footerLink("fallback-fl-15", "Watch Video", "EXPLORE", 2),
+  footerLink("fallback-fl-16", "What We Do", "EXPLORE", 3),
+  footerLink("fallback-fl-17", "Latest News", "EXPLORE", 4),
+  footerLink("fallback-fl-18", "Help Center", "EXPLORE", 5),
+  footerLink("fallback-fl-19", "Privacy", "BOTTOM", 0),
+  footerLink("fallback-fl-20", "Policy", "BOTTOM", 1),
+  footerLink("fallback-fl-21", "Contact Us", "BOTTOM", 2),
+];
+
+export const defaultFooterRecentPosts: Omit<
+  FooterRecentPostItem,
+  "id"
+>[] = [
+  {
+    title: "This Specific Issue Network Security",
+    dateLabel: "10 May 2024",
+    imageUrl: "/images/blog/footer-blog-1-1.jpg",
+    imageAlt: "Network security blog",
+    href: "#",
+    displayOrder: 0,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+  {
+    title: "In up So Discovery my Middleton",
+    dateLabel: "23 February 2025",
+    imageUrl: "/images/blog/footer-blog-1-2.jpg",
+    imageAlt: "Discovery blog",
+    href: "#",
+    displayOrder: 1,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+];
+
+export const defaultFooterSocials: Omit<FooterSocialItem, "id">[] = [
+  { label: "Facebook", href: "https://facebook.com", icon: "fa-facebook-f", displayOrder: 0, isVisible: true, isActive: true, deletedAt: null },
+  { label: "X", href: "https://x.com", icon: "fa-twitter", displayOrder: 1, isVisible: true, isActive: true, deletedAt: null },
+  { label: "Linkedin", href: "https://linkedin.com", icon: "fa-linkedin-in", displayOrder: 2, isVisible: true, isActive: true, deletedAt: null },
+  { label: "Instagram", href: "https://instagram.com", icon: "fa-instagram", displayOrder: 3, isVisible: true, isActive: true, deletedAt: null },
+];
+
+export const defaultFooter: FooterContent = {
+  about:
+    "Carvi Associates is a modern finance, business & consulting practice helping individuals and companies plan, invest, and grow with confidence.",
+  backgroundImageUrl: "/images/backgrounds/footer-bg.jpg",
+  watermarkText: "CARVI ASSOCIATES",
+  showWatermark: true,
+  copyrightText: "by Carvi Associates.",
+  linksTitle: "Links",
+  exploreTitle: "Explore",
+  blogTitle: "Recent Blog",
+  showAbout: true,
+  showSocials: true,
+  showLinks: true,
+  showExplore: true,
+  showRecentBlog: true,
+  showBottomBar: true,
+  useSiteSocials: true,
+  logoTone: "dark",
+  isVisible: true,
+  seoTitle: null,
+  seoDescription: null,
+  seoKeywords: null,
+  canonicalUrl: null,
+  ogImageUrl: null,
+  twitterImageUrl: null,
+  noIndex: false,
+  linksColumnOne: defaultFooterLinks.filter((link) => link.column === "LINKS_ONE"),
+  linksColumnTwo: defaultFooterLinks.filter((link) => link.column === "LINKS_TWO"),
+  explore: defaultFooterLinks.filter((link) => link.column === "EXPLORE"),
+  bottomLinks: defaultFooterLinks.filter((link) => link.column === "BOTTOM"),
+  recentBlog: defaultFooterRecentPosts.map((post, index) => ({
+    id: `fallback-frp-${index}`,
+    ...post,
+  })),
+  socials: defaultFooterSocials.map((social, index) => ({
+    id: `fallback-fs-${index}`,
+    ...social,
   })),
 };

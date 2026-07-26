@@ -267,3 +267,80 @@ export type WorkingProcessContent = {
   noIndex: boolean;
   steps: WorkingProcessStepItem[];
 };
+
+export const FOOTER_LINK_COLUMNS = [
+  "LINKS_ONE",
+  "LINKS_TWO",
+  "EXPLORE",
+  "BOTTOM",
+] as const;
+
+export type FooterLinkColumn = (typeof FOOTER_LINK_COLUMNS)[number];
+
+export type FooterNavLink = {
+  id: string;
+  label: string;
+  href: string;
+  column: FooterLinkColumn;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+};
+
+export type FooterRecentPostItem = {
+  id: string;
+  title: string;
+  dateLabel: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+};
+
+export type FooterSocialItem = {
+  id: string;
+  label: string;
+  href: string;
+  icon: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+};
+
+export type FooterContent = {
+  about: string;
+  backgroundImageUrl: string;
+  watermarkText: string;
+  showWatermark: boolean;
+  copyrightText: string;
+  linksTitle: string;
+  exploreTitle: string;
+  blogTitle: string;
+  showAbout: boolean;
+  showSocials: boolean;
+  showLinks: boolean;
+  showExplore: boolean;
+  showRecentBlog: boolean;
+  showBottomBar: boolean;
+  useSiteSocials: boolean;
+  logoTone: "light" | "dark";
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+  linksColumnOne: FooterNavLink[];
+  linksColumnTwo: FooterNavLink[];
+  explore: FooterNavLink[];
+  bottomLinks: FooterNavLink[];
+  recentBlog: FooterRecentPostItem[];
+  socials: FooterSocialItem[];
+};

@@ -14,6 +14,10 @@ import {
   defaultServices,
   defaultServicesSection,
   defaultSocialLinks,
+  defaultFooter,
+  defaultFooterLinks,
+  defaultFooterRecentPosts,
+  defaultFooterSocials,
   defaultTeam,
   defaultTopbar,
   defaultWhyChoose,
@@ -25,6 +29,11 @@ import type {
   AboutTab,
   BookAppointmentContent,
   FeatureItem,
+  FooterContent,
+  FooterLinkColumn,
+  FooterNavLink,
+  FooterRecentPostItem,
+  FooterSocialItem,
   HeroStat,
   HeroTrustItem,
   PartnerMarqueeItem,
@@ -38,7 +47,7 @@ import type {
   WorkingProcessContent,
   WorkingProcessStepItem,
 } from "@/lib/cms/types";
-import { PARTNER_VARIANTS } from "@/lib/cms/types";
+import { FOOTER_LINK_COLUMNS, PARTNER_VARIANTS } from "@/lib/cms/types";
 
 export type SiteContent = {
   navItems: Array<{
@@ -98,6 +107,7 @@ export type SiteContent = {
   whyChoose: WhyChooseContent;
   team: TeamContent;
   workingProcess: WorkingProcessContent;
+  footer: FooterContent;
 };
 
 function parseActiveUserImages(value: unknown): string[] {
@@ -489,6 +499,151 @@ function mapWorkingProcessSection(
   };
 }
 
+function parseFooterColumn(value: unknown): FooterLinkColumn {
+  if (
+    typeof value === "string" &&
+    (FOOTER_LINK_COLUMNS as readonly string[]).includes(value)
+  ) {
+    return value as FooterLinkColumn;
+  }
+  return "LINKS_ONE";
+}
+
+export function mapFooterLink(row: {
+  id: string;
+  label: string;
+  href: string;
+  column: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+}): FooterNavLink {
+  return {
+    id: row.id,
+    label: row.label,
+    href: row.href,
+    column: parseFooterColumn(row.column),
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+  };
+}
+
+export function mapFooterRecentPost(row: {
+  id: string;
+  title: string;
+  dateLabel: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+}): FooterRecentPostItem {
+  return {
+    id: row.id,
+    title: row.title,
+    dateLabel: row.dateLabel,
+    imageUrl: row.imageUrl,
+    imageAlt: row.imageAlt,
+    href: row.href,
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+  };
+}
+
+export function mapFooterSocial(row: {
+  id: string;
+  label: string;
+  href: string;
+  icon: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+}): FooterSocialItem {
+  return {
+    id: row.id,
+    label: row.label,
+    href: row.href,
+    icon: row.icon,
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+  };
+}
+
+function mapFooterContent(
+  row: {
+    about: string;
+    backgroundImageUrl: string;
+    watermarkText: string;
+    showWatermark: boolean;
+    copyrightText: string;
+    linksTitle: string;
+    exploreTitle: string;
+    blogTitle: string;
+    showAbout: boolean;
+    showSocials: boolean;
+    showLinks: boolean;
+    showExplore: boolean;
+    showRecentBlog: boolean;
+    showBottomBar: boolean;
+    useSiteSocials: boolean;
+    logoTone: string;
+    isVisible: boolean;
+    seoTitle: string | null;
+    seoDescription: string | null;
+    seoKeywords: string | null;
+    canonicalUrl: string | null;
+    ogImageUrl: string | null;
+    twitterImageUrl: string | null;
+    noIndex: boolean;
+  },
+  links: FooterNavLink[],
+  recentBlog: FooterRecentPostItem[],
+  socials: FooterSocialItem[],
+): FooterContent {
+  return {
+    about: row.about,
+    backgroundImageUrl: row.backgroundImageUrl,
+    watermarkText: row.watermarkText,
+    showWatermark: row.showWatermark,
+    copyrightText: row.copyrightText,
+    linksTitle: row.linksTitle,
+    exploreTitle: row.exploreTitle,
+    blogTitle: row.blogTitle,
+    showAbout: row.showAbout,
+    showSocials: row.showSocials,
+    showLinks: row.showLinks,
+    showExplore: row.showExplore,
+    showRecentBlog: row.showRecentBlog,
+    showBottomBar: row.showBottomBar,
+    useSiteSocials: row.useSiteSocials,
+    logoTone: row.logoTone === "light" ? "light" : "dark",
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
+    linksColumnOne: links.filter((link) => link.column === "LINKS_ONE"),
+    linksColumnTwo: links.filter((link) => link.column === "LINKS_TWO"),
+    explore: links.filter((link) => link.column === "EXPLORE"),
+    bottomLinks: links.filter((link) => link.column === "BOTTOM"),
+    recentBlog,
+    socials,
+  };
+}
+
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const [
     navItems,
@@ -509,6 +664,10 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     teamMembers,
     workingProcessSettings,
     workingProcessSteps,
+    footerSettings,
+    footerLinks,
+    footerRecentPosts,
+    footerSocials,
   ] = await Promise.all([
     prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
@@ -543,6 +702,19 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     }),
     prisma.workingProcessSettings.findUnique({ where: { id: "default" } }),
     prisma.workingProcessStep.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
+    prisma.footerSettings.findUnique({ where: { id: "default" } }),
+    prisma.footerLink.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: [{ column: "asc" }, { displayOrder: "asc" }],
+    }),
+    prisma.footerRecentPost.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
+    prisma.footerSocialLink.findMany({
       where: { deletedAt: null, isVisible: true, isActive: true },
       orderBy: { displayOrder: "asc" },
     }),
@@ -653,5 +825,52 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
             : defaultWorkingProcess.steps,
         )
       : defaultWorkingProcess,
+    footer: (() => {
+      if (!footerSettings) return defaultFooter;
+
+      const mappedLinks = footerLinks.length
+        ? footerLinks.map(mapFooterLink)
+        : defaultFooterLinks;
+      const mappedPosts = footerRecentPosts.length
+        ? footerRecentPosts.map(mapFooterRecentPost)
+        : defaultFooterRecentPosts.map((post, index) => ({
+            id: `fallback-frp-${index}`,
+            ...post,
+          }));
+
+      const siteSocialsAsFooter: FooterSocialItem[] = socialLinks
+        .filter((link) => link.visible)
+        .map((link, index) => ({
+          id: link.id,
+          label: link.label,
+          href: link.href,
+          icon: link.icon,
+          displayOrder: link.sortOrder ?? index,
+          isVisible: link.visible,
+          isActive: true,
+          deletedAt: null,
+        }));
+
+      const mappedSocials = footerSettings.useSiteSocials
+        ? siteSocialsAsFooter.length
+          ? siteSocialsAsFooter
+          : defaultFooterSocials.map((social, index) => ({
+              id: `fallback-fs-${index}`,
+              ...social,
+            }))
+        : footerSocials.length
+          ? footerSocials.map(mapFooterSocial)
+          : defaultFooterSocials.map((social, index) => ({
+              id: `fallback-fs-${index}`,
+              ...social,
+            }));
+
+      return mapFooterContent(
+        footerSettings,
+        mappedLinks,
+        mappedPosts,
+        mappedSocials,
+      );
+    })(),
   };
 });

@@ -21,6 +21,10 @@ import {
   defaultWhyChooseItems,
   defaultWorkingProcess,
   defaultWorkingProcessSteps,
+  defaultFooter,
+  defaultFooterLinks,
+  defaultFooterRecentPosts,
+  defaultFooterSocials,
 } from "../lib/cms/defaults";
 
 const connectionString = process.env.DATABASE_URL;
@@ -428,6 +432,85 @@ async function main() {
         displayOrder: step.displayOrder,
         isVisible: step.isVisible,
         isActive: step.isActive,
+      })),
+    });
+  }
+
+  const existingFooter = await prisma.footerSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingFooter) {
+    await prisma.footerSettings.create({
+      data: {
+        id: "default",
+        about: defaultFooter.about,
+        backgroundImageUrl: defaultFooter.backgroundImageUrl,
+        watermarkText: defaultFooter.watermarkText,
+        showWatermark: defaultFooter.showWatermark,
+        copyrightText: defaultFooter.copyrightText,
+        linksTitle: defaultFooter.linksTitle,
+        exploreTitle: defaultFooter.exploreTitle,
+        blogTitle: defaultFooter.blogTitle,
+        showAbout: defaultFooter.showAbout,
+        showSocials: defaultFooter.showSocials,
+        showLinks: defaultFooter.showLinks,
+        showExplore: defaultFooter.showExplore,
+        showRecentBlog: defaultFooter.showRecentBlog,
+        showBottomBar: defaultFooter.showBottomBar,
+        useSiteSocials: defaultFooter.useSiteSocials,
+        logoTone: defaultFooter.logoTone,
+        isVisible: defaultFooter.isVisible,
+        seoTitle: defaultFooter.seoTitle,
+        seoDescription: defaultFooter.seoDescription,
+        seoKeywords: defaultFooter.seoKeywords,
+        canonicalUrl: defaultFooter.canonicalUrl,
+        ogImageUrl: defaultFooter.ogImageUrl,
+        twitterImageUrl: defaultFooter.twitterImageUrl,
+        noIndex: defaultFooter.noIndex,
+      },
+    });
+  }
+
+  const footerLinkCount = await prisma.footerLink.count();
+  if (footerLinkCount === 0) {
+    await prisma.footerLink.createMany({
+      data: defaultFooterLinks.map((link) => ({
+        label: link.label,
+        href: link.href,
+        column: link.column,
+        displayOrder: link.displayOrder,
+        isVisible: link.isVisible,
+        isActive: link.isActive,
+      })),
+    });
+  }
+
+  const footerPostCount = await prisma.footerRecentPost.count();
+  if (footerPostCount === 0) {
+    await prisma.footerRecentPost.createMany({
+      data: defaultFooterRecentPosts.map((post) => ({
+        title: post.title,
+        dateLabel: post.dateLabel,
+        imageUrl: post.imageUrl,
+        imageAlt: post.imageAlt,
+        href: post.href,
+        displayOrder: post.displayOrder,
+        isVisible: post.isVisible,
+        isActive: post.isActive,
+      })),
+    });
+  }
+
+  const footerSocialCount = await prisma.footerSocialLink.count();
+  if (footerSocialCount === 0) {
+    await prisma.footerSocialLink.createMany({
+      data: defaultFooterSocials.map((social) => ({
+        label: social.label,
+        href: social.href,
+        icon: social.icon,
+        displayOrder: social.displayOrder,
+        isVisible: social.isVisible,
+        isActive: social.isActive,
       })),
     });
   }
