@@ -85,6 +85,7 @@ export function About({ about }: AboutProps) {
       ? about.defaultTabId
       : (about.tabs[1]?.id ?? about.tabs[0]?.id ?? "");
   const [activeTab, setActiveTab] = useState(initialTabId);
+  const [textExpanded, setTextExpanded] = useState(false);
 
   return (
     <section className="about-one relative bg-white pb-30 max-md:pb-25 max-sm:pb-20">
@@ -151,12 +152,36 @@ export function About({ about }: AboutProps) {
             />
 
             <Reveal direction="up" duration={1300}>
-              <p className="about-one__text mb-[27px] text-muted-foreground">{about.text}</p>
+              <div className="about-one__text-wrap mb-[27px]">
+                <p
+                  className={cn(
+                    "about-one__text text-muted-foreground",
+                    !textExpanded && "line-clamp-2",
+                  )}
+                >
+                  {about.text}
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setTextExpanded((open) => !open)}
+                  aria-expanded={textExpanded}
+                  className="about-one__read-more mt-3 inline-flex items-center gap-2 font-heading text-[15px] font-semibold text-accent capitalize transition-colors duration-300 hover:text-primary"
+                >
+                  {textExpanded ? "Read Less" : "Read More"}
+                  <i
+                    className={cn(
+                      "icon-right text-[12px] transition-transform duration-300",
+                      textExpanded && "rotate-90",
+                    )}
+                    aria-hidden="true"
+                  />
+                </button>
+              </div>
             </Reveal>
 
             <Reveal direction="up" duration={1300}>
               <div className="tabs-box">
-                <ul className="tab-buttons m-0 flex list-none flex-wrap items-center gap-[30px] p-0">
+                <ul className="tab-buttons m-0 flex w-full list-none items-stretch gap-3 p-0 sm:gap-4">
                   {about.tabs.map((t) => (
                     <li
                       key={t.id}
@@ -170,11 +195,11 @@ export function About({ about }: AboutProps) {
                         }
                       }}
                       className={cn(
-                        "tab-btn relative cursor-pointer rounded-[50px_0px] border border-border bg-white px-[30px] py-[10px] font-heading text-[16px] leading-[1.562] font-semibold text-foreground capitalize transition-all duration-500 hover:border-primary hover:bg-primary hover:text-foreground",
+                        "tab-btn relative flex min-w-0 flex-1 cursor-pointer items-center justify-center rounded-[50px_0px] border border-border bg-white px-3 py-[10px] text-center font-heading text-[14px] leading-[1.35] font-semibold text-foreground capitalize transition-all duration-500 hover:border-primary hover:bg-primary hover:text-foreground sm:px-5 sm:text-[15px] xl:px-6 xl:text-[16px] xl:leading-[1.562]",
                         activeTab === t.id && "active-btn border-primary bg-primary text-foreground",
                       )}
                     >
-                      {t.label}
+                      <span className="block w-full text-balance">{t.label}</span>
                     </li>
                   ))}
                 </ul>

@@ -82,7 +82,7 @@ export function Carousel({
       <div
         ref={trackRef}
         className={cn(
-          "scrollbar-hide flex snap-x snap-mandatory overflow-x-auto scroll-smooth",
+          "scrollbar-hide flex items-stretch snap-x snap-mandatory overflow-x-auto scroll-smooth",
           gapClassName,
         )}
       >
@@ -93,7 +93,7 @@ export function Carousel({
             ref={(el) => {
               itemRefs.current[i] = el;
             }}
-            className={cn("snap-start shrink-0", itemClassName)}
+            className={cn("flex snap-start shrink-0 flex-col [&>*]:h-full", itemClassName)}
           >
             {item}
           </div>

@@ -43,16 +43,25 @@
   border: 1px dashed var(--findox-base);
 }
 
+/* Equal-width tab pills on one row; decorative flag must not shift layout. */
+.about-one .tab-buttons {
+  width: 100%;
+}
+.about-one .tab-btn {
+  min-height: 46px;
+}
+
 /* Green "flag" tucked under a tab button, revealed while active. */
 .about-one .tab-btn::after {
   content: "";
   width: 56.49px;
   height: 25.067px;
   position: absolute;
-  right: -9px;
+  right: -6px;
   bottom: -7px;
   z-index: -1;
   opacity: 0;
+  pointer-events: none;
   transform: rotate(129.56deg);
   border-radius: inherit;
   background-color: var(--findox-base);

@@ -33,13 +33,12 @@
   transform: translateX(0%) translateY(-50%);
 }
 
-/* Colour-tint overlay masked to the member cutout's own silhouette; the
-   mask-image itself is set inline per-member (see Team.tsx). */
-.team-card__overlay {
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-size: cover;
-  mask-repeat: no-repeat;
-  mask-size: cover;
+/* Uniform photo frame + hover colour wash over the fixed image area. */
+.team-card__image {
+  flex-shrink: 0;
+}
+.team-card__photo {
+  object-position: top center;
 }
 .team-card:hover .team-card__overlay {
   height: 100%;

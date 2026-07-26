@@ -59,15 +59,31 @@ export function Team({ team, socialLinks }: TeamProps) {
                     }));
 
               return (
-                <Reveal key={member.id} direction="up" duration={1300} delay={(i + 1) * 100}>
-                  <div className="team-card group relative">
-                    <div className="team-card__image relative overflow-hidden text-center">
+                <Reveal
+                  key={member.id}
+                  direction="up"
+                  duration={1300}
+                  delay={(i + 1) * 100}
+                  className="h-full"
+                >
+                  <div className="team-card group relative flex h-full flex-col">
+                    <div className="team-card__image relative aspect-[270/322] w-full overflow-hidden text-center">
+                      <span
+                        className="team-card__shape absolute bottom-0 left-0 z-0 h-[75%] w-full bg-muted"
+                        aria-hidden="true"
+                      />
+
                       <Image
                         src={member.imageUrl}
                         alt={member.imageAlt || member.name}
-                        width={270}
-                        height={322}
-                        className="relative z-[1] mx-auto h-auto w-auto max-w-full"
+                        fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                        className="team-card__photo relative z-[1] object-cover object-top"
+                      />
+
+                      <div
+                        className="team-card__overlay absolute inset-0 z-[1] h-0 w-full bg-accent/50 opacity-0 transition-all duration-500"
+                        aria-hidden="true"
                       />
 
                       <div className="team-card__social absolute right-0 bottom-0 z-[3] h-[45px] w-20">
@@ -76,23 +92,9 @@ export function Team({ team, socialLinks }: TeamProps) {
                         </span>
                         <SocialLinks socials={socials} />
                       </div>
-
-                      <div
-                        className="team-card__overlay absolute top-0 left-0 z-[1] h-0 w-full bg-accent/50 opacity-0 transition-all duration-500"
-                        style={{
-                          WebkitMaskImage: `url(${member.imageUrl})`,
-                          maskImage: `url(${member.imageUrl})`,
-                        }}
-                        aria-hidden="true"
-                      />
-
-                      <span
-                        className="team-card__shape absolute bottom-0 left-0 h-[242px] w-full bg-muted"
-                        aria-hidden="true"
-                      />
                     </div>
 
-                    <div className="team-card__info relative z-[1] overflow-hidden rounded-b-[50px] bg-white px-[25px] pt-5 pb-[17px] text-center">
+                    <div className="team-card__info relative z-[1] mt-auto flex min-h-[96px] flex-col justify-center overflow-hidden rounded-b-[50px] bg-white px-[25px] pt-5 pb-[17px] text-center">
                       <h3 className="team-card__name mb-1.5 text-[22px] leading-[1.318] font-bold text-foreground capitalize transition-colors duration-500 group-hover:text-white sm:max-md:text-[19px]">
                         <Link href={href}>{member.name}</Link>
                       </h3>
