@@ -15,6 +15,7 @@ import {
   defaultServicesSection,
   defaultSocialLinks,
   defaultTopbar,
+  defaultWhyChoose,
 } from "@/lib/cms/defaults";
 import { mapServiceRow } from "@/lib/cms/service-mappers";
 import type {
@@ -27,6 +28,8 @@ import type {
   PartnerMarqueeItem,
   PartnerVariant,
   ServicesContent,
+  WhyChooseContent,
+  WhyChooseItem,
 } from "@/lib/cms/types";
 import { PARTNER_VARIANTS } from "@/lib/cms/types";
 
@@ -85,6 +88,7 @@ export type SiteContent = {
   about: AboutContent;
   services: ServicesContent;
   bookAppointment: BookAppointmentContent;
+  whyChoose: WhyChooseContent;
 };
 
 function parseActiveUserImages(value: unknown): string[] {
@@ -264,6 +268,75 @@ function mapBookAppointment(row: {
   };
 }
 
+export function mapWhyChooseItem(row: {
+  id: string;
+  icon: string;
+  title: string;
+  text: string;
+  href: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): WhyChooseItem {
+  return {
+    id: row.id,
+    icon: row.icon,
+    title: row.title,
+    text: row.text,
+    href: row.href,
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+function mapWhyChooseSection(
+  row: {
+    tagline: string;
+    titleLine1: string;
+    titleLine2: string;
+    description: string;
+    taglineBg: string;
+    imageUrl: string;
+    imageAlt: string;
+    shapeImageUrl: string;
+    isVisible: boolean;
+    seoTitle: string | null;
+    seoDescription: string | null;
+    seoKeywords: string | null;
+    canonicalUrl: string | null;
+    ogImageUrl: string | null;
+    twitterImageUrl: string | null;
+    noIndex: boolean;
+  },
+  items: WhyChooseItem[],
+): WhyChooseContent {
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    description: row.description,
+    taglineBg: row.taglineBg || defaultWhyChoose.taglineBg,
+    imageUrl: row.imageUrl,
+    imageAlt: row.imageAlt || defaultWhyChoose.imageAlt,
+    shapeImageUrl: row.shapeImageUrl || defaultWhyChoose.shapeImageUrl,
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
+    items,
+  };
+}
+
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const [
     navItems,
@@ -278,6 +351,8 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     servicesSection,
     services,
     bookAppointment,
+    whyChooseSettings,
+    whyChooseItems,
   ] = await Promise.all([
     prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
@@ -300,6 +375,11 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
       orderBy: { displayOrder: "asc" },
     }),
     prisma.bookAppointmentSettings.findUnique({ where: { id: "default" } }),
+    prisma.whyChooseSettings.findUnique({ where: { id: "default" } }),
+    prisma.whyChooseItem.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
   ]);
 
   return {
@@ -383,5 +463,13 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     bookAppointment: bookAppointment
       ? mapBookAppointment(bookAppointment)
       : defaultBookAppointment,
+    whyChoose: whyChooseSettings
+      ? mapWhyChooseSection(
+          whyChooseSettings,
+          whyChooseItems.length
+            ? whyChooseItems.map(mapWhyChooseItem)
+            : defaultWhyChoose.items,
+        )
+      : defaultWhyChoose,
   };
 });

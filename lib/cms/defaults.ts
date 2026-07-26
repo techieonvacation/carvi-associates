@@ -7,6 +7,8 @@ import type {
   PartnerMarqueeItem,
   ServiceItem,
   ServicesSectionContent,
+  WhyChooseContent,
+  WhyChooseItem,
 } from "@/lib/cms/types";
 
 export const defaultNavItems = [
@@ -431,4 +433,60 @@ export const defaultBookAppointment: BookAppointmentContent = {
   ogImageUrl: null,
   twitterImageUrl: null,
   noIndex: false,
+};
+
+export const defaultWhyChooseItems: Omit<WhyChooseItem, "id" | "createdAt" | "updatedAt">[] = [
+  {
+    icon: "icon-market-research",
+    title: "Market Research Analysis",
+    text: "Financial services provided company.",
+    href: "#",
+    displayOrder: 0,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+  {
+    icon: "icon-data-visualization",
+    title: "Data Analysis finance",
+    text: "Business tailored design, management.",
+    href: "#",
+    displayOrder: 1,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+  {
+    icon: "icon-advertisig-agency",
+    title: "Digital of Marketing",
+    text: "We need to make the new version clean.",
+    href: "#",
+    displayOrder: 2,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+];
+
+export const defaultWhyChoose: WhyChooseContent = {
+  tagline: "Why Choose Us",
+  title: ["Consulting Solutions For Your", "Business Development."],
+  description:
+    "Business tailored design, management & support services Business business agency elit, sed do eiusmod tempor majority have in some we form, by injected humour solution.",
+  taglineBg: "#f4ebd8",
+  imageUrl: "/images/resources/why-choose-1-1.jpg",
+  imageAlt: "Why choose Carvi Associates",
+  shapeImageUrl: "/images/shapes/why-choose-shape-1-1.png",
+  isVisible: true,
+  seoTitle: null,
+  seoDescription: null,
+  seoKeywords: null,
+  canonicalUrl: null,
+  ogImageUrl: null,
+  twitterImageUrl: null,
+  noIndex: false,
+  items: defaultWhyChooseItems.map((item, index) => ({
+    id: `fallback-why-${index}`,
+    ...item,
+  })),
 };

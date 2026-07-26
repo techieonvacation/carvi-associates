@@ -16,6 +16,7 @@ import {
   Info,
   BriefcaseBusiness,
   CalendarCheck2,
+  BadgeCheck,
 } from "lucide-react";
 import {
   Sidebar,
@@ -42,6 +43,7 @@ const items = [
   { href: "/admin/about", label: "About", icon: Info },
   { href: "/admin/services", label: "Services", icon: BriefcaseBusiness },
   { href: "/admin/book-appointment", label: "Book Appointment", icon: CalendarCheck2 },
+  { href: "/admin/why-choose", label: "Why Choose Us", icon: BadgeCheck },
   { href: "/admin/header", label: "Header CTA", icon: Megaphone },
   { href: "/admin/socials", label: "Social Links", icon: Share2 },
 ];

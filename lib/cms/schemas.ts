@@ -187,3 +187,55 @@ export const bookAppointmentSchema = z.object({
   twitterImageUrl: optionalUrl,
   noIndex: z.boolean(),
 });
+
+export const whyChooseSectionSchema = z.object({
+  tagline: z.string().min(1),
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  description: z.string().min(1),
+  taglineBg: z.string().min(1),
+  imageUrl: z.string().min(1),
+  imageAlt: z.string().min(1),
+  shapeImageUrl: z.string().min(1),
+  isVisible: z.boolean(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  twitterImageUrl: optionalUrl,
+  noIndex: z.boolean(),
+});
+
+export const whyChooseItemSchema = z.object({
+  id: z.string().optional(),
+  icon: z.string().min(1),
+  title: z.string().min(1),
+  text: z.string().min(1),
+  href: z.string().min(1),
+  displayOrder: z.number().int().optional(),
+  isVisible: z.boolean(),
+  isActive: z.boolean(),
+});
+
+export const whyChooseItemsPayloadSchema = z.object({
+  items: z.array(whyChooseItemSchema).min(1),
+});
+
+export const whyChooseReorderSchema = z.object({
+  orderedIds: z.array(z.string().min(1)).min(1),
+});
+
+export const whyChooseBulkSchema = z.object({
+  ids: z.array(z.string().min(1)).min(1),
+  action: z.enum([
+    "show",
+    "hide",
+    "activate",
+    "deactivate",
+    "soft-delete",
+    "restore",
+    "hard-delete",
+    "duplicate",
+  ]),
+});

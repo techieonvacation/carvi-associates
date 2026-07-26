@@ -40,7 +40,7 @@ export default async function Home() {
         {/* <ClientLogos /> */}
         <Services services={content.services} />
         <BookAppointment bookAppointment={content.bookAppointment} />
-        <WhyChooseUs />
+        <WhyChooseUs whyChoose={content.whyChoose} />
         <MarqueeBands />
         <Team />
         <Projects />

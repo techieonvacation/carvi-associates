@@ -241,3 +241,42 @@ model BookAppointmentSettings {
   noIndex              Boolean  @default(false)
   updatedAt            DateTime @updatedAt
 }
+
+model WhyChooseSettings {
+  id             String   @id @default("default")
+  tagline        String
+  titleLine1     String
+  titleLine2     String
+  description    String
+  taglineBg      String   @default("#f4ebd8")
+  imageUrl       String
+  imageAlt       String   @default("Why choose Carvi Associates")
+  shapeImageUrl  String   @default("/images/shapes/why-choose-shape-1-1.png")
+  isVisible      Boolean  @default(true)
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  canonicalUrl   String?
+  ogImageUrl     String?
+  twitterImageUrl String?
+  noIndex        Boolean  @default(false)
+  updatedAt      DateTime @updatedAt
+}
+
+model WhyChooseItem {
+  id           String    @id @default(cuid())
+  icon         String
+  title        String
+  text         String
+  href         String    @default("#")
+  displayOrder Int       @default(0)
+  isVisible    Boolean   @default(true)
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([isVisible, isActive, deletedAt])
+}

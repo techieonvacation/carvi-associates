@@ -166,3 +166,36 @@ export type BookAppointmentContent = {
   twitterImageUrl: string | null;
   noIndex: boolean;
 };
+
+export type WhyChooseItem = {
+  id: string;
+  icon: string;
+  title: string;
+  text: string;
+  href: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type WhyChooseContent = {
+  tagline: string;
+  title: [string, string];
+  description: string;
+  taglineBg: string;
+  imageUrl: string;
+  imageAlt: string;
+  shapeImageUrl: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+  items: WhyChooseItem[];
+};

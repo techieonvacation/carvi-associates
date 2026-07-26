@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
+  BadgeCheck,
   BriefcaseBusiness,
   Building2,
   CalendarCheck2,
@@ -22,14 +23,21 @@ export default async function AdminDashboardPage() {
   const user = await getSessionUser();
   if (!user) return null;
 
-  const [navCount, socialCount, partnerCount, featureCount, serviceCount] =
-    await Promise.all([
-      prisma.navItem.count(),
-      prisma.socialLink.count(),
-      prisma.partner.count(),
-      prisma.feature.count(),
-      prisma.service.count({ where: { deletedAt: null } }),
-    ]);
+  const [
+    navCount,
+    socialCount,
+    partnerCount,
+    featureCount,
+    serviceCount,
+    whyChooseCount,
+  ] = await Promise.all([
+    prisma.navItem.count(),
+    prisma.socialLink.count(),
+    prisma.partner.count(),
+    prisma.feature.count(),
+    prisma.service.count({ where: { deletedAt: null } }),
+    prisma.whyChooseItem.count({ where: { deletedAt: null } }),
+  ]);
 
   const cards = [
     {
@@ -79,6 +87,12 @@ export default async function AdminDashboardPage() {
       description: "CTA band copy, buttons, and background image",
       href: "/admin/book-appointment",
       icon: CalendarCheck2,
+    },
+    {
+      title: "Why Choose Us",
+      description: `${whyChooseCount} reason cards and feature image`,
+      href: "/admin/why-choose",
+      icon: BadgeCheck,
     },
     {
       title: "Social Links",

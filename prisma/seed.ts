@@ -15,6 +15,8 @@ import {
   defaultServicesSection,
   defaultSocialLinks,
   defaultTopbar,
+  defaultWhyChoose,
+  defaultWhyChooseItems,
 } from "../lib/cms/defaults";
 
 const connectionString = process.env.DATABASE_URL;
@@ -301,6 +303,48 @@ async function main() {
         twitterImageUrl: defaultBookAppointment.twitterImageUrl,
         noIndex: defaultBookAppointment.noIndex,
       },
+    });
+  }
+
+  const existingWhyChoose = await prisma.whyChooseSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingWhyChoose) {
+    await prisma.whyChooseSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultWhyChoose.tagline,
+        titleLine1: defaultWhyChoose.title[0],
+        titleLine2: defaultWhyChoose.title[1],
+        description: defaultWhyChoose.description,
+        taglineBg: defaultWhyChoose.taglineBg,
+        imageUrl: defaultWhyChoose.imageUrl,
+        imageAlt: defaultWhyChoose.imageAlt,
+        shapeImageUrl: defaultWhyChoose.shapeImageUrl,
+        isVisible: defaultWhyChoose.isVisible,
+        seoTitle: defaultWhyChoose.seoTitle,
+        seoDescription: defaultWhyChoose.seoDescription,
+        seoKeywords: defaultWhyChoose.seoKeywords,
+        canonicalUrl: defaultWhyChoose.canonicalUrl,
+        ogImageUrl: defaultWhyChoose.ogImageUrl,
+        twitterImageUrl: defaultWhyChoose.twitterImageUrl,
+        noIndex: defaultWhyChoose.noIndex,
+      },
+    });
+  }
+
+  const whyChooseCount = await prisma.whyChooseItem.count();
+  if (whyChooseCount === 0) {
+    await prisma.whyChooseItem.createMany({
+      data: defaultWhyChooseItems.map((item) => ({
+        icon: item.icon,
+        title: item.title,
+        text: item.text,
+        href: item.href,
+        displayOrder: item.displayOrder,
+        isVisible: item.isVisible,
+        isActive: item.isActive,
+      })),
     });
   }
 }

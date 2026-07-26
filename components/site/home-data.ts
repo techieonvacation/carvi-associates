@@ -4,38 +4,14 @@
  * kept as-is). All internal links are "#" placeholders since only the home
  * page exists in this build.
  *
- * Hero, Partner Marquee, Features, About, Services, and Book Appointment
- * are CMS-managed via Prisma (`lib/cms/*`).
+ * Hero, Partner Marquee, Features, About, Services, Book Appointment,
+ * and Why Choose Us are CMS-managed via Prisma (`lib/cms/*`).
  */
 
 export const CLIENTS = {
   headline: ["Over 330+ Projects With 200+ Clients"],
   logo: "/images/resources/brand-1-1.png",
   logoHover: "/images/resources/brand-1-1-hover.png",
-};
-
-export const WHY_CHOOSE = {
-  tagline: "Why Choose Us",
-  title: ["Consulting Solutions For Your", "Business Development."],
-  text: "Business tailored design, management & support services Business business agency elit, sed do eiusmod tempor majority have in some we form, by injected humour solution.",
-  image: "/images/resources/why-choose-1-1.jpg",
-  items: [
-    {
-      icon: "icon-market-research",
-      title: "Market Research Analysis",
-      text: "Financial services provided company.",
-    },
-    {
-      icon: "icon-data-visualization",
-      title: "Data Analysis finance",
-      text: "Business tailored design, management.",
-    },
-    {
-      icon: "icon-advertisig-agency",
-      title: "Digital of Marketing",
-      text: "We need to make the new version clean.",
-    },
-  ],
 };
 
 export const MARQUEE_WORDS = [
