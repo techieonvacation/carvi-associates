@@ -2,8 +2,12 @@ import { Container } from "./Container";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { FindoxButton } from "./FindoxButton";
-import { BOOK_APPOINTMENT } from "./home-data";
+import type { BookAppointmentContent } from "@/lib/cms/types";
 import "./css/book.css";
+
+type BookAppointmentProps = {
+  bookAppointment: BookAppointmentContent;
+};
 
 /**
  * BookAppointment — the dark "book-appointment" band between Services and
@@ -13,12 +17,16 @@ import "./css/book.css";
  * on hover), and two yellow masked corner blobs pinned to the section
  * edges. Mirrors the reference `.book-appointment` section.
  */
-export function BookAppointment() {
+export function BookAppointment({ bookAppointment }: BookAppointmentProps) {
+  if (!bookAppointment.isVisible) {
+    return null;
+  }
+
   return (
     <section className="book-appointment section-space relative bg-[#2a2418] py-30 max-md:py-25 max-sm:py-20">
       <div
         className="book-appointment__bg jarallax absolute inset-0 bg-scroll bg-top bg-cover bg-no-repeat md:bg-fixed"
-        style={{ backgroundImage: `url(${BOOK_APPOINTMENT.image})` }}
+        style={{ backgroundImage: `url(${bookAppointment.backgroundImageUrl})` }}
         aria-hidden="true"
       />
 
@@ -28,28 +36,28 @@ export function BookAppointment() {
             <SectionHeading
               align="center"
               light
-              taglineBg="#f4ebd8"
-              tagline={BOOK_APPOINTMENT.tagline}
-              lines={BOOK_APPOINTMENT.title}
+              taglineBg={bookAppointment.taglineBg}
+              tagline={bookAppointment.tagline}
+              lines={[...bookAppointment.title]}
               className="mb-2.75!"
             />
 
             <Reveal direction="up" duration={1300}>
               <p className="book-appointment__text mb-6.75 text-white">
-                {BOOK_APPOINTMENT.text}
+                {bookAppointment.description}
               </p>
             </Reveal>
 
             <Reveal direction="up" duration={1300}>
               <div className="book-appointment__button flex flex-wrap items-center justify-center gap-x-7.5 gap-y-6.25">
                 <FindoxButton
-                  href="#"
-                  text="Get Started"
+                  href={bookAppointment.primaryButtonHref || "#"}
+                  text={bookAppointment.primaryButtonText}
                   className="findox-btn--white"
                 />
                 <FindoxButton
-                  href="#"
-                  text="Contact Now"
+                  href={bookAppointment.secondaryButtonHref || "#"}
+                  text={bookAppointment.secondaryButtonText}
                   className="book-appointment__btn-2"
                 />
               </div>

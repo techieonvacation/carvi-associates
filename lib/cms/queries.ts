@@ -2,6 +2,7 @@ import { cache } from "react";
 import { prisma } from "@/lib/prisma";
 import {
   defaultAbout,
+  defaultBookAppointment,
   defaultFeatures,
   defaultHeader,
   defaultHero,
@@ -10,17 +11,22 @@ import {
   defaultNavItems,
   defaultPartnerMarqueeLabel,
   defaultPartners,
+  defaultServices,
+  defaultServicesSection,
   defaultSocialLinks,
   defaultTopbar,
 } from "@/lib/cms/defaults";
+import { mapServiceRow } from "@/lib/cms/service-mappers";
 import type {
   AboutContent,
   AboutTab,
+  BookAppointmentContent,
   FeatureItem,
   HeroStat,
   HeroTrustItem,
   PartnerMarqueeItem,
   PartnerVariant,
+  ServicesContent,
 } from "@/lib/cms/types";
 import { PARTNER_VARIANTS } from "@/lib/cms/types";
 
@@ -77,6 +83,8 @@ export type SiteContent = {
   };
   features: FeatureItem[];
   about: AboutContent;
+  services: ServicesContent;
+  bookAppointment: BookAppointmentContent;
 };
 
 function parseActiveUserImages(value: unknown): string[] {
@@ -182,6 +190,80 @@ function mapAboutSettings(row: {
   };
 }
 
+function mapServicesSection(row: {
+  tagline: string;
+  titleLine1: string;
+  titleLine2: string;
+  cardTagline: string;
+  taglineBg: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+}): ServicesContent["section"] {
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    cardTagline: row.cardTagline,
+    taglineBg: row.taglineBg || defaultServicesSection.taglineBg,
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
+  };
+}
+
+function mapBookAppointment(row: {
+  tagline: string;
+  titleLine1: string;
+  titleLine2: string;
+  description: string;
+  primaryButtonText: string;
+  primaryButtonHref: string;
+  secondaryButtonText: string;
+  secondaryButtonHref: string;
+  backgroundImageUrl: string;
+  backgroundImageAlt: string;
+  taglineBg: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+}): BookAppointmentContent {
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    description: row.description,
+    primaryButtonText: row.primaryButtonText,
+    primaryButtonHref: row.primaryButtonHref,
+    secondaryButtonText: row.secondaryButtonText,
+    secondaryButtonHref: row.secondaryButtonHref,
+    backgroundImageUrl: row.backgroundImageUrl,
+    backgroundImageAlt: row.backgroundImageAlt,
+    taglineBg: row.taglineBg || defaultBookAppointment.taglineBg,
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
+  };
+}
+
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const [
     navItems,
@@ -193,6 +275,9 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     partners,
     features,
     about,
+    servicesSection,
+    services,
+    bookAppointment,
   ] = await Promise.all([
     prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
@@ -209,6 +294,12 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
       orderBy: { sortOrder: "asc" },
     }),
     prisma.aboutSettings.findUnique({ where: { id: "default" } }),
+    prisma.servicesSectionSettings.findUnique({ where: { id: "default" } }),
+    prisma.service.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
+    prisma.bookAppointmentSettings.findUnique({ where: { id: "default" } }),
   ]);
 
   return {
@@ -278,5 +369,19 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
           ...feature,
         })),
     about: about ? mapAboutSettings(about) : defaultAbout,
+    services: {
+      section: servicesSection
+        ? mapServicesSection(servicesSection)
+        : defaultServicesSection,
+      items: services.length
+        ? services.map(mapServiceRow)
+        : defaultServices.map((service, index) => ({
+            id: `fallback-service-${index}`,
+            ...service,
+          })),
+    },
+    bookAppointment: bookAppointment
+      ? mapBookAppointment(bookAppointment)
+      : defaultBookAppointment,
   };
 });

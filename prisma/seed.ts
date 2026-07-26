@@ -4,12 +4,15 @@ import bcrypt from "bcryptjs";
 import "dotenv/config";
 import {
   defaultAbout,
+  defaultBookAppointment,
   defaultFeatures,
   defaultHeader,
   defaultHero,
   defaultNavItems,
   defaultPartnerMarqueeLabel,
   defaultPartners,
+  defaultServices,
+  defaultServicesSection,
   defaultSocialLinks,
   defaultTopbar,
 } from "../lib/cms/defaults";
@@ -206,6 +209,97 @@ async function main() {
         ...(isEmptyJsonArray(existingAbout.checklist)
           ? { checklist: defaultAbout.checklist }
           : {}),
+      },
+    });
+  }
+
+  const existingServicesSection = await prisma.servicesSectionSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingServicesSection) {
+    await prisma.servicesSectionSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultServicesSection.tagline,
+        titleLine1: defaultServicesSection.title[0],
+        titleLine2: defaultServicesSection.title[1],
+        cardTagline: defaultServicesSection.cardTagline,
+        taglineBg: defaultServicesSection.taglineBg,
+        isVisible: defaultServicesSection.isVisible,
+        seoTitle: defaultServicesSection.seoTitle,
+        seoDescription: defaultServicesSection.seoDescription,
+        seoKeywords: defaultServicesSection.seoKeywords,
+        canonicalUrl: defaultServicesSection.canonicalUrl,
+        ogImageUrl: defaultServicesSection.ogImageUrl,
+        twitterImageUrl: defaultServicesSection.twitterImageUrl,
+        noIndex: defaultServicesSection.noIndex,
+      },
+    });
+  }
+
+  const serviceCount = await prisma.service.count();
+  if (serviceCount === 0) {
+    await prisma.service.createMany({
+      data: defaultServices.map((service) => ({
+        titleLine1: service.titleLine1,
+        titleLine2: service.titleLine2,
+        shortTitle: service.shortTitle,
+        subtitle: service.subtitle,
+        description: service.description,
+        slug: service.slug,
+        icon: service.icon,
+        iconType: service.iconType,
+        imageUrl: service.imageUrl,
+        imageAlt: service.imageAlt,
+        hoverImageUrl: service.hoverImageUrl,
+        badge: service.badge,
+        category: service.category,
+        serviceType: service.serviceType,
+        accentColor: service.accentColor,
+        ctaText: service.ctaText,
+        ctaHref: service.ctaHref,
+        displayOrder: service.displayOrder,
+        isFeatured: service.isFeatured,
+        isPopular: service.isPopular,
+        isActive: service.isActive,
+        isVisible: service.isVisible,
+        publishedAt: new Date(),
+        seoTitle: service.seoTitle,
+        seoDescription: service.seoDescription,
+        seoKeywords: service.seoKeywords,
+        canonicalUrl: service.canonicalUrl,
+        ogImageUrl: service.ogImageUrl,
+        noIndex: service.noIndex,
+      })),
+    });
+  }
+
+  const existingBookAppointment = await prisma.bookAppointmentSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingBookAppointment) {
+    await prisma.bookAppointmentSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultBookAppointment.tagline,
+        titleLine1: defaultBookAppointment.title[0],
+        titleLine2: defaultBookAppointment.title[1],
+        description: defaultBookAppointment.description,
+        primaryButtonText: defaultBookAppointment.primaryButtonText,
+        primaryButtonHref: defaultBookAppointment.primaryButtonHref,
+        secondaryButtonText: defaultBookAppointment.secondaryButtonText,
+        secondaryButtonHref: defaultBookAppointment.secondaryButtonHref,
+        backgroundImageUrl: defaultBookAppointment.backgroundImageUrl,
+        backgroundImageAlt: defaultBookAppointment.backgroundImageAlt,
+        taglineBg: defaultBookAppointment.taglineBg,
+        isVisible: defaultBookAppointment.isVisible,
+        seoTitle: defaultBookAppointment.seoTitle,
+        seoDescription: defaultBookAppointment.seoDescription,
+        seoKeywords: defaultBookAppointment.seoKeywords,
+        canonicalUrl: defaultBookAppointment.canonicalUrl,
+        ogImageUrl: defaultBookAppointment.ogImageUrl,
+        twitterImageUrl: defaultBookAppointment.twitterImageUrl,
+        noIndex: defaultBookAppointment.noIndex,
       },
     });
   }

@@ -38,8 +38,8 @@ export default async function Home() {
         <Features features={content.features} />
         <About about={content.about} />
         {/* <ClientLogos /> */}
-        <Services />
-        <BookAppointment />
+        <Services services={content.services} />
+        <BookAppointment bookAppointment={content.bookAppointment} />
         <WhyChooseUs />
         <MarqueeBands />
         <Team />

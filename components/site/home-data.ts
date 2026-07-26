@@ -4,64 +4,14 @@
  * kept as-is). All internal links are "#" placeholders since only the home
  * page exists in this build.
  *
- * Hero, Partner Marquee, Features, and About are CMS-managed via Prisma (`lib/cms/*`).
+ * Hero, Partner Marquee, Features, About, Services, and Book Appointment
+ * are CMS-managed via Prisma (`lib/cms/*`).
  */
 
 export const CLIENTS = {
   headline: ["Over 330+ Projects With 200+ Clients"],
   logo: "/images/resources/brand-1-1.png",
   logoHover: "/images/resources/brand-1-1-hover.png",
-};
-
-export const SERVICES = {
-  tagline: "Our Best Services",
-  title: ["Expert Advice For Consulting", "Finance Services."],
-  tagline2: "Finance Strategic Business",
-  items: [
-    {
-      icon: "icon-stats-2",
-      title: ["Business Analytics", "Statistics"],
-      text: "Delivering clear insight from complex financial data sets.",
-      image: "/images/services/service-1-1.jpg",
-    },
-    {
-      icon: "icon-agreement",
-      title: ["Personal Finance", "Services"],
-      text: "Guiding individuals toward smarter long-term money decisions.",
-      image: "/images/services/service-1-2.jpg",
-    },
-    {
-      icon: "icon-bank",
-      title: ["Banking & Business", "Accounts"],
-      text: "Streamlined account structures built for growing businesses.",
-      image: "/images/services/service-1-3.jpg",
-    },
-    {
-      icon: "icon-analysis",
-      title: ["Financial Data Analysis", "Solutions"],
-      text: "Turning raw numbers into confident, actionable strategy.",
-      image: "/images/services/service-1-4.jpg",
-    },
-    {
-      icon: "icon-planning",
-      title: ["Strategic Finance", "Planning"],
-      text: "Roadmaps that align today's budget with tomorrow's goals.",
-      image: "/images/services/service-1-5.jpg",
-    },
-    {
-      icon: "icon-support",
-      title: ["24/7 Team Support", "Services"],
-      text: "Always-on advisory support whenever a question comes up.",
-      image: "/images/services/service-1-6.jpg",
-    },
-  ],
-};
-
-export const BOOK_APPOINTMENT = {
-  tagline: "Book Appointment Now",
-  title: ["Get Any Kind Of Finance Service", "Free To Contact Us."],
-  text: "Financial services provided company that help individuals get this now or other contacts manage money make investments capital.",
-  image: "/images/backgrounds/book-appointment-bg.jpg",
 };
 
 export const WHY_CHOOSE = {

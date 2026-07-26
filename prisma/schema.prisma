@@ -139,3 +139,105 @@ model AboutSettings {
   checklist        Json     @default("[]")
   updatedAt        DateTime @updatedAt
 }
+
+model Media {
+  id           String    @id @default(cuid())
+  url          String
+  publicId     String?
+  alt          String    @default("")
+  caption      String    @default("")
+  credit       String    @default("")
+  width        Int?
+  height       Int?
+  mimeType     String?
+  blurDataUrl  String?
+  folder       String?
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([deletedAt])
+  @@index([createdAt])
+}
+
+model ServicesSectionSettings {
+  id             String   @id @default("default")
+  tagline        String
+  titleLine1     String
+  titleLine2     String
+  cardTagline    String
+  taglineBg      String   @default("#fffdf8")
+  isVisible      Boolean  @default(true)
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  canonicalUrl   String?
+  ogImageUrl     String?
+  twitterImageUrl String?
+  noIndex        Boolean  @default(false)
+  updatedAt      DateTime @updatedAt
+}
+
+model Service {
+  id             String    @id @default(cuid())
+  titleLine1     String
+  titleLine2     String
+  shortTitle     String?
+  subtitle       String?
+  description    String
+  slug           String?   @unique
+  icon           String
+  iconType       String    @default("icomoon")
+  imageUrl       String
+  imageAlt       String    @default("")
+  hoverImageUrl  String?
+  badge          String?
+  category       String?
+  serviceType    String?
+  accentColor    String?
+  ctaText        String    @default("Learn more")
+  ctaHref        String    @default("#")
+  displayOrder   Int       @default(0)
+  isFeatured     Boolean   @default(false)
+  isPopular      Boolean   @default(false)
+  isActive       Boolean   @default(true)
+  isVisible      Boolean   @default(true)
+  publishedAt    DateTime?
+  deletedAt      DateTime?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  canonicalUrl   String?
+  ogImageUrl     String?
+  noIndex        Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([isVisible, isActive, deletedAt])
+}
+
+model BookAppointmentSettings {
+  id                   String   @id @default("default")
+  tagline              String
+  titleLine1           String
+  titleLine2           String
+  description          String
+  primaryButtonText    String   @default("Get Started")
+  primaryButtonHref    String   @default("#")
+  secondaryButtonText  String   @default("Contact Now")
+  secondaryButtonHref  String   @default("#")
+  backgroundImageUrl   String
+  backgroundImageAlt   String   @default("")
+  taglineBg            String   @default("#f4ebd8")
+  isVisible            Boolean  @default(true)
+  seoTitle             String?
+  seoDescription       String?
+  seoKeywords          String?
+  canonicalUrl         String?
+  ogImageUrl           String?
+  twitterImageUrl      String?
+  noIndex              Boolean  @default(false)
+  updatedAt            DateTime @updatedAt
+}

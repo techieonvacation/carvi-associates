@@ -1,7 +1,9 @@
 import Link from "next/link";
 import {
   ArrowUpRight,
+  BriefcaseBusiness,
   Building2,
+  CalendarCheck2,
   Info,
   LayoutGrid,
   Navigation,
@@ -20,12 +22,14 @@ export default async function AdminDashboardPage() {
   const user = await getSessionUser();
   if (!user) return null;
 
-  const [navCount, socialCount, partnerCount, featureCount] = await Promise.all([
-    prisma.navItem.count(),
-    prisma.socialLink.count(),
-    prisma.partner.count(),
-    prisma.feature.count(),
-  ]);
+  const [navCount, socialCount, partnerCount, featureCount, serviceCount] =
+    await Promise.all([
+      prisma.navItem.count(),
+      prisma.socialLink.count(),
+      prisma.partner.count(),
+      prisma.feature.count(),
+      prisma.service.count({ where: { deletedAt: null } }),
+    ]);
 
   const cards = [
     {
@@ -63,6 +67,18 @@ export default async function AdminDashboardPage() {
       description: "Collage, experience badge, tabs, and checklist",
       href: "/admin/about",
       icon: Info,
+    },
+    {
+      title: "Services",
+      description: `${serviceCount} service cards on the homepage`,
+      href: "/admin/services",
+      icon: BriefcaseBusiness,
+    },
+    {
+      title: "Book Appointment",
+      description: "CTA band copy, buttons, and background image",
+      href: "/admin/book-appointment",
+      icon: CalendarCheck2,
     },
     {
       title: "Social Links",

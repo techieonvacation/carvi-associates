@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PARTNER_VARIANTS } from "@/lib/cms/types";
+import { PARTNER_VARIANTS, SERVICE_ICON_TYPES } from "@/lib/cms/types";
 
 export const heroStatSchema = z.object({
   icon: z.string().min(1),
@@ -85,4 +85,105 @@ export const aboutSchema = z.object({
   taglineBg: z.string().min(1),
   tabs: z.array(aboutTabSchema).min(1),
   checklist: z.array(z.string().min(1)).min(1),
+});
+
+const optionalUrl = z.string().optional().nullable();
+const optionalText = z.string().optional().nullable();
+
+export const servicesSectionSchema = z.object({
+  tagline: z.string().min(1),
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  cardTagline: z.string().min(1),
+  taglineBg: z.string().min(1),
+  isVisible: z.boolean(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  twitterImageUrl: optionalUrl,
+  noIndex: z.boolean(),
+});
+
+export const serviceItemSchema = z.object({
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  shortTitle: optionalText,
+  subtitle: optionalText,
+  description: z.string().min(1),
+  slug: z
+    .union([
+      z.literal(""),
+      z
+        .string()
+        .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase slug"),
+      z.null(),
+    ])
+    .optional(),
+  icon: z.string().min(1),
+  iconType: z.enum(SERVICE_ICON_TYPES),
+  imageUrl: z.string().min(1),
+  imageAlt: z.string(),
+  hoverImageUrl: optionalUrl,
+  badge: optionalText,
+  category: optionalText,
+  serviceType: optionalText,
+  accentColor: optionalText,
+  ctaText: z.string().min(1),
+  ctaHref: z.string().min(1),
+  displayOrder: z.number().int().optional(),
+  isFeatured: z.boolean(),
+  isPopular: z.boolean(),
+  isActive: z.boolean(),
+  isVisible: z.boolean(),
+  publishedAt: z.union([z.string().datetime(), z.literal(""), z.null()]).optional(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  noIndex: z.boolean(),
+});
+
+export const servicesReorderSchema = z.object({
+  orderedIds: z.array(z.string().min(1)).min(1),
+});
+
+export const servicesBulkSchema = z.object({
+  ids: z.array(z.string().min(1)).min(1),
+  action: z.enum([
+    "publish",
+    "unpublish",
+    "hide",
+    "show",
+    "activate",
+    "deactivate",
+    "soft-delete",
+    "restore",
+    "hard-delete",
+    "duplicate",
+  ]),
+});
+
+export const bookAppointmentSchema = z.object({
+  tagline: z.string().min(1),
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  description: z.string().min(1),
+  primaryButtonText: z.string().min(1),
+  primaryButtonHref: z.string().min(1),
+  secondaryButtonText: z.string().min(1),
+  secondaryButtonHref: z.string().min(1),
+  backgroundImageUrl: z.string().min(1),
+  backgroundImageAlt: z.string(),
+  taglineBg: z.string().min(1),
+  isVisible: z.boolean(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  twitterImageUrl: optionalUrl,
+  noIndex: z.boolean(),
 });

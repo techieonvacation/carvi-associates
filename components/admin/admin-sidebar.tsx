@@ -14,6 +14,8 @@ import {
   Building2,
   LayoutGrid,
   Info,
+  BriefcaseBusiness,
+  CalendarCheck2,
 } from "lucide-react";
 import {
   Sidebar,
@@ -38,6 +40,8 @@ const items = [
   { href: "/admin/partners", label: "Partner Marquee", icon: Building2 },
   { href: "/admin/features", label: "Features", icon: LayoutGrid },
   { href: "/admin/about", label: "About", icon: Info },
+  { href: "/admin/services", label: "Services", icon: BriefcaseBusiness },
+  { href: "/admin/book-appointment", label: "Book Appointment", icon: CalendarCheck2 },
   { href: "/admin/header", label: "Header CTA", icon: Megaphone },
   { href: "/admin/socials", label: "Social Links", icon: Share2 },
 ];

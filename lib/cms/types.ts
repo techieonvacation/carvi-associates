@@ -86,3 +86,83 @@ export const FEATURE_ICON_OPTIONS = [
   "icon-folder",
   "icon-satisfaction",
 ] as const;
+
+export const SERVICE_ICON_TYPES = ["icomoon", "lucide", "image", "svg"] as const;
+export type ServiceIconType = (typeof SERVICE_ICON_TYPES)[number];
+
+export type ServicesSectionContent = {
+  tagline: string;
+  title: [string, string];
+  cardTagline: string;
+  taglineBg: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+};
+
+export type ServiceItem = {
+  id: string;
+  titleLine1: string;
+  titleLine2: string;
+  shortTitle: string | null;
+  subtitle: string | null;
+  description: string;
+  slug: string | null;
+  icon: string;
+  iconType: ServiceIconType;
+  imageUrl: string;
+  imageAlt: string;
+  hoverImageUrl: string | null;
+  badge: string | null;
+  category: string | null;
+  serviceType: string | null;
+  accentColor: string | null;
+  ctaText: string;
+  ctaHref: string;
+  displayOrder: number;
+  isFeatured: boolean;
+  isPopular: boolean;
+  isActive: boolean;
+  isVisible: boolean;
+  publishedAt: string | null;
+  deletedAt: string | null;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  noIndex: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ServicesContent = {
+  section: ServicesSectionContent;
+  items: ServiceItem[];
+};
+
+export type BookAppointmentContent = {
+  tagline: string;
+  title: [string, string];
+  description: string;
+  primaryButtonText: string;
+  primaryButtonHref: string;
+  secondaryButtonText: string;
+  secondaryButtonHref: string;
+  backgroundImageUrl: string;
+  backgroundImageAlt: string;
+  taglineBg: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+};
