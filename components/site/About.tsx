@@ -99,7 +99,9 @@ export function About({ about }: AboutProps) {
                   alt={about.collageOneAlt}
                   width={497}
                   height={402}
-                  className="about-one__image__one__img relative z-1 h-auto max-w-full rounded-bl-[100px]"
+                  sizes="(max-width: 991px) 100vw, 497px"
+                  className="about-one__image__one__img relative z-1 h-auto w-auto max-w-full rounded-bl-[100px]"
+                  style={{ width: "auto", height: "auto" }}
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -118,7 +120,9 @@ export function About({ about }: AboutProps) {
                   alt={about.collageTwoAlt}
                   width={365}
                   height={261}
-                  className="about-one__image__two__img relative z-1 h-auto max-w-full"
+                  sizes="(max-width: 991px) 90vw, 365px"
+                  className="about-one__image__two__img relative z-1 h-auto w-auto max-w-full"
+                  style={{ width: "auto", height: "auto" }}
                 />
 
                 <div className="about-one__experience absolute top-[-104px] right-0 z-2 text-right">
@@ -230,7 +234,9 @@ export function About({ about }: AboutProps) {
                             alt={t.label}
                             width={231}
                             height={147}
-                            className="h-auto max-w-full"
+                            sizes="231px"
+                            className="h-auto w-auto max-w-full"
+                            style={{ width: "auto", height: "auto" }}
                           />
                         </div>
                       </div>

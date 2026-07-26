@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { Container } from "./Container";
 import { Reveal } from "./Reveal";
@@ -14,12 +13,11 @@ type ServicesProps = {
  * Services — the "services-one" grid of six white service-card tiles on a
  * mint section background. Each card layers a masked white background shape
  * (service-card__bg) with a photo that wipes in from the left on hover
- * (service-card__bg__main, via next/image sized to its animated-width
- * wrapper so object-cover reproduces the reference's background-size:cover
- * reveal), a yellow line-art icon + huge outline number above a divider
- * tick, and a circular findox-style arrow button pinned to the notch at the
- * card's bottom-right corner. Mirrors the reference `.services-one` /
- * `.service-card` markup 1:1.
+ * (service-card__bg__main as a CSS background — keeps hover art out of LCP
+ * while matching the reference's background-size:cover reveal), a yellow
+ * line-art icon + huge outline number above a divider tick, and a circular
+ * findox-style arrow button pinned to the notch at the card's bottom-right
+ * corner. Mirrors the reference `.services-one` / `.service-card` markup 1:1.
  */
 export function Services({ services }: ServicesProps) {
   if (!services.section.isVisible || !services.items.length) {
@@ -51,15 +49,12 @@ export function Services({ services }: ServicesProps) {
               >
                 <div className="service-card group relative overflow-hidden rounded-[20px]">
                   <div className="service-card__bg absolute inset-0 rounded-[inherit] bg-white">
-                    <div className="service-card__bg__main absolute top-0 left-0 h-full w-0 overflow-hidden transition-[width] duration-600 group-hover:w-full">
-                      <Image
-                        src={imageSrc}
-                        alt={service.imageAlt || ""}
-                        fill
-                        sizes="(min-width: 992px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        className="object-cover object-top"
-                      />
-                    </div>
+                    <div
+                      className="service-card__bg__main absolute top-0 left-0 h-full w-0 overflow-hidden transition-[width] duration-600 group-hover:w-full"
+                      style={{ backgroundImage: `url(${imageSrc})` }}
+                      role="img"
+                      aria-label={service.imageAlt || title}
+                    />
                   </div>
 
                   <div
@@ -118,7 +113,7 @@ export function Services({ services }: ServicesProps) {
                     <Link
                       href={href}
                       aria-label={service.ctaText ? `${service.ctaText}: ${title}` : `Learn more about ${title}`}
-                      className="service-card__btn absolute right-0 bottom-0 flex size-[71px] items-center justify-center rounded-full bg-accent text-[36px] text-white transition-all duration-500 group-hover:bg-primary group-hover:text-accent hover:rotate-45 max-[375px]:bottom-[16px] max-[375px]:size-[60px] max-[375px]:text-[28px] lg:bottom-[16px] lg:size-[60px] lg:text-[28px] xl:bottom-0 xl:size-[71px] xl:text-[36px]"
+                      className="service-card__btn absolute right-0 bottom-0 z-[2] flex size-[71px] items-center justify-center rounded-full bg-accent text-[36px] text-accent-foreground transition-all duration-500 group-hover:bg-primary group-hover:text-accent hover:rotate-45 max-[375px]:bottom-[16px] max-[375px]:size-[60px] max-[375px]:text-[28px] lg:bottom-[16px] lg:size-[60px] lg:text-[28px] xl:bottom-0 xl:size-[71px] xl:text-[36px]"
                     >
                       <i className="icon-arrow-right-up" aria-hidden="true" />
                     </Link>

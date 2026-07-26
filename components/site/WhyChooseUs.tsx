@@ -121,7 +121,9 @@ export function WhyChooseUs({ whyChoose }: WhyChooseUsProps) {
                   alt={whyChoose.imageAlt}
                   width={570}
                   height={600}
+                  sizes="(max-width: 991px) 100vw, 570px"
                   className="why-choose__image__img relative z-[1] h-auto w-full max-w-full"
+                  style={{ height: "auto" }}
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img

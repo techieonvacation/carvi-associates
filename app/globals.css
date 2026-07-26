@@ -190,3 +190,26 @@
   -webkit-text-stroke: 1.5px var(--stroke-color, currentColor);
   color: transparent;
 }
+
+/*
+ * Findox sets `.findox-scope a { color: base }` globally. Accent-filled
+ * circular CTAs (service cards, etc.) need a light icon so they stay
+ * visible before hover — not green-on-green.
+ */
+.findox-scope a.service-card__btn {
+  color: var(--accent-foreground);
+}
+.findox-scope a.service-card__btn i::before {
+  color: inherit;
+}
+.findox-scope .service-card:hover a.service-card__btn {
+  color: var(--accent);
+}
+
+/*
+ * next/image `fill` frames must keep Next's absolute 100% box model.
+ * Paired with findox.css `:not([data-nimg="fill"])` intrinsic rule.
+ */
+.findox-scope img[data-nimg="fill"] {
+  max-width: none;
+}

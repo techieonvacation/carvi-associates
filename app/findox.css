@@ -157,8 +157,14 @@
   padding: 0;
 }
 
-.findox-scope img {
+/*
+ * Intrinsic images stay fluid. Skip `fill` next/image nodes (`data-nimg="fill"`)
+ * so absolute cover frames keep width/height: 100% from Next's inline styles.
+ * Always pair width+height auto to avoid Next's aspect-ratio console warning.
+ */
+.findox-scope img:not([data-nimg="fill"]) {
   max-width: 100%;
+  width: auto;
   height: auto;
 }
 

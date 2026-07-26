@@ -160,13 +160,14 @@ export function Footer({ footer }: FooterProps) {
                         key={post.id}
                         className="grid grid-cols-[75px_auto] items-start gap-[19px]"
                       >
-                        <div className="footer-widget__blog__image size-[75px] shrink-0 overflow-hidden rounded-[5px]">
+                        <div className="footer-widget__blog__image relative size-[75px] shrink-0 overflow-hidden rounded-[5px]">
                           <Image
                             src={post.imageUrl}
                             alt={post.imageAlt || ""}
-                            width={75}
-                            height={76}
-                            className="size-full object-cover"
+                            fill
+                            sizes="75px"
+                            loading="lazy"
+                            className="object-cover"
                           />
                         </div>
                         <div className="footer-widget__blog__content">

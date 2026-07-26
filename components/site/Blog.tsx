@@ -34,7 +34,8 @@ export function Blog() {
                     width={350}
                     height={263}
                     sizes="(min-width: 992px) 33vw, (min-width: 768px) 50vw, 100vw"
-                    className="block h-auto w-full rounded-[inherit]"
+                    className="block h-auto w-auto max-w-full rounded-[inherit]"
+                    style={{ width: "auto", height: "auto" }}
                   />
                   <Link href="#" className="blog-card__image__link">
                     <span className="sr-only">{post.title}</span>

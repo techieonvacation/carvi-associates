@@ -103,7 +103,8 @@ export function Hero({ hero, whatsappHref }: HeroProps) {
                 height={668}
                 sizes="(max-width: 991px) 90vw, 40vw"
                 priority
-                unoptimized
+                fetchPriority="high"
+                style={{ height: "auto" }}
               />
             </div>
           </div>

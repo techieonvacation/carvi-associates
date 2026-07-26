@@ -13,6 +13,13 @@
   mask-size: 100% 100%;
 }
 
+/* Hover photo wipe — CSS background so it never competes for LCP. */
+.service-card__bg__main {
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
 /* Small yellow corner flag that flies in from the right once the photo
    has wiped across on hover. */
 .service-card__bg__main::before {
@@ -65,4 +72,27 @@
 }
 .service-card__title a:hover {
   background-size: 100% 1px;
+}
+
+/*
+ * Corner CTA: accent circle + light arrow by default.
+ * `.findox-scope a` forces brand-green link color, which matches `bg-accent`
+ * and makes the icon invisible until hover — reassert contrast here.
+ */
+.services-one .service-card__btn {
+  background-color: var(--findox-base, #5c6b45);
+  color: #ffffff;
+  z-index: 2;
+}
+.services-one .service-card__btn i,
+.services-one .service-card__btn i::before {
+  color: #ffffff;
+}
+.services-one .service-card:hover .service-card__btn {
+  background-color: var(--findox-primary, #e3c9a0);
+  color: var(--findox-base, #5c6b45);
+}
+.services-one .service-card:hover .service-card__btn i,
+.services-one .service-card:hover .service-card__btn i::before {
+  color: var(--findox-base, #5c6b45);
 }
