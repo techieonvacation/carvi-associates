@@ -7,6 +7,7 @@ import { MobileMenu } from "./MobileMenu";
 import { SearchPopup } from "./SearchPopup";
 import { FindoxButton } from "./FindoxButton";
 import { Logo } from "./Logo";
+import { withKnowledgeBankDropdown } from "./nav-data";
 import type { SiteContent } from "@/lib/cms/queries";
 
 type HeaderProps = Pick<
@@ -27,9 +28,11 @@ function MainHeaderBar({
   contactCtaText: string;
   contactCtaHref: string;
 }) {
-  const visibleItems = navItems
-    .filter((item) => item.visible)
-    .map((item) => ({ label: item.label, href: item.href }));
+  const visibleItems = withKnowledgeBankDropdown(
+    navItems
+      .filter((item) => item.visible)
+      .map((item) => ({ label: item.label, href: item.href })),
+  );
 
   return (
     <div className="findox-container">
@@ -78,9 +81,11 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
 
-  const visibleNavItems = navItems
-    .filter((item) => item.visible)
-    .map((item) => ({ label: item.label, href: item.href }));
+  const visibleNavItems = withKnowledgeBankDropdown(
+    navItems
+      .filter((item) => item.visible)
+      .map((item) => ({ label: item.label, href: item.href })),
+  );
 
   const visibleSocials = socialLinks
     .filter((item) => item.visible)

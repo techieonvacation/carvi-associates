@@ -889,14 +889,14 @@
 }
 .main-menu .main-menu__list > li.megamenu > a::after,
 .main-menu .main-menu__list > li.dropdown > a::after {
-  content: "\f078";
+  content: "\e92c";
   position: absolute;
   top: 50%;
   right: 0;
   transform: translateY(-50%);
-  font-family: "Font Awesome 5 Free", "icomoon";
-  font-size: 12px;
-  font-weight: 600;
+  font-family: "icomoon" !important;
+  font-size: 10px;
+  font-weight: normal;
   color: var(--findox-black3);
   transition: all 500ms ease;
 }

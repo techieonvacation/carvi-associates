@@ -22,7 +22,7 @@ import type {
 export const defaultNavItems = [
   { label: "Home", href: "/", sortOrder: 0, visible: true },
   { label: "About Us", href: "#", sortOrder: 1, visible: true },
-  { label: "Knowledge Bank", href: "#", sortOrder: 2, visible: true },
+  { label: "Knowledge Bank", href: "/insight", sortOrder: 2, visible: true },
   { label: "Services", href: "#", sortOrder: 3, visible: true },
   { label: "Contact", href: "#", sortOrder: 4, visible: true },
 ];

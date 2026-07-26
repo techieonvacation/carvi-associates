@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { SocialLinks } from "./SocialLinks";
 import { Logo } from "./Logo";
@@ -28,6 +29,8 @@ export function MobileMenu({
   contact,
   socials,
 }: MobileMenuProps) {
+  const [expanded, setExpanded] = useState<string | null>(null);
+
   return (
     <div className={`mobile-nav__wrapper${open ? " expanded" : ""}`}>
       <button
@@ -53,13 +56,52 @@ export function MobileMenu({
 
         <div className="mobile-nav__container">
           <ul className="main-menu__list">
-            {items.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href} onClick={onClose}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
+            {items.map((item) => {
+              const hasChildren = !!item.children?.length;
+              const isOpen = expanded === item.label;
+
+              if (!hasChildren) {
+                return (
+                  <li key={item.label}>
+                    <Link href={item.href} onClick={onClose}>
+                      {item.label}
+                    </Link>
+                  </li>
+                );
+              }
+
+              return (
+                <li key={item.label} className="dropdown">
+                  <div className="mobile-nav__row">
+                    <Link href={item.href} onClick={onClose}>
+                      {item.label}
+                    </Link>
+                    <button
+                      type="button"
+                      className={`mobile-nav__expander${isOpen ? " expanded" : ""}`}
+                      aria-expanded={isOpen}
+                      aria-label={`${isOpen ? "Collapse" : "Expand"} ${item.label}`}
+                      onClick={() =>
+                        setExpanded((current) =>
+                          current === item.label ? null : item.label,
+                        )
+                      }
+                    >
+                      <i className="icon-down-arrow" aria-hidden="true" />
+                    </button>
+                  </div>
+                  <ul className={isOpen ? "expanded" : undefined}>
+                    {item.children!.map((child) => (
+                      <li key={child.label}>
+                        <Link href={child.href} onClick={onClose}>
+                          {child.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              );
+            })}
           </ul>
         </div>
 
