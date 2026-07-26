@@ -93,16 +93,16 @@ export function About({ about }: AboutProps) {
         <div className="grid grid-cols-1 gap-x-6 gap-y-[50px] lg:grid-cols-2">
           <Reveal direction="right" duration={1300}>
             <div className="about-one__image relative">
-              <div className="about-one__image__one relative inline-block">
-                <Image
-                  src={about.images.collageOne}
-                  alt={about.collageOneAlt}
-                  width={497}
-                  height={402}
-                  sizes="(max-width: 991px) 100vw, 497px"
-                  className="about-one__image__one__img relative z-1 h-auto w-auto max-w-full rounded-bl-[100px]"
-                  style={{ width: "auto", height: "auto" }}
-                />
+              <div className="about-one__image__one relative inline-block w-full max-w-[497px]">
+                <div className="about-one__image__one__frame relative aspect-[497/402] w-full overflow-hidden rounded-bl-[100px]">
+                  <Image
+                    src={about.images.collageOne}
+                    alt={about.collageOneAlt}
+                    fill
+                    sizes="(max-width: 991px) 100vw, 497px"
+                    className="about-one__image__one__img object-cover object-top"
+                  />
+                </div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/images/shapes/about-shape-1-1.png"
@@ -110,20 +110,20 @@ export function About({ about }: AboutProps) {
                   width={64}
                   height={98}
                   aria-hidden="true"
-                  className="about-one__image__shape-1 absolute top-[31px] -right-[43px] h-auto max-w-full max-sm:hidden"
+                  className="about-one__image__shape-1 absolute top-[31px] -right-[43px] h-auto w-auto max-w-full max-sm:hidden"
                 />
               </div>
 
-              <div className="about-one__image__two relative z-1 mt-[-148px] mr-[15px] ml-auto table border-t-[10px] border-l-[10px] border-white lg:max-xl:mt-10 max-md:mr-0 max-[500px]:m-0">
-                <Image
-                  src={about.images.collageTwo}
-                  alt={about.collageTwoAlt}
-                  width={365}
-                  height={261}
-                  sizes="(max-width: 991px) 90vw, 365px"
-                  className="about-one__image__two__img relative z-1 h-auto w-auto max-w-full"
-                  style={{ width: "auto", height: "auto" }}
-                />
+              <div className="about-one__image__two relative z-1 mt-[-148px] mr-[15px] ml-auto w-full max-w-[365px] border-t-[10px] border-l-[10px] border-white lg:max-xl:mt-10 max-md:mr-0 max-[500px]:m-0">
+                <div className="about-one__image__two__frame relative aspect-[365/261] w-full overflow-hidden">
+                  <Image
+                    src={about.images.collageTwo}
+                    alt={about.collageTwoAlt}
+                    fill
+                    sizes="(max-width: 991px) 90vw, 365px"
+                    className="about-one__image__two__img object-cover object-top"
+                  />
+                </div>
 
                 <div className="about-one__experience absolute top-[-104px] right-0 z-2 text-right">
                   <h3 className="about-one__experience__year relative z-1 m-0 ml-auto table rounded-t-[100px] bg-primary pt-[38px] pr-[22.5px] pb-[26px] pl-[22.5px] text-center text-[40px] leading-none font-bold text-foreground">
