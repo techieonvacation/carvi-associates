@@ -7,8 +7,12 @@ import type {
   PartnerMarqueeItem,
   ServiceItem,
   ServicesSectionContent,
+  TeamContent,
+  TeamMemberItem,
   WhyChooseContent,
   WhyChooseItem,
+  WorkingProcessContent,
+  WorkingProcessStepItem,
 } from "@/lib/cms/types";
 
 export const defaultNavItems = [
@@ -488,5 +492,106 @@ export const defaultWhyChoose: WhyChooseContent = {
   items: defaultWhyChooseItems.map((item, index) => ({
     id: `fallback-why-${index}`,
     ...item,
+  })),
+};
+
+export const defaultTeamMembers: Omit<TeamMemberItem, "id" | "createdAt" | "updatedAt">[] = [
+  { name: "Christine Rose", role: "Founder", imageUrl: "/images/team/team-1-1.png", imageAlt: "Christine Rose", href: "#", socials: [], displayOrder: 0, isVisible: true, isActive: true, deletedAt: null },
+  { name: "Thomas Adison", role: "Co - Founder", imageUrl: "/images/team/team-1-2.png", imageAlt: "Thomas Adison", href: "#", socials: [], displayOrder: 1, isVisible: true, isActive: true, deletedAt: null },
+  { name: "Jhone Doe", role: "Manager", imageUrl: "/images/team/team-1-3.png", imageAlt: "Jhone Doe", href: "#", socials: [], displayOrder: 2, isVisible: true, isActive: true, deletedAt: null },
+  { name: "Sharon Ratley", role: "Marketer", imageUrl: "/images/team/team-1-4.png", imageAlt: "Sharon Ratley", href: "#", socials: [], displayOrder: 3, isVisible: true, isActive: true, deletedAt: null },
+  { name: "Adlof Carr", role: "Business Consultant", imageUrl: "/images/team/team-1-5.png", imageAlt: "Adlof Carr", href: "#", socials: [], displayOrder: 4, isVisible: true, isActive: true, deletedAt: null },
+  { name: "Isabella Leo", role: "Support Engineer", imageUrl: "/images/team/team-1-6.png", imageAlt: "Isabella Leo", href: "#", socials: [], displayOrder: 5, isVisible: true, isActive: true, deletedAt: null },
+  { name: "Judith White", role: "Creative Director", imageUrl: "/images/team/team-1-7.png", imageAlt: "Judith White", href: "#", socials: [], displayOrder: 6, isVisible: true, isActive: true, deletedAt: null },
+  { name: "Paul Dotson", role: "Partnership Lead", imageUrl: "/images/team/team-1-8.png", imageAlt: "Paul Dotson", href: "#", socials: [], displayOrder: 7, isVisible: true, isActive: true, deletedAt: null },
+];
+
+export const defaultTeam: TeamContent = {
+  tagline: "OUR Team member",
+  title: ["Our Financial Experts The Team", "Member Solution."],
+  taglineBg: "#f4ebd8",
+  isVisible: true,
+  seoTitle: null,
+  seoDescription: null,
+  seoKeywords: null,
+  canonicalUrl: null,
+  ogImageUrl: null,
+  twitterImageUrl: null,
+  noIndex: false,
+  members: defaultTeamMembers.map((member, index) => ({
+    id: `fallback-team-${index}`,
+    ...member,
+  })),
+};
+
+export const defaultWorkingProcessSteps: Omit<
+  WorkingProcessStepItem,
+  "id" | "createdAt" | "updatedAt"
+>[] = [
+  {
+    stepLabel: "Step 01",
+    title: "Market Analysis",
+    text: "Financial work provided best investments capital.",
+    imageUrl: "/images/resources/working-process-1-1.jpg",
+    imageAlt: "Market Analysis",
+    href: "#",
+    displayOrder: 0,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+  {
+    stepLabel: "Step 02",
+    title: "Finance Planning",
+    text: "We are teiduals in business challenges, of enhancing.",
+    imageUrl: "/images/resources/working-process-1-2.jpg",
+    imageAlt: "Finance Planning",
+    href: "#",
+    displayOrder: 1,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+  {
+    stepLabel: "Step 03",
+    title: "Investment Appraisal",
+    text: "It is pleasure, but because those who do not know.",
+    imageUrl: "/images/resources/working-process-1-3.jpg",
+    imageAlt: "Investment Appraisal",
+    href: "#",
+    displayOrder: 2,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+  {
+    stepLabel: "Step 04",
+    title: "Completed Work",
+    text: "Continually myocardinate holistic mindshare with.",
+    imageUrl: "/images/resources/working-process-1-4.jpg",
+    imageAlt: "Completed Work",
+    href: "#",
+    displayOrder: 3,
+    isVisible: true,
+    isActive: true,
+    deletedAt: null,
+  },
+];
+
+export const defaultWorkingProcess: WorkingProcessContent = {
+  tagline: "Our Working Process",
+  title: ["Over The Solution Work Financial", "Of Provided Company."],
+  taglineBg: "#f4ebd8",
+  isVisible: true,
+  seoTitle: null,
+  seoDescription: null,
+  seoKeywords: null,
+  canonicalUrl: null,
+  ogImageUrl: null,
+  twitterImageUrl: null,
+  noIndex: false,
+  steps: defaultWorkingProcessSteps.map((step, index) => ({
+    id: `fallback-wp-${index}`,
+    ...step,
   })),
 };

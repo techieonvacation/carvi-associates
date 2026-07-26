@@ -5,7 +5,7 @@
  * page exists in this build.
  *
  * Hero, Partner Marquee, Features, About, Services, Book Appointment,
- * and Why Choose Us are CMS-managed via Prisma (`lib/cms/*`).
+ * Why Choose Us, Team, and Working Process are CMS-managed via Prisma (`lib/cms/*`).
  */
 
 export const CLIENTS = {
@@ -24,21 +24,6 @@ export const MARQUEE_WORDS = [
   "#Corporate",
   "#Startup",
 ];
-
-export const TEAM = {
-  tagline: "OUR Team member",
-  title: ["Our Financial Experts The Team", "Member Solution."],
-  members: [
-    { name: "Christine Rose", role: "Founder", image: "/images/team/team-1-1.png" },
-    { name: "Thomas Adison", role: "Co - Founder", image: "/images/team/team-1-2.png" },
-    { name: "Jhone Doe", role: "Manager", image: "/images/team/team-1-3.png" },
-    { name: "Sharon Ratley", role: "Marketer", image: "/images/team/team-1-4.png" },
-    { name: "Adlof Carr", role: "Business Consultant", image: "/images/team/team-1-5.png" },
-    { name: "Isabella Leo", role: "Support Engineer", image: "/images/team/team-1-6.png" },
-    { name: "Judith White", role: "Creative Director", image: "/images/team/team-1-7.png" },
-    { name: "Paul Dotson", role: "Partnership Lead", image: "/images/team/team-1-8.png" },
-  ],
-};
 
 export const PROJECT_FILTERS = [
   { label: "All", value: "all" },
@@ -108,37 +93,6 @@ export const PROJECTS = {
     checklist: ["Remind yourself Business know fact."],
     button: "View All Projects",
   },
-};
-
-export const WORKING_PROCESS = {
-  tagline: "Our Working Process",
-  title: ["Over The Solution Work Financial", "Of Provided Company."],
-  steps: [
-    {
-      step: "Step 01",
-      title: "Market Analysis",
-      text: "Financial work provided best investments capital.",
-      image: "/images/resources/working-process-1-1.jpg",
-    },
-    {
-      step: "Step 02",
-      title: "Finance Planning",
-      text: "We are teiduals in business challenges, of enhancing.",
-      image: "/images/resources/working-process-1-2.jpg",
-    },
-    {
-      step: "Step 03",
-      title: "Investment Appraisal",
-      text: "It is pleasure, but because those who do not know.",
-      image: "/images/resources/working-process-1-3.jpg",
-    },
-    {
-      step: "Step 04",
-      title: "Completed Work",
-      text: "Continually myocardinate holistic mindshare with.",
-      image: "/images/resources/working-process-1-4.jpg",
-    },
-  ],
 };
 
 export const BLOG = {

@@ -12,6 +12,8 @@ import {
   Share2,
   Sparkles,
   Users,
+  UsersRound,
+  Waypoints,
 } from "lucide-react";
 import { AdminHeader } from "@/components/admin/admin-header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,6 +32,8 @@ export default async function AdminDashboardPage() {
     featureCount,
     serviceCount,
     whyChooseCount,
+    teamCount,
+    workingProcessCount,
   ] = await Promise.all([
     prisma.navItem.count(),
     prisma.socialLink.count(),
@@ -37,6 +41,8 @@ export default async function AdminDashboardPage() {
     prisma.feature.count(),
     prisma.service.count({ where: { deletedAt: null } }),
     prisma.whyChooseItem.count({ where: { deletedAt: null } }),
+    prisma.teamMember.count({ where: { deletedAt: null } }),
+    prisma.workingProcessStep.count({ where: { deletedAt: null } }),
   ]);
 
   const cards = [
@@ -93,6 +99,18 @@ export default async function AdminDashboardPage() {
       description: `${whyChooseCount} reason cards and feature image`,
       href: "/admin/why-choose",
       icon: BadgeCheck,
+    },
+    {
+      title: "Team",
+      description: `${teamCount} team members in the carousel`,
+      href: "/admin/team",
+      icon: UsersRound,
+    },
+    {
+      title: "Working Process",
+      description: `${workingProcessCount} timeline steps`,
+      href: "/admin/working-process",
+      icon: Waypoints,
     },
     {
       title: "Social Links",

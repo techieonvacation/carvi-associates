@@ -199,3 +199,71 @@ export type WhyChooseContent = {
   noIndex: boolean;
   items: WhyChooseItem[];
 };
+
+export type TeamMemberSocial = {
+  label: string;
+  href: string;
+  icon: string;
+};
+
+export type TeamMemberItem = {
+  id: string;
+  name: string;
+  role: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  socials: TeamMemberSocial[];
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type TeamContent = {
+  tagline: string;
+  title: [string, string];
+  taglineBg: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+  members: TeamMemberItem[];
+};
+
+export type WorkingProcessStepItem = {
+  id: string;
+  stepLabel: string;
+  title: string;
+  text: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type WorkingProcessContent = {
+  tagline: string;
+  title: [string, string];
+  taglineBg: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+  steps: WorkingProcessStepItem[];
+};

@@ -239,3 +239,73 @@ export const whyChooseBulkSchema = z.object({
     "duplicate",
   ]),
 });
+
+export const teamSectionSchema = z.object({
+  tagline: z.string().min(1),
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  taglineBg: z.string().min(1),
+  isVisible: z.boolean(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  twitterImageUrl: optionalUrl,
+  noIndex: z.boolean(),
+});
+
+export const teamMemberSocialSchema = z.object({
+  label: z.string().min(1),
+  href: z.string().min(1),
+  icon: z.string().min(1),
+});
+
+export const teamMemberSchema = z.object({
+  id: z.string().optional(),
+  name: z.string().min(1),
+  role: z.string().min(1),
+  imageUrl: z.string().min(1),
+  imageAlt: z.string(),
+  href: z.string().min(1),
+  socials: z.array(teamMemberSocialSchema).default([]),
+  displayOrder: z.number().int().optional(),
+  isVisible: z.boolean(),
+  isActive: z.boolean(),
+});
+
+export const teamMembersPayloadSchema = z.object({
+  members: z.array(teamMemberSchema).min(1),
+});
+
+export const workingProcessSectionSchema = z.object({
+  tagline: z.string().min(1),
+  titleLine1: z.string().min(1),
+  titleLine2: z.string().min(1),
+  taglineBg: z.string().min(1),
+  isVisible: z.boolean(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  twitterImageUrl: optionalUrl,
+  noIndex: z.boolean(),
+});
+
+export const workingProcessStepSchema = z.object({
+  id: z.string().optional(),
+  stepLabel: z.string().min(1),
+  title: z.string().min(1),
+  text: z.string().min(1),
+  imageUrl: z.string().min(1),
+  imageAlt: z.string(),
+  href: z.string().min(1),
+  displayOrder: z.number().int().optional(),
+  isVisible: z.boolean(),
+  isActive: z.boolean(),
+});
+
+export const workingProcessStepsPayloadSchema = z.object({
+  steps: z.array(workingProcessStepSchema).min(1),
+});

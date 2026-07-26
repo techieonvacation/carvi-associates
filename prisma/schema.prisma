@@ -280,3 +280,77 @@ model WhyChooseItem {
   @@index([deletedAt])
   @@index([isVisible, isActive, deletedAt])
 }
+
+model TeamSettings {
+  id             String   @id @default("default")
+  tagline        String
+  titleLine1     String
+  titleLine2     String
+  taglineBg      String   @default("#f4ebd8")
+  isVisible      Boolean  @default(true)
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  canonicalUrl   String?
+  ogImageUrl     String?
+  twitterImageUrl String?
+  noIndex        Boolean  @default(false)
+  updatedAt      DateTime @updatedAt
+}
+
+model TeamMember {
+  id           String    @id @default(cuid())
+  name         String
+  role         String
+  imageUrl     String
+  imageAlt     String    @default("")
+  href         String    @default("#")
+  socials      Json      @default("[]")
+  displayOrder Int       @default(0)
+  isVisible    Boolean   @default(true)
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([isVisible, isActive, deletedAt])
+}
+
+model WorkingProcessSettings {
+  id             String   @id @default("default")
+  tagline        String
+  titleLine1     String
+  titleLine2     String
+  taglineBg      String   @default("#f4ebd8")
+  isVisible      Boolean  @default(true)
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  canonicalUrl   String?
+  ogImageUrl     String?
+  twitterImageUrl String?
+  noIndex        Boolean  @default(false)
+  updatedAt      DateTime @updatedAt
+}
+
+model WorkingProcessStep {
+  id           String    @id @default(cuid())
+  stepLabel    String
+  title        String
+  text         String
+  imageUrl     String
+  imageAlt     String    @default("")
+  href         String    @default("#")
+  displayOrder Int       @default(0)
+  isVisible    Boolean   @default(true)
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([isVisible, isActive, deletedAt])
+}

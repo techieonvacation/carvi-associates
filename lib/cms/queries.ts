@@ -14,8 +14,10 @@ import {
   defaultServices,
   defaultServicesSection,
   defaultSocialLinks,
+  defaultTeam,
   defaultTopbar,
   defaultWhyChoose,
+  defaultWorkingProcess,
 } from "@/lib/cms/defaults";
 import { mapServiceRow } from "@/lib/cms/service-mappers";
 import type {
@@ -28,8 +30,13 @@ import type {
   PartnerMarqueeItem,
   PartnerVariant,
   ServicesContent,
+  TeamContent,
+  TeamMemberItem,
+  TeamMemberSocial,
   WhyChooseContent,
   WhyChooseItem,
+  WorkingProcessContent,
+  WorkingProcessStepItem,
 } from "@/lib/cms/types";
 import { PARTNER_VARIANTS } from "@/lib/cms/types";
 
@@ -89,6 +96,8 @@ export type SiteContent = {
   services: ServicesContent;
   bookAppointment: BookAppointmentContent;
   whyChoose: WhyChooseContent;
+  team: TeamContent;
+  workingProcess: WorkingProcessContent;
 };
 
 function parseActiveUserImages(value: unknown): string[] {
@@ -337,6 +346,149 @@ function mapWhyChooseSection(
   };
 }
 
+function parseTeamSocials(value: unknown): TeamMemberSocial[] {
+  if (!Array.isArray(value)) return [];
+  return value.filter((item): item is TeamMemberSocial => {
+    if (!item || typeof item !== "object") return false;
+    const candidate = item as Partial<TeamMemberSocial>;
+    return (
+      typeof candidate.label === "string" &&
+      typeof candidate.href === "string" &&
+      typeof candidate.icon === "string"
+    );
+  });
+}
+
+export function mapTeamMember(row: {
+  id: string;
+  name: string;
+  role: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  socials: unknown;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): TeamMemberItem {
+  return {
+    id: row.id,
+    name: row.name,
+    role: row.role,
+    imageUrl: row.imageUrl,
+    imageAlt: row.imageAlt,
+    href: row.href,
+    socials: parseTeamSocials(row.socials),
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+function mapTeamSection(
+  row: {
+    tagline: string;
+    titleLine1: string;
+    titleLine2: string;
+    taglineBg: string;
+    isVisible: boolean;
+    seoTitle: string | null;
+    seoDescription: string | null;
+    seoKeywords: string | null;
+    canonicalUrl: string | null;
+    ogImageUrl: string | null;
+    twitterImageUrl: string | null;
+    noIndex: boolean;
+  },
+  members: TeamMemberItem[],
+): TeamContent {
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    taglineBg: row.taglineBg || defaultTeam.taglineBg,
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
+    members,
+  };
+}
+
+export function mapWorkingProcessStep(row: {
+  id: string;
+  stepLabel: string;
+  title: string;
+  text: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): WorkingProcessStepItem {
+  return {
+    id: row.id,
+    stepLabel: row.stepLabel,
+    title: row.title,
+    text: row.text,
+    imageUrl: row.imageUrl,
+    imageAlt: row.imageAlt,
+    href: row.href,
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+function mapWorkingProcessSection(
+  row: {
+    tagline: string;
+    titleLine1: string;
+    titleLine2: string;
+    taglineBg: string;
+    isVisible: boolean;
+    seoTitle: string | null;
+    seoDescription: string | null;
+    seoKeywords: string | null;
+    canonicalUrl: string | null;
+    ogImageUrl: string | null;
+    twitterImageUrl: string | null;
+    noIndex: boolean;
+  },
+  steps: WorkingProcessStepItem[],
+): WorkingProcessContent {
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    taglineBg: row.taglineBg || defaultWorkingProcess.taglineBg,
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
+    steps,
+  };
+}
+
 export const getSiteContent = cache(async (): Promise<SiteContent> => {
   const [
     navItems,
@@ -353,6 +505,10 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     bookAppointment,
     whyChooseSettings,
     whyChooseItems,
+    teamSettings,
+    teamMembers,
+    workingProcessSettings,
+    workingProcessSteps,
   ] = await Promise.all([
     prisma.navItem.findMany({ orderBy: { sortOrder: "asc" } }),
     prisma.socialLink.findMany({ orderBy: { sortOrder: "asc" } }),
@@ -377,6 +533,16 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     prisma.bookAppointmentSettings.findUnique({ where: { id: "default" } }),
     prisma.whyChooseSettings.findUnique({ where: { id: "default" } }),
     prisma.whyChooseItem.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
+    prisma.teamSettings.findUnique({ where: { id: "default" } }),
+    prisma.teamMember.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
+    prisma.workingProcessSettings.findUnique({ where: { id: "default" } }),
+    prisma.workingProcessStep.findMany({
       where: { deletedAt: null, isVisible: true, isActive: true },
       orderBy: { displayOrder: "asc" },
     }),
@@ -471,5 +637,21 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
             : defaultWhyChoose.items,
         )
       : defaultWhyChoose,
+    team: teamSettings
+      ? mapTeamSection(
+          teamSettings,
+          teamMembers.length
+            ? teamMembers.map(mapTeamMember)
+            : defaultTeam.members,
+        )
+      : defaultTeam,
+    workingProcess: workingProcessSettings
+      ? mapWorkingProcessSection(
+          workingProcessSettings,
+          workingProcessSteps.length
+            ? workingProcessSteps.map(mapWorkingProcessStep)
+            : defaultWorkingProcess.steps,
+        )
+      : defaultWorkingProcess,
   };
 });

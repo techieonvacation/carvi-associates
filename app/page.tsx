@@ -42,9 +42,12 @@ export default async function Home() {
         <BookAppointment bookAppointment={content.bookAppointment} />
         <WhyChooseUs whyChoose={content.whyChoose} />
         <MarqueeBands />
-        <Team />
+        <Team
+          team={content.team}
+          socialLinks={content.socialLinks.filter((link) => link.visible)}
+        />
         <Projects />
-        <WorkingProcess />
+        <WorkingProcess workingProcess={content.workingProcess} />
         <Blog />
         <Newsletter />
       </main>

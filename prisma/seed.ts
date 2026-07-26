@@ -15,8 +15,12 @@ import {
   defaultServicesSection,
   defaultSocialLinks,
   defaultTopbar,
+  defaultTeam,
+  defaultTeamMembers,
   defaultWhyChoose,
   defaultWhyChooseItems,
+  defaultWorkingProcess,
+  defaultWorkingProcessSteps,
 } from "../lib/cms/defaults";
 
 const connectionString = process.env.DATABASE_URL;
@@ -344,6 +348,86 @@ async function main() {
         displayOrder: item.displayOrder,
         isVisible: item.isVisible,
         isActive: item.isActive,
+      })),
+    });
+  }
+
+  const existingTeam = await prisma.teamSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingTeam) {
+    await prisma.teamSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultTeam.tagline,
+        titleLine1: defaultTeam.title[0],
+        titleLine2: defaultTeam.title[1],
+        taglineBg: defaultTeam.taglineBg,
+        isVisible: defaultTeam.isVisible,
+        seoTitle: defaultTeam.seoTitle,
+        seoDescription: defaultTeam.seoDescription,
+        seoKeywords: defaultTeam.seoKeywords,
+        canonicalUrl: defaultTeam.canonicalUrl,
+        ogImageUrl: defaultTeam.ogImageUrl,
+        twitterImageUrl: defaultTeam.twitterImageUrl,
+        noIndex: defaultTeam.noIndex,
+      },
+    });
+  }
+
+  const teamCount = await prisma.teamMember.count();
+  if (teamCount === 0) {
+    await prisma.teamMember.createMany({
+      data: defaultTeamMembers.map((member) => ({
+        name: member.name,
+        role: member.role,
+        imageUrl: member.imageUrl,
+        imageAlt: member.imageAlt,
+        href: member.href,
+        socials: member.socials,
+        displayOrder: member.displayOrder,
+        isVisible: member.isVisible,
+        isActive: member.isActive,
+      })),
+    });
+  }
+
+  const existingWorkingProcess = await prisma.workingProcessSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingWorkingProcess) {
+    await prisma.workingProcessSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultWorkingProcess.tagline,
+        titleLine1: defaultWorkingProcess.title[0],
+        titleLine2: defaultWorkingProcess.title[1],
+        taglineBg: defaultWorkingProcess.taglineBg,
+        isVisible: defaultWorkingProcess.isVisible,
+        seoTitle: defaultWorkingProcess.seoTitle,
+        seoDescription: defaultWorkingProcess.seoDescription,
+        seoKeywords: defaultWorkingProcess.seoKeywords,
+        canonicalUrl: defaultWorkingProcess.canonicalUrl,
+        ogImageUrl: defaultWorkingProcess.ogImageUrl,
+        twitterImageUrl: defaultWorkingProcess.twitterImageUrl,
+        noIndex: defaultWorkingProcess.noIndex,
+      },
+    });
+  }
+
+  const workingProcessCount = await prisma.workingProcessStep.count();
+  if (workingProcessCount === 0) {
+    await prisma.workingProcessStep.createMany({
+      data: defaultWorkingProcessSteps.map((step) => ({
+        stepLabel: step.stepLabel,
+        title: step.title,
+        text: step.text,
+        imageUrl: step.imageUrl,
+        imageAlt: step.imageAlt,
+        href: step.href,
+        displayOrder: step.displayOrder,
+        isVisible: step.isVisible,
+        isActive: step.isActive,
       })),
     });
   }
