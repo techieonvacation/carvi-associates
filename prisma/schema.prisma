@@ -48,15 +48,18 @@ model SocialLink {
 }
 
 model TopbarSettings {
-  id            String   @id @default("default")
-  email         String
-  address       String
-  addressMapUrl String
-  phone         String
-  phoneHref     String
-  whatsappLabel String
-  whatsappHref  String
-  updatedAt     DateTime @updatedAt
+  id                   String   @id @default("default")
+  email                String
+  address              String
+  addressMapUrl        String
+  phone                String
+  phoneHref            String
+  whatsappLabel        String
+  whatsappHref         String
+  whatsappMarqueeText  String   @default("Join our WhatsApp Channel for daily tax, GST & compliance updates")
+  whatsappMarqueeSpeed Int      @default(22)
+  showWhatsappMarquee  Boolean  @default(true)
+  updatedAt            DateTime @updatedAt
 }
 
 model HeroSettings {
@@ -122,60 +125,60 @@ model Feature {
 }
 
 model AboutSettings {
-  id               String   @id @default("default")
-  tagline          String
-  titleLine1       String
-  titleLine2       String
-  text             String
-  experienceValue  String
-  experienceLabel  String
-  collageOneUrl    String
-  collageTwoUrl    String
-  collageOneAlt    String   @default("Advisors reviewing a financial plan")
-  collageTwoAlt    String   @default("Client consultation in progress")
-  defaultTabId     String?
-  taglineBg        String   @default("#f4ebd8")
-  tabs             Json     @default("[]")
-  checklist        Json     @default("[]")
-  updatedAt        DateTime @updatedAt
+  id              String   @id @default("default")
+  tagline         String
+  titleLine1      String
+  titleLine2      String
+  text            String
+  experienceValue String
+  experienceLabel String
+  collageOneUrl   String
+  collageTwoUrl   String
+  collageOneAlt   String   @default("Advisors reviewing a financial plan")
+  collageTwoAlt   String   @default("Client consultation in progress")
+  defaultTabId    String?
+  taglineBg       String   @default("#f4ebd8")
+  tabs            Json     @default("[]")
+  checklist       Json     @default("[]")
+  updatedAt       DateTime @updatedAt
 }
 
 model Media {
-  id           String    @id @default(cuid())
-  url          String
-  publicId     String?
-  alt          String    @default("")
-  caption      String    @default("")
-  credit       String    @default("")
-  width        Int?
-  height       Int?
-  mimeType     String?
-  blurDataUrl  String?
-  folder       String?
-  deletedAt    DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id          String    @id @default(cuid())
+  url         String
+  publicId    String?
+  alt         String    @default("")
+  caption     String    @default("")
+  credit      String    @default("")
+  width       Int?
+  height      Int?
+  mimeType    String?
+  blurDataUrl String?
+  folder      String?
+  deletedAt   DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([deletedAt])
   @@index([createdAt])
 }
 
 model ServicesSectionSettings {
-  id             String   @id @default("default")
-  tagline        String
-  titleLine1     String
-  titleLine2     String
-  cardTagline    String
-  taglineBg      String   @default("#fffdf8")
-  isVisible      Boolean  @default(true)
-  seoTitle       String?
-  seoDescription String?
-  seoKeywords    String?
-  canonicalUrl   String?
-  ogImageUrl     String?
+  id              String   @id @default("default")
+  tagline         String
+  titleLine1      String
+  titleLine2      String
+  cardTagline     String
+  taglineBg       String   @default("#fffdf8")
+  isVisible       Boolean  @default(true)
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  canonicalUrl    String?
+  ogImageUrl      String?
   twitterImageUrl String?
-  noIndex        Boolean  @default(false)
-  updatedAt      DateTime @updatedAt
+  noIndex         Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
 }
 
 model Service {
@@ -219,48 +222,51 @@ model Service {
 }
 
 model BookAppointmentSettings {
-  id                   String   @id @default("default")
-  tagline              String
-  titleLine1           String
-  titleLine2           String
-  description          String
-  primaryButtonText    String   @default("Get Started")
-  primaryButtonHref    String   @default("#")
-  secondaryButtonText  String   @default("Contact Now")
-  secondaryButtonHref  String   @default("#")
-  backgroundImageUrl   String
-  backgroundImageAlt   String   @default("")
-  taglineBg            String   @default("#f4ebd8")
-  isVisible            Boolean  @default(true)
-  seoTitle             String?
-  seoDescription       String?
-  seoKeywords          String?
-  canonicalUrl         String?
-  ogImageUrl           String?
-  twitterImageUrl      String?
-  noIndex              Boolean  @default(false)
-  updatedAt            DateTime @updatedAt
+  id                  String   @id @default("default")
+  tagline             String
+  titleLine1          String
+  titleLine2          String
+  description         String
+  primaryButtonText   String   @default("Get Started")
+  primaryButtonHref   String   @default("#")
+  secondaryButtonText String   @default("Contact Now")
+  secondaryButtonHref String   @default("#")
+  backgroundImageUrl  String
+  backgroundImageAlt  String   @default("")
+  taglineBg           String   @default("#f4ebd8")
+  isVisible           Boolean  @default(true)
+  seoTitle            String?
+  seoDescription      String?
+  seoKeywords         String?
+  canonicalUrl        String?
+  ogImageUrl          String?
+  twitterImageUrl     String?
+  noIndex             Boolean  @default(false)
+  updatedAt           DateTime @updatedAt
 }
 
 model WhyChooseSettings {
-  id             String   @id @default("default")
-  tagline        String
-  titleLine1     String
-  titleLine2     String
-  description    String
-  taglineBg      String   @default("#f4ebd8")
-  imageUrl       String
-  imageAlt       String   @default("Why choose Carvi Associates")
-  shapeImageUrl  String   @default("/images/shapes/why-choose-shape-1-1.png")
-  isVisible      Boolean  @default(true)
-  seoTitle       String?
-  seoDescription String?
-  seoKeywords    String?
-  canonicalUrl   String?
-  ogImageUrl     String?
-  twitterImageUrl String?
-  noIndex        Boolean  @default(false)
-  updatedAt      DateTime @updatedAt
+  id               String   @id @default("default")
+  tagline          String
+  titleLine1       String
+  titleLine2       String
+  description      String
+  taglineBg        String   @default("#f4ebd8")
+  imageUrl         String
+  imageAlt         String   @default("Why choose Carvi Associates")
+  shapeImageUrl    String   @default("/images/shapes/why-choose-shape-1-1.png")
+  imageFit         String   @default("cover")
+  imageMinHeightPx Int      @default(560)
+  showImageShape   Boolean  @default(true)
+  isVisible        Boolean  @default(true)
+  seoTitle         String?
+  seoDescription   String?
+  seoKeywords      String?
+  canonicalUrl     String?
+  ogImageUrl       String?
+  twitterImageUrl  String?
+  noIndex          Boolean  @default(false)
+  updatedAt        DateTime @updatedAt
 }
 
 model WhyChooseItem {
@@ -282,20 +288,20 @@ model WhyChooseItem {
 }
 
 model TeamSettings {
-  id             String   @id @default("default")
-  tagline        String
-  titleLine1     String
-  titleLine2     String
-  taglineBg      String   @default("#f4ebd8")
-  isVisible      Boolean  @default(true)
-  seoTitle       String?
-  seoDescription String?
-  seoKeywords    String?
-  canonicalUrl   String?
-  ogImageUrl     String?
+  id              String   @id @default("default")
+  tagline         String
+  titleLine1      String
+  titleLine2      String
+  taglineBg       String   @default("#f4ebd8")
+  isVisible       Boolean  @default(true)
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  canonicalUrl    String?
+  ogImageUrl      String?
   twitterImageUrl String?
-  noIndex        Boolean  @default(false)
-  updatedAt      DateTime @updatedAt
+  noIndex         Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
 }
 
 model TeamMember {
@@ -319,20 +325,20 @@ model TeamMember {
 }
 
 model WorkingProcessSettings {
-  id             String   @id @default("default")
-  tagline        String
-  titleLine1     String
-  titleLine2     String
-  taglineBg      String   @default("#f4ebd8")
-  isVisible      Boolean  @default(true)
-  seoTitle       String?
-  seoDescription String?
-  seoKeywords    String?
-  canonicalUrl   String?
-  ogImageUrl     String?
+  id              String   @id @default("default")
+  tagline         String
+  titleLine1      String
+  titleLine2      String
+  taglineBg       String   @default("#f4ebd8")
+  isVisible       Boolean  @default(true)
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  canonicalUrl    String?
+  ogImageUrl      String?
   twitterImageUrl String?
-  noIndex        Boolean  @default(false)
-  updatedAt      DateTime @updatedAt
+  noIndex         Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
 }
 
 model WorkingProcessStep {
@@ -439,4 +445,134 @@ model FooterSocialLink {
 
   @@index([displayOrder])
   @@index([deletedAt])
+}
+
+enum MarqueeBandTarget {
+  ONE
+  TWO
+  BOTH
+}
+
+enum MarqueeItemKind {
+  TEXT
+  IMAGE
+  TEXT_IMAGE
+}
+
+model MarqueeSettings {
+  id                  String   @id @default("default")
+  ariaLabel           String   @default("Practice highlights")
+  layout              String   @default("stacked")
+  isVisible           Boolean  @default(true)
+  showBandOne         Boolean  @default(true)
+  showBandTwo         Boolean  @default(true)
+  bandOneBgColor      String   @default("#5c6b45")
+  bandOneTextColor    String   @default("#fffdf8")
+  bandTwoBgColor      String   @default("#e3c9a0")
+  bandTwoTextColor    String   @default("#5c6b45")
+  bandOneDirection    String   @default("left")
+  bandTwoDirection    String   @default("right")
+  bandOneSpeedSeconds Int      @default(34)
+  bandTwoSpeedSeconds Int      @default(34)
+  bandOneSeparatorUrl String   @default("/images/shapes/slidet-text-shape-1.png")
+  bandTwoSeparatorUrl String   @default("/images/shapes/slidet-text-shape-2.png")
+  showSeparator       Boolean  @default(true)
+  skewDegrees         Float    @default(1.5)
+  fontSizePx          Int      @default(26)
+  itemGapPx           Int      @default(28)
+  bandPaddingPx       Int      @default(22)
+  alternateOutline    Boolean  @default(true)
+  pauseOnHover        Boolean  @default(true)
+  updatedAt           DateTime @updatedAt
+}
+
+model MarqueeItem {
+  id           String            @id @default(cuid())
+  kind         MarqueeItemKind   @default(TEXT)
+  band         MarqueeBandTarget @default(BOTH)
+  text         String            @default("")
+  imageUrl     String?
+  imageAlt     String            @default("")
+  imageWidth   Int               @default(120)
+  imageHeight  Int               @default(40)
+  href         String?
+  outlined     Boolean           @default(false)
+  displayOrder Int               @default(0)
+  isVisible    Boolean           @default(true)
+  isActive     Boolean           @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([isVisible, isActive, deletedAt])
+}
+
+model ProjectsSectionSettings {
+  id                       String   @id @default("default")
+  tagline                  String
+  titleLine1               String
+  titleLine2               String
+  taglineBg                String   @default("#fffdf8")
+  topBackgroundImageUrl    String   @default("/images/shapes/projects-bg-shape-1-1.png")
+  bottomBackgroundImageUrl String   @default("/images/shapes/projects-bg-shape-1-2.png")
+  showFilters              Boolean  @default(true)
+  allFilterLabel           String   @default("All")
+  showBottomBanner         Boolean  @default(true)
+  bannerStat               String   @default("25,860+")
+  bannerTitleLine1         String
+  bannerTitleLine2         String
+  bannerChecklist          Json     @default("[]")
+  bannerButtonText         String   @default("View All Projects")
+  bannerButtonHref         String   @default("#")
+  isVisible                Boolean  @default(true)
+  seoTitle                 String?
+  seoDescription           String?
+  seoKeywords              String?
+  canonicalUrl             String?
+  ogImageUrl               String?
+  twitterImageUrl          String?
+  noIndex                  Boolean  @default(false)
+  updatedAt                DateTime @updatedAt
+}
+
+model ProjectCategory {
+  id           String    @id @default(cuid())
+  label        String
+  slug         String    @unique
+  displayOrder Int       @default(0)
+  isVisible    Boolean   @default(true)
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+}
+
+model ProjectItem {
+  id           String    @id @default(cuid())
+  title        String
+  text         String
+  icon         String    @default("icon-business-and-finance")
+  imageUrl     String
+  imageAlt     String    @default("")
+  href         String    @default("#")
+  slug         String?   @unique
+  categorySlug String?
+  tags         Json      @default("[]")
+  displayOrder Int       @default(0)
+  isFeatured   Boolean   @default(false)
+  isVisible    Boolean   @default(true)
+  isActive     Boolean   @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([categorySlug])
+  @@index([isVisible, isActive, deletedAt])
 }

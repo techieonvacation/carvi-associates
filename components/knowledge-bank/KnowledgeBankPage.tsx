@@ -9,11 +9,10 @@ import {
   useState,
 } from "react";
 import { Container } from "@/components/site/Container";
-import { Hero } from "./Hero";
-import { FilterBar } from "./FilterBar";
+import { Masthead } from "./Masthead";
+import { CategoryNav } from "./CategoryNav";
+import { CategoryRail } from "./CategoryRail";
 import { SearchResults } from "./SearchResults";
-import { SidebarNavigation } from "./SidebarNavigation";
-import { QuickAccessGrid } from "./QuickAccessGrid";
 import { FeaturedKnowledge } from "./FeaturedKnowledge";
 import { InsightsSection } from "./InsightsSection";
 import { ShortsSection } from "./ShortsSection";
@@ -39,23 +38,13 @@ function filterResults(
   if (!q) return [];
 
   return SEARCH_INDEX.filter((item) => {
-    const matchesCategory = category === "all" || item.category === category;
-    if (!matchesCategory) return false;
+    if (category !== "all" && item.category !== category) return false;
     return (
       item.title.toLowerCase().includes(q) ||
       item.description.toLowerCase().includes(q) ||
       item.category.toLowerCase().includes(q)
     );
   });
-}
-
-function sectionVisible(
-  section: KnowledgeCategory | "featured" | "overview",
-  filter: KnowledgeCategory,
-) {
-  if (filter === "all") return true;
-  if (section === "featured" || section === "overview") return false;
-  return section === filter;
 }
 
 export function InsightPage({
@@ -91,61 +80,63 @@ export function InsightPage({
   const results = filterResults(deferredQuery, filter);
   const isSearching = deferredQuery.trim().length > 0;
 
+  /* On a single-category view only that section renders, and it numbers as 01. */
+  const showAll = filter === "all";
+  const sections = [
+    { key: "featured", show: showAll, render: (n: number) => <FeaturedKnowledge index={n} /> },
+    { key: "insights", show: showAll || filter === "insights", render: (n: number) => <InsightsSection index={n} /> },
+    { key: "shorts", show: showAll || filter === "shorts", render: (n: number) => <ShortsSection index={n} /> },
+    { key: "calculators", show: showAll || filter === "calculators", render: (n: number) => <CalculatorsSection index={n} /> },
+    { key: "updates", show: showAll || filter === "updates", render: (n: number) => <UpdatesSection index={n} /> },
+    { key: "utilities", show: showAll || filter === "utilities", render: (n: number) => <UtilitiesSection index={n} /> },
+    { key: "links", show: showAll || filter === "links", render: (n: number) => <LinksSection index={n} /> },
+    { key: "acts", show: showAll || filter === "acts", render: (n: number) => <ActsSection index={n} /> },
+    { key: "forms", show: showAll || filter === "forms", render: (n: number) => <FormsSection index={n} /> },
+  ].filter((section) => section.show);
+
   return (
     <div className="bg-background">
-      <Hero
+      <Masthead
         filter={filter}
         searchValue={query}
         onSearchChange={setQuery}
         searchInputRef={searchInputRef}
       />
 
-      <FilterBar active={filter} />
+      <CategoryNav active={filter} />
 
-      <SearchResults
-        query={deferredQuery}
-        results={results}
-        onClear={() => {
-          setQuery("");
-          setDebouncedQuery("");
-          searchInputRef.current?.focus();
-        }}
-      />
+      {isSearching ? (
+        <>
+          <SearchResults
+            query={deferredQuery}
+            results={results}
+            onClear={() => {
+              setQuery("");
+              setDebouncedQuery("");
+              searchInputRef.current?.focus();
+            }}
+          />
+          <Container className="pb-14">
+            <CTASection />
+            <KnowledgeFooter />
+          </Container>
+        </>
+      ) : (
+        <Container>
+          <div className="flex gap-12 xl:gap-16">
+            <CategoryRail filter={filter} />
 
-      {!isSearching ? (
-        <Container className="relative">
-          <div className="flex gap-10 xl:gap-12">
-            <SidebarNavigation activeFilter={filter} />
+            <div className="min-w-0 flex-1 pb-14">
+              {sections.map((section, position) => (
+                <div key={section.key}>{section.render(position + 1)}</div>
+              ))}
 
-            <div className="min-w-0 flex-1 pb-16">
-              {sectionVisible("overview", filter) ? <QuickAccessGrid /> : null}
-              {sectionVisible("featured", filter) ? <FeaturedKnowledge /> : null}
-              {sectionVisible("insights", filter) ? <InsightsSection /> : null}
-              {sectionVisible("shorts", filter) ? <ShortsSection /> : null}
-              {sectionVisible("calculators", filter) ? (
-                <CalculatorsSection />
-              ) : null}
-              {sectionVisible("updates", filter) ? <UpdatesSection /> : null}
-              {sectionVisible("utilities", filter) ? (
-                <UtilitiesSection />
-              ) : null}
-              {sectionVisible("links", filter) ? <LinksSection /> : null}
-              {sectionVisible("acts", filter) ? <ActsSection /> : null}
-              {sectionVisible("forms", filter) ? <FormsSection /> : null}
-
-              <div className="pt-6 pb-4">
+              <div className="pt-4">
                 <CTASection />
               </div>
               <KnowledgeFooter />
             </div>
           </div>
-        </Container>
-      ) : (
-        <Container className="pb-16">
-          <div className="pt-10">
-            <CTASection />
-          </div>
-          <KnowledgeFooter />
         </Container>
       )}
     </div>

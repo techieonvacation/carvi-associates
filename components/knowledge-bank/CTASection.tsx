@@ -1,39 +1,47 @@
-import { FindoxButton } from "@/components/site/FindoxButton";
-import { Reveal } from "@/components/site/Reveal";
+import Link from "next/link";
+import { ArrowUpRight, Mail } from "lucide-react";
 
+/**
+ * A quiet closing panel. The page above it is dense reference material, so the
+ * ask is a single line and two plain links — a coloured full-width banner here
+ * would read as an ad interrupting a library.
+ */
 export function CTASection() {
   return (
-    <section
-      id="cta"
-      className="relative overflow-hidden rounded-[28px] border border-border bg-accent px-6 py-14 text-accent-foreground sm:px-10 md:px-14 md:py-16"
-      aria-labelledby="kb-cta-title"
+    <aside
+      aria-labelledby="insight-help-title"
+      className="rounded-xl border border-border/70 bg-secondary/35 px-5 py-6 sm:px-7 sm:py-7"
     >
-      <div
-        className="pointer-events-none absolute inset-0 opacity-40"
-        style={{
-          background:
-            "radial-gradient(circle at 15% 20%, color-mix(in oklch, var(--primary) 70%, transparent), transparent 42%), radial-gradient(circle at 85% 80%, color-mix(in oklch, var(--secondary) 55%, transparent), transparent 45%)",
-        }}
-        aria-hidden="true"
-      />
-      <Reveal direction="up" duration={1000}>
-        <div className="relative z-[1] mx-auto max-w-3xl text-center">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+        <div className="min-w-0">
           <h2
-            id="kb-cta-title"
-            className="mb-4 font-heading text-3xl font-bold text-white md:text-4xl"
+            id="insight-help-title"
+            className="font-heading text-[1.0625rem] font-bold text-foreground md:text-lg"
           >
-            Can&apos;t find what you&apos;re looking for?
+            Looking for something that isn&apos;t here?
           </h2>
-          <p className="mb-8 text-base text-white/85 md:text-lg">
-            Search our complete knowledge repository or contact us — our team
-            will point you to the right resource.
+          <p className="mt-1.5 max-w-xl text-sm leading-relaxed text-muted-foreground">
+            Tell us what you need and we&apos;ll point you to the right resource — or
+            prepare it for you.
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-3">
-            <FindoxButton href="/insight" text="Explore Insights" variant="base" />
-            <FindoxButton href="/#contact" text="Contact Us" />
-          </div>
         </div>
-      </Reveal>
-    </section>
+        <div className="flex shrink-0 flex-wrap items-center gap-2.5">
+          <Link
+            href="/#contact"
+            className="inline-flex items-center gap-2 rounded-lg bg-accent px-4 py-2.5 text-[13px] font-semibold text-accent-foreground transition-colors hover:bg-accent/90 focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+          >
+            <Mail className="size-3.5" aria-hidden="true" />
+            Ask our team
+          </Link>
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-border/70 bg-card px-4 py-2.5 text-[13px] font-semibold text-foreground transition-colors hover:border-accent/50 hover:bg-secondary/50 focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+          >
+            Our services
+            <ArrowUpRight className="size-3.5" aria-hidden="true" />
+          </Link>
+        </div>
+      </div>
+    </aside>
   );
 }

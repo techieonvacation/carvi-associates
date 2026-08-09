@@ -14,6 +14,9 @@ function toPayload(row: {
   imageUrl: string;
   imageAlt: string;
   shapeImageUrl: string;
+  imageFit: string;
+  imageMinHeightPx: number;
+  showImageShape: boolean;
   isVisible: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -32,6 +35,9 @@ function toPayload(row: {
     imageUrl: row.imageUrl,
     imageAlt: row.imageAlt,
     shapeImageUrl: row.shapeImageUrl,
+    imageFit: row.imageFit,
+    imageMinHeightPx: row.imageMinHeightPx,
+    showImageShape: row.showImageShape,
     isVisible: row.isVisible,
     seoTitle: row.seoTitle,
     seoDescription: row.seoDescription,
@@ -59,6 +65,9 @@ export async function GET() {
         imageUrl: defaultWhyChoose.imageUrl,
         imageAlt: defaultWhyChoose.imageAlt,
         shapeImageUrl: defaultWhyChoose.shapeImageUrl,
+        imageFit: defaultWhyChoose.imageFit,
+        imageMinHeightPx: defaultWhyChoose.imageMinHeightPx,
+        showImageShape: defaultWhyChoose.showImageShape,
         isVisible: defaultWhyChoose.isVisible,
         seoTitle: defaultWhyChoose.seoTitle,
         seoDescription: defaultWhyChoose.seoDescription,
@@ -93,6 +102,9 @@ export async function PUT(request: Request) {
     imageUrl: parsed.data.imageUrl.trim(),
     imageAlt: parsed.data.imageAlt.trim(),
     shapeImageUrl: parsed.data.shapeImageUrl.trim(),
+    imageFit: parsed.data.imageFit,
+    imageMinHeightPx: parsed.data.imageMinHeightPx,
+    showImageShape: parsed.data.showImageShape,
     isVisible: parsed.data.isVisible,
     seoTitle: normalizeNullable(parsed.data.seoTitle),
     seoDescription: normalizeNullable(parsed.data.seoDescription),

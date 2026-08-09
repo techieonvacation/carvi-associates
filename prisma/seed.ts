@@ -8,9 +8,14 @@ import {
   defaultFeatures,
   defaultHeader,
   defaultHero,
+  defaultMarquee,
+  defaultMarqueeItems,
   defaultNavItems,
   defaultPartnerMarqueeLabel,
   defaultPartners,
+  defaultProjectCategories,
+  defaultProjectItems,
+  defaultProjectsSection,
   defaultServices,
   defaultServicesSection,
   defaultSocialLinks,
@@ -392,6 +397,132 @@ async function main() {
         displayOrder: member.displayOrder,
         isVisible: member.isVisible,
         isActive: member.isActive,
+      })),
+    });
+  }
+
+  const existingMarquee = await prisma.marqueeSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingMarquee) {
+    await prisma.marqueeSettings.create({
+      data: {
+        id: "default",
+        ariaLabel: defaultMarquee.ariaLabel,
+        layout: defaultMarquee.layout,
+        isVisible: defaultMarquee.isVisible,
+        showBandOne: defaultMarquee.showBandOne,
+        showBandTwo: defaultMarquee.showBandTwo,
+        bandOneBgColor: defaultMarquee.bandOneBgColor,
+        bandOneTextColor: defaultMarquee.bandOneTextColor,
+        bandTwoBgColor: defaultMarquee.bandTwoBgColor,
+        bandTwoTextColor: defaultMarquee.bandTwoTextColor,
+        bandOneDirection: defaultMarquee.bandOneDirection,
+        bandTwoDirection: defaultMarquee.bandTwoDirection,
+        bandOneSpeedSeconds: defaultMarquee.bandOneSpeedSeconds,
+        bandTwoSpeedSeconds: defaultMarquee.bandTwoSpeedSeconds,
+        bandOneSeparatorUrl: defaultMarquee.bandOneSeparatorUrl,
+        bandTwoSeparatorUrl: defaultMarquee.bandTwoSeparatorUrl,
+        showSeparator: defaultMarquee.showSeparator,
+        skewDegrees: defaultMarquee.skewDegrees,
+        fontSizePx: defaultMarquee.fontSizePx,
+        itemGapPx: defaultMarquee.itemGapPx,
+        bandPaddingPx: defaultMarquee.bandPaddingPx,
+        alternateOutline: defaultMarquee.alternateOutline,
+        pauseOnHover: defaultMarquee.pauseOnHover,
+      },
+    });
+  }
+
+  const marqueeItemCount = await prisma.marqueeItem.count();
+  if (marqueeItemCount === 0) {
+    await prisma.marqueeItem.createMany({
+      data: defaultMarqueeItems.map((item) => ({
+        kind: item.kind,
+        band: item.band,
+        text: item.text,
+        imageUrl: item.imageUrl,
+        imageAlt: item.imageAlt,
+        imageWidth: item.imageWidth,
+        imageHeight: item.imageHeight,
+        href: item.href,
+        outlined: item.outlined,
+        displayOrder: item.displayOrder,
+        isVisible: item.isVisible,
+        isActive: item.isActive,
+      })),
+    });
+  }
+
+  const existingProjectsSection = await prisma.projectsSectionSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingProjectsSection) {
+    await prisma.projectsSectionSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultProjectsSection.tagline,
+        titleLine1: defaultProjectsSection.title[0],
+        titleLine2: defaultProjectsSection.title[1],
+        taglineBg: defaultProjectsSection.taglineBg,
+        topBackgroundImageUrl: defaultProjectsSection.topBackgroundImageUrl,
+        bottomBackgroundImageUrl: defaultProjectsSection.bottomBackgroundImageUrl,
+        showFilters: defaultProjectsSection.showFilters,
+        allFilterLabel: defaultProjectsSection.allFilterLabel,
+        showBottomBanner: defaultProjectsSection.showBottomBanner,
+        bannerStat: defaultProjectsSection.bannerStat,
+        bannerTitleLine1: defaultProjectsSection.bannerTitle[0],
+        bannerTitleLine2: defaultProjectsSection.bannerTitle[1],
+        bannerChecklist: defaultProjectsSection.bannerChecklist,
+        bannerButtonText: defaultProjectsSection.bannerButtonText,
+        bannerButtonHref: defaultProjectsSection.bannerButtonHref,
+        isVisible: defaultProjectsSection.isVisible,
+        seoTitle: defaultProjectsSection.seoTitle,
+        seoDescription: defaultProjectsSection.seoDescription,
+        seoKeywords: defaultProjectsSection.seoKeywords,
+        canonicalUrl: defaultProjectsSection.canonicalUrl,
+        ogImageUrl: defaultProjectsSection.ogImageUrl,
+        twitterImageUrl: defaultProjectsSection.twitterImageUrl,
+        noIndex: defaultProjectsSection.noIndex,
+      },
+    });
+  } else if (isEmptyJsonArray(existingProjectsSection.bannerChecklist)) {
+    await prisma.projectsSectionSettings.update({
+      where: { id: "default" },
+      data: { bannerChecklist: defaultProjectsSection.bannerChecklist },
+    });
+  }
+
+  const projectCategoryCount = await prisma.projectCategory.count();
+  if (projectCategoryCount === 0) {
+    await prisma.projectCategory.createMany({
+      data: defaultProjectCategories.map((category) => ({
+        label: category.label,
+        slug: category.slug,
+        displayOrder: category.displayOrder,
+        isVisible: category.isVisible,
+        isActive: category.isActive,
+      })),
+    });
+  }
+
+  const projectItemCount = await prisma.projectItem.count();
+  if (projectItemCount === 0) {
+    await prisma.projectItem.createMany({
+      data: defaultProjectItems.map((item) => ({
+        title: item.title,
+        text: item.text,
+        icon: item.icon,
+        imageUrl: item.imageUrl,
+        imageAlt: item.imageAlt,
+        href: item.href,
+        slug: item.slug,
+        categorySlug: item.categorySlug,
+        tags: item.tags,
+        displayOrder: item.displayOrder,
+        isFeatured: item.isFeatured,
+        isVisible: item.isVisible,
+        isActive: item.isActive,
       })),
     });
   }

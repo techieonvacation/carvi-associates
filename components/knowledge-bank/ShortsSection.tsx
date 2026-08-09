@@ -2,73 +2,71 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { Reveal } from "@/components/site/Reveal";
-import { KnowledgeIcon } from "./icons";
-import { SectionHeader } from "./SectionHeader";
-import { ResourceGrid } from "./ResourceGrid";
+import { Bookmark } from "lucide-react";
+import { SectionShell, Tag } from "./insight-ui";
 import { SHORTS } from "./data";
 import { cn } from "@/lib/utils";
 
-export function ShortsSection() {
-  const [bookmarked, setBookmarked] = useState<Record<string, boolean>>({});
+/**
+ * Shorts — single takeaways, so each one is set as a marked passage: an accent
+ * rule down the left edge, the claim at reading size, the source category
+ * underneath. Two columns keeps the measure short enough to scan.
+ */
+export function ShortsSection({ index }: { index: number }) {
+  const [saved, setSaved] = useState<Record<string, boolean>>({});
 
   return (
-    <section
+    <SectionShell
       id="shorts"
-      className="scroll-mt-28 rounded-[28px] border border-border/70 bg-secondary/40 px-4 py-16 sm:px-6 md:px-8 md:py-20"
-      aria-labelledby="shorts-heading"
+      index={index}
+      title="Shorts"
+      lede="One idea each, written to be read between meetings."
+      count={`${SHORTS.length} entries`}
     >
-      <SectionHeader
-        tagline="30-second reads"
-        title={["Shorts"]}
-        description="Sharp takeaways for busy founders, CFOs, and compliance teams."
-      />
-
-      <ResourceGrid columns={3}>
-        {SHORTS.map((item, index) => {
-          const saved = !!bookmarked[item.id];
+      <ul className="grid gap-x-8 gap-y-1 sm:grid-cols-2">
+        {SHORTS.map((item) => {
+          const isSaved = Boolean(saved[item.id]);
           return (
-            <Reveal key={item.id} direction="up" delay={(index % 3) * 60} duration={900}>
-              <article className="relative flex h-full flex-col rounded-[20px] border border-border bg-card p-5 md:p-6">
-                <div className="mb-3 flex items-start justify-between gap-3">
-                  <Badge variant="outline">{item.category}</Badge>
-                  <button
-                    type="button"
-                    aria-label={saved ? "Remove bookmark" : "Bookmark short"}
-                    aria-pressed={saved}
-                    onClick={() =>
-                      setBookmarked((prev) => ({
-                        ...prev,
-                        [item.id]: !prev[item.id],
-                      }))
-                    }
-                    className={cn(
-                      "rounded-full p-2 transition-colors",
-                      saved
-                        ? "bg-accent text-accent-foreground"
-                        : "bg-secondary text-muted-foreground hover:text-foreground",
-                    )}
-                  >
-                    <KnowledgeIcon name="bookmark" className="size-4" />
-                  </button>
-                </div>
-                <h3
-                  id={index === 0 ? "shorts-heading" : undefined}
-                  className="mb-2 font-heading text-lg font-bold text-foreground"
-                >
+            <li
+              key={item.id}
+              className="group flex items-start gap-4 border-l-2 border-border py-4 pl-4 transition-colors hover:border-accent sm:pl-5"
+            >
+              <div className="min-w-0 flex-1">
+                <h3 className="font-heading text-[0.9375rem] leading-snug font-bold text-foreground">
                   <Link href={item.href} className="hover:text-accent">
                     {item.title}
                   </Link>
                 </h3>
-                <p className="line-clamp-2 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
                   {item.preview}
                 </p>
-              </article>
-            </Reveal>
+                <div className="mt-2.5">
+                  <Tag>{item.category}</Tag>
+                </div>
+              </div>
+              <button
+                type="button"
+                aria-label={isSaved ? `Remove bookmark on ${item.title}` : `Bookmark ${item.title}`}
+                aria-pressed={isSaved}
+                onClick={() =>
+                  setSaved((prev) => ({ ...prev, [item.id]: !prev[item.id] }))
+                }
+                className={cn(
+                  "shrink-0 rounded-md p-1.5 transition-colors focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none",
+                  isSaved
+                    ? "text-accent"
+                    : "text-muted-foreground/50 hover:bg-secondary hover:text-foreground",
+                )}
+              >
+                <Bookmark
+                  className={cn("size-4", isSaved && "fill-current")}
+                  aria-hidden="true"
+                />
+              </button>
+            </li>
           );
         })}
-      </ResourceGrid>
-    </section>
+      </ul>
+    </SectionShell>
   );
 }

@@ -181,6 +181,9 @@ export type WhyChooseItem = {
   updatedAt?: string;
 };
 
+export const IMAGE_FIT_OPTIONS = ["cover", "contain"] as const;
+export type ImageFit = (typeof IMAGE_FIT_OPTIONS)[number];
+
 export type WhyChooseContent = {
   tagline: string;
   title: [string, string];
@@ -189,6 +192,9 @@ export type WhyChooseContent = {
   imageUrl: string;
   imageAlt: string;
   shapeImageUrl: string;
+  imageFit: ImageFit;
+  imageMinHeightPx: number;
+  showImageShape: boolean;
   isVisible: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -266,6 +272,134 @@ export type WorkingProcessContent = {
   twitterImageUrl: string | null;
   noIndex: boolean;
   steps: WorkingProcessStepItem[];
+};
+
+export const MARQUEE_BAND_TARGETS = ["ONE", "TWO", "BOTH"] as const;
+export type MarqueeBandTarget = (typeof MARQUEE_BAND_TARGETS)[number];
+
+export const MARQUEE_ITEM_KINDS = ["TEXT", "IMAGE", "TEXT_IMAGE"] as const;
+export type MarqueeItemKind = (typeof MARQUEE_ITEM_KINDS)[number];
+
+export const MARQUEE_DIRECTIONS = ["left", "right"] as const;
+export type MarqueeDirection = (typeof MARQUEE_DIRECTIONS)[number];
+
+export const MARQUEE_LAYOUTS = ["stacked", "crossed"] as const;
+export type MarqueeLayout = (typeof MARQUEE_LAYOUTS)[number];
+
+export type MarqueeItemData = {
+  id: string;
+  kind: MarqueeItemKind;
+  band: MarqueeBandTarget;
+  text: string;
+  imageUrl: string | null;
+  imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
+  href: string | null;
+  outlined: boolean;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type MarqueeContent = {
+  ariaLabel: string;
+  layout: MarqueeLayout;
+  isVisible: boolean;
+  showBandOne: boolean;
+  showBandTwo: boolean;
+  bandOneBgColor: string;
+  bandOneTextColor: string;
+  bandTwoBgColor: string;
+  bandTwoTextColor: string;
+  bandOneDirection: MarqueeDirection;
+  bandTwoDirection: MarqueeDirection;
+  bandOneSpeedSeconds: number;
+  bandTwoSpeedSeconds: number;
+  bandOneSeparatorUrl: string;
+  bandTwoSeparatorUrl: string;
+  showSeparator: boolean;
+  skewDegrees: number;
+  fontSizePx: number;
+  itemGapPx: number;
+  bandPaddingPx: number;
+  alternateOutline: boolean;
+  pauseOnHover: boolean;
+  items: MarqueeItemData[];
+};
+
+export const PROJECT_TAG_TONES = ["primary", "light", "accent"] as const;
+export type ProjectTagTone = (typeof PROJECT_TAG_TONES)[number];
+
+export type ProjectTag = {
+  label: string;
+  href: string;
+  tone: ProjectTagTone;
+};
+
+export type ProjectCategoryItem = {
+  id: string;
+  label: string;
+  slug: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ProjectCardItem = {
+  id: string;
+  title: string;
+  text: string;
+  icon: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  slug: string | null;
+  categorySlug: string | null;
+  tags: ProjectTag[];
+  displayOrder: number;
+  isFeatured: boolean;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: string | null;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type ProjectsSectionContent = {
+  tagline: string;
+  title: [string, string];
+  taglineBg: string;
+  topBackgroundImageUrl: string;
+  bottomBackgroundImageUrl: string;
+  showFilters: boolean;
+  allFilterLabel: string;
+  showBottomBanner: boolean;
+  bannerStat: string;
+  bannerTitle: [string, string];
+  bannerChecklist: string[];
+  bannerButtonText: string;
+  bannerButtonHref: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+};
+
+export type ProjectsContent = {
+  section: ProjectsSectionContent;
+  categories: ProjectCategoryItem[];
+  items: ProjectCardItem[];
 };
 
 export const FOOTER_LINK_COLUMNS = [

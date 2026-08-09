@@ -1,73 +1,70 @@
-import { Reveal } from "@/components/site/Reveal";
+import { ExternalLink } from "lucide-react";
 import { KnowledgeIcon } from "./icons";
-import { SectionHeader } from "./SectionHeader";
+import { Eyebrow, SectionShell } from "./insight-ui";
 import { LINKS, LINK_CATEGORIES } from "./data";
 
-export function LinksSection() {
+/**
+ * Links — outbound government and industry portals, grouped by the authority
+ * that owns them. Each group is a labelled block so you can find "the income
+ * tax one" by scanning headings rather than reading every row.
+ */
+export function LinksSection({ index }: { index: number }) {
   return (
-    <section
+    <SectionShell
       id="links"
-      className="scroll-mt-28 py-16 md:py-20"
-      aria-labelledby="links-heading"
+      index={index}
+      title="Important links"
+      lede="Filing portals and official sources, grouped by the authority behind them."
+      count={`${LINKS.length} portals`}
     >
-      <SectionHeader
-        tagline="Trusted portals"
-        title={["Important Links"]}
-        description="Government and business destinations, organized by the work you do."
-      />
-      <h2 id="links-heading" className="sr-only">
-        Important Links
-      </h2>
-
-      <div className="space-y-10">
+      <div className="space-y-8">
         {LINK_CATEGORIES.map((category) => {
           const items = LINKS.filter((link) => link.category === category);
           if (!items.length) return null;
 
           return (
-            <div key={category}>
-              <h3 className="mb-4 font-heading text-sm font-semibold tracking-[0.16em] text-muted-foreground uppercase">
-                {category}
-              </h3>
-              <ul className="space-y-3">
-                {items.map((item, index) => (
-                  <Reveal key={item.id} direction="up" delay={index * 40} duration={850}>
-                    <li className="flex flex-col gap-4 rounded-[18px] border border-border bg-card px-4 py-4 transition-colors hover:border-accent/40 sm:flex-row sm:items-center sm:justify-between sm:px-5">
-                      <div className="flex min-w-0 items-start gap-3">
-                        <span className="inline-flex size-11 shrink-0 items-center justify-center rounded-xl bg-secondary text-accent">
-                          <KnowledgeIcon name={item.icon} className="size-5" />
+            <section key={category} aria-label={category}>
+              <p className="mb-3 flex items-center gap-3">
+                <Eyebrow>{category}</Eyebrow>
+                <span className="h-px flex-1 bg-border/60" aria-hidden="true" />
+                <span className="text-xs text-muted-foreground tabular-nums">
+                  {items.length}
+                </span>
+              </p>
+              <ul className="grid gap-2 md:grid-cols-2">
+                {items.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex h-full items-start gap-3 rounded-lg border border-border/70 bg-card px-3.5 py-3 transition-colors hover:border-accent/45 hover:bg-secondary/30 focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+                    >
+                      <KnowledgeIcon
+                        name={item.icon}
+                        className="mt-0.5 size-4 shrink-0 text-accent"
+                      />
+                      <span className="min-w-0 flex-1">
+                        <span className="block font-heading text-sm font-bold text-foreground group-hover:text-accent">
+                          {item.title}
                         </span>
-                        <div className="min-w-0">
-                          <p className="font-heading text-base font-bold text-foreground">
-                            {item.title}
-                          </p>
-                          <p className="text-sm text-muted-foreground">
-                            {item.description}
-                          </p>
-                        </div>
-                      </div>
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="findox-btn findox-btn--base shrink-0 self-start sm:self-center"
-                      >
-                        <span className="findox-btn__text">Open</span>
-                        <span className="findox-btn__icon-box">
-                          <span className="findox-btn__icon">
-                            <i className="icon-arrow-right-up" aria-hidden="true" />
-                            <i className="icon-arrow-right-up" aria-hidden="true" />
-                          </span>
+                        <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">
+                          {item.description}
                         </span>
-                      </a>
-                    </li>
-                  </Reveal>
+                      </span>
+                      <ExternalLink
+                        className="mt-0.5 size-3.5 shrink-0 text-muted-foreground/70 group-hover:text-accent"
+                        aria-hidden="true"
+                      />
+                      <span className="sr-only">(opens in a new tab)</span>
+                    </a>
+                  </li>
                 ))}
               </ul>
-            </div>
+            </section>
           );
         })}
       </div>
-    </section>
+    </SectionShell>
   );
 }

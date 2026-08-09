@@ -1,6 +1,6 @@
 "use client";
 
-import { KnowledgeIcon } from "./icons";
+import { Search, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function SearchBar({
@@ -21,22 +21,34 @@ export function SearchBar({
       <label htmlFor={id} className="sr-only">
         Search the knowledge bank
       </label>
-      <span className="pointer-events-none absolute top-1/2 left-4 -translate-y-1/2 text-muted-foreground">
-        <KnowledgeIcon name="search" className="size-5" />
-      </span>
+      <Search
+        className="pointer-events-none absolute top-1/2 left-3.5 size-4 -translate-y-1/2 text-muted-foreground"
+        aria-hidden="true"
+      />
       <input
         ref={inputRef}
         id={id}
-        type="search"
+        type="text"
         value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder="Search insights, calculators, forms, acts…"
+        onChange={(event) => onChange(event.target.value)}
+        placeholder="Search articles, calculators, forms, acts…"
         autoComplete="off"
-        className="h-14 w-full rounded-2xl border border-border bg-card/90 pr-24 pl-12 text-base text-foreground shadow-[0_18px_50px_-28px_rgba(58,48,32,0.45)] outline-none transition-[border-color,box-shadow,background-color] placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40"
+        className="h-11 w-full rounded-lg border border-border/70 bg-card pr-20 pl-10 text-[0.9375rem] text-foreground outline-none transition-[border-color,box-shadow] placeholder:text-muted-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/35"
       />
-      <kbd className="pointer-events-none absolute top-1/2 right-3 hidden -translate-y-1/2 items-center gap-1 rounded-lg border border-border bg-secondary px-2.5 py-1 font-mono text-[11px] font-medium tracking-wide text-muted-foreground sm:inline-flex">
-        Ctrl K
-      </kbd>
+      {value ? (
+        <button
+          type="button"
+          onClick={() => onChange("")}
+          aria-label="Clear search"
+          className="absolute top-1/2 right-2.5 -translate-y-1/2 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+        >
+          <X className="size-4" aria-hidden="true" />
+        </button>
+      ) : (
+        <kbd className="pointer-events-none absolute top-1/2 right-3 hidden -translate-y-1/2 items-center gap-1 rounded border border-border/70 bg-secondary/70 px-1.5 py-0.5 font-mono text-[10px] font-medium text-muted-foreground sm:inline-flex">
+          Ctrl K
+        </kbd>
+      )}
     </div>
   );
 }

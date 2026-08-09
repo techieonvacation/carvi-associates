@@ -1,7 +1,10 @@
+"use client";
+
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { KnowledgeIcon } from "./icons";
-import type { SearchableItem } from "./data";
+import { ArrowUpRight, SearchX } from "lucide-react";
+import { Container } from "@/components/site/Container";
+import { Eyebrow, Tag } from "./insight-ui";
+import { categoryLabel, type SearchableItem } from "./data";
 
 export function SearchResults({
   query,
@@ -15,69 +18,66 @@ export function SearchResults({
   if (!query.trim()) return null;
 
   return (
-    <section
-      className="border-b border-border/70 bg-secondary/35 py-10"
-      aria-live="polite"
-      aria-label="Search results"
-    >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6">
-        <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <p className="text-sm text-muted-foreground">
-              Showing results for
-            </p>
-            <h2 className="font-heading text-2xl font-bold text-foreground">
-              “{query.trim()}”
-            </h2>
-          </div>
-          <button
-            type="button"
-            onClick={onClear}
-            className="rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-secondary"
-          >
-            Clear search
-          </button>
-        </div>
+    <Container className="py-10 md:py-12">
+      <div
+        className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2"
+        aria-live="polite"
+      >
+        <p className="min-w-0">
+          <Eyebrow>Search</Eyebrow>
+          <span className="mt-1.5 block font-heading text-lg font-bold text-foreground">
+            {results.length} {results.length === 1 ? "result" : "results"} for
+            &ldquo;{query.trim()}&rdquo;
+          </span>
+        </p>
+        <button
+          type="button"
+          onClick={onClear}
+          className="shrink-0 text-sm font-medium text-accent hover:underline focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+        >
+          Clear search
+        </button>
+      </div>
 
-        {results.length === 0 ? (
-          <div className="flex flex-col items-center rounded-[24px] border border-dashed border-border bg-card/70 px-6 py-16 text-center">
-            <div
-              className="mb-5 flex size-20 items-center justify-center rounded-[28%] bg-gradient-to-br from-secondary via-primary/40 to-accent/30"
-              aria-hidden="true"
-            >
-              <KnowledgeIcon name="search" className="size-8 text-accent" />
-            </div>
-            <h3 className="mb-2 font-heading text-xl font-bold text-foreground">
-              No results found
-            </h3>
-            <p className="max-w-md text-sm text-muted-foreground">
-              Try a broader keyword, or browse categories below — calculators,
-              forms, acts, and utilities are always a click away.
-            </p>
-          </div>
-        ) : (
-          <ul className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            {results.map((item) => (
-              <li key={`${item.category}-${item.id}`}>
-                <Link
-                  href={item.href}
-                  className="group flex h-full flex-col rounded-2xl border border-border bg-card p-5 transition-all hover:border-accent/40 hover:shadow-[0_18px_40px_-32px_rgba(58,48,32,0.5)]"
-                >
-                  <Badge variant="secondary" className="mb-3 capitalize">
-                    {item.category}
-                  </Badge>
-                  <h3 className="mb-1.5 font-heading text-lg font-bold text-foreground group-hover:text-accent">
+      {results.length ? (
+        <ul className="mt-6 divide-y divide-border/60 border-y border-border/60">
+          {results.map((item) => (
+            <li key={item.id}>
+              <Link
+                href={item.href}
+                className="group flex items-start justify-between gap-4 py-4 focus-visible:outline-none"
+              >
+                <div className="min-w-0">
+                  <h3 className="font-heading text-[0.9375rem] font-bold text-foreground group-hover:text-accent">
                     {item.title}
                   </h3>
-                  <p className="line-clamp-2 text-sm text-muted-foreground">
+                  <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
                     {item.description}
                   </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </section>
+                  <div className="mt-2">
+                    <Tag>{categoryLabel(item.category)}</Tag>
+                  </div>
+                </div>
+                <ArrowUpRight
+                  className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
+                  aria-hidden="true"
+                />
+              </Link>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div className="mt-6 flex flex-col items-start gap-3 rounded-xl border border-dashed border-border/70 bg-secondary/20 px-5 py-8">
+          <SearchX className="size-5 text-muted-foreground" aria-hidden="true" />
+          <p className="font-heading text-[0.9375rem] font-bold text-foreground">
+            Nothing matched &ldquo;{query.trim()}&rdquo;
+          </p>
+          <p className="max-w-md text-[13px] leading-relaxed text-muted-foreground">
+            Try a shorter term, or browse a category from the list above — the
+            library indexes titles and summaries, not full article text.
+          </p>
+        </div>
+      )}
+    </Container>
   );
 }

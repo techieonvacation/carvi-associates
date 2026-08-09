@@ -1,54 +1,96 @@
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
-import { Reveal } from "@/components/site/Reveal";
-import { SectionHeader } from "./SectionHeader";
-import { ResourceGrid } from "./ResourceGrid";
-import { ACTS } from "./data";
+import { SectionShell, Tag } from "./insight-ui";
+import { ACTS, type ActItem } from "./data";
 
-function statusVariant(status: (typeof ACTS)[number]["status"]) {
-  if (status === "In Force") return "default" as const;
-  if (status === "Amended") return "secondary" as const;
-  return "outline" as const;
+function statusTone(status: ActItem["status"]) {
+  if (status === "In Force") return "accent" as const;
+  if (status === "Amended") return "primary" as const;
+  return "muted" as const;
 }
 
-export function ActsSection() {
+/**
+ * Acts & Rules — reference data with three consistent attributes per row, so
+ * it is a table on desktop where the columns let you compare status and
+ * currency at a glance, and stacked cards below `md` where a table would
+ * either overflow or shrink the text past legibility.
+ */
+export function ActsSection({ index }: { index: number }) {
   return (
-    <section
+    <SectionShell
       id="acts"
-      className="scroll-mt-28 py-16 md:py-20"
-      aria-labelledby="acts-heading"
+      index={index}
+      title="Acts & rules"
+      lede="Statutes and guidelines cited across our advisory and audit work."
+      count={`${ACTS.length} entries`}
     >
-      <SectionHeader
-        tagline="Legal library"
-        title={["Acts & Rules"]}
-        description="Core statutes and guidelines referenced across advisory and compliance work."
-      />
-      <h2 id="acts-heading" className="sr-only">
-        Acts & Rules
-      </h2>
-
-      <ResourceGrid columns={3}>
-        {ACTS.map((item, index) => (
-          <Reveal key={item.id} direction="up" delay={(index % 3) * 60} duration={950}>
-            <article className="flex h-full flex-col rounded-[20px] border border-border bg-card p-6">
-              <div className="mb-4 flex flex-wrap items-center gap-2">
-                <Badge variant={statusVariant(item.status)}>{item.status}</Badge>
-                <span className="text-xs text-muted-foreground">
-                  Updated {item.lastUpdated}
+      <div className="hidden overflow-hidden rounded-xl border border-border/70 md:block">
+        <table className="w-full border-collapse text-left">
+          <caption className="sr-only">
+            Acts and rules with current status and last revision date
+          </caption>
+          <thead>
+            <tr className="border-b border-border/60 bg-secondary/40">
+              <th scope="col" className="px-5 py-3">
+                <span className="font-heading text-[11px] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
+                  Act or rule
                 </span>
-              </div>
-              <h3 className="mb-2 font-heading text-xl font-bold text-foreground">
-                <Link href={item.href} className="hover:text-accent">
-                  {item.title}
-                </Link>
-              </h3>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                {item.summary}
-              </p>
-            </article>
-          </Reveal>
+              </th>
+              <th scope="col" className="w-32 px-5 py-3">
+                <span className="font-heading text-[11px] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
+                  Status
+                </span>
+              </th>
+              <th scope="col" className="w-36 px-5 py-3">
+                <span className="font-heading text-[11px] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
+                  Updated
+                </span>
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border/50">
+            {ACTS.map((item) => (
+              <tr key={item.id} className="group align-top transition-colors hover:bg-secondary/25">
+                <th scope="row" className="px-5 py-4 font-normal">
+                  <Link
+                    href={item.href}
+                    className="font-heading text-[0.9375rem] font-bold text-foreground group-hover:text-accent"
+                  >
+                    {item.title}
+                  </Link>
+                  <span className="mt-1.5 block max-w-xl text-[13px] leading-relaxed text-muted-foreground">
+                    {item.summary}
+                  </span>
+                </th>
+                <td className="px-5 py-4">
+                  <Tag tone={statusTone(item.status)}>{item.status}</Tag>
+                </td>
+                <td className="px-5 py-4 text-[13px] text-muted-foreground tabular-nums">
+                  {item.lastUpdated}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <ul className="grid gap-3 md:hidden">
+        {ACTS.map((item) => (
+          <li key={item.id} className="rounded-xl border border-border/70 bg-card px-4 py-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <Tag tone={statusTone(item.status)}>{item.status}</Tag>
+              <span className="text-xs text-muted-foreground tabular-nums">
+                Updated {item.lastUpdated}
+              </span>
+            </div>
+            <h3 className="mt-2.5 font-heading text-[0.9375rem] leading-snug font-bold text-foreground">
+              <Link href={item.href}>{item.title}</Link>
+            </h3>
+            <p className="mt-1.5 text-[13px] leading-relaxed text-muted-foreground">
+              {item.summary}
+            </p>
+          </li>
         ))}
-      </ResourceGrid>
-    </section>
+      </ul>
+    </SectionShell>
   );
 }

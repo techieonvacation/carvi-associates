@@ -21,7 +21,12 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import { FEATURE_ICON_OPTIONS, type WhyChooseItem } from "@/lib/cms/types";
+import {
+  FEATURE_ICON_OPTIONS,
+  IMAGE_FIT_OPTIONS,
+  type ImageFit,
+  type WhyChooseItem,
+} from "@/lib/cms/types";
 
 type SectionForm = {
   tagline: string;
@@ -32,6 +37,9 @@ type SectionForm = {
   imageUrl: string;
   imageAlt: string;
   shapeImageUrl: string;
+  imageFit: ImageFit;
+  imageMinHeightPx: number;
+  showImageShape: boolean;
   isVisible: boolean;
   seoTitle: string;
   seoDescription: string;
@@ -78,6 +86,9 @@ export function WhyChoosePageClient({ user }: WhyChoosePageProps) {
             imageUrl: sectionData.whyChoose.imageUrl ?? "",
             imageAlt: sectionData.whyChoose.imageAlt ?? "",
             shapeImageUrl: sectionData.whyChoose.shapeImageUrl ?? "",
+            imageFit: sectionData.whyChoose.imageFit ?? "cover",
+            imageMinHeightPx: sectionData.whyChoose.imageMinHeightPx ?? 560,
+            showImageShape: sectionData.whyChoose.showImageShape ?? true,
             isVisible: sectionData.whyChoose.isVisible ?? true,
             seoTitle: sectionData.whyChoose.seoTitle ?? "",
             seoDescription: sectionData.whyChoose.seoDescription ?? "",
@@ -336,6 +347,62 @@ export function WhyChoosePageClient({ user }: WhyChoosePageProps) {
                           setSection({ ...section, imageAlt: event.target.value })
                         }
                       />
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label>Image fit</Label>
+                        <Select
+                          value={section.imageFit}
+                          onValueChange={(imageFit) => {
+                            if (imageFit) {
+                              setSection({ ...section, imageFit: imageFit as ImageFit });
+                            }
+                          }}
+                        >
+                          <SelectTrigger className="w-full">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {IMAGE_FIT_OPTIONS.map((option) => (
+                              <SelectItem key={option} value={option}>
+                                {option === "cover"
+                                  ? "Cover — fill the frame, crop overflow"
+                                  : "Contain — fit inside the frame"}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          The frame owns the height, so any upload ratio matches the list column.
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Minimum frame height (px)</Label>
+                        <Input
+                          type="number"
+                          min={240}
+                          max={1200}
+                          value={section.imageMinHeightPx}
+                          onChange={(event) =>
+                            setSection({
+                              ...section,
+                              imageMinHeightPx: Number(event.target.value),
+                            })
+                          }
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Used on mobile and as the floor beside a short list.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-3 rounded-xl border border-border/70 px-4 py-3">
+                      <Switch
+                        checked={section.showImageShape}
+                        onCheckedChange={(showImageShape) =>
+                          setSection({ ...section, showImageShape })
+                        }
+                      />
+                      <Label>Show decorative shape beside the image</Label>
                     </div>
                     <ImageField
                       label="Decorative shape image"

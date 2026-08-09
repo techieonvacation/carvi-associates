@@ -8,9 +8,12 @@ import {
   defaultHero,
   defaultHeroStats,
   defaultHeroTrust,
+  defaultMarquee,
   defaultNavItems,
   defaultPartnerMarqueeLabel,
   defaultPartners,
+  defaultProjects,
+  defaultProjectsSection,
   defaultServices,
   defaultServicesSection,
   defaultSocialLinks,
@@ -36,8 +39,18 @@ import type {
   FooterSocialItem,
   HeroStat,
   HeroTrustItem,
+  ImageFit,
+  MarqueeContent,
+  MarqueeDirection,
+  MarqueeItemData,
+  MarqueeLayout,
   PartnerMarqueeItem,
   PartnerVariant,
+  ProjectCardItem,
+  ProjectCategoryItem,
+  ProjectTag,
+  ProjectsContent,
+  ProjectsSectionContent,
   ServicesContent,
   TeamContent,
   TeamMemberItem,
@@ -47,7 +60,14 @@ import type {
   WorkingProcessContent,
   WorkingProcessStepItem,
 } from "@/lib/cms/types";
-import { FOOTER_LINK_COLUMNS, PARTNER_VARIANTS } from "@/lib/cms/types";
+import {
+  FOOTER_LINK_COLUMNS,
+  IMAGE_FIT_OPTIONS,
+  MARQUEE_DIRECTIONS,
+  MARQUEE_LAYOUTS,
+  PARTNER_VARIANTS,
+  PROJECT_TAG_TONES,
+} from "@/lib/cms/types";
 
 export type SiteContent = {
   navItems: Array<{
@@ -73,6 +93,9 @@ export type SiteContent = {
     phoneHref: string;
     whatsappLabel: string;
     whatsappHref: string;
+    whatsappMarqueeText: string;
+    whatsappMarqueeSpeed: number;
+    showWhatsappMarquee: boolean;
   };
   hero: {
     tagline: string;
@@ -105,7 +128,9 @@ export type SiteContent = {
   services: ServicesContent;
   bookAppointment: BookAppointmentContent;
   whyChoose: WhyChooseContent;
+  marquee: MarqueeContent;
   team: TeamContent;
+  projects: ProjectsContent;
   workingProcess: WorkingProcessContent;
   footer: FooterContent;
 };
@@ -315,6 +340,16 @@ export function mapWhyChooseItem(row: {
   };
 }
 
+export function parseImageFit(value: unknown): ImageFit {
+  if (
+    typeof value === "string" &&
+    (IMAGE_FIT_OPTIONS as readonly string[]).includes(value)
+  ) {
+    return value as ImageFit;
+  }
+  return "cover";
+}
+
 function mapWhyChooseSection(
   row: {
     tagline: string;
@@ -325,6 +360,9 @@ function mapWhyChooseSection(
     imageUrl: string;
     imageAlt: string;
     shapeImageUrl: string;
+    imageFit: string;
+    imageMinHeightPx: number;
+    showImageShape: boolean;
     isVisible: boolean;
     seoTitle: string | null;
     seoDescription: string | null;
@@ -344,6 +382,9 @@ function mapWhyChooseSection(
     imageUrl: row.imageUrl,
     imageAlt: row.imageAlt || defaultWhyChoose.imageAlt,
     shapeImageUrl: row.shapeImageUrl || defaultWhyChoose.shapeImageUrl,
+    imageFit: parseImageFit(row.imageFit),
+    imageMinHeightPx: row.imageMinHeightPx || defaultWhyChoose.imageMinHeightPx,
+    showImageShape: row.showImageShape,
     isVisible: row.isVisible,
     seoTitle: row.seoTitle,
     seoDescription: row.seoDescription,
@@ -353,6 +394,263 @@ function mapWhyChooseSection(
     twitterImageUrl: row.twitterImageUrl,
     noIndex: row.noIndex,
     items,
+  };
+}
+
+function parseMarqueeDirection(value: unknown): MarqueeDirection {
+  if (
+    typeof value === "string" &&
+    (MARQUEE_DIRECTIONS as readonly string[]).includes(value)
+  ) {
+    return value as MarqueeDirection;
+  }
+  return "left";
+}
+
+export function mapMarqueeItem(row: {
+  id: string;
+  kind: string;
+  band: string;
+  text: string;
+  imageUrl: string | null;
+  imageAlt: string;
+  imageWidth: number;
+  imageHeight: number;
+  href: string | null;
+  outlined: boolean;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): MarqueeItemData {
+  return {
+    id: row.id,
+    kind: row.kind as MarqueeItemData["kind"],
+    band: row.band as MarqueeItemData["band"],
+    text: row.text,
+    imageUrl: row.imageUrl,
+    imageAlt: row.imageAlt,
+    imageWidth: row.imageWidth,
+    imageHeight: row.imageHeight,
+    href: row.href,
+    outlined: row.outlined,
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+function parseMarqueeLayout(value: unknown): MarqueeLayout {
+  if (
+    typeof value === "string" &&
+    (MARQUEE_LAYOUTS as readonly string[]).includes(value)
+  ) {
+    return value as MarqueeLayout;
+  }
+  return "stacked";
+}
+
+function mapMarqueeSettings(
+  row: {
+    ariaLabel: string;
+    layout: string;
+    isVisible: boolean;
+    showBandOne: boolean;
+    showBandTwo: boolean;
+    bandOneBgColor: string;
+    bandOneTextColor: string;
+    bandTwoBgColor: string;
+    bandTwoTextColor: string;
+    bandOneDirection: string;
+    bandTwoDirection: string;
+    bandOneSpeedSeconds: number;
+    bandTwoSpeedSeconds: number;
+    bandOneSeparatorUrl: string;
+    bandTwoSeparatorUrl: string;
+    showSeparator: boolean;
+    skewDegrees: number;
+    fontSizePx: number;
+    itemGapPx: number;
+    bandPaddingPx: number;
+    alternateOutline: boolean;
+    pauseOnHover: boolean;
+  },
+  items: MarqueeItemData[],
+): MarqueeContent {
+  return {
+    ariaLabel: row.ariaLabel || defaultMarquee.ariaLabel,
+    layout: parseMarqueeLayout(row.layout),
+    isVisible: row.isVisible,
+    showBandOne: row.showBandOne,
+    showBandTwo: row.showBandTwo,
+    bandOneBgColor: row.bandOneBgColor || defaultMarquee.bandOneBgColor,
+    bandOneTextColor: row.bandOneTextColor || defaultMarquee.bandOneTextColor,
+    bandTwoBgColor: row.bandTwoBgColor || defaultMarquee.bandTwoBgColor,
+    bandTwoTextColor: row.bandTwoTextColor || defaultMarquee.bandTwoTextColor,
+    bandOneDirection: parseMarqueeDirection(row.bandOneDirection),
+    bandTwoDirection: parseMarqueeDirection(row.bandTwoDirection),
+    bandOneSpeedSeconds: row.bandOneSpeedSeconds || defaultMarquee.bandOneSpeedSeconds,
+    bandTwoSpeedSeconds: row.bandTwoSpeedSeconds || defaultMarquee.bandTwoSpeedSeconds,
+    bandOneSeparatorUrl: row.bandOneSeparatorUrl || defaultMarquee.bandOneSeparatorUrl,
+    bandTwoSeparatorUrl: row.bandTwoSeparatorUrl || defaultMarquee.bandTwoSeparatorUrl,
+    showSeparator: row.showSeparator,
+    skewDegrees: row.skewDegrees,
+    fontSizePx: row.fontSizePx || defaultMarquee.fontSizePx,
+    itemGapPx: row.itemGapPx || defaultMarquee.itemGapPx,
+    bandPaddingPx: row.bandPaddingPx,
+    alternateOutline: row.alternateOutline,
+    pauseOnHover: row.pauseOnHover,
+    items,
+  };
+}
+
+function parseProjectTags(value: unknown): ProjectTag[] {
+  if (!Array.isArray(value)) return [];
+  return value.flatMap((item) => {
+    if (!item || typeof item !== "object") return [];
+    const candidate = item as Partial<ProjectTag>;
+    if (typeof candidate.label !== "string" || !candidate.label.length) return [];
+    const tone =
+      typeof candidate.tone === "string" &&
+      (PROJECT_TAG_TONES as readonly string[]).includes(candidate.tone)
+        ? (candidate.tone as ProjectTag["tone"])
+        : "primary";
+    return [
+      {
+        label: candidate.label,
+        href: typeof candidate.href === "string" && candidate.href ? candidate.href : "#",
+        tone,
+      },
+    ];
+  });
+}
+
+function parseProjectChecklist(value: unknown): string[] {
+  if (!Array.isArray(value)) return defaultProjectsSection.bannerChecklist;
+  const checklist = value.filter(
+    (item): item is string => typeof item === "string" && item.length > 0,
+  );
+  return checklist.length ? checklist : defaultProjectsSection.bannerChecklist;
+}
+
+export function mapProjectCategory(row: {
+  id: string;
+  label: string;
+  slug: string;
+  displayOrder: number;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): ProjectCategoryItem {
+  return {
+    id: row.id,
+    label: row.label,
+    slug: row.slug,
+    displayOrder: row.displayOrder,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+export function mapProjectItem(row: {
+  id: string;
+  title: string;
+  text: string;
+  icon: string;
+  imageUrl: string;
+  imageAlt: string;
+  href: string;
+  slug: string | null;
+  categorySlug: string | null;
+  tags: unknown;
+  displayOrder: number;
+  isFeatured: boolean;
+  isVisible: boolean;
+  isActive: boolean;
+  deletedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}): ProjectCardItem {
+  return {
+    id: row.id,
+    title: row.title,
+    text: row.text,
+    icon: row.icon,
+    imageUrl: row.imageUrl,
+    imageAlt: row.imageAlt,
+    href: row.href,
+    slug: row.slug,
+    categorySlug: row.categorySlug,
+    tags: parseProjectTags(row.tags),
+    displayOrder: row.displayOrder,
+    isFeatured: row.isFeatured,
+    isVisible: row.isVisible,
+    isActive: row.isActive,
+    deletedAt: row.deletedAt?.toISOString() ?? null,
+    createdAt: row.createdAt.toISOString(),
+    updatedAt: row.updatedAt.toISOString(),
+  };
+}
+
+export function mapProjectsSection(row: {
+  tagline: string;
+  titleLine1: string;
+  titleLine2: string;
+  taglineBg: string;
+  topBackgroundImageUrl: string;
+  bottomBackgroundImageUrl: string;
+  showFilters: boolean;
+  allFilterLabel: string;
+  showBottomBanner: boolean;
+  bannerStat: string;
+  bannerTitleLine1: string;
+  bannerTitleLine2: string;
+  bannerChecklist: unknown;
+  bannerButtonText: string;
+  bannerButtonHref: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+}): ProjectsSectionContent {
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    taglineBg: row.taglineBg || defaultProjectsSection.taglineBg,
+    topBackgroundImageUrl:
+      row.topBackgroundImageUrl || defaultProjectsSection.topBackgroundImageUrl,
+    bottomBackgroundImageUrl:
+      row.bottomBackgroundImageUrl || defaultProjectsSection.bottomBackgroundImageUrl,
+    showFilters: row.showFilters,
+    allFilterLabel: row.allFilterLabel || defaultProjectsSection.allFilterLabel,
+    showBottomBanner: row.showBottomBanner,
+    bannerStat: row.bannerStat,
+    bannerTitle: [row.bannerTitleLine1, row.bannerTitleLine2],
+    bannerChecklist: parseProjectChecklist(row.bannerChecklist),
+    bannerButtonText: row.bannerButtonText,
+    bannerButtonHref: row.bannerButtonHref,
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
   };
 }
 
@@ -660,8 +958,13 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     bookAppointment,
     whyChooseSettings,
     whyChooseItems,
+    marqueeSettings,
+    marqueeItems,
     teamSettings,
     teamMembers,
+    projectsSection,
+    projectCategories,
+    projectItems,
     workingProcessSettings,
     workingProcessSteps,
     footerSettings,
@@ -695,8 +998,22 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
       where: { deletedAt: null, isVisible: true, isActive: true },
       orderBy: { displayOrder: "asc" },
     }),
+    prisma.marqueeSettings.findUnique({ where: { id: "default" } }),
+    prisma.marqueeItem.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
     prisma.teamSettings.findUnique({ where: { id: "default" } }),
     prisma.teamMember.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
+    prisma.projectsSectionSettings.findUnique({ where: { id: "default" } }),
+    prisma.projectCategory.findMany({
+      where: { deletedAt: null, isVisible: true, isActive: true },
+      orderBy: { displayOrder: "asc" },
+    }),
+    prisma.projectItem.findMany({
       where: { deletedAt: null, isVisible: true, isActive: true },
       orderBy: { displayOrder: "asc" },
     }),
@@ -809,6 +1126,14 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
             : defaultWhyChoose.items,
         )
       : defaultWhyChoose,
+    marquee: marqueeSettings
+      ? mapMarqueeSettings(
+          marqueeSettings,
+          marqueeItems.length
+            ? marqueeItems.map(mapMarqueeItem)
+            : defaultMarquee.items,
+        )
+      : defaultMarquee,
     team: teamSettings
       ? mapTeamSection(
           teamSettings,
@@ -817,6 +1142,17 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
             : defaultTeam.members,
         )
       : defaultTeam,
+    projects: {
+      section: projectsSection
+        ? mapProjectsSection(projectsSection)
+        : defaultProjectsSection,
+      categories: projectCategories.length
+        ? projectCategories.map(mapProjectCategory)
+        : defaultProjects.categories,
+      items: projectItems.length
+        ? projectItems.map(mapProjectItem)
+        : defaultProjects.items,
+    },
     workingProcess: workingProcessSettings
       ? mapWorkingProcessSection(
           workingProcessSettings,

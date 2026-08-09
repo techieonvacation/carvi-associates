@@ -27,7 +27,7 @@ export function WhyChooseUs({ whyChoose }: WhyChooseUsProps) {
   return (
     <section className="why-choose section-space relative bg-white py-30 max-md:py-25 max-sm:py-20">
       <Container>
-        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 lg:gap-x-6 lg:items-center">
+        <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 lg:items-stretch lg:gap-x-6">
           <div className="why-choose__content">
             <SectionHeading
               tagline={whyChoose.tagline}
@@ -113,27 +113,36 @@ export function WhyChooseUs({ whyChoose }: WhyChooseUsProps) {
             </div>
           </div>
 
-          <Reveal direction="up" duration={1300}>
-            <div className="why-choose__image relative">
-              <div className="why-choose__image__inner relative inline-block">
+          <Reveal direction="up" duration={1300} className="flex lg:h-full">
+            <div className="why-choose__image relative w-full lg:h-full">
+              {/* The frame owns the height so any CMS upload — portrait, square
+                  or landscape — fills the column beside the list instead of
+                  collapsing to its own intrinsic ratio. */}
+              <div
+                className="why-choose__image__inner relative w-full lg:h-full"
+                style={{ minHeight: `${whyChoose.imageMinHeightPx}px` }}
+              >
                 <Image
                   src={whyChoose.imageUrl}
                   alt={whyChoose.imageAlt}
-                  width={570}
-                  height={600}
+                  fill
                   sizes="(max-width: 991px) 100vw, 570px"
-                  className="why-choose__image__img relative z-[1] h-auto w-full max-w-full"
-                  style={{ height: "auto" }}
+                  className={cn(
+                    "why-choose__image__img z-[1]",
+                    whyChoose.imageFit === "contain" ? "object-contain" : "object-cover",
+                  )}
                 />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={whyChoose.shapeImageUrl}
-                  alt=""
-                  aria-hidden="true"
-                  width={195}
-                  height={195}
-                  className="why-choose__image__shape absolute top-[1px] -right-20 max-w-full"
-                />
+                {whyChoose.showImageShape ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={whyChoose.shapeImageUrl}
+                    alt=""
+                    aria-hidden="true"
+                    width={195}
+                    height={195}
+                    className="why-choose__image__shape absolute top-[1px] -right-20 z-[2] max-w-full"
+                  />
+                ) : null}
               </div>
             </div>
           </Reveal>

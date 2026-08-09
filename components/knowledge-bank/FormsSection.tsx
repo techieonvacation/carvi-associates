@@ -1,49 +1,51 @@
-import { Reveal } from "@/components/site/Reveal";
+import { Download } from "lucide-react";
 import { KnowledgeIcon } from "./icons";
-import { SectionHeader } from "./SectionHeader";
-import { ResourceGrid } from "./ResourceGrid";
+import { IconFrame, SectionShell } from "./insight-ui";
 import { FORMS } from "./data";
 
-export function FormsSection() {
+/**
+ * Forms — a download list. The action sits on the right of every row at the
+ * same position, so a visitor who wants three forms clicks the same spot three
+ * times instead of hunting a differently-placed button in each card.
+ */
+export function FormsSection({ index }: { index: number }) {
   return (
-    <section
+    <SectionShell
       id="forms"
-      className="scroll-mt-28 py-16 md:py-20"
-      aria-labelledby="forms-heading"
+      index={index}
+      title="Forms"
+      lede="Statutory and registration packs, ready to fill and file."
+      count={`${FORMS.length} downloads`}
     >
-      <SectionHeader
-        tagline="Ready to file"
-        title={["Forms"]}
-        description="Downloadable packs for registration, tax, and statutory workflows."
-      />
-      <h2 id="forms-heading" className="sr-only">
-        Forms
-      </h2>
-
-      <ResourceGrid columns={4}>
-        {FORMS.map((item, index) => (
-          <Reveal key={item.id} direction="up" delay={(index % 4) * 50} duration={900}>
-            <article className="flex h-full flex-col rounded-[20px] border border-border bg-card p-5 md:p-6">
-              <span className="mb-4 inline-flex size-11 items-center justify-center rounded-xl bg-accent text-accent-foreground">
-                <KnowledgeIcon name={item.icon} className="size-5" />
-              </span>
-              <h3 className="mb-1.5 font-heading text-base font-bold text-foreground md:text-lg">
+      <ul className="divide-y divide-border/60 overflow-hidden rounded-xl border border-border/70">
+        {FORMS.map((item) => (
+          <li
+            key={item.id}
+            className="flex flex-col gap-3 bg-card px-4 py-4 transition-colors hover:bg-secondary/25 sm:flex-row sm:items-center sm:gap-4 sm:px-5"
+          >
+            <IconFrame>
+              <KnowledgeIcon name={item.icon} className="size-4.5" />
+            </IconFrame>
+            <div className="min-w-0 flex-1">
+              <h3 className="font-heading text-[0.9375rem] font-bold text-foreground">
                 {item.title}
               </h3>
-              <p className="mb-5 flex-1 text-sm text-muted-foreground">
+              <p className="mt-0.5 text-[13px] leading-relaxed text-muted-foreground">
                 {item.description}
               </p>
-              <a
-                href={item.href}
-                className="inline-flex items-center justify-center gap-2 rounded-4xl border border-border bg-secondary px-4 py-2.5 text-sm font-semibold text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/40"
-              >
-                <KnowledgeIcon name="download" className="size-4" />
-                Download
-              </a>
-            </article>
-          </Reveal>
+            </div>
+            <a
+              href={item.href}
+              download
+              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-border/70 bg-secondary/60 px-3.5 py-2 text-[13px] font-semibold text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+            >
+              <Download className="size-3.5" aria-hidden="true" />
+              Download
+              <span className="sr-only">{item.title}</span>
+            </a>
+          </li>
         ))}
-      </ResourceGrid>
-    </section>
+      </ul>
+    </SectionShell>
   );
 }

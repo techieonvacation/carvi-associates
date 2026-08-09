@@ -1,5 +1,12 @@
 import { SocialLinks } from "./SocialLinks";
 
+/**
+ * Roughly how many characters fill the widest marquee viewport at 14px. The
+ * message is repeated to at least this length so short copy still covers the
+ * track and the loop stays seamless.
+ */
+const MIN_SEQUENCE_CHARS = 78;
+
 function WhatsAppIcon() {
   return (
     <svg viewBox="0 0 448 512" width="1em" height="1em" fill="currentColor" aria-hidden="true">
@@ -9,11 +16,11 @@ function WhatsAppIcon() {
 }
 
 type TopbarProps = {
-  email: string;
-  address: string;
-  addressMapUrl: string;
   whatsappLabel: string;
   whatsappHref: string;
+  whatsappMarqueeText: string;
+  whatsappMarqueeSpeed: number;
+  showWhatsappMarquee: boolean;
   socials: Array<{
     label: string;
     href: string;
@@ -22,38 +29,55 @@ type TopbarProps = {
 };
 
 export function Topbar({
-  email,
-  address,
-  addressMapUrl,
   whatsappLabel,
   whatsappHref,
+  whatsappMarqueeText,
+  whatsappMarqueeSpeed,
+  showWhatsappMarquee,
   socials,
 }: TopbarProps) {
+  const message = whatsappMarqueeText || whatsappLabel;
+  const repeats = Math.max(2, Math.ceil(MIN_SEQUENCE_CHARS / Math.max(message.length, 1)));
+
   return (
     <div className="topbar">
       <div className="findox-container">
         <div className="topbar__inner">
-          <ul className="topbar__info">
-            <li>
-              <span className="topbar__info__icon">
-                <i className="icon-email" aria-hidden="true" />
-              </span>
-              <span>
-                <a href={`mailto:${email}`}>{email}</a>
-              </span>
-            </li>
-            
-            <li>
-              <span className="topbar__info__icon">
-                <WhatsAppIcon />
-              </span>
-              <span>
-                <a href={whatsappHref} target="_blank" rel="noopener noreferrer">
-                  {whatsappLabel}
-                </a>
-              </span>
-            </li>
-          </ul>
+          {showWhatsappMarquee ? (
+            <div className="topbar__whatsapp">
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={whatsappLabel}
+                className="topbar__whatsapp__link"
+              >
+                <span className="topbar__whatsapp__icon">
+                  <WhatsAppIcon />
+                </span>
+                <span className="topbar__whatsapp__viewport" aria-hidden="true">
+                  <span
+                    className="topbar__whatsapp__track"
+                    style={
+                      {
+                        "--topbar-marquee-duration": `${whatsappMarqueeSpeed}s`,
+                      } as React.CSSProperties
+                    }
+                  >
+                    {[0, 1].map((duplicate) => (
+                      <span key={duplicate} className="topbar__whatsapp__sequence">
+                        {Array.from({ length: repeats }).map((_, repeat) => (
+                          <span key={repeat} className="topbar__whatsapp__text">
+                            {message}
+                          </span>
+                        ))}
+                      </span>
+                    ))}
+                  </span>
+                </span>
+              </a>
+            </div>
+          ) : null}
 
           <div className="topbar__right">
             <SocialLinks socials={socials} />

@@ -20,6 +20,8 @@ import {
   UsersRound,
   Waypoints,
   PanelBottom,
+  GalleryHorizontal,
+  FolderKanban,
 } from "lucide-react";
 import {
   Sidebar,
@@ -47,7 +49,9 @@ const items = [
   { href: "/admin/services", label: "Services", icon: BriefcaseBusiness },
   { href: "/admin/book-appointment", label: "Book Appointment", icon: CalendarCheck2 },
   { href: "/admin/why-choose", label: "Why Choose Us", icon: BadgeCheck },
+  { href: "/admin/marquee", label: "Marquee Bands", icon: GalleryHorizontal },
   { href: "/admin/team", label: "Team", icon: UsersRound },
+  { href: "/admin/projects", label: "Case Studies", icon: FolderKanban },
   { href: "/admin/working-process", label: "Working Process", icon: Waypoints },
   { href: "/admin/footer", label: "Footer", icon: PanelBottom },
   { href: "/admin/header", label: "Header CTA", icon: Megaphone },

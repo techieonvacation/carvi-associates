@@ -5,6 +5,8 @@ import {
   BriefcaseBusiness,
   Building2,
   CalendarCheck2,
+  FolderKanban,
+  GalleryHorizontal,
   Info,
   LayoutGrid,
   Navigation,
@@ -33,7 +35,9 @@ export default async function AdminDashboardPage() {
     featureCount,
     serviceCount,
     whyChooseCount,
+    marqueeItemCount,
     teamCount,
+    projectCount,
     workingProcessCount,
     footerLinkCount,
   ] = await Promise.all([
@@ -43,7 +47,9 @@ export default async function AdminDashboardPage() {
     prisma.feature.count(),
     prisma.service.count({ where: { deletedAt: null } }),
     prisma.whyChooseItem.count({ where: { deletedAt: null } }),
+    prisma.marqueeItem.count({ where: { deletedAt: null } }),
     prisma.teamMember.count({ where: { deletedAt: null } }),
+    prisma.projectItem.count({ where: { deletedAt: null } }),
     prisma.workingProcessStep.count({ where: { deletedAt: null } }),
     prisma.footerLink.count({ where: { deletedAt: null } }),
   ]);
@@ -104,10 +110,22 @@ export default async function AdminDashboardPage() {
       icon: BadgeCheck,
     },
     {
+      title: "Marquee Bands",
+      description: `${marqueeItemCount} scrolling text or logo items`,
+      href: "/admin/marquee",
+      icon: GalleryHorizontal,
+    },
+    {
       title: "Team",
       description: `${teamCount} team members in the carousel`,
       href: "/admin/team",
       icon: UsersRound,
+    },
+    {
+      title: "Case Studies",
+      description: `${projectCount} case-study cards and filters`,
+      href: "/admin/projects",
+      icon: FolderKanban,
     },
     {
       title: "Working Process",

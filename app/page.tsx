@@ -41,12 +41,12 @@ export default async function Home() {
         <Services services={content.services} />
         <BookAppointment bookAppointment={content.bookAppointment} />
         <WhyChooseUs whyChoose={content.whyChoose} />
-        <MarqueeBands />
+        <MarqueeBands marquee={content.marquee} />
         <Team
           team={content.team}
           socialLinks={content.socialLinks.filter((link) => link.visible)}
         />
-        <Projects />
+        <Projects projects={content.projects} />
         <WorkingProcess workingProcess={content.workingProcess} />
         <Blog />
         <Newsletter />

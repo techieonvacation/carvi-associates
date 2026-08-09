@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/api-auth";
+import { defaultTopbar } from "@/lib/cms/defaults";
 
 const topbarSchema = z.object({
   email: z.string().email(),
@@ -11,11 +12,14 @@ const topbarSchema = z.object({
   phoneHref: z.string().min(1),
   whatsappLabel: z.string().min(1),
   whatsappHref: z.string().url(),
+  whatsappMarqueeText: z.string().min(1).max(180),
+  whatsappMarqueeSpeed: z.number().int().min(5).max(120),
+  showWhatsappMarquee: z.boolean(),
 });
 
 export async function GET() {
   const topbar = await prisma.topbarSettings.findUnique({ where: { id: "default" } });
-  return NextResponse.json({ topbar });
+  return NextResponse.json({ topbar: topbar ?? defaultTopbar });
 }
 
 export async function PUT(request: Request) {
@@ -25,7 +29,10 @@ export async function PUT(request: Request) {
   const body = await request.json();
   const parsed = topbarSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid payload" }, { status: 400 });
+    return NextResponse.json(
+      { error: parsed.error.issues[0]?.message ?? "Invalid payload" },
+      { status: 400 },
+    );
   }
 
   const topbar = await prisma.topbarSettings.upsert({

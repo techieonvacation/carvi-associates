@@ -10,17 +10,22 @@
   background-color: rgba(92, 107, 69, 0.9);
 }
 
-/* Category pills: first is primary yellow (set inline via Tailwind), the
-   last swaps to white at rest and back to yellow on its own :hover, or
-   whenever the whole card is hovered. */
-.project-card__category:last-child {
+/* Category pills: the CMS tone picks the resting fill; every pill lands on
+   primary yellow on its own :hover or when the whole card is hovered. */
+.project-card__category[data-tone="primary"] {
+  background-color: var(--findox-primary, #e3c9a0);
+}
+.project-card__category[data-tone="light"] {
   background-color: var(--findox-white, #ffffff);
 }
-.project-card__category:hover {
-  background-color: var(--findox-primary, #e3c9a0) !important;
+.project-card__category[data-tone="accent"] {
+  background-color: var(--findox-base, #5c6b45);
+  color: var(--findox-white, #ffffff);
 }
-.project-card:hover .project-card__category:last-child {
+.project-card__category:hover,
+.project-card:hover .project-card__category:not([data-tone="primary"]) {
   background-color: var(--findox-primary, #e3c9a0);
+  color: var(--findox-text, #6b5b40);
 }
 
 /* Green wash that slides up to fill the lower part of the card on hover. */

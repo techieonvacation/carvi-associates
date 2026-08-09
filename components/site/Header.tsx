@@ -123,11 +123,11 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
     <>
       <div className="header">
         <Topbar
-          email={topbar.email}
-          address={topbar.address}
-          addressMapUrl={topbar.addressMapUrl}
           whatsappLabel={topbar.whatsappLabel}
           whatsappHref={topbar.whatsappHref}
+          whatsappMarqueeText={topbar.whatsappMarqueeText}
+          whatsappMarqueeSpeed={topbar.whatsappMarqueeSpeed}
+          showWhatsappMarquee={topbar.showWhatsappMarquee}
           socials={visibleSocials}
         />
         <header className="main-header">

@@ -36,17 +36,27 @@ export default async function InsightRoute({ searchParams }: InsightRouteProps) 
   const filter = parseInsightFilter(params.filter);
 
   return (
-    <div className="findox-scope page-wrapper">
-      <Header
-        navItems={content.navItems}
-        socialLinks={content.socialLinks}
-        topbar={content.topbar}
-        header={content.header}
-      />
+    /*
+     * `findox-scope` wraps only the marketing header and footer. The Knowledge
+     * Bank itself is built on the shadcn tokens, and findox.css declares
+     * `.findox-scope a { color }` unlayered — which outranks every layered
+     * Tailwind text colour and would repaint the whole library olive.
+     */
+    <div className="page-wrapper">
+      <div className="findox-scope findox-header-inflow">
+        <Header
+          navItems={content.navItems}
+          socialLinks={content.socialLinks}
+          topbar={content.topbar}
+          header={content.header}
+        />
+      </div>
       <main>
         <InsightPage initialFilter={filter} />
       </main>
-      <Footer footer={content.footer} />
+      <div className="findox-scope">
+        <Footer footer={content.footer} />
+      </div>
     </div>
   );
 }
