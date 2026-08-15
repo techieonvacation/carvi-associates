@@ -3,6 +3,7 @@ import { DM_Sans, Sora, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./findox.css";
 import { cn } from "@/lib/utils";
+import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site-config";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -23,9 +24,18 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  // Every relative Open Graph / canonical URL resolves against this origin.
+  metadataBase: new URL(SITE_URL),
+  // No `template` on purpose: page-level titles come from CMS-authored SEO
+  // fields that already carry the brand suffix, and a template would double it.
   title: "Carvi Associates | Finance, Business & Consulting",
-  description:
-    "Carvi Associates — expert solutions for corporate financial success. Modern, responsive finance and business consulting.",
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    locale: "en_IN",
+  },
+  twitter: { card: "summary_large_image" },
   icons: {
     icon: [
       { url: "/images/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },

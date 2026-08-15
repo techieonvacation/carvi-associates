@@ -87,7 +87,15 @@
 
 /* Info panel: base fill wipes up from the bottom on card hover. */
 .team-card__info {
-  filter: drop-shadow(0 2px 4.4px rgba(0, 0, 0, 0.15));
+  box-shadow:
+    0 1px 2px rgba(58, 48, 32, 0.06),
+    0 6px 16px -8px rgba(58, 48, 32, 0.18);
+  transition: box-shadow 500ms ease;
+}
+.team-card:hover .team-card__info {
+  box-shadow:
+    0 2px 4px rgba(58, 48, 32, 0.08),
+    0 14px 30px -12px rgba(58, 48, 32, 0.3);
 }
 .team-card__info::before {
   content: "";
@@ -118,5 +126,124 @@
 @media (min-width: 576px) and (max-width: 767px) {
   .team-card__social .social-links {
     right: 70%;
+  }
+}
+
+/* -------------------------------------------------------------
+   Info panel detail — the bottom of the card used to be just a
+   name over a role on flat white. It now carries an ornamental
+   rule and a "view profile" affordance that resolves on hover,
+   so the card has somewhere to go visually instead of stopping.
+   ------------------------------------------------------------- */
+
+/* Two hairlines flanking a rotated square (the sec-title shape mark in
+   pure CSS). The lines grow and the diamond flips to primary on hover. */
+.team-card__rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 auto 8px;
+  height: 7px;
+}
+.team-card__rule i {
+  display: block;
+  width: 18px;
+  height: 1px;
+  background-color: var(--findox-border-color);
+  transition: width 500ms ease, background-color 500ms ease;
+}
+.team-card__rule b {
+  display: block;
+  width: 5px;
+  height: 5px;
+  transform: rotate(45deg);
+  background-color: var(--findox-base);
+  transition: background-color 500ms ease, transform 500ms ease;
+}
+.team-card:hover .team-card__rule i {
+  width: 26px;
+  background-color: rgba(var(--findox-primary-rgb), 0.65);
+}
+.team-card:hover .team-card__rule b {
+  background-color: var(--findox-primary);
+  transform: rotate(135deg);
+}
+
+/* "View profile" row: collapsed to zero height until the card is hovered,
+   then it expands and slides up. `grid-template-rows` animates cleanly from
+   0fr to 1fr, so no fixed height has to be guessed for the label. */
+.team-card__profile {
+  display: grid;
+  grid-template-rows: 0fr;
+  justify-content: center;
+  margin-top: 0;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: grid-template-rows 500ms ease, opacity 400ms ease,
+    transform 500ms ease, margin-top 500ms ease;
+}
+.team-card:hover .team-card__profile,
+.team-card__profile:focus-visible {
+  grid-template-rows: 1fr;
+  margin-top: 10px;
+  opacity: 1;
+  transform: translateY(0);
+}
+.team-card__profile > span:not(.sr-only) {
+  overflow: hidden;
+  min-height: 0;
+}
+.team-card__profile__text {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--findox-primary);
+  line-height: 1.6;
+}
+.team-card__profile__icon {
+  display: none;
+}
+
+/* Wider cards have room for the label and the arrow side by side. */
+@media (min-width: 576px) {
+  .team-card__profile {
+    grid-template-columns: auto auto;
+    align-items: center;
+    gap: 8px;
+  }
+  .team-card__profile__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgba(var(--findox-primary-rgb), 0.22);
+    color: var(--findox-primary);
+    font-size: 8px;
+    transition: transform 500ms ease, background-color 500ms ease;
+  }
+  .team-card:hover .team-card__profile__icon {
+    background-color: var(--findox-primary);
+    color: var(--findox-base);
+  }
+}
+
+/* Keyboard users get the same reveal without needing a pointer. */
+.team-card__profile:focus-visible {
+  outline: 2px solid var(--findox-primary);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-card__rule i,
+  .team-card__rule b,
+  .team-card__profile,
+  .team-card__profile__icon {
+    transition: none;
   }
 }

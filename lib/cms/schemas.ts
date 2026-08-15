@@ -564,3 +564,6 @@ export const projectsBulkSchema = z.object({
     "duplicate",
   ]),
 });
+
+/** Blog validators live in their own module — re-exported for a single import path. */
+export * from "@/lib/cms/blog-schemas";

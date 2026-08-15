@@ -31,6 +31,14 @@ import {
   defaultFooterRecentPosts,
   defaultFooterSocials,
 } from "../lib/cms/defaults";
+import {
+  defaultBlogAuthors,
+  defaultBlogCategories,
+  defaultBlogPosts,
+  defaultBlogSection,
+  defaultBlogTags,
+} from "../lib/cms/blog-defaults";
+import { estimateReadingMinutes } from "../lib/cms/blog-sanitize";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
@@ -643,6 +651,167 @@ async function main() {
         isVisible: social.isVisible,
         isActive: social.isActive,
       })),
+    });
+  }
+
+  await seedBlog();
+}
+
+/**
+ * Blog seed. Every step is guarded on "does this already exist" and keyed by
+ * slug, so re-running the seed never duplicates or overwrites content an editor
+ * has since changed in the CMS.
+ */
+async function seedBlog() {
+  const existingBlogSection = await prisma.blogSectionSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingBlogSection) {
+    await prisma.blogSectionSettings.create({
+      data: {
+        id: "default",
+        tagline: defaultBlogSection.tagline,
+        titleLine1: defaultBlogSection.title[0],
+        titleLine2: defaultBlogSection.title[1],
+        taglineBg: defaultBlogSection.taglineBg,
+        homeLimit: defaultBlogSection.homeLimit,
+        homeCtaText: defaultBlogSection.homeCtaText,
+        homeCtaHref: defaultBlogSection.homeCtaHref,
+        showHomeCta: defaultBlogSection.showHomeCta,
+        isVisible: defaultBlogSection.isVisible,
+        archiveTagline: defaultBlogSection.archiveTagline,
+        archiveTitleLine1: defaultBlogSection.archiveTitle[0],
+        archiveTitleLine2: defaultBlogSection.archiveTitle[1],
+        archiveIntro: defaultBlogSection.archiveIntro,
+        archiveHeroImage: defaultBlogSection.archiveHeroImage,
+        postsPerPage: defaultBlogSection.postsPerPage,
+        showSidebar: defaultBlogSection.showSidebar,
+        showSearch: defaultBlogSection.showSearch,
+        showCategories: defaultBlogSection.showCategories,
+        showTags: defaultBlogSection.showTags,
+        showNewsletter: defaultBlogSection.showNewsletter,
+        allowComments: defaultBlogSection.allowComments,
+        moderateComments: defaultBlogSection.moderateComments,
+        disclaimer: defaultBlogSection.disclaimer,
+        seoTitle: defaultBlogSection.seoTitle,
+        seoDescription: defaultBlogSection.seoDescription,
+        seoKeywords: defaultBlogSection.seoKeywords,
+      },
+    });
+  }
+
+  for (const category of defaultBlogCategories) {
+    const exists = await prisma.blogCategory.findUnique({ where: { slug: category.slug } });
+    if (exists) continue;
+    await prisma.blogCategory.create({
+      data: {
+        name: category.name,
+        slug: category.slug,
+        description: category.description,
+        icon: category.icon,
+        accentColor: category.accentColor,
+        displayOrder: category.displayOrder,
+        isFeatured: category.isFeatured,
+        seoDescription: category.seoDescription,
+      },
+    });
+  }
+
+  for (const tag of defaultBlogTags) {
+    const exists = await prisma.blogTag.findUnique({ where: { slug: tag.slug } });
+    if (exists) continue;
+    await prisma.blogTag.create({
+      data: { name: tag.name, slug: tag.slug, description: tag.description },
+    });
+  }
+
+  for (const author of defaultBlogAuthors) {
+    const exists = await prisma.blogAuthor.findUnique({ where: { slug: author.slug } });
+    if (exists) continue;
+    await prisma.blogAuthor.create({
+      data: {
+        name: author.name,
+        slug: author.slug,
+        role: author.role,
+        credentials: author.credentials,
+        bio: author.bio,
+        avatarUrl: author.avatarUrl,
+        linkedinUrl: author.linkedinUrl,
+        displayOrder: author.displayOrder,
+      },
+    });
+  }
+
+  const [categories, tags, authors] = await Promise.all([
+    prisma.blogCategory.findMany({ select: { id: true, slug: true } }),
+    prisma.blogTag.findMany({ select: { id: true, slug: true } }),
+    prisma.blogAuthor.findMany({ select: { id: true, slug: true } }),
+  ]);
+  const categoryBySlug = new Map(categories.map((row) => [row.slug, row.id]));
+  const tagBySlug = new Map(tags.map((row) => [row.slug, row.id]));
+  const authorBySlug = new Map(authors.map((row) => [row.slug, row.id]));
+
+  for (const [index, post] of defaultBlogPosts.entries()) {
+    const exists = await prisma.blogPost.findUnique({ where: { slug: post.slug } });
+    if (exists) continue;
+
+    const publishedAt = new Date();
+    publishedAt.setDate(publishedAt.getDate() - post.publishedDaysAgo);
+
+    const created = await prisma.blogPost.create({
+      data: {
+        title: post.title,
+        slug: post.slug,
+        subtitle: post.subtitle,
+        excerpt: post.excerpt,
+        contentHtml: post.contentHtml,
+        keyTakeaways: post.keyTakeaways,
+        faqs: post.faqs,
+        sources: post.sources,
+        coverImageUrl: post.coverImageUrl,
+        coverImageAlt: post.coverImageAlt,
+        contentType: post.contentType,
+        status: "PUBLISHED",
+        categoryId: categoryBySlug.get(post.categorySlug) ?? null,
+        authorId: authorBySlug.get(post.authorSlug) ?? null,
+        readingMinutes: estimateReadingMinutes(post.contentHtml, post.excerpt),
+        displayOrder: index,
+        isFeatured: post.isFeatured,
+        isPinned: post.isPinned,
+        isVisible: true,
+        isActive: true,
+        publishedAt,
+        seoTitle: post.seoTitle,
+        seoDescription: post.seoDescription,
+        seoKeywords: post.seoKeywords,
+      },
+    });
+
+    const tagIds = post.tagSlugs
+      .map((slug) => tagBySlug.get(slug))
+      .filter((id): id is string => Boolean(id));
+
+    if (tagIds.length) {
+      await prisma.blogPostTag.createMany({
+        data: tagIds.map((tagId) => ({ postId: created.id, tagId })),
+        skipDuplicates: true,
+      });
+    }
+  }
+
+  // A "Blog" entry in the primary nav, added only if the menu has no blog link.
+  const blogNavExists = await prisma.navItem.findFirst({
+    where: { href: { startsWith: "/blog" } },
+  });
+  if (!blogNavExists) {
+    const maxOrder = await prisma.navItem.aggregate({ _max: { sortOrder: true } });
+    await prisma.navItem.create({
+      data: {
+        label: "Blog",
+        href: "/blog",
+        sortOrder: (maxOrder._max.sortOrder ?? -1) + 1,
+        visible: true,
+      },
     });
   }
 }

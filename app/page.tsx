@@ -15,11 +15,12 @@ import { Blog } from "@/components/site/Blog";
 import { Newsletter } from "@/components/site/Newsletter";
 import { Footer } from "@/components/site/Footer";
 import { getSiteContent } from "@/lib/cms/queries";
+import { getHomeBlog } from "@/lib/cms/blog-queries";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
-  const content = await getSiteContent();
+  const [content, blog] = await Promise.all([getSiteContent(), getHomeBlog()]);
 
   return (
     <div className="findox-scope page-wrapper">
@@ -48,7 +49,7 @@ export default async function Home() {
         />
         <Projects projects={content.projects} />
         <WorkingProcess workingProcess={content.workingProcess} />
-        <Blog />
+        <Blog blog={blog} />
         <Newsletter />
       </main>
       <Footer footer={content.footer} />

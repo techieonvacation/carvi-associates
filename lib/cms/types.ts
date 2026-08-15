@@ -478,3 +478,10 @@ export type FooterContent = {
   recentBlog: FooterRecentPostItem[];
   socials: FooterSocialItem[];
 };
+
+/**
+ * Blog domain types live in their own module (the surface is large: blocks,
+ * FAQs, sources, comments, archive filters) and are re-exported here so every
+ * CMS consumer keeps importing from a single `@/lib/cms/types` path.
+ */
+export * from "@/lib/cms/blog-types";

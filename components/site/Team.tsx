@@ -94,13 +94,31 @@ export function Team({ team, socialLinks }: TeamProps) {
                       </div>
                     </div>
 
-                    <div className="team-card__info relative z-[1] mt-auto flex min-h-[96px] flex-col justify-center overflow-hidden rounded-b-[50px] bg-white px-[25px] pt-5 pb-[17px] text-center">
-                      <h3 className="team-card__name mb-1.5 text-[22px] leading-[1.318] font-bold text-foreground capitalize transition-colors duration-500 group-hover:text-white sm:max-md:text-[19px]">
+                    <div className="team-card__info relative z-[1] mt-auto flex min-h-[150px] flex-col justify-center overflow-hidden rounded-b-[50px] bg-white px-[25px] pt-[18px] pb-[22px] text-center">
+                      <h3 className="team-card__name mb-2 text-[22px] leading-[1.318] font-bold text-foreground capitalize transition-colors duration-500 group-hover:text-white sm:max-md:text-[19px]">
                         <Link href={href}>{member.name}</Link>
                       </h3>
+
+                      {/* Ornamental rule: two hairlines flanking a rotated
+                          square, mirroring the sec-title shape marks used
+                          across the site. Widens on card hover. */}
+                      <span className="team-card__rule" aria-hidden="true">
+                        <i />
+                        <b />
+                        <i />
+                      </span>
+
                       <p className="team-card__designation m-0 capitalize text-muted-foreground transition-colors duration-500 group-hover:text-white">
                         {member.role}
                       </p>
+
+                      <Link href={href} className="team-card__profile">
+                        <span className="team-card__profile__text">View profile</span>
+                        <span className="team-card__profile__icon">
+                          <i className="icon-arrow-right-up" aria-hidden="true" />
+                        </span>
+                        <span className="sr-only">— {member.name}</span>
+                      </Link>
                     </div>
                   </div>
                 </Reveal>

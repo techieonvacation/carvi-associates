@@ -576,3 +576,222 @@ model ProjectItem {
   @@index([categorySlug])
   @@index([isVisible, isActive, deletedAt])
 }
+
+// -------------------------------------------------------------
+// Blog / Knowledge articles
+// -------------------------------------------------------------
+
+enum BlogPostStatus {
+  DRAFT
+  SCHEDULED
+  PUBLISHED
+  ARCHIVED
+}
+
+/// Editorial format of a post — drives the coloured pill on cards and the
+/// listing "type" filter. Sized for a CA practice: explainers, statutory
+/// updates, budget notes, compliance checklists, and client case studies.
+enum BlogContentType {
+  BLOG
+  ARTICLE
+  NEWS
+  GUIDE
+  CASE_STUDY
+  UPDATE
+  CIRCULAR
+  CHECKLIST
+  FAQ
+  OPINION
+}
+
+enum BlogCommentStatus {
+  PENDING
+  APPROVED
+  SPAM
+  REJECTED
+}
+
+model BlogSectionSettings {
+  id                String   @id @default("default")
+  tagline           String   @default("Our Latest Blog")
+  titleLine1        String   @default("Today's Blog Industry Finance")
+  titleLine2        String   @default("Business Consulting.")
+  taglineBg         String   @default("#f4ebd8")
+  homeLimit         Int      @default(3)
+  homeCtaText       String   @default("View All Blogs")
+  homeCtaHref       String   @default("/blog")
+  showHomeCta       Boolean  @default(true)
+  isVisible         Boolean  @default(true)
+  archiveTagline    String   @default("Knowledge Desk")
+  archiveTitleLine1 String   @default("Insights On Tax, GST &")
+  archiveTitleLine2 String   @default("Business Compliance.")
+  archiveIntro      String   @default("Practical, plain-English notes on income tax, GST, company law and audit — written by the Carvi Associates team for founders, finance heads and growing businesses.")
+  archiveHeroImage  String   @default("/images/blog/blog-1-1.jpg")
+  postsPerPage      Int      @default(9)
+  showSidebar       Boolean  @default(true)
+  showSearch        Boolean  @default(true)
+  showCategories    Boolean  @default(true)
+  showTags          Boolean  @default(true)
+  showNewsletter    Boolean  @default(true)
+  allowComments     Boolean  @default(true)
+  moderateComments  Boolean  @default(true)
+  disclaimer        String   @default("This article is for general information only and is not professional advice. Tax and regulatory positions change frequently — please consult Carvi Associates before acting on anything you read here.")
+  seoTitle          String?
+  seoDescription    String?
+  seoKeywords       String?
+  canonicalUrl      String?
+  ogImageUrl        String?
+  twitterImageUrl   String?
+  noIndex           Boolean  @default(false)
+  updatedAt         DateTime @updatedAt
+}
+
+model BlogAuthor {
+  id           String     @id @default(cuid())
+  name         String
+  slug         String     @unique
+  role         String     @default("")
+  credentials  String     @default("")
+  bio          String     @default("")
+  avatarUrl    String     @default("")
+  email        String?
+  linkedinUrl  String?
+  twitterUrl   String?
+  websiteUrl   String?
+  displayOrder Int        @default(0)
+  isVisible    Boolean    @default(true)
+  isActive     Boolean    @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  posts        BlogPost[]
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+}
+
+model BlogCategory {
+  id             String     @id @default(cuid())
+  name           String
+  slug           String     @unique
+  description    String     @default("")
+  icon           String     @default("icon-folder")
+  accentColor    String     @default("#5c6b45")
+  imageUrl       String?
+  displayOrder   Int        @default(0)
+  isFeatured     Boolean    @default(false)
+  isVisible      Boolean    @default(true)
+  isActive       Boolean    @default(true)
+  deletedAt      DateTime?
+  seoTitle       String?
+  seoDescription String?
+  seoKeywords    String?
+  noIndex        Boolean    @default(false)
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+  posts          BlogPost[]
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([isVisible, isActive, deletedAt])
+}
+
+model BlogTag {
+  id          String        @id @default(cuid())
+  name        String
+  slug        String        @unique
+  description String        @default("")
+  isVisible   Boolean       @default(true)
+  isActive    Boolean       @default(true)
+  deletedAt   DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  posts       BlogPostTag[]
+
+  @@index([deletedAt])
+}
+
+model BlogPost {
+  id              String          @id @default(cuid())
+  title           String
+  slug            String          @unique
+  subtitle        String?
+  excerpt         String
+  contentHtml     String          @default("")
+  keyTakeaways    Json            @default("[]")
+  faqs            Json            @default("[]")
+  sources         Json            @default("[]")
+  coverImageUrl   String
+  coverImageAlt   String          @default("")
+  thumbnailUrl    String?
+  contentType     BlogContentType @default(BLOG)
+  status          BlogPostStatus  @default(DRAFT)
+  categoryId      String?
+  authorId        String?
+  readingMinutes  Int             @default(0)
+  viewCount       Int             @default(0)
+  displayOrder    Int             @default(0)
+  isFeatured      Boolean         @default(false)
+  isPinned        Boolean         @default(false)
+  allowComments   Boolean         @default(true)
+  isVisible       Boolean         @default(true)
+  isActive        Boolean         @default(true)
+  publishedAt     DateTime?
+  deletedAt       DateTime?
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  canonicalUrl    String?
+  ogImageUrl      String?
+  twitterImageUrl String?
+  noIndex         Boolean         @default(false)
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  category BlogCategory? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  author   BlogAuthor?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  tags     BlogPostTag[]
+  comments BlogComment[]
+
+  @@index([publishedAt])
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([categoryId])
+  @@index([authorId])
+  @@index([status, isVisible, isActive, deletedAt])
+}
+
+model BlogPostTag {
+  postId String
+  tagId  String
+  post   BlogPost @relation(fields: [postId], references: [id], onDelete: Cascade)
+  tag    BlogTag  @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([postId, tagId])
+  @@index([tagId])
+}
+
+model BlogComment {
+  id        String            @id @default(cuid())
+  postId    String
+  parentId  String?
+  name      String
+  email     String
+  website   String?
+  body      String
+  status    BlogCommentStatus @default(PENDING)
+  ipHash    String?
+  userAgent String?
+  isPinned  Boolean           @default(false)
+  deletedAt DateTime?
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  post    BlogPost      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  parent  BlogComment?  @relation("BlogCommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies BlogComment[] @relation("BlogCommentReplies")
+
+  @@index([postId, status])
+  @@index([status])
+  @@index([deletedAt])
+}

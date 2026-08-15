@@ -1,0 +1,1 @@
+ALTER TABLE "BlogPost" DROP COLUMN IF EXISTS "blocks";
