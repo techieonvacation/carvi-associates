@@ -1,10 +1,7 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowUpRight, SearchX } from "lucide-react";
-import { Container } from "@/components/site/Container";
-import { Eyebrow, Tag } from "./insight-ui";
+import { Tag, insightCard } from "./insight-ui";
 import { categoryLabel, type SearchableItem } from "./data";
+import { cn } from "@/lib/utils";
 
 export function SearchResults({
   query,
@@ -15,69 +12,66 @@ export function SearchResults({
   results: SearchableItem[];
   onClear: () => void;
 }) {
-  if (!query.trim()) return null;
+  const term = query.trim();
 
   return (
-    <Container className="py-10 md:py-12">
-      <div
-        className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2"
-        aria-live="polite"
-      >
-        <p className="min-w-0">
-          <Eyebrow>Search</Eyebrow>
-          <span className="mt-1.5 block font-heading text-lg font-bold text-foreground">
-            {results.length} {results.length === 1 ? "result" : "results"} for
-            &ldquo;{query.trim()}&rdquo;
-          </span>
-        </p>
+    <div aria-live="polite">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-x-8 gap-y-4 border-b border-border pb-6">
+        <div className="min-w-0">
+          <h2 className="font-heading text-[25px] leading-tight font-bold text-foreground max-sm:text-[22px]">
+            {results.length} {results.length === 1 ? "result" : "results"}
+          </h2>
+          <p className="mt-2 text-base text-muted-foreground">
+            Matching &ldquo;<span className="font-medium text-foreground">{term}</span>&rdquo;
+            across the full library
+          </p>
+        </div>
         <button
           type="button"
           onClick={onClear}
-          className="shrink-0 text-sm font-medium text-accent hover:underline focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+          className="cursor-pointer border border-border px-5 py-[9.5px] font-heading text-[15px] font-semibold text-muted-foreground transition-all duration-500 hover:border-accent hover:bg-accent hover:text-white"
         >
           Clear search
         </button>
       </div>
 
       {results.length ? (
-        <ul className="mt-6 divide-y divide-border/60 border-y border-border/60">
+        <ul className="m-0 grid list-none gap-5 p-0 md:grid-cols-2">
           {results.map((item) => (
-            <li key={item.id}>
+            <li key={`${item.category}-${item.id}`}>
               <Link
                 href={item.href}
-                className="group flex items-start justify-between gap-4 py-4 focus-visible:outline-none"
+                className={cn(insightCard, "group flex h-full flex-col p-6 max-sm:p-5")}
               >
-                <div className="min-w-0">
-                  <h3 className="font-heading text-[0.9375rem] font-bold text-foreground group-hover:text-accent">
-                    {item.title}
-                  </h3>
-                  <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
-                    {item.description}
-                  </p>
-                  <div className="mt-2">
-                    <Tag>{categoryLabel(item.category)}</Tag>
-                  </div>
-                </div>
-                <ArrowUpRight
-                  className="mt-1 size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
-                  aria-hidden="true"
-                />
+                <Tag className="self-start">{categoryLabel(item.category)}</Tag>
+                <h3 className="mt-4 font-heading text-[19px] leading-[1.35] font-bold text-foreground transition-colors duration-500 group-hover:text-accent">
+                  {item.title}
+                </h3>
+                <p className="mt-2.5 text-[15px] leading-[1.7] text-muted-foreground">
+                  {item.description}
+                </p>
               </Link>
             </li>
           ))}
         </ul>
       ) : (
-        <div className="mt-6 flex flex-col items-start gap-3 rounded-xl border border-dashed border-border/70 bg-secondary/20 px-5 py-8">
-          <SearchX className="size-5 text-muted-foreground" aria-hidden="true" />
-          <p className="font-heading text-[0.9375rem] font-bold text-foreground">
-            Nothing matched &ldquo;{query.trim()}&rdquo;
+        <div className="rounded-[20px] border border-border bg-secondary/30 px-7.5 py-20 text-center max-sm:px-5 max-sm:py-12">
+          <h3 className="mb-3 font-heading text-[24px] leading-tight font-bold text-foreground max-sm:text-[20px]">
+            Nothing matched your search
+          </h3>
+          <p className="mx-auto mb-7 max-w-110 text-base text-muted-foreground">
+            Try a shorter term, or browse a category — the library indexes titles and
+            summaries, not full article text.
           </p>
-          <p className="max-w-md text-[13px] leading-relaxed text-muted-foreground">
-            Try a shorter term, or browse a category from the list above — the
-            library indexes titles and summaries, not full article text.
-          </p>
+          <Link
+            href="/insight"
+            scroll={false}
+            className="inline-flex items-center border border-accent bg-accent px-6 py-[11px] font-heading text-[15px] font-semibold text-white transition-all duration-500 hover:border-border hover:bg-transparent hover:text-foreground"
+          >
+            Browse the full library
+          </Link>
         </div>
       )}
-    </Container>
+    </div>
   );
 }

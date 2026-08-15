@@ -1,54 +1,55 @@
 import Link from "next/link";
-import { Dot, SectionShell, Tag } from "./insight-ui";
+import { ArrowButton, SectionShell, Tag, insightCard } from "./insight-ui";
 import { INSIGHTS } from "./data";
+import { cn } from "@/lib/utils";
 
-/**
- * Insights — an article index, laid out like one. Rows separated by hairlines
- * with a running number, category, reading time and views. No invented cover
- * art: a gradient rectangle standing in for a photo adds nothing a reader can
- * use, and four of them in a row is the giveaway that nobody designed the page.
- */
-export function InsightsSection({ index }: { index: number }) {
+export function InsightsSection() {
   return (
     <SectionShell
       id="insights"
-      index={index}
-      title="Insights"
-      lede="Long-form analysis on funding, market structure, operations, and technology."
+      tagline="Insights"
+      title="Long-form analysis"
+      lede="Deep dives on funding, market structure, operations, and technology — written for founders and finance teams."
       count={`${INSIGHTS.length} articles`}
       action={{ label: "All insights", href: "/insight?filter=insights" }}
     >
-      <ol className="divide-y divide-border/60 border-y border-border/60">
-        {INSIGHTS.map((item, position) => (
+      <ul className="m-0 grid list-none gap-5 p-0 md:grid-cols-2">
+        {INSIGHTS.map((item) => (
           <li key={item.id}>
-            <Link
-              href={item.href}
-              className="group grid grid-cols-[2rem_minmax(0,1fr)] items-start gap-x-4 py-5 transition-colors focus-visible:outline-none sm:grid-cols-[2.5rem_minmax(0,1fr)] md:py-6"
-            >
-              <span
-                className="font-heading text-sm font-semibold text-muted-foreground/70 tabular-nums group-hover:text-primary"
-                aria-hidden="true"
-              >
-                {(position + 1).toString().padStart(2, "0")}
-              </span>
-              <div className="min-w-0">
-                <h3 className="font-heading text-[1.0625rem] leading-snug font-bold text-foreground group-hover:text-accent md:text-[1.1875rem]">
-                  {item.title}
-                </h3>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
-                  {item.summary}
-                </p>
-                <p className="mt-3 flex flex-wrap items-center gap-2 text-[13px] text-muted-foreground">
-                  <Tag>{item.category}</Tag>
-                  <span className="tabular-nums">{item.readingTime} read</span>
-                  <Dot />
-                  <span className="tabular-nums">{item.views} views</span>
-                </p>
+            <article className={cn(insightCard, "group flex h-full flex-col p-7.5 max-sm:p-5")}>
+              <div className="flex flex-wrap items-center justify-between gap-3">
+                <Tag>{item.category}</Tag>
+                <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <i className="icon-clock text-xs text-accent" aria-hidden="true" />
+                  {item.readingTime} read
+                </span>
               </div>
-            </Link>
+
+              <h3 className="mt-5 font-heading text-[22px] leading-[1.3] font-bold text-foreground max-sm:text-[20px]">
+                <Link
+                  href={item.href}
+                  className="transition-colors duration-500 hover:text-accent"
+                >
+                  {item.title}
+                </Link>
+              </h3>
+              <p className="mt-3.5 text-base leading-[1.75] text-muted-foreground">
+                {item.summary}
+              </p>
+
+              <div className="mt-auto flex items-center justify-between gap-4 border-t border-border/60 pt-6 max-sm:pt-5">
+                <span className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <i className="icon-eye text-xs text-accent" aria-hidden="true" />
+                  {item.views} views
+                </span>
+                <Link href={item.href} aria-label={`Read ${item.title}`}>
+                  <ArrowButton />
+                </Link>
+              </div>
+            </article>
           </li>
         ))}
-      </ol>
+      </ul>
     </SectionShell>
   );
 }

@@ -1,45 +1,39 @@
-import { Download } from "lucide-react";
 import { KnowledgeIcon } from "./icons";
-import { IconFrame, SectionShell } from "./insight-ui";
+import { IconBadge, SectionShell } from "./insight-ui";
 import { FORMS } from "./data";
 
-/**
- * Forms — a download list. The action sits on the right of every row at the
- * same position, so a visitor who wants three forms clicks the same spot three
- * times instead of hunting a differently-placed button in each card.
- */
-export function FormsSection({ index }: { index: number }) {
+export function FormsSection() {
   return (
     <SectionShell
       id="forms"
-      index={index}
-      title="Forms"
-      lede="Statutory and registration packs, ready to fill and file."
+      tagline="Forms"
+      title="Filled, checked, ready to file"
+      lede="Registration and compliance packs with the checklists our team uses on every engagement."
       count={`${FORMS.length} downloads`}
     >
-      <ul className="divide-y divide-border/60 overflow-hidden rounded-xl border border-border/70">
+      <ul className="m-0 list-none overflow-hidden rounded-[20px] border border-border bg-white p-0">
         {FORMS.map((item) => (
           <li
             key={item.id}
-            className="flex flex-col gap-3 bg-card px-4 py-4 transition-colors hover:bg-secondary/25 sm:flex-row sm:items-center sm:gap-4 sm:px-5"
+            className="insight-row group flex flex-col gap-4 border-b border-border/60 p-6 last:border-b-0 hover:bg-secondary/30 sm:flex-row sm:items-center sm:gap-5 sm:px-7.5 max-sm:p-5"
           >
-            <IconFrame>
-              <KnowledgeIcon name={item.icon} className="size-4.5" />
-            </IconFrame>
+            <IconBadge>
+              <KnowledgeIcon name={item.icon} className="size-5.5" />
+            </IconBadge>
             <div className="min-w-0 flex-1">
-              <h3 className="font-heading text-[0.9375rem] font-bold text-foreground">
+              <h3 className="font-heading text-[17px] leading-snug font-bold text-foreground">
                 {item.title}
               </h3>
-              <p className="mt-0.5 text-[13px] leading-relaxed text-muted-foreground">
+              <p className="mt-1.5 text-[15px] leading-[1.6] text-muted-foreground">
                 {item.description}
               </p>
             </div>
             <a
               href={item.href}
               download
-              className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-border/70 bg-secondary/60 px-3.5 py-2 text-[13px] font-semibold text-foreground transition-colors hover:border-accent hover:bg-accent hover:text-accent-foreground focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none"
+              className="inline-flex shrink-0 items-center justify-center gap-2.5 border border-border px-5 py-[11px] font-heading text-[15px] font-semibold text-foreground transition-all duration-500 hover:border-accent hover:bg-accent hover:text-white max-sm:self-start"
             >
-              <Download className="size-3.5" aria-hidden="true" />
+              <i className="icon-arrow-bottom text-[11px]" aria-hidden="true" />
               Download
               <span className="sr-only">{item.title}</span>
             </a>

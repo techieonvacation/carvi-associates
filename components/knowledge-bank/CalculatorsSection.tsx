@@ -1,44 +1,36 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { KnowledgeIcon } from "./icons";
-import { IconFrame, SectionShell, Tag } from "./insight-ui";
+import { ArrowButton, IconBadge, SectionShell, Tag, insightCard } from "./insight-ui";
 import { CALCULATORS } from "./data";
+import { cn } from "@/lib/utils";
 
-/**
- * Calculators — a tool directory. Each row is a target you click, so the row
- * itself is the control; unavailable tools stay in place as a muted, non-
- * interactive entry rather than being hidden, because knowing a tool is coming
- * is useful information.
- */
-export function CalculatorsSection({ index }: { index: number }) {
+export function CalculatorsSection() {
   const live = CALCULATORS.filter((item) => !item.comingSoon).length;
 
   return (
     <SectionShell
       id="calculators"
-      index={index}
-      title="Calculators"
-      lede="Working models for tax, payroll, and loan questions that come up daily."
+      tagline="Calculators"
+      title="Working models, ready to use"
+      lede="Tax, payroll, and financing calculators for the questions that come up every day."
       count={`${live} live · ${CALCULATORS.length - live} in build`}
     >
-      <ul className="grid gap-3 md:grid-cols-2">
+      <ul className="m-0 grid list-none gap-5 p-0 sm:grid-cols-2">
         {CALCULATORS.map((item) => {
           const body = (
             <>
-              <IconFrame tone={item.comingSoon ? "muted" : "accent"}>
-                <KnowledgeIcon name={item.icon} className="size-[1.125rem]" />
-              </IconFrame>
-              <div className="min-w-0 flex-1">
-                <div className="flex flex-wrap items-center gap-2">
-                  <h3 className="font-heading text-[0.9375rem] font-bold text-foreground">
-                    {item.title}
-                  </h3>
-                  {item.comingSoon ? <Tag>Coming soon</Tag> : null}
-                </div>
-                <p className="mt-1 text-[13px] leading-relaxed text-muted-foreground">
-                  {item.description}
-                </p>
+              <div className="flex items-start justify-between gap-4">
+                <IconBadge tone={item.comingSoon ? "muted" : "accent"}>
+                  <KnowledgeIcon name={item.icon} className="size-5.5" />
+                </IconBadge>
+                {item.comingSoon ? <Tag>Coming soon</Tag> : <ArrowButton className="size-9" />}
               </div>
+              <h3 className="mt-5 font-heading text-[19px] leading-[1.35] font-bold text-foreground transition-colors duration-500 group-hover:text-accent">
+                {item.title}
+              </h3>
+              <p className="mt-2.5 text-[15px] leading-[1.7] text-muted-foreground">
+                {item.description}
+              </p>
             </>
           );
 
@@ -46,7 +38,7 @@ export function CalculatorsSection({ index }: { index: number }) {
             return (
               <li
                 key={item.id}
-                className="flex gap-4 rounded-xl border border-dashed border-border/70 bg-secondary/20 px-4 py-4 sm:px-5"
+                className="flex h-full flex-col rounded-[20px] border border-dashed border-border bg-secondary/25 p-6 max-sm:p-5"
               >
                 {body}
               </li>
@@ -57,13 +49,9 @@ export function CalculatorsSection({ index }: { index: number }) {
             <li key={item.id}>
               <Link
                 href={item.href}
-                className="group flex h-full gap-4 rounded-xl border border-border/70 bg-card px-4 py-4 transition-colors hover:border-accent/45 hover:bg-secondary/30 focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none sm:px-5"
+                className={cn(insightCard, "group flex h-full flex-col p-6 max-sm:p-5")}
               >
                 {body}
-                <ArrowUpRight
-                  className="mt-2.5 size-4 shrink-0 self-start text-muted-foreground transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-accent"
-                  aria-hidden="true"
-                />
               </Link>
             </li>
           );

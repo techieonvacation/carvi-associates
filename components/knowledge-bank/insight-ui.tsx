@@ -1,15 +1,7 @@
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/**
- * Shared primitives for the Knowledge Bank. The page is a reference library,
- * not a landing page, so the system is deliberately narrow: one border weight,
- * one radius, one label style, no decorative gradients. Structure varies per
- * content type; chrome does not.
- */
-
-export function Eyebrow({
+export function Tagline({
   children,
   className,
 }: {
@@ -19,34 +11,40 @@ export function Eyebrow({
   return (
     <span
       className={cn(
-        "font-heading text-[11px] font-semibold tracking-[0.16em] text-muted-foreground uppercase",
+        "insight-tagline inline-flex items-start gap-2 bg-secondary py-2.5 pr-8 pl-5 font-heading text-[15px] leading-tight font-semibold text-accent uppercase",
         className,
       )}
     >
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/shapes/sec-title-shape-1-1.png"
+        alt=""
+        width={16}
+        height={16}
+        className="relative top-px h-4 w-4"
+        aria-hidden="true"
+      />
       {children}
     </span>
   );
 }
 
-/** Numbered section header: `03 — Calculators`, a count, and an optional link. */
 export function SectionShell({
   id,
-  index,
+  tagline,
   title,
   lede,
   count,
   action,
   children,
-  className,
 }: {
   id: string;
-  index: number;
+  tagline: string;
   title: string;
   lede: string;
   count?: string;
   action?: { label: string; href: string };
   children: React.ReactNode;
-  className?: string;
 }) {
   const headingId = `${id}-heading`;
 
@@ -54,53 +52,45 @@ export function SectionShell({
     <section
       id={id}
       aria-labelledby={headingId}
-      className={cn(
-        "scroll-mt-24 border-t border-border/60 py-12 first:border-t-0 md:py-16",
-        className,
-      )}
+      className="scroll-mt-30"
     >
-      <header className="mb-8 md:mb-10">
-        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-          <div className="flex min-w-0 items-baseline gap-3">
-            <span
-              className="font-heading text-sm font-semibold text-primary tabular-nums"
-              aria-hidden="true"
-            >
-              {index.toString().padStart(2, "0")}
+      <header className="mb-10 flex flex-wrap items-end justify-between gap-x-8 gap-y-5 max-sm:mb-8">
+        <div className="min-w-0 max-w-2xl">
+          <Tagline>{tagline}</Tagline>
+          <h2
+            id={headingId}
+            className="mt-4.5 font-heading text-[30px] leading-[1.25] font-bold text-foreground max-sm:text-[25px]"
+          >
+            {title}
+          </h2>
+          <p className="mt-3.5 text-base leading-[1.75] text-muted-foreground">{lede}</p>
+        </div>
+
+        <div className="flex shrink-0 flex-wrap items-center gap-4">
+          {count ? (
+            <span className="inline-flex items-center rounded-full border border-border bg-secondary/50 px-4 py-1.5 text-sm font-medium text-muted-foreground">
+              {count}
             </span>
-            <h2
-              id={headingId}
-              className="font-heading text-[1.375rem] leading-tight font-bold tracking-tight text-foreground md:text-[1.625rem]"
-            >
-              {title}
-            </h2>
-            {count ? (
-              <span className="text-xs text-muted-foreground tabular-nums">{count}</span>
-            ) : null}
-          </div>
+          ) : null}
           {action ? (
             <Link
               href={action.href}
-              className="group inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+              className="group inline-flex items-center gap-2 font-heading text-[15px] font-semibold text-accent transition-colors duration-500 hover:text-foreground"
             >
               {action.label}
-              <ArrowUpRight
-                className="size-3.5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              <i
+                className="icon-arrow-right-up text-[11px] transition-transform duration-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 aria-hidden="true"
               />
             </Link>
           ) : null}
         </div>
-        <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-[0.9375rem]">
-          {lede}
-        </p>
       </header>
       {children}
     </section>
   );
 }
 
-/** Small status/category label. Flat, bordered, no fill — reads as metadata. */
 export function Tag({
   children,
   tone = "muted",
@@ -113,10 +103,10 @@ export function Tag({
   return (
     <span
       className={cn(
-        "inline-flex items-center rounded-md border px-2 py-0.5 text-[11px] font-medium whitespace-nowrap",
-        tone === "muted" && "border-border/70 bg-secondary/50 text-muted-foreground",
-        tone === "accent" && "border-accent/30 bg-accent/8 text-accent",
-        tone === "primary" && "border-primary/60 bg-primary/25 text-foreground",
+        "inline-flex items-center rounded-full border px-3.5 py-1 text-[13px] leading-tight font-medium whitespace-nowrap",
+        tone === "muted" && "border-border bg-secondary/50 text-muted-foreground",
+        tone === "accent" && "border-accent bg-accent text-white",
+        tone === "primary" && "border-primary bg-primary text-foreground",
         className,
       )}
     >
@@ -125,25 +115,7 @@ export function Tag({
   );
 }
 
-/** Middot separator for inline metadata runs. */
-export function Dot() {
-  return (
-    <span className="text-border" aria-hidden="true">
-      ·
-    </span>
-  );
-}
-
-/** The one card surface used across the page. */
-export const cardSurface =
-  "rounded-xl border border-border/70 bg-card transition-colors duration-200";
-
-/** The one interactive-row surface used across the page. */
-export const rowSurface =
-  "group flex gap-4 rounded-xl border border-border/70 bg-card px-4 py-4 transition-colors duration-200 hover:border-accent/45 hover:bg-secondary/30 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/35 focus-visible:outline-none sm:px-5";
-
-/** Square icon frame at a single size, used for every tool/link/form row. */
-export function IconFrame({
+export function IconBadge({
   children,
   tone = "muted",
   className,
@@ -155,9 +127,10 @@ export function IconFrame({
   return (
     <span
       className={cn(
-        "inline-flex size-10 shrink-0 items-center justify-center rounded-lg",
-        tone === "muted" && "bg-secondary/70 text-accent",
-        tone === "accent" && "bg-accent text-accent-foreground",
+        "inline-flex size-12.5 shrink-0 items-center justify-center rounded-full transition-colors duration-500",
+        tone === "muted"
+          ? "bg-secondary text-accent group-hover:bg-accent group-hover:text-white"
+          : "bg-accent text-white",
         className,
       )}
       aria-hidden="true"
@@ -166,3 +139,28 @@ export function IconFrame({
     </span>
   );
 }
+
+export function ArrowButton({ className }: { className?: string }) {
+  return (
+    <span
+      className={cn(
+        "inline-flex size-11 shrink-0 items-center justify-center rounded-full border border-border text-accent transition-colors duration-500 group-hover:border-accent group-hover:bg-accent group-hover:text-white",
+        className,
+      )}
+      aria-hidden="true"
+    >
+      <i className="icon-arrow-right-up text-[11px]" />
+    </span>
+  );
+}
+
+export function Dot() {
+  return (
+    <span className="text-border" aria-hidden="true">
+      ·
+    </span>
+  );
+}
+
+export const insightCard =
+  "insight-card rounded-[20px] border border-border bg-white";
