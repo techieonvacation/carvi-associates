@@ -14,17 +14,35 @@ export function Logo({ logo, tone = "light", onClick, className }: LogoProps) {
   const imageSrc =
     tone === "dark" ? logo.darkImageUrl || logo.imageUrl : logo.imageUrl;
   const showImage = logo.variant === "image" && Boolean(imageSrc);
+  const primaryText = logo.primaryText.trim();
+  const secondaryText = logo.secondaryText.trim();
+  const hasText = Boolean(primaryText || secondaryText);
+
+  const type = hasText ? (
+    <span className="site-logo__type">
+      {primaryText ? <span className="site-logo__primary">{primaryText}</span> : null}
+      {secondaryText ? (
+        <span className="site-logo__secondary">{secondaryText}</span>
+      ) : null}
+    </span>
+  ) : null;
 
   return (
     <Link
       href={logo.href || "/"}
       aria-label={logo.alt}
       onClick={onClick}
-      className={cn("site-logo", `site-logo--${tone}`, className)}
+      className={cn(
+        "site-logo",
+        `site-logo--${tone}`,
+        showImage && "site-logo--image",
+        className,
+      )}
       style={
         {
           "--site-logo-desktop": `${logo.heightDesktop}px`,
           "--site-logo-mobile": `${logo.heightMobile}px`,
+          "--site-logo-text": `${logo.textSizePx}px`,
         } as React.CSSProperties
       }
     >
@@ -37,25 +55,12 @@ export function Logo({ logo, tone = "light", onClick, className }: LogoProps) {
           priority
           className="site-logo__image"
         />
-      ) : (
-        <>
-          {logo.showMark ? (
-            <span className="site-logo__mark" aria-hidden="true">
-              {logo.markText}
-            </span>
-          ) : null}
-          {logo.primaryText || logo.secondaryText ? (
-            <span className="site-logo__type">
-              {logo.primaryText ? (
-                <span className="site-logo__primary">{logo.primaryText}</span>
-              ) : null}
-              {logo.secondaryText ? (
-                <span className="site-logo__secondary">{logo.secondaryText}</span>
-              ) : null}
-            </span>
-          ) : null}
-        </>
-      )}
+      ) : logo.showMark ? (
+        <span className="site-logo__mark" aria-hidden="true">
+          {logo.markText}
+        </span>
+      ) : null}
+      {type}
     </Link>
   );
 }

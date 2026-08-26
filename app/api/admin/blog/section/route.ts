@@ -29,7 +29,6 @@ function toPayload(row: {
   showSearch: boolean;
   showCategories: boolean;
   showTags: boolean;
-  showNewsletter: boolean;
   allowComments: boolean;
   moderateComments: boolean;
   disclaimer: string;
@@ -73,7 +72,6 @@ export async function GET() {
         showSearch: defaultBlogSection.showSearch,
         showCategories: defaultBlogSection.showCategories,
         showTags: defaultBlogSection.showTags,
-        showNewsletter: defaultBlogSection.showNewsletter,
         allowComments: defaultBlogSection.allowComments,
         moderateComments: defaultBlogSection.moderateComments,
         disclaimer: defaultBlogSection.disclaimer,
@@ -128,7 +126,6 @@ export async function PUT(request: Request) {
     showSearch: parsed.data.showSearch,
     showCategories: parsed.data.showCategories,
     showTags: parsed.data.showTags,
-    showNewsletter: parsed.data.showNewsletter,
     allowComments: parsed.data.allowComments,
     moderateComments: parsed.data.moderateComments,
     disclaimer: parsed.data.disclaimer.trim(),

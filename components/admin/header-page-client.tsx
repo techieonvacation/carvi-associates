@@ -14,7 +14,12 @@ import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { LOGO_MAX_HEIGHT, LOGO_MIN_HEIGHT } from "@/lib/cms/header-mappers";
+import {
+  LOGO_MAX_HEIGHT,
+  LOGO_MIN_HEIGHT,
+  LOGO_TEXT_MAX_SIZE,
+  LOGO_TEXT_MIN_SIZE,
+} from "@/lib/cms/header-mappers";
 import type { LogoVariant } from "@/lib/cms/types";
 
 type HeaderForm = {
@@ -40,6 +45,7 @@ type HeaderForm = {
   showLogoMark: boolean;
   logoHeightDesktop: number;
   logoHeightMobile: number;
+  logoTextSizePx: number;
 };
 
 type HeaderPageProps = {
@@ -54,9 +60,21 @@ function toHeight(value: number | readonly number[]): number {
   return Array.isArray(value) ? value[0] : (value as number);
 }
 
-function LogoPreview({ form, tone, height }: { form: HeaderForm; tone: "light" | "dark"; height: number }) {
+function LogoPreview({
+  form,
+  tone,
+  height,
+}: {
+  form: HeaderForm;
+  tone: "light" | "dark";
+  height: number;
+}) {
   const imageSrc = tone === "dark" ? form.logoDarkImageUrl || form.logoImageUrl : form.logoImageUrl;
   const useImage = form.logoVariant === "image" && Boolean(imageSrc);
+  const primaryText = form.logoPrimaryText.trim();
+  const secondaryText = form.logoSecondaryText.trim();
+  const primarySize = useImage ? form.logoTextSizePx : height * 0.48;
+  const secondarySize = useImage ? form.logoTextSizePx * 0.5 : height * 0.24;
 
   return (
     <div
@@ -66,57 +84,59 @@ function LogoPreview({ form, tone, height }: { form: HeaderForm; tone: "light" |
           : "flex min-h-28 items-center rounded-xl bg-white px-5"
       }
     >
-      {useImage ? (
-        <Image
-          src={imageSrc}
-          alt={form.logoAlt}
-          width={480}
-          height={160}
-          unoptimized
-          style={{ height, width: "auto", objectFit: "contain" }}
-        />
-      ) : (
-        <span className="inline-flex items-center" style={{ gap: height * 0.26 }}>
-          {form.showLogoMark ? (
-            <span
-              className="inline-flex shrink-0 items-center justify-center font-bold text-white"
-              style={{
-                width: height,
-                height,
-                borderRadius: height * 0.22,
-                fontSize: height * 0.55,
-                backgroundColor: tone === "dark" ? "#f5c835" : "#006654",
-                color: tone === "dark" ? "#131111" : "#ffffff",
-              }}
-            >
-              {form.logoMarkText}
-            </span>
-          ) : null}
-          <span className="flex flex-col" style={{ gap: height * 0.07 }}>
-            <span
-              className="font-bold leading-none"
-              style={{
-                fontSize: height * 0.48,
-                color: tone === "dark" ? "#ffffff" : "#131111",
-              }}
-            >
-              {form.logoPrimaryText}
-            </span>
-            {form.logoSecondaryText ? (
+      <span className="inline-flex items-center" style={{ gap: height * 0.26 }}>
+        {useImage ? (
+          <Image
+            src={imageSrc}
+            alt={form.logoAlt}
+            width={480}
+            height={160}
+            unoptimized
+            style={{ height, width: "auto", objectFit: "contain" }}
+          />
+        ) : form.showLogoMark ? (
+          <span
+            className="inline-flex shrink-0 items-center justify-center font-bold text-white"
+            style={{
+              width: height,
+              height,
+              borderRadius: height * 0.22,
+              fontSize: height * 0.55,
+              backgroundColor: tone === "dark" ? "#f5c835" : "#006654",
+              color: tone === "dark" ? "#131111" : "#ffffff",
+            }}
+          >
+            {form.logoMarkText}
+          </span>
+        ) : null}
+        {primaryText || secondaryText ? (
+          <span className="flex flex-col" style={{ gap: primarySize * 0.14 }}>
+            {primaryText ? (
+              <span
+                className="font-bold leading-none"
+                style={{
+                  fontSize: primarySize,
+                  color: tone === "dark" ? "#ffffff" : "#131111",
+                }}
+              >
+                {primaryText}
+              </span>
+            ) : null}
+            {secondaryText ? (
               <span
                 className="font-semibold uppercase leading-none"
                 style={{
-                  fontSize: height * 0.24,
+                  fontSize: secondarySize,
                   letterSpacing: "0.22em",
                   color: tone === "dark" ? "#f5c835" : "#006654",
                 }}
               >
-                {form.logoSecondaryText}
+                {secondaryText}
               </span>
             ) : null}
           </span>
-        </span>
-      )}
+        ) : null}
+      </span>
     </div>
   );
 }
@@ -224,17 +244,68 @@ export function HeaderPageClient({ user }: HeaderPageProps) {
                 </div>
 
                 {form.logoVariant === "image" ? (
-                  <div className="grid gap-5 md:grid-cols-2">
-                    <ImageField
-                      label="Logo for light backgrounds"
-                      value={form.logoImageUrl}
-                      onChange={(value) => setForm({ ...form, logoImageUrl: value })}
-                    />
-                    <ImageField
-                      label="Logo for dark backgrounds (optional)"
-                      value={form.logoDarkImageUrl}
-                      onChange={(value) => setForm({ ...form, logoDarkImageUrl: value })}
-                    />
+                  <div className="space-y-6">
+                    <div className="grid gap-5 md:grid-cols-2">
+                      <ImageField
+                        label="Logo for light backgrounds"
+                        value={form.logoImageUrl}
+                        onChange={(value) => setForm({ ...form, logoImageUrl: value })}
+                      />
+                      <ImageField
+                        label="Logo for dark backgrounds (optional)"
+                        value={form.logoDarkImageUrl}
+                        onChange={(value) => setForm({ ...form, logoDarkImageUrl: value })}
+                      />
+                    </div>
+                    <div className="grid gap-5 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="logoImagePrimaryText">Text beside the logo</Label>
+                        <Input
+                          id="logoImagePrimaryText"
+                          maxLength={40}
+                          value={form.logoPrimaryText}
+                          onChange={(event) =>
+                            setForm({ ...form, logoPrimaryText: event.target.value })
+                          }
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          The full firm name shown to the right of the image. Leave both text
+                          fields empty to show the image on its own.
+                        </p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="logoImageSecondaryText">Sub-text (optional)</Label>
+                        <Input
+                          id="logoImageSecondaryText"
+                          maxLength={40}
+                          value={form.logoSecondaryText}
+                          onChange={(event) =>
+                            setForm({ ...form, logoSecondaryText: event.target.value })
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <Label>Logo text size</Label>
+                        <span className="text-sm font-medium text-muted-foreground">
+                          {form.logoTextSizePx}px
+                        </span>
+                      </div>
+                      <Slider
+                        min={LOGO_TEXT_MIN_SIZE}
+                        max={LOGO_TEXT_MAX_SIZE}
+                        step={1}
+                        value={form.logoTextSizePx}
+                        onValueChange={(value) =>
+                          setForm({ ...form, logoTextSizePx: toHeight(value) })
+                        }
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Scales down automatically on phones; the sub-text tracks it at half
+                        size.
+                      </p>
+                    </div>
                   </div>
                 ) : (
                   <div className="grid gap-5 md:grid-cols-3">

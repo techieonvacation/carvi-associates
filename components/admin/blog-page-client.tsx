@@ -83,7 +83,6 @@ type SectionForm = {
   showSearch: boolean;
   showCategories: boolean;
   showTags: boolean;
-  showNewsletter: boolean;
   allowComments: boolean;
   moderateComments: boolean;
   disclaimer: string;
@@ -1078,7 +1077,6 @@ export function BlogPageClient({ user }: { user: AdminUser }) {
                               ["showSearch", "Show search bar"],
                               ["showCategories", "Show topic filters"],
                               ["showTags", "Show tag cloud"],
-                              ["showNewsletter", "Show newsletter band"],
                             ] as const
                           ).map(([key, label]) => (
                             <div

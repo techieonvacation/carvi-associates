@@ -3,7 +3,12 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/api-auth";
 import { defaultHeader, defaultLogo } from "@/lib/cms/defaults";
-import { LOGO_MAX_HEIGHT, LOGO_MIN_HEIGHT } from "@/lib/cms/header-mappers";
+import {
+  LOGO_MAX_HEIGHT,
+  LOGO_MIN_HEIGHT,
+  LOGO_TEXT_MAX_SIZE,
+  LOGO_TEXT_MIN_SIZE,
+} from "@/lib/cms/header-mappers";
 import { LOGO_VARIANTS } from "@/lib/cms/types";
 
 const headerSchema = z.object({
@@ -29,6 +34,7 @@ const headerSchema = z.object({
   showLogoMark: z.boolean(),
   logoHeightDesktop: z.number().int().min(LOGO_MIN_HEIGHT).max(LOGO_MAX_HEIGHT),
   logoHeightMobile: z.number().int().min(LOGO_MIN_HEIGHT).max(LOGO_MAX_HEIGHT),
+  logoTextSizePx: z.number().int().min(LOGO_TEXT_MIN_SIZE).max(LOGO_TEXT_MAX_SIZE),
 });
 
 function fallbackPayload() {
@@ -55,6 +61,7 @@ function fallbackPayload() {
     showLogoMark: defaultLogo.showMark,
     logoHeightDesktop: defaultLogo.heightDesktop,
     logoHeightMobile: defaultLogo.heightMobile,
+    logoTextSizePx: defaultLogo.textSizePx,
   };
 }
 
@@ -99,6 +106,7 @@ export async function PUT(request: Request) {
     showLogoMark: parsed.data.showLogoMark,
     logoHeightDesktop: parsed.data.logoHeightDesktop,
     logoHeightMobile: parsed.data.logoHeightMobile,
+    logoTextSizePx: parsed.data.logoTextSizePx,
   };
 
   const header = await prisma.headerSettings.upsert({

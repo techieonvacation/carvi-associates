@@ -313,6 +313,7 @@ export const contactSectionSchema = z.object({
   emailLabel: z.string().min(1).max(60),
   mobileLabel: z.string().min(1).max(60),
   locationLabel: z.string().min(1).max(60),
+  messageLabel: z.string().min(1).max(60),
   submitLabel: z.string().min(1).max(40),
   sideImageUrl: z.string().max(500),
   sideImageAlt: z.string().max(160),

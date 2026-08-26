@@ -186,7 +186,6 @@ export type BlogSectionContent = {
   showSearch: boolean;
   showCategories: boolean;
   showTags: boolean;
-  showNewsletter: boolean;
   allowComments: boolean;
   moderateComments: boolean;
   disclaimer: string;

@@ -43,7 +43,3 @@ export const BLOG = {
   ],
 };
 
-export const NEWSLETTER = {
-  title: "Subscribe Your Newsletter",
-  text: "We have built dictumst sollicitudin cu sociis libero lacus cubilia leo porta penatibus varius arcu sagittis in the consumer goods business.",
-};

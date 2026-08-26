@@ -143,6 +143,7 @@ function compose(enquiry: Enquiry): Composed {
           { label: "Email", value: enquiry.email },
           { label: "Mobile", value: enquiry.phone },
           { label: "Location", value: enquiry.location },
+          { label: "Message", value: enquiry.message ?? "" },
         ],
         replyTo: enquiry.email,
         recipientName: enquiry.name,
@@ -153,6 +154,7 @@ function compose(enquiry: Enquiry): Composed {
         ackRows: [
           { label: "Company", value: enquiry.company ?? "" },
           { label: "Location", value: enquiry.location },
+          { label: "Your message", value: enquiry.message ?? "" },
         ],
       };
 

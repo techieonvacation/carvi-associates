@@ -3,6 +3,8 @@ import { LOGO_VARIANTS, type HeaderContent, type LogoVariant, type SiteLogo } fr
 
 export const LOGO_MIN_HEIGHT = 20;
 export const LOGO_MAX_HEIGHT = 120;
+export const LOGO_TEXT_MIN_SIZE = 10;
+export const LOGO_TEXT_MAX_SIZE = 48;
 
 export type HeaderRow = {
   contactCtaText: string;
@@ -27,6 +29,7 @@ export type HeaderRow = {
   showLogoMark: boolean;
   logoHeightDesktop: number;
   logoHeightMobile: number;
+  logoTextSizePx: number;
 };
 
 export function normalizeLogoVariant(value: string): LogoVariant {
@@ -38,6 +41,11 @@ export function normalizeLogoVariant(value: string): LogoVariant {
 export function clampLogoHeight(value: number, fallback: number): number {
   if (!Number.isFinite(value)) return fallback;
   return Math.min(LOGO_MAX_HEIGHT, Math.max(LOGO_MIN_HEIGHT, Math.round(value)));
+}
+
+export function clampLogoTextSize(value: number, fallback: number): number {
+  if (!Number.isFinite(value)) return fallback;
+  return Math.min(LOGO_TEXT_MAX_SIZE, Math.max(LOGO_TEXT_MIN_SIZE, Math.round(value)));
 }
 
 export function mapSiteLogo(row: HeaderRow): SiteLogo {
@@ -56,6 +64,7 @@ export function mapSiteLogo(row: HeaderRow): SiteLogo {
     showMark: row.showLogoMark,
     heightDesktop: clampLogoHeight(row.logoHeightDesktop, defaultLogo.heightDesktop),
     heightMobile: clampLogoHeight(row.logoHeightMobile, defaultLogo.heightMobile),
+    textSizePx: clampLogoTextSize(row.logoTextSizePx, defaultLogo.textSizePx),
   };
 }
 

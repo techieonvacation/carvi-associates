@@ -127,6 +127,7 @@ export const defaultLogo: SiteLogo = {
   showMark: true,
   heightDesktop: 46,
   heightMobile: 36,
+  textSizePx: 20,
 };
 
 export const defaultHeader: HeaderContent = {
@@ -739,6 +740,7 @@ export const defaultContact: ContactContent = {
   emailLabel: "Your Mail *",
   mobileLabel: "Your Mobile *",
   locationLabel: "Your Location *",
+  messageLabel: "Your Message",
   submitLabel: "SEND REQUEST",
   sideImageUrl: "",
   sideImageAlt: "",

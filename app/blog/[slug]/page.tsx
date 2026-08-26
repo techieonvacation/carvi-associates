@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/site/Container";
-import { Newsletter } from "@/components/site/Newsletter";
 import { Reveal } from "@/components/site/Reveal";
 import { SectionHeading } from "@/components/site/SectionHeading";
 import { AuthorCard } from "@/components/blog/AuthorCard";
@@ -389,11 +388,6 @@ export default async function ArticlePage({ params }: ArticleRouteProps) {
         </section>
       ) : null}
 
-      {section.showNewsletter ? (
-        <div className="findox-scope">
-          <Newsletter />
-        </div>
-      ) : null}
     </>
   );
 }

@@ -368,7 +368,6 @@ type SectionRow = {
   showSearch: boolean;
   showCategories: boolean;
   showTags: boolean;
-  showNewsletter: boolean;
   allowComments: boolean;
   moderateComments: boolean;
   disclaimer: string;
@@ -421,7 +420,6 @@ export function mapBlogSection(row: SectionRow): BlogSectionContent {
     showSearch: row.showSearch,
     showCategories: row.showCategories,
     showTags: row.showTags,
-    showNewsletter: row.showNewsletter,
     allowComments: row.allowComments,
     moderateComments: row.moderateComments,
     disclaimer: row.disclaimer,

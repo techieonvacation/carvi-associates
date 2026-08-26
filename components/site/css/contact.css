@@ -151,7 +151,7 @@
   background-color: var(--findox-base);
 }
 
-.contact-one__info__title {
+.contact-one .contact-one__info__title {
   margin-bottom: 5px;
   font-size: 18px;
   color: var(--findox-white);
@@ -161,11 +161,11 @@
   transition: all 500ms ease;
 }
 
-.contact-one__info__inner:hover .contact-one__info__title {
+.contact-one .contact-one__info__inner:hover .contact-one__info__title {
   color: var(--findox-black2);
 }
 
-.contact-one__info__text {
+.contact-one .contact-one__info__text {
   font-size: 16px;
   color: var(--findox-white);
   font-weight: 400;
@@ -174,11 +174,11 @@
   transition: all 500ms ease;
 }
 
-.contact-one__info__text:hover {
+.contact-one .contact-one__info__text:hover {
   background-size: 100% 1px;
 }
 
-.contact-one__info__inner:hover .contact-one__info__text {
+.contact-one .contact-one__info__inner:hover .contact-one__info__text {
   color: var(--findox-black3);
 }
 
@@ -236,7 +236,8 @@
 
 .form-one input[type="text"],
 .form-one input[type="email"],
-.form-one input[type="tel"] {
+.form-one input[type="tel"],
+.form-one textarea {
   display: block;
   width: 100%;
   height: 48px;
@@ -252,21 +253,32 @@
   transition: all 500ms ease;
 }
 
+.form-one textarea {
+  height: 122px;
+  padding-top: 14px;
+  padding-bottom: 14px;
+  border-radius: 24px;
+  resize: vertical;
+}
+
 @media (max-width: 767px) {
   .form-one input[type="text"],
   .form-one input[type="email"],
-  .form-one input[type="tel"] {
+  .form-one input[type="tel"],
+  .form-one textarea {
     padding-left: 25px;
     padding-right: 25px;
   }
 }
 
-.form-one input:focus {
+.form-one input:focus,
+.form-one textarea:focus {
   color: var(--findox-black4);
   border-color: var(--findox-base);
 }
 
-.form-one input[aria-invalid="true"] {
+.form-one input[aria-invalid="true"],
+.form-one textarea[aria-invalid="true"] {
   border-color: #c0392b;
 }
 

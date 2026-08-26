@@ -22,6 +22,7 @@ export type SiteLogo = {
   showMark: boolean;
   heightDesktop: number;
   heightMobile: number;
+  textSizePx: number;
 };
 
 export type HeaderContent = {
@@ -438,6 +439,7 @@ export type ContactContent = {
   emailLabel: string;
   mobileLabel: string;
   locationLabel: string;
+  messageLabel: string;
   submitLabel: string;
   sideImageUrl: string;
   sideImageAlt: string;

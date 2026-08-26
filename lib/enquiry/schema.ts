@@ -171,6 +171,7 @@ export const quoteEnquirySchema = z.object({
   email,
   phone,
   location: z.string().trim().min(2, "Enter your city or location").max(120, "Location is too long"),
+  message: optionalText(2000),
   sourcePath: optionalText(200),
   ...antiSpam,
 });

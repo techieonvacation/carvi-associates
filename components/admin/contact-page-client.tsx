@@ -33,6 +33,7 @@ type ContactForm = {
   emailLabel: string;
   mobileLabel: string;
   locationLabel: string;
+  messageLabel: string;
   submitLabel: string;
   sideImageUrl: string;
   sideImageAlt: string;
@@ -304,7 +305,7 @@ export function ContactPageClient({ user }: ContactPageProps) {
                   <TabsContent value="form" className="mt-4 space-y-4">
                     <p className="text-xs text-muted-foreground">
                       Field placeholders. Name, mail, mobile and location are always required;
-                      company name is optional.
+                      company name and message are optional.
                     </p>
                     <div className="grid gap-4 md:grid-cols-2">
                       <div className="space-y-2">
@@ -354,6 +355,16 @@ export function ContactPageClient({ user }: ContactPageProps) {
                           value={form.locationLabel}
                           onChange={(event) =>
                             setForm({ ...form, locationLabel: event.target.value })
+                          }
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>Message field</Label>
+                        <Input
+                          maxLength={60}
+                          value={form.messageLabel}
+                          onChange={(event) =>
+                            setForm({ ...form, messageLabel: event.target.value })
                           }
                         />
                       </div>

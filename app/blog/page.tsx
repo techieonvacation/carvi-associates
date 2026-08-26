@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { BlogArchive } from "@/components/blog/BlogArchive";
 import { PageBanner } from "@/components/blog/PageBanner";
-import { Newsletter } from "@/components/site/Newsletter";
 import {
   getBlogArchive,
   getBlogCategories,
@@ -87,11 +86,6 @@ export default async function BlogPage({ searchParams }: BlogRouteProps) {
         emptyMessage="Try a different category or clear your search."
       />
 
-      {section.showNewsletter ? (
-        <div className="findox-scope">
-          <Newsletter />
-        </div>
-      ) : null}
     </>
   );
 }

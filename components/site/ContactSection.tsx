@@ -23,7 +23,7 @@ type ContactSectionProps = {
 type FieldProps = {
   id: string;
   name: string;
-  type: "text" | "email" | "tel";
+  type: "text" | "email" | "tel" | "textarea";
   label: string;
   required?: boolean;
   autoComplete?: string;
@@ -41,21 +41,26 @@ function Field({
   error,
   full = false,
 }: FieldProps) {
+  const shared = {
+    id,
+    name,
+    placeholder: label,
+    required,
+    autoComplete,
+    "aria-invalid": error ? true : undefined,
+    "aria-describedby": error ? `${id}-error` : undefined,
+  } as const;
+
   return (
     <div className={`form-one__control${full ? " form-one__control--full" : ""}`}>
       <label className="sr-only" htmlFor={id}>
         {label}
       </label>
-      <input
-        id={id}
-        name={name}
-        type={type}
-        placeholder={label}
-        required={required}
-        autoComplete={autoComplete}
-        aria-invalid={error ? true : undefined}
-        aria-describedby={error ? `${id}-error` : undefined}
-      />
+      {type === "textarea" ? (
+        <textarea {...shared} rows={4} />
+      ) : (
+        <input {...shared} type={type} />
+      )}
       {error ? (
         <span id={`${id}-error`} className="form-one__error" role="alert">
           {error}
@@ -237,6 +242,15 @@ export function ContactSection({ contact, fallback }: ContactSectionProps) {
                     label={contact.locationLabel}
                     autoComplete="address-level2"
                     error={errors.location}
+                    full
+                  />
+                  <Field
+                    id="contact-message"
+                    name="message"
+                    type="textarea"
+                    label={contact.messageLabel}
+                    required={false}
+                    error={errors.message}
                     full
                   />
                   <div className="form-one__control form-one__control--full">

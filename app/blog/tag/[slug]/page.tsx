@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogArchive } from "@/components/blog/BlogArchive";
 import { PageBanner } from "@/components/blog/PageBanner";
-import { Newsletter } from "@/components/site/Newsletter";
 import {
   getBlogArchive,
   getBlogCategories,
@@ -93,11 +92,6 @@ export default async function TagArchivePage({ params, searchParams }: TagRouteP
         emptyMessage={`Nothing is tagged "${tag.name}" yet. Browse all articles instead.`}
       />
 
-      {section.showNewsletter ? (
-        <div className="findox-scope">
-          <Newsletter />
-        </div>
-      ) : null}
     </>
   );
 }

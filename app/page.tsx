@@ -12,7 +12,6 @@ import { Team } from "@/components/site/Team";
 import { WorkingProcess } from "@/components/site/WorkingProcess";
 import { Blog } from "@/components/site/Blog";
 import { ContactSection } from "@/components/site/ContactSection";
-import { Newsletter } from "@/components/site/Newsletter";
 import { Footer } from "@/components/site/Footer";
 import { getSiteContent } from "@/lib/cms/queries";
 import { getHomeBlog } from "@/lib/cms/blog-queries";
@@ -56,7 +55,6 @@ export default async function Home() {
             addressMapUrl: content.topbar.addressMapUrl,
           }}
         />
-        <Newsletter />
       </main>
       <Footer footer={content.footer} logo={content.header.logo} />
     </div>

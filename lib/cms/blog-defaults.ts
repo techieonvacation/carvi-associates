@@ -28,7 +28,6 @@ export const defaultBlogSection: BlogSectionContent = {
   showSearch: true,
   showCategories: true,
   showTags: true,
-  showNewsletter: true,
   allowComments: true,
   moderateComments: true,
   disclaimer:

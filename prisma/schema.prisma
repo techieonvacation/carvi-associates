@@ -113,6 +113,7 @@ model HeaderSettings {
   showLogoMark           Boolean  @default(true)
   logoHeightDesktop      Int      @default(46)
   logoHeightMobile       Int      @default(36)
+  logoTextSizePx         Int      @default(20)
   updatedAt              DateTime @updatedAt
 }
 
@@ -374,6 +375,7 @@ model ContactSettings {
   emailLabel      String   @default("Your Mail *")
   mobileLabel     String   @default("Your Mobile *")
   locationLabel   String   @default("Your Location *")
+  messageLabel    String   @default("Your Message")
   submitLabel     String   @default("SEND REQUEST")
   sideImageUrl    String   @default("")
   sideImageAlt    String   @default("")
@@ -634,7 +636,6 @@ model BlogSectionSettings {
   showSearch         Boolean  @default(true)
   showCategories     Boolean  @default(true)
   showTags           Boolean  @default(true)
-  showNewsletter     Boolean  @default(true)
   allowComments      Boolean  @default(true)
   moderateComments   Boolean  @default(true)
   disclaimer         String   @default("This article is for general information only and is not professional advice. Tax and regulatory positions change frequently — please consult Carvi Associates before acting on anything you read here.")

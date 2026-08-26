@@ -49,7 +49,6 @@ export const blogSectionSchema = z.object({
   showSearch: z.boolean(),
   showCategories: z.boolean(),
   showTags: z.boolean(),
-  showNewsletter: z.boolean(),
   allowComments: z.boolean(),
   moderateComments: z.boolean(),
   disclaimer: z.string(),

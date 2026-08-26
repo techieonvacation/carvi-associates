@@ -26,6 +26,7 @@ function toPayload(row: {
   emailLabel: string;
   mobileLabel: string;
   locationLabel: string;
+  messageLabel: string;
   submitLabel: string;
   sideImageUrl: string;
   sideImageAlt: string;
@@ -61,6 +62,7 @@ function toPayload(row: {
     emailLabel: row.emailLabel,
     mobileLabel: row.mobileLabel,
     locationLabel: row.locationLabel,
+    messageLabel: row.messageLabel,
     submitLabel: row.submitLabel,
     sideImageUrl: row.sideImageUrl,
     sideImageAlt: row.sideImageAlt,
@@ -103,6 +105,7 @@ export async function GET() {
         emailLabel: defaultContact.emailLabel,
         mobileLabel: defaultContact.mobileLabel,
         locationLabel: defaultContact.locationLabel,
+        messageLabel: defaultContact.messageLabel,
         submitLabel: defaultContact.submitLabel,
         sideImageUrl: defaultContact.sideImageUrl,
         sideImageAlt: defaultContact.sideImageAlt,
@@ -156,6 +159,7 @@ export async function PUT(request: Request) {
     emailLabel: parsed.data.emailLabel.trim(),
     mobileLabel: parsed.data.mobileLabel.trim(),
     locationLabel: parsed.data.locationLabel.trim(),
+    messageLabel: parsed.data.messageLabel.trim(),
     submitLabel: parsed.data.submitLabel.trim(),
     sideImageUrl: parsed.data.sideImageUrl.trim(),
     sideImageAlt: parsed.data.sideImageAlt.trim(),

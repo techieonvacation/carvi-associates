@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { BlogArchive } from "@/components/blog/BlogArchive";
 import { PageBanner } from "@/components/blog/PageBanner";
-import { Newsletter } from "@/components/site/Newsletter";
 import {
   getBlogArchive,
   getBlogCategories,
@@ -98,11 +97,6 @@ export default async function CategoryArchivePage({ params, searchParams }: Cate
         emptyMessage={`No ${category.name} articles have been published yet. Check back soon or browse another topic.`}
       />
 
-      {section.showNewsletter ? (
-        <div className="findox-scope">
-          <Newsletter />
-        </div>
-      ) : null}
     </>
   );
 }

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/site/Container";
-import { Newsletter } from "@/components/site/Newsletter";
 import { AuthorCard } from "@/components/blog/AuthorCard";
 import { BlogArchive } from "@/components/blog/BlogArchive";
 import { PageBanner } from "@/components/blog/PageBanner";
@@ -120,11 +119,6 @@ export default async function AuthorArchivePage({ params, searchParams }: Author
         emptyMessage={`${author.name} has not published anything yet.`}
       />
 
-      {section.showNewsletter ? (
-        <div className="findox-scope">
-          <Newsletter />
-        </div>
-      ) : null}
     </>
   );
 }

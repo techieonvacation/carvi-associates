@@ -675,6 +675,7 @@ function mapContactSection(row: {
   emailLabel: string;
   mobileLabel: string;
   locationLabel: string;
+  messageLabel: string;
   submitLabel: string;
   sideImageUrl: string;
   sideImageAlt: string;
@@ -709,6 +710,7 @@ function mapContactSection(row: {
     emailLabel: row.emailLabel,
     mobileLabel: row.mobileLabel,
     locationLabel: row.locationLabel,
+    messageLabel: row.messageLabel,
     submitLabel: row.submitLabel,
     sideImageUrl: row.sideImageUrl.trim(),
     sideImageAlt: row.sideImageAlt.trim(),
