@@ -131,6 +131,31 @@ function compose(enquiry: Enquiry): Composed {
         ackRows: [{ label: "Interests", value: enquiry.interests ?? "All updates" }],
       };
 
+    case "quote":
+      return {
+        prefix: "CA-QTE",
+        subject: `Quote request — ${enquiry.name}${enquiry.company ? ` · ${enquiry.company}` : ""}`,
+        heading: "New quote request",
+        intro: `${enquiry.name} requested a free quote from the homepage contact form.`,
+        rows: [
+          { label: "Name", value: enquiry.name },
+          { label: "Company", value: enquiry.company ?? "" },
+          { label: "Email", value: enquiry.email },
+          { label: "Mobile", value: enquiry.phone },
+          { label: "Location", value: enquiry.location },
+        ],
+        replyTo: enquiry.email,
+        recipientName: enquiry.name,
+        recipientEmail: enquiry.email,
+        ackHeading: "We have your quote request",
+        ackBody:
+          "Thank you for reaching out to Carvi Associates. Our team is preparing a response and will contact you within one business day with next steps and an indicative scope.",
+        ackRows: [
+          { label: "Company", value: enquiry.company ?? "" },
+          { label: "Location", value: enquiry.location },
+        ],
+      };
+
     case "resource":
       return {
         prefix: "CA-RES",

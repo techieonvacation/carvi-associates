@@ -9,9 +9,9 @@ import { BookAppointment } from "@/components/site/BookAppointment";
 import { WhyChooseUs } from "@/components/site/WhyChooseUs";
 import { MarqueeBands } from "@/components/site/MarqueeBands";
 import { Team } from "@/components/site/Team";
-import { Projects } from "@/components/site/Projects";
 import { WorkingProcess } from "@/components/site/WorkingProcess";
 import { Blog } from "@/components/site/Blog";
+import { ContactSection } from "@/components/site/ContactSection";
 import { Newsletter } from "@/components/site/Newsletter";
 import { Footer } from "@/components/site/Footer";
 import { getSiteContent } from "@/lib/cms/queries";
@@ -44,9 +44,18 @@ export default async function Home() {
         <WhyChooseUs whyChoose={content.whyChoose} />
         <MarqueeBands marquee={content.marquee} />
         <Team team={content.team} />
-        <Projects projects={content.projects} />
         <WorkingProcess workingProcess={content.workingProcess} />
         <Blog blog={blog} />
+        <ContactSection
+          contact={content.contact}
+          details={{
+            phone: content.topbar.phone,
+            phoneHref: content.topbar.phoneHref,
+            email: content.topbar.email,
+            address: content.topbar.address,
+            addressMapUrl: content.topbar.addressMapUrl,
+          }}
+        />
         <Newsletter />
       </main>
       <Footer footer={content.footer} logo={content.header.logo} />

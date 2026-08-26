@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import {
   defaultAbout,
   defaultBookAppointment,
+  defaultContact,
   defaultFeatures,
   defaultHero,
   defaultHeroStats,
@@ -11,8 +12,6 @@ import {
   defaultNavItems,
   defaultPartnerMarqueeLabel,
   defaultPartners,
-  defaultProjects,
-  defaultProjectsSection,
   defaultServices,
   defaultServicesSection,
   defaultSocialLinks,
@@ -31,6 +30,7 @@ import type {
   AboutContent,
   AboutTab,
   BookAppointmentContent,
+  ContactContent,
   FeatureItem,
   FooterContent,
   FooterLinkColumn,
@@ -47,11 +47,6 @@ import type {
   MarqueeLayout,
   PartnerMarqueeItem,
   PartnerVariant,
-  ProjectCardItem,
-  ProjectCategoryItem,
-  ProjectTag,
-  ProjectsContent,
-  ProjectsSectionContent,
   ServicesContent,
   TeamContent,
   TeamMemberItem,
@@ -67,7 +62,6 @@ import {
   MARQUEE_DIRECTIONS,
   MARQUEE_LAYOUTS,
   PARTNER_VARIANTS,
-  PROJECT_TAG_TONES,
 } from "@/lib/cms/types";
 
 export type SiteContent = {
@@ -134,8 +128,8 @@ export type SiteContent = {
   whyChoose: WhyChooseContent;
   marquee: MarqueeContent;
   team: TeamContent;
-  projects: ProjectsContent;
   workingProcess: WorkingProcessContent;
+  contact: ContactContent;
   footer: FooterContent;
 };
 
@@ -513,151 +507,6 @@ function mapMarqueeSettings(
   };
 }
 
-function parseProjectTags(value: unknown): ProjectTag[] {
-  if (!Array.isArray(value)) return [];
-  return value.flatMap((item) => {
-    if (!item || typeof item !== "object") return [];
-    const candidate = item as Partial<ProjectTag>;
-    if (typeof candidate.label !== "string" || !candidate.label.length) return [];
-    const tone =
-      typeof candidate.tone === "string" &&
-      (PROJECT_TAG_TONES as readonly string[]).includes(candidate.tone)
-        ? (candidate.tone as ProjectTag["tone"])
-        : "primary";
-    return [
-      {
-        label: candidate.label,
-        href: typeof candidate.href === "string" && candidate.href ? candidate.href : "#",
-        tone,
-      },
-    ];
-  });
-}
-
-function parseProjectChecklist(value: unknown): string[] {
-  if (!Array.isArray(value)) return defaultProjectsSection.bannerChecklist;
-  const checklist = value.filter(
-    (item): item is string => typeof item === "string" && item.length > 0,
-  );
-  return checklist.length ? checklist : defaultProjectsSection.bannerChecklist;
-}
-
-export function mapProjectCategory(row: {
-  id: string;
-  label: string;
-  slug: string;
-  displayOrder: number;
-  isVisible: boolean;
-  isActive: boolean;
-  deletedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}): ProjectCategoryItem {
-  return {
-    id: row.id,
-    label: row.label,
-    slug: row.slug,
-    displayOrder: row.displayOrder,
-    isVisible: row.isVisible,
-    isActive: row.isActive,
-    deletedAt: row.deletedAt?.toISOString() ?? null,
-    createdAt: row.createdAt.toISOString(),
-    updatedAt: row.updatedAt.toISOString(),
-  };
-}
-
-export function mapProjectItem(row: {
-  id: string;
-  title: string;
-  text: string;
-  icon: string;
-  imageUrl: string;
-  imageAlt: string;
-  href: string;
-  slug: string | null;
-  categorySlug: string | null;
-  tags: unknown;
-  displayOrder: number;
-  isFeatured: boolean;
-  isVisible: boolean;
-  isActive: boolean;
-  deletedAt: Date | null;
-  createdAt: Date;
-  updatedAt: Date;
-}): ProjectCardItem {
-  return {
-    id: row.id,
-    title: row.title,
-    text: row.text,
-    icon: row.icon,
-    imageUrl: row.imageUrl,
-    imageAlt: row.imageAlt,
-    href: row.href,
-    slug: row.slug,
-    categorySlug: row.categorySlug,
-    tags: parseProjectTags(row.tags),
-    displayOrder: row.displayOrder,
-    isFeatured: row.isFeatured,
-    isVisible: row.isVisible,
-    isActive: row.isActive,
-    deletedAt: row.deletedAt?.toISOString() ?? null,
-    createdAt: row.createdAt.toISOString(),
-    updatedAt: row.updatedAt.toISOString(),
-  };
-}
-
-export function mapProjectsSection(row: {
-  tagline: string;
-  titleLine1: string;
-  titleLine2: string;
-  taglineBg: string;
-  topBackgroundImageUrl: string;
-  bottomBackgroundImageUrl: string;
-  showFilters: boolean;
-  allFilterLabel: string;
-  showBottomBanner: boolean;
-  bannerStat: string;
-  bannerTitleLine1: string;
-  bannerTitleLine2: string;
-  bannerChecklist: unknown;
-  bannerButtonText: string;
-  bannerButtonHref: string;
-  isVisible: boolean;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoKeywords: string | null;
-  canonicalUrl: string | null;
-  ogImageUrl: string | null;
-  twitterImageUrl: string | null;
-  noIndex: boolean;
-}): ProjectsSectionContent {
-  return {
-    tagline: row.tagline,
-    title: [row.titleLine1, row.titleLine2],
-    taglineBg: row.taglineBg || defaultProjectsSection.taglineBg,
-    topBackgroundImageUrl:
-      row.topBackgroundImageUrl || defaultProjectsSection.topBackgroundImageUrl,
-    bottomBackgroundImageUrl:
-      row.bottomBackgroundImageUrl || defaultProjectsSection.bottomBackgroundImageUrl,
-    showFilters: row.showFilters,
-    allFilterLabel: row.allFilterLabel || defaultProjectsSection.allFilterLabel,
-    showBottomBanner: row.showBottomBanner,
-    bannerStat: row.bannerStat,
-    bannerTitle: [row.bannerTitleLine1, row.bannerTitleLine2],
-    bannerChecklist: parseProjectChecklist(row.bannerChecklist),
-    bannerButtonText: row.bannerButtonText,
-    bannerButtonHref: row.bannerButtonHref,
-    isVisible: row.isVisible,
-    seoTitle: row.seoTitle,
-    seoDescription: row.seoDescription,
-    seoKeywords: row.seoKeywords,
-    canonicalUrl: row.canonicalUrl,
-    ogImageUrl: row.ogImageUrl,
-    twitterImageUrl: row.twitterImageUrl,
-    noIndex: row.noIndex,
-  };
-}
-
 function parseTeamSocials(value: unknown): TeamMemberSocial[] {
   if (!Array.isArray(value)) return [];
   return value.filter((item): item is TeamMemberSocial => {
@@ -802,6 +651,43 @@ function mapWorkingProcessSection(
     twitterImageUrl: row.twitterImageUrl,
     noIndex: row.noIndex,
     steps,
+  };
+}
+
+function mapContactSection(row: {
+  tagline: string;
+  titleLine1: string;
+  titleLine2: string;
+  taglineBg: string;
+  phoneTitle: string;
+  emailTitle: string;
+  locationTitle: string;
+  submitLabel: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
+}): ContactContent {
+  return {
+    tagline: row.tagline,
+    title: [row.titleLine1, row.titleLine2],
+    taglineBg: row.taglineBg || defaultContact.taglineBg,
+    phoneTitle: row.phoneTitle,
+    emailTitle: row.emailTitle,
+    locationTitle: row.locationTitle,
+    submitLabel: row.submitLabel,
+    isVisible: row.isVisible,
+    seoTitle: row.seoTitle,
+    seoDescription: row.seoDescription,
+    seoKeywords: row.seoKeywords,
+    canonicalUrl: row.canonicalUrl,
+    ogImageUrl: row.ogImageUrl,
+    twitterImageUrl: row.twitterImageUrl,
+    noIndex: row.noIndex,
   };
 }
 
@@ -970,11 +856,9 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
     marqueeItems,
     teamSettings,
     teamMembers,
-    projectsSection,
-    projectCategories,
-    projectItems,
     workingProcessSettings,
     workingProcessSteps,
+    contactSettings,
     footerSettings,
     footerLinks,
     footerRecentPosts,
@@ -1016,20 +900,12 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
       where: { deletedAt: null, isVisible: true, isActive: true },
       orderBy: { displayOrder: "asc" },
     }),
-    prisma.projectsSectionSettings.findUnique({ where: { id: "default" } }),
-    prisma.projectCategory.findMany({
-      where: { deletedAt: null, isVisible: true, isActive: true },
-      orderBy: { displayOrder: "asc" },
-    }),
-    prisma.projectItem.findMany({
-      where: { deletedAt: null, isVisible: true, isActive: true },
-      orderBy: { displayOrder: "asc" },
-    }),
     prisma.workingProcessSettings.findUnique({ where: { id: "default" } }),
     prisma.workingProcessStep.findMany({
       where: { deletedAt: null, isVisible: true, isActive: true },
       orderBy: { displayOrder: "asc" },
     }),
+    prisma.contactSettings.findUnique({ where: { id: "default" } }),
     prisma.footerSettings.findUnique({ where: { id: "default" } }),
     prisma.footerLink.findMany({
       where: { deletedAt: null, isVisible: true, isActive: true },
@@ -1150,17 +1026,6 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
             : defaultTeam.members,
         )
       : defaultTeam,
-    projects: {
-      section: projectsSection
-        ? mapProjectsSection(projectsSection)
-        : defaultProjectsSection,
-      categories: projectCategories.length
-        ? projectCategories.map(mapProjectCategory)
-        : defaultProjects.categories,
-      items: projectItems.length
-        ? projectItems.map(mapProjectItem)
-        : defaultProjects.items,
-    },
     workingProcess: workingProcessSettings
       ? mapWorkingProcessSection(
           workingProcessSettings,
@@ -1169,6 +1034,7 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
             : defaultWorkingProcess.steps,
         )
       : defaultWorkingProcess,
+    contact: contactSettings ? mapContactSection(contactSettings) : defaultContact,
     footer: (() => {
       if (!footerSettings) return defaultFooter;
 

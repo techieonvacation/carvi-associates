@@ -374,77 +374,6 @@ export type MarqueeContent = {
   items: MarqueeItemData[];
 };
 
-export const PROJECT_TAG_TONES = ["primary", "light", "accent"] as const;
-export type ProjectTagTone = (typeof PROJECT_TAG_TONES)[number];
-
-export type ProjectTag = {
-  label: string;
-  href: string;
-  tone: ProjectTagTone;
-};
-
-export type ProjectCategoryItem = {
-  id: string;
-  label: string;
-  slug: string;
-  displayOrder: number;
-  isVisible: boolean;
-  isActive: boolean;
-  deletedAt: string | null;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type ProjectCardItem = {
-  id: string;
-  title: string;
-  text: string;
-  icon: string;
-  imageUrl: string;
-  imageAlt: string;
-  href: string;
-  slug: string | null;
-  categorySlug: string | null;
-  tags: ProjectTag[];
-  displayOrder: number;
-  isFeatured: boolean;
-  isVisible: boolean;
-  isActive: boolean;
-  deletedAt: string | null;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type ProjectsSectionContent = {
-  tagline: string;
-  title: [string, string];
-  taglineBg: string;
-  topBackgroundImageUrl: string;
-  bottomBackgroundImageUrl: string;
-  showFilters: boolean;
-  allFilterLabel: string;
-  showBottomBanner: boolean;
-  bannerStat: string;
-  bannerTitle: [string, string];
-  bannerChecklist: string[];
-  bannerButtonText: string;
-  bannerButtonHref: string;
-  isVisible: boolean;
-  seoTitle: string | null;
-  seoDescription: string | null;
-  seoKeywords: string | null;
-  canonicalUrl: string | null;
-  ogImageUrl: string | null;
-  twitterImageUrl: string | null;
-  noIndex: boolean;
-};
-
-export type ProjectsContent = {
-  section: ProjectsSectionContent;
-  categories: ProjectCategoryItem[];
-  items: ProjectCardItem[];
-};
-
 export const FOOTER_LINK_COLUMNS = [
   "LINKS_ONE",
   "LINKS_TWO",
@@ -487,6 +416,24 @@ export type FooterSocialItem = {
   isVisible: boolean;
   isActive: boolean;
   deletedAt: string | null;
+};
+
+export type ContactContent = {
+  tagline: string;
+  title: [string, string];
+  taglineBg: string;
+  phoneTitle: string;
+  emailTitle: string;
+  locationTitle: string;
+  submitLabel: string;
+  isVisible: boolean;
+  seoTitle: string | null;
+  seoDescription: string | null;
+  seoKeywords: string | null;
+  canonicalUrl: string | null;
+  ogImageUrl: string | null;
+  twitterImageUrl: string | null;
+  noIndex: boolean;
 };
 
 export type FooterContent = {

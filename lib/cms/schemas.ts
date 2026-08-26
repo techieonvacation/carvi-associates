@@ -7,7 +7,6 @@ import {
   MARQUEE_ITEM_KINDS,
   MARQUEE_LAYOUTS,
   PARTNER_VARIANTS,
-  PROJECT_TAG_TONES,
   SERVICE_ICON_TYPES,
 } from "@/lib/cms/types";
 
@@ -293,6 +292,25 @@ export const teamMembersPayloadSchema = z.object({
   members: z.array(teamMemberSchema).min(1),
 });
 
+export const contactSectionSchema = z.object({
+  tagline: z.string().min(1).max(60),
+  titleLine1: z.string().min(1).max(120),
+  titleLine2: z.string().max(120),
+  taglineBg: z.string().min(1),
+  phoneTitle: z.string().min(1).max(60),
+  emailTitle: z.string().min(1).max(60),
+  locationTitle: z.string().min(1).max(60),
+  submitLabel: z.string().min(1).max(40),
+  isVisible: z.boolean(),
+  seoTitle: optionalText,
+  seoDescription: optionalText,
+  seoKeywords: optionalText,
+  canonicalUrl: optionalUrl,
+  ogImageUrl: optionalUrl,
+  twitterImageUrl: optionalUrl,
+  noIndex: z.boolean(),
+});
+
 export const workingProcessSectionSchema = z.object({
   tagline: z.string().min(1),
   titleLine1: z.string().min(1),
@@ -465,101 +483,6 @@ export const marqueeBulkSchema = z.object({
     "hide",
     "activate",
     "deactivate",
-    "soft-delete",
-    "restore",
-    "hard-delete",
-    "duplicate",
-  ]),
-});
-
-export const projectsSectionSchema = z.object({
-  tagline: z.string().min(1),
-  titleLine1: z.string().min(1),
-  titleLine2: z.string().min(1),
-  taglineBg: z.string().min(1),
-  topBackgroundImageUrl: z.string().min(1),
-  bottomBackgroundImageUrl: z.string().min(1),
-  showFilters: z.boolean(),
-  allFilterLabel: z.string().min(1),
-  showBottomBanner: z.boolean(),
-  bannerStat: z.string().min(1),
-  bannerTitleLine1: z.string().min(1),
-  bannerTitleLine2: z.string().min(1),
-  bannerChecklist: z.array(z.string().min(1)),
-  bannerButtonText: z.string().min(1),
-  bannerButtonHref: z.string().min(1),
-  isVisible: z.boolean(),
-  seoTitle: optionalText,
-  seoDescription: optionalText,
-  seoKeywords: optionalText,
-  canonicalUrl: optionalUrl,
-  ogImageUrl: optionalUrl,
-  twitterImageUrl: optionalUrl,
-  noIndex: z.boolean(),
-});
-
-export const projectCategorySchema = z.object({
-  id: z.string().optional(),
-  label: z.string().min(1),
-  slug: z
-    .string()
-    .min(1)
-    .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase slug"),
-  displayOrder: z.number().int().optional(),
-  isVisible: z.boolean(),
-  isActive: z.boolean(),
-});
-
-export const projectCategoriesPayloadSchema = z.object({
-  categories: z.array(projectCategorySchema),
-});
-
-export const projectTagSchema = z.object({
-  label: z.string().min(1),
-  href: z.string().min(1),
-  tone: z.enum(PROJECT_TAG_TONES),
-});
-
-export const projectItemSchema = z.object({
-  id: z.string().optional(),
-  title: z.string().min(1),
-  text: z.string().min(1),
-  icon: z.string().min(1),
-  imageUrl: z.string().min(1),
-  imageAlt: z.string(),
-  href: z.string().min(1),
-  slug: z
-    .union([
-      z.literal(""),
-      z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, "Use a lowercase slug"),
-      z.null(),
-    ])
-    .optional(),
-  categorySlug: optionalText,
-  tags: z.array(projectTagSchema).max(4),
-  displayOrder: z.number().int().optional(),
-  isFeatured: z.boolean(),
-  isVisible: z.boolean(),
-  isActive: z.boolean(),
-});
-
-export const projectItemsPayloadSchema = z.object({
-  items: z.array(projectItemSchema),
-});
-
-export const projectsReorderSchema = z.object({
-  orderedIds: z.array(z.string().min(1)).min(1),
-});
-
-export const projectsBulkSchema = z.object({
-  ids: z.array(z.string().min(1)).min(1),
-  action: z.enum([
-    "show",
-    "hide",
-    "activate",
-    "deactivate",
-    "feature",
-    "unfeature",
     "soft-delete",
     "restore",
     "hard-delete",

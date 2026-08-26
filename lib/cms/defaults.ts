@@ -1,6 +1,7 @@
 import type {
   AboutContent,
   BookAppointmentContent,
+  ContactContent,
   FeatureItem,
   FooterContent,
   FooterNavLink,
@@ -12,10 +13,6 @@ import type {
   MarqueeContent,
   MarqueeItemData,
   PartnerMarqueeItem,
-  ProjectCardItem,
-  ProjectCategoryItem,
-  ProjectsContent,
-  ProjectsSectionContent,
   ServiceItem,
   ServicesSectionContent,
   SiteLogo,
@@ -704,173 +701,6 @@ export const defaultMarquee: MarqueeContent = {
   })),
 };
 
-export const defaultProjectCategories: Omit<
-  ProjectCategoryItem,
-  "id" | "createdAt" | "updatedAt"
->[] = [
-  { label: "Business", slug: "business", displayOrder: 0, isVisible: true, isActive: true, deletedAt: null },
-  { label: "Counseling", slug: "counseling", displayOrder: 1, isVisible: true, isActive: true, deletedAt: null },
-  { label: "Support", slug: "support", displayOrder: 2, isVisible: true, isActive: true, deletedAt: null },
-  { label: "Financial", slug: "financial", displayOrder: 3, isVisible: true, isActive: true, deletedAt: null },
-  { label: "Branding", slug: "branding", displayOrder: 4, isVisible: true, isActive: true, deletedAt: null },
-];
-
-export const defaultProjectItems: Omit<
-  ProjectCardItem,
-  "id" | "createdAt" | "updatedAt"
->[] = [
-  {
-    title: "Business Strategy",
-    text: "Driving growth through planning",
-    icon: "icon-business-and-finance",
-    imageUrl: "/images/projects/project-1-1.jpg",
-    imageAlt: "Business strategy case study",
-    href: "#",
-    slug: "business-strategy",
-    categorySlug: "business",
-    tags: [
-      { label: "Business", href: "#", tone: "primary" },
-      { label: "Strategy", href: "#", tone: "light" },
-    ],
-    displayOrder: 0,
-    isFeatured: true,
-    isVisible: true,
-    isActive: true,
-    deletedAt: null,
-  },
-  {
-    title: "Team Counseling",
-    text: "Guiding teams with clarity",
-    icon: "icon-satisfaction",
-    imageUrl: "/images/projects/project-1-2.jpg",
-    imageAlt: "Team counseling case study",
-    href: "#",
-    slug: "team-counseling",
-    categorySlug: "counseling",
-    tags: [
-      { label: "Counseling", href: "#", tone: "primary" },
-      { label: "Branding", href: "#", tone: "light" },
-    ],
-    displayOrder: 1,
-    isFeatured: false,
-    isVisible: true,
-    isActive: true,
-    deletedAt: null,
-  },
-  {
-    title: "Client Support",
-    text: "Building trust with service",
-    icon: "icon-support",
-    imageUrl: "/images/projects/project-1-3.jpg",
-    imageAlt: "Client support case study",
-    href: "#",
-    slug: "client-support",
-    categorySlug: "support",
-    tags: [
-      { label: "Design", href: "#", tone: "primary" },
-      { label: "Support", href: "#", tone: "light" },
-    ],
-    displayOrder: 2,
-    isFeatured: false,
-    isVisible: true,
-    isActive: true,
-    deletedAt: null,
-  },
-  {
-    title: "Financial Analysis",
-    text: "Unlocking insights for success",
-    icon: "icon-analytics",
-    imageUrl: "/images/projects/project-1-4.jpg",
-    imageAlt: "Financial analysis case study",
-    href: "#",
-    slug: "financial-analysis",
-    categorySlug: "financial",
-    tags: [
-      { label: "Financial", href: "#", tone: "primary" },
-      { label: "Analysis", href: "#", tone: "light" },
-    ],
-    displayOrder: 3,
-    isFeatured: false,
-    isVisible: true,
-    isActive: true,
-    deletedAt: null,
-  },
-  {
-    title: "Branding Solutions",
-    text: "Creating identity that lasts",
-    icon: "icon-technical-team",
-    imageUrl: "/images/projects/project-1-5.jpg",
-    imageAlt: "Branding solutions case study",
-    href: "#",
-    slug: "branding-solutions",
-    categorySlug: "branding",
-    tags: [
-      { label: "Branding", href: "#", tone: "primary" },
-      { label: "Solutions", href: "#", tone: "light" },
-    ],
-    displayOrder: 4,
-    isFeatured: false,
-    isVisible: true,
-    isActive: true,
-    deletedAt: null,
-  },
-  {
-    title: "Digital of Marketing",
-    text: "Financial services provided",
-    icon: "icon-planning",
-    imageUrl: "/images/projects/project-1-6.jpg",
-    imageAlt: "Digital marketing case study",
-    href: "#",
-    slug: "digital-of-marketing",
-    categorySlug: "financial",
-    tags: [
-      { label: "Marketing", href: "#", tone: "primary" },
-      { label: "Branding", href: "#", tone: "light" },
-    ],
-    displayOrder: 5,
-    isFeatured: false,
-    isVisible: true,
-    isActive: true,
-    deletedAt: null,
-  },
-];
-
-export const defaultProjectsSection: ProjectsSectionContent = {
-  tagline: "Our Case Studies",
-  title: ["We Popular Projects Studies", "For Clients Case Study."],
-  taglineBg: "#ffffff",
-  topBackgroundImageUrl: "/images/shapes/projects-bg-shape-1-1.png",
-  bottomBackgroundImageUrl: "/images/shapes/projects-bg-shape-1-2.png",
-  showFilters: true,
-  allFilterLabel: "All",
-  showBottomBanner: true,
-  bannerStat: "25,860+",
-  bannerTitle: ["Projects Completed Business Planning", "Online Service Solution."],
-  bannerChecklist: ["Remind yourself Business know fact."],
-  bannerButtonText: "View All Projects",
-  bannerButtonHref: "#",
-  isVisible: true,
-  seoTitle: null,
-  seoDescription: null,
-  seoKeywords: null,
-  canonicalUrl: null,
-  ogImageUrl: null,
-  twitterImageUrl: null,
-  noIndex: false,
-};
-
-export const defaultProjects: ProjectsContent = {
-  section: defaultProjectsSection,
-  categories: defaultProjectCategories.map((category, index) => ({
-    id: `fallback-project-category-${index}`,
-    ...category,
-  })),
-  items: defaultProjectItems.map((item, index) => ({
-    id: `fallback-project-${index}`,
-    ...item,
-  })),
-};
-
 function footerLink(
   id: string,
   label: string,
@@ -888,6 +718,24 @@ function footerLink(
     deletedAt: null,
   };
 }
+
+export const defaultContact: ContactContent = {
+  tagline: "Our Contact Now",
+  title: ["Request A Free Quote", "Get This Contact."],
+  taglineBg: "#ffffff",
+  phoneTitle: "Get Contact Now",
+  emailTitle: "Send Us Email",
+  locationTitle: "Location Map",
+  submitLabel: "SEND REQUEST",
+  isVisible: true,
+  seoTitle: null,
+  seoDescription: null,
+  seoKeywords: null,
+  canonicalUrl: null,
+  ogImageUrl: null,
+  twitterImageUrl: null,
+  noIndex: false,
+};
 
 export const defaultFooterLinks: FooterNavLink[] = [
   footerLink("fallback-fl-1", "About Us", "LINKS_ONE", 0),

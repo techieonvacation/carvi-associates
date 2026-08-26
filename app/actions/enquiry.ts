@@ -14,6 +14,7 @@ const SUCCESS_COPY: Record<string, string> = {
     "Your consultation request is booked. We will confirm the slot by email shortly.",
   callback: "Thanks — we will call you back during business hours.",
   newsletter: "You are subscribed. Watch your inbox for the next compliance digest.",
+  quote: "Thanks — your quote request is with our team. We reply within one business day.",
   resource: "Request received. We will email the resource within one business day.",
   "tool-result": "Sent — check your inbox for the result summary.",
 };

@@ -352,6 +352,27 @@ model TeamMember {
   @@index([isVisible, isActive, deletedAt])
 }
 
+model ContactSettings {
+  id              String   @id @default("default")
+  tagline         String   @default("Our Contact Now")
+  titleLine1      String   @default("Request A Free Quote")
+  titleLine2      String   @default("Get This Contact.")
+  taglineBg       String   @default("#ffffff")
+  phoneTitle      String   @default("Get Contact Now")
+  emailTitle      String   @default("Send Us Email")
+  locationTitle   String   @default("Location Map")
+  submitLabel     String   @default("SEND REQUEST")
+  isVisible       Boolean  @default(true)
+  seoTitle        String?
+  seoDescription  String?
+  seoKeywords     String?
+  canonicalUrl    String?
+  ogImageUrl      String?
+  twitterImageUrl String?
+  noIndex         Boolean  @default(false)
+  updatedAt       DateTime @updatedAt
+}
+
 model WorkingProcessSettings {
   id              String   @id @default("default")
   tagline         String
@@ -534,74 +555,6 @@ model MarqueeItem {
 
   @@index([displayOrder])
   @@index([deletedAt])
-  @@index([isVisible, isActive, deletedAt])
-}
-
-model ProjectsSectionSettings {
-  id                       String   @id @default("default")
-  tagline                  String
-  titleLine1               String
-  titleLine2               String
-  taglineBg                String   @default("#ffffff")
-  topBackgroundImageUrl    String   @default("/images/shapes/projects-bg-shape-1-1.png")
-  bottomBackgroundImageUrl String   @default("/images/shapes/projects-bg-shape-1-2.png")
-  showFilters              Boolean  @default(true)
-  allFilterLabel           String   @default("All")
-  showBottomBanner         Boolean  @default(true)
-  bannerStat               String   @default("25,860+")
-  bannerTitleLine1         String
-  bannerTitleLine2         String
-  bannerChecklist          Json     @default("[]")
-  bannerButtonText         String   @default("View All Projects")
-  bannerButtonHref         String   @default("#")
-  isVisible                Boolean  @default(true)
-  seoTitle                 String?
-  seoDescription           String?
-  seoKeywords              String?
-  canonicalUrl             String?
-  ogImageUrl               String?
-  twitterImageUrl          String?
-  noIndex                  Boolean  @default(false)
-  updatedAt                DateTime @updatedAt
-}
-
-model ProjectCategory {
-  id           String    @id @default(cuid())
-  label        String
-  slug         String    @unique
-  displayOrder Int       @default(0)
-  isVisible    Boolean   @default(true)
-  isActive     Boolean   @default(true)
-  deletedAt    DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
-  @@index([displayOrder])
-  @@index([deletedAt])
-}
-
-model ProjectItem {
-  id           String    @id @default(cuid())
-  title        String
-  text         String
-  icon         String    @default("icon-business-and-finance")
-  imageUrl     String
-  imageAlt     String    @default("")
-  href         String    @default("#")
-  slug         String?   @unique
-  categorySlug String?
-  tags         Json      @default("[]")
-  displayOrder Int       @default(0)
-  isFeatured   Boolean   @default(false)
-  isVisible    Boolean   @default(true)
-  isActive     Boolean   @default(true)
-  deletedAt    DateTime?
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-
-  @@index([displayOrder])
-  @@index([deletedAt])
-  @@index([categorySlug])
   @@index([isVisible, isActive, deletedAt])
 }
 

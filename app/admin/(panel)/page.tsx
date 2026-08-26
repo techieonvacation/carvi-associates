@@ -5,7 +5,6 @@ import {
   BriefcaseBusiness,
   Building2,
   CalendarCheck2,
-  FolderKanban,
   GalleryHorizontal,
   Info,
   LayoutGrid,
@@ -16,6 +15,7 @@ import {
   Users,
   UsersRound,
   Waypoints,
+  MailPlus,
   PanelBottom,
 } from "lucide-react";
 import { AdminHeader } from "@/components/admin/admin-header";
@@ -37,7 +37,6 @@ export default async function AdminDashboardPage() {
     whyChooseCount,
     marqueeItemCount,
     teamCount,
-    projectCount,
     workingProcessCount,
     footerLinkCount,
   ] = await Promise.all([
@@ -49,7 +48,6 @@ export default async function AdminDashboardPage() {
     prisma.whyChooseItem.count({ where: { deletedAt: null } }),
     prisma.marqueeItem.count({ where: { deletedAt: null } }),
     prisma.teamMember.count({ where: { deletedAt: null } }),
-    prisma.projectItem.count({ where: { deletedAt: null } }),
     prisma.workingProcessStep.count({ where: { deletedAt: null } }),
     prisma.footerLink.count({ where: { deletedAt: null } }),
   ]);
@@ -122,16 +120,16 @@ export default async function AdminDashboardPage() {
       icon: UsersRound,
     },
     {
-      title: "Case Studies",
-      description: `${projectCount} case-study cards and filters`,
-      href: "/admin/projects",
-      icon: FolderKanban,
-    },
-    {
       title: "Working Process",
       description: `${workingProcessCount} timeline steps`,
       href: "/admin/working-process",
       icon: Waypoints,
+    },
+    {
+      title: "Contact",
+      description: "Quote-request form heading and labels",
+      href: "/admin/contact",
+      icon: MailPlus,
     },
     {
       title: "Footer",

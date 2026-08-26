@@ -5,6 +5,7 @@ import "dotenv/config";
 import {
   defaultAbout,
   defaultBookAppointment,
+  defaultContact,
   defaultFeatures,
   defaultHeader,
   defaultHero,
@@ -13,9 +14,6 @@ import {
   defaultNavItems,
   defaultPartnerMarqueeLabel,
   defaultPartners,
-  defaultProjectCategories,
-  defaultProjectItems,
-  defaultProjectsSection,
   defaultServices,
   defaultServicesSection,
   defaultSocialLinks,
@@ -477,76 +475,23 @@ async function main() {
     });
   }
 
-  const existingProjectsSection = await prisma.projectsSectionSettings.findUnique({
+  const existingContact = await prisma.contactSettings.findUnique({
     where: { id: "default" },
   });
-  if (!existingProjectsSection) {
-    await prisma.projectsSectionSettings.create({
+  if (!existingContact) {
+    await prisma.contactSettings.create({
       data: {
         id: "default",
-        tagline: defaultProjectsSection.tagline,
-        titleLine1: defaultProjectsSection.title[0],
-        titleLine2: defaultProjectsSection.title[1],
-        taglineBg: defaultProjectsSection.taglineBg,
-        topBackgroundImageUrl: defaultProjectsSection.topBackgroundImageUrl,
-        bottomBackgroundImageUrl: defaultProjectsSection.bottomBackgroundImageUrl,
-        showFilters: defaultProjectsSection.showFilters,
-        allFilterLabel: defaultProjectsSection.allFilterLabel,
-        showBottomBanner: defaultProjectsSection.showBottomBanner,
-        bannerStat: defaultProjectsSection.bannerStat,
-        bannerTitleLine1: defaultProjectsSection.bannerTitle[0],
-        bannerTitleLine2: defaultProjectsSection.bannerTitle[1],
-        bannerChecklist: defaultProjectsSection.bannerChecklist,
-        bannerButtonText: defaultProjectsSection.bannerButtonText,
-        bannerButtonHref: defaultProjectsSection.bannerButtonHref,
-        isVisible: defaultProjectsSection.isVisible,
-        seoTitle: defaultProjectsSection.seoTitle,
-        seoDescription: defaultProjectsSection.seoDescription,
-        seoKeywords: defaultProjectsSection.seoKeywords,
-        canonicalUrl: defaultProjectsSection.canonicalUrl,
-        ogImageUrl: defaultProjectsSection.ogImageUrl,
-        twitterImageUrl: defaultProjectsSection.twitterImageUrl,
-        noIndex: defaultProjectsSection.noIndex,
+        tagline: defaultContact.tagline,
+        titleLine1: defaultContact.title[0],
+        titleLine2: defaultContact.title[1],
+        taglineBg: defaultContact.taglineBg,
+        phoneTitle: defaultContact.phoneTitle,
+        emailTitle: defaultContact.emailTitle,
+        locationTitle: defaultContact.locationTitle,
+        submitLabel: defaultContact.submitLabel,
+        isVisible: defaultContact.isVisible,
       },
-    });
-  } else if (isEmptyJsonArray(existingProjectsSection.bannerChecklist)) {
-    await prisma.projectsSectionSettings.update({
-      where: { id: "default" },
-      data: { bannerChecklist: defaultProjectsSection.bannerChecklist },
-    });
-  }
-
-  const projectCategoryCount = await prisma.projectCategory.count();
-  if (projectCategoryCount === 0) {
-    await prisma.projectCategory.createMany({
-      data: defaultProjectCategories.map((category) => ({
-        label: category.label,
-        slug: category.slug,
-        displayOrder: category.displayOrder,
-        isVisible: category.isVisible,
-        isActive: category.isActive,
-      })),
-    });
-  }
-
-  const projectItemCount = await prisma.projectItem.count();
-  if (projectItemCount === 0) {
-    await prisma.projectItem.createMany({
-      data: defaultProjectItems.map((item) => ({
-        title: item.title,
-        text: item.text,
-        icon: item.icon,
-        imageUrl: item.imageUrl,
-        imageAlt: item.imageAlt,
-        href: item.href,
-        slug: item.slug,
-        categorySlug: item.categorySlug,
-        tags: item.tags,
-        displayOrder: item.displayOrder,
-        isFeatured: item.isFeatured,
-        isVisible: item.isVisible,
-        isActive: item.isActive,
-      })),
     });
   }
 

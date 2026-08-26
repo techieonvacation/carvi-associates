@@ -11,9 +11,9 @@ export const HOME_SECTION_ANCHORS: HomeSectionAnchor[] = [
   { id: "contact", label: "Book an appointment" },
   { id: "why-choose-us", label: "Why choose us" },
   { id: "team", label: "Team" },
-  { id: "projects", label: "Projects" },
   { id: "process", label: "Working process" },
   { id: "blog", label: "Blog" },
+  { id: "contact-now", label: "Contact form" },
 ];
 
 export function resolveAnchorId(href: string): string | null {

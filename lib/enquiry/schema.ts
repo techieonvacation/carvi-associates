@@ -5,6 +5,7 @@ export const ENQUIRY_KINDS = [
   "appointment",
   "callback",
   "newsletter",
+  "quote",
   "resource",
   "tool-result",
 ] as const;
@@ -163,6 +164,17 @@ export const newsletterEnquirySchema = z.object({
   ...antiSpam,
 });
 
+export const quoteEnquirySchema = z.object({
+  kind: z.literal("quote"),
+  name,
+  company: optionalText(120),
+  email,
+  phone,
+  location: z.string().trim().min(2, "Enter your city or location").max(120, "Location is too long"),
+  sourcePath: optionalText(200),
+  ...antiSpam,
+});
+
 export const resourceEnquirySchema = z.object({
   kind: z.literal("resource"),
   name,
@@ -199,6 +211,7 @@ export const enquirySchema = z.discriminatedUnion("kind", [
   appointmentEnquirySchema,
   callbackEnquirySchema,
   newsletterEnquirySchema,
+  quoteEnquirySchema,
   resourceEnquirySchema,
   toolResultEnquirySchema,
 ]);
@@ -207,6 +220,7 @@ export type ContactEnquiry = z.infer<typeof contactEnquirySchema>;
 export type AppointmentEnquiry = z.infer<typeof appointmentEnquirySchema>;
 export type CallbackEnquiry = z.infer<typeof callbackEnquirySchema>;
 export type NewsletterEnquiry = z.infer<typeof newsletterEnquirySchema>;
+export type QuoteEnquiry = z.infer<typeof quoteEnquirySchema>;
 export type ResourceEnquiry = z.infer<typeof resourceEnquirySchema>;
 export type ToolResultEnquiry = z.infer<typeof toolResultEnquirySchema>;
 export type Enquiry = z.infer<typeof enquirySchema>;

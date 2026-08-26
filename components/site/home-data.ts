@@ -5,7 +5,7 @@
  * page exists in this build.
  *
  * Hero, Partner Marquee, Features, About, Services, Book Appointment,
- * Why Choose Us, Marquee Bands, Team, Case Studies, and Working Process are
+ * Why Choose Us, Marquee Bands, Team, and Working Process are
  * CMS-managed via Prisma (`lib/cms/*`).
  */
 
