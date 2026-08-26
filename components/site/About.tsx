@@ -129,7 +129,7 @@ export function About({ about }: AboutProps) {
                   <h3 className="about-one__experience__year relative z-1 m-0 ml-auto table rounded-t-[100px] bg-primary pt-[38px] pr-[22.5px] pb-[26px] pl-[22.5px] text-center text-[40px] leading-none font-bold text-foreground">
                     {about.experience.value}
                   </h3>
-                  <h4 className="about-one__experience__title relative z-1 m-0 inline-block border-b-[10px] border-l-[10px] border-white bg-accent px-[15px] py-[5.5px] text-[18px] leading-[1.388] font-bold text-white capitalize">
+                  <h4 className="about-one__experience__title relative z-1 m-0 inline-block border-b-[10px] border-l-[10px] border-white bg-accent px-[15px] py-[5.5px] text-[18px] leading-[1.388] font-bold text-white! capitalize">
                     {about.experience.label}
                   </h4>
                 </div>
