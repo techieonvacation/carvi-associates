@@ -156,6 +156,14 @@ export type BlogPostItem = {
   updatedAt?: string;
 };
 
+export const HERO_HEIGHTS = ["compact", "standard", "tall"] as const;
+
+export type HeroHeight = (typeof HERO_HEIGHTS)[number];
+
+export const HERO_ALIGNMENTS = ["left", "center"] as const;
+
+export type HeroAlignment = (typeof HERO_ALIGNMENTS)[number];
+
 export type BlogSectionContent = {
   tagline: string;
   title: [string, string];
@@ -169,6 +177,10 @@ export type BlogSectionContent = {
   archiveTitle: [string, string];
   archiveIntro: string;
   archiveHeroImage: string;
+  archiveHeroOverlay: number;
+  archiveHeroHeight: HeroHeight;
+  archiveHeroAlign: HeroAlignment;
+  archiveShowCrumbs: boolean;
   postsPerPage: number;
   showSidebar: boolean;
   showSearch: boolean;

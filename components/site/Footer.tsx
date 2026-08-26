@@ -3,12 +3,14 @@ import Link from "next/link";
 import { Container } from "./Container";
 import { Logo } from "./Logo";
 import { Reveal } from "./Reveal";
+import { SmartLink } from "./SmartLink";
 import { SocialLinks } from "./SocialLinks";
-import type { FooterContent } from "@/lib/cms/types";
+import type { FooterContent, SiteLogo } from "@/lib/cms/types";
 import "./css/footer.css";
 
 type FooterProps = {
   footer: FooterContent;
+  logo: SiteLogo;
 };
 
 /**
@@ -19,7 +21,7 @@ type FooterProps = {
  * Tailwind at the project's Bootstrap-aligned breakpoints, its dash-bullet
  * "Links" list, and its link underline-sweep hovers (see css/footer.css).
  */
-export function Footer({ footer }: FooterProps) {
+export function Footer({ footer, logo }: FooterProps) {
   if (!footer.isVisible) return null;
 
   const year = new Date().getFullYear();
@@ -61,7 +63,7 @@ export function Footer({ footer }: FooterProps) {
               >
                 <div className="footer-widget footer-widget--about">
                   <div className="footer-widget__logo mb-[31px] inline-flex">
-                    <Logo tone={footer.logoTone} />
+                    <Logo logo={logo} tone={footer.logoTone} />
                   </div>
                   <p className="footer-widget__text mb-[22px] text-white">{footer.about}</p>
                   {footer.showSocials && socials.length ? (
@@ -89,12 +91,12 @@ export function Footer({ footer }: FooterProps) {
                           key={link.id}
                           className="relative pl-[15px] before:absolute before:top-1/2 before:left-0 before:-translate-y-1/2 before:text-[14px] before:leading-none before:text-white before:transition-colors before:duration-500 before:content-['-'] hover:before:text-primary"
                         >
-                          <Link
+                          <SmartLink
                             href={link.href}
                             className="text-base text-white transition-colors hover:text-primary"
                           >
                             {link.label}
-                          </Link>
+                          </SmartLink>
                         </li>
                       ))}
                     </ul>
@@ -104,12 +106,12 @@ export function Footer({ footer }: FooterProps) {
                           key={link.id}
                           className="relative pl-[15px] before:absolute before:top-1/2 before:left-0 before:-translate-y-1/2 before:text-[14px] before:leading-none before:text-white before:transition-colors before:duration-500 before:content-['-'] hover:before:text-primary"
                         >
-                          <Link
+                          <SmartLink
                             href={link.href}
                             className="text-base text-white transition-colors hover:text-primary"
                           >
                             {link.label}
-                          </Link>
+                          </SmartLink>
                         </li>
                       ))}
                     </ul>
@@ -131,12 +133,12 @@ export function Footer({ footer }: FooterProps) {
                   <ul className="footer-widget__links list-none space-y-2.5">
                     {footer.explore.map((link) => (
                       <li key={link.id} className="text-base">
-                        <Link
+                        <SmartLink
                           href={link.href}
                           className="text-base text-white transition-colors hover:text-primary"
                         >
                           {link.label}
-                        </Link>
+                        </SmartLink>
                       </li>
                     ))}
                   </ul>
@@ -210,9 +212,9 @@ export function Footer({ footer }: FooterProps) {
                       key={link.id}
                       className="text-base leading-[1.25] font-normal text-white capitalize"
                     >
-                      <Link href={link.href} className="text-white hover:text-primary">
+                      <SmartLink href={link.href} className="text-white hover:text-primary">
                         {link.label}
-                      </Link>
+                      </SmartLink>
                     </li>
                   ))}
                 </ul>

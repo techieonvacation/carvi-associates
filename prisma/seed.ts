@@ -157,7 +157,22 @@ async function main() {
   });
   if (!existingHeader) {
     await prisma.headerSettings.create({
-      data: { id: "default", ...defaultHeader },
+      data: {
+        id: "default",
+        contactCtaText: defaultHeader.contactCtaText,
+        contactCtaHref: defaultHeader.contactCtaHref,
+        logoVariant: defaultHeader.logo.variant,
+        logoImageUrl: defaultHeader.logo.imageUrl,
+        logoDarkImageUrl: defaultHeader.logo.darkImageUrl,
+        logoAlt: defaultHeader.logo.alt,
+        logoHref: defaultHeader.logo.href,
+        logoMarkText: defaultHeader.logo.markText,
+        logoPrimaryText: defaultHeader.logo.primaryText,
+        logoSecondaryText: defaultHeader.logo.secondaryText,
+        showLogoMark: defaultHeader.logo.showMark,
+        logoHeightDesktop: defaultHeader.logo.heightDesktop,
+        logoHeightMobile: defaultHeader.logo.heightMobile,
+      },
     });
   }
 
@@ -684,6 +699,10 @@ async function seedBlog() {
         archiveTitleLine2: defaultBlogSection.archiveTitle[1],
         archiveIntro: defaultBlogSection.archiveIntro,
         archiveHeroImage: defaultBlogSection.archiveHeroImage,
+        archiveHeroOverlay: defaultBlogSection.archiveHeroOverlay,
+        archiveHeroHeight: defaultBlogSection.archiveHeroHeight,
+        archiveHeroAlign: defaultBlogSection.archiveHeroAlign,
+        archiveShowCrumbs: defaultBlogSection.archiveShowCrumbs,
         postsPerPage: defaultBlogSection.postsPerPage,
         showSidebar: defaultBlogSection.showSidebar,
         showSearch: defaultBlogSection.showSearch,

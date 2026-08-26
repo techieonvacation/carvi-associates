@@ -19,6 +19,10 @@ export const defaultBlogSection: BlogSectionContent = {
   archiveIntro:
     "Practical, plain-English notes on income tax, GST, company law and audit — written by the Carvi Associates team for founders, finance heads and growing businesses.",
   archiveHeroImage: "/images/blog/blog-1-1.jpg",
+  archiveHeroOverlay: 82,
+  archiveHeroHeight: "standard",
+  archiveHeroAlign: "center",
+  archiveShowCrumbs: true,
   postsPerPage: 9,
   showSidebar: true,
   showSearch: true,

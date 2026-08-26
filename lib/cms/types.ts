@@ -1,3 +1,27 @@
+export const LOGO_VARIANTS = ["wordmark", "image"] as const;
+
+export type LogoVariant = (typeof LOGO_VARIANTS)[number];
+
+export type SiteLogo = {
+  variant: LogoVariant;
+  imageUrl: string;
+  darkImageUrl: string;
+  alt: string;
+  href: string;
+  markText: string;
+  primaryText: string;
+  secondaryText: string;
+  showMark: boolean;
+  heightDesktop: number;
+  heightMobile: number;
+};
+
+export type HeaderContent = {
+  contactCtaText: string;
+  contactCtaHref: string;
+  logo: SiteLogo;
+};
+
 export type HeroStat = {
   icon: string;
   end: number;

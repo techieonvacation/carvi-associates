@@ -31,7 +31,7 @@ export function Team({ team, socialLinks }: TeamProps) {
   }
 
   return (
-    <section className="team-one section-space bg-white py-30 max-md:py-25 max-sm:py-20">
+    <section id="team" className="team-one section-space bg-white py-30 max-md:py-25 max-sm:py-20">
       <Container>
         <SectionHeading
           tagline={team.tagline}

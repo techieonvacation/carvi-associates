@@ -22,13 +22,6 @@
   color: var(--findox-black4);
 }
 
-.blog-banner__bg::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: rgba(58, 48, 32, 0.82);
-}
-
 .blog-banner__title {
   margin: 0;
   font-family: var(--findox-heading-font);

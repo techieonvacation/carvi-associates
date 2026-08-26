@@ -97,6 +97,10 @@ export default async function AuthorArchivePage({ params, searchParams }: Author
           { label: "Blog", href: "/blog" },
           { label: author.name },
         ]}
+        overlay={section.archiveHeroOverlay}
+        height={section.archiveHeroHeight}
+        align={section.archiveHeroAlign}
+        showCrumbs={section.archiveShowCrumbs}
       />
 
       <div className="bg-white pt-14 max-md:pt-10">

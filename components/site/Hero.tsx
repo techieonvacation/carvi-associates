@@ -12,7 +12,7 @@ type HeroProps = {
 
 export function Hero({ hero, whatsappHref }: HeroProps) {
   return (
-    <section className="hero-one">
+    <section id="home" className="hero-one">
       <div
         className="hero-one__bg"
         style={{ backgroundImage: "url(/images/shapes/hero-bg-1-1.png)" }}

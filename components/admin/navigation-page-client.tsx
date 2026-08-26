@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
+import { HOME_SECTION_ANCHORS } from "@/lib/site-anchors";
 
 type NavItem = {
   id?: string;
@@ -108,7 +109,12 @@ export function NavigationPageClient({ user }: NavigationPageProps) {
           <CardHeader className="flex flex-row items-center justify-between gap-4">
             <div>
               <CardTitle>Menu items</CardTitle>
-              <CardDescription>Drag order by using the sort index and toggle visibility per link.</CardDescription>
+              <CardDescription>
+                Drag order by using the sort index and toggle visibility per link. A URL like
+                {" "}
+                <code className="rounded bg-muted px-1 py-0.5">#about-us</code> scrolls smoothly to
+                that homepage section, from any page.
+              </CardDescription>
             </div>
             <Button type="button" variant="outline" onClick={addItem}>
               <Plus className="size-4" />
@@ -124,6 +130,11 @@ export function NavigationPageClient({ user }: NavigationPageProps) {
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-4">
+                <datalist id="home-section-anchors">
+                  {HOME_SECTION_ANCHORS.map((anchor) => (
+                    <option key={anchor.id} value={`#${anchor.id}`} label={anchor.label} />
+                  ))}
+                </datalist>
                 {items.map((item, index) => (
                   <div
                     key={`${item.label}-${index}`}
@@ -143,6 +154,7 @@ export function NavigationPageClient({ user }: NavigationPageProps) {
                     <div className="space-y-2">
                       <Label>URL</Label>
                       <Input
+                        list="home-section-anchors"
                         value={item.href}
                         onChange={(event) => updateItem(index, { href: event.target.value })}
                       />
@@ -172,6 +184,25 @@ export function NavigationPageClient({ user }: NavigationPageProps) {
                 </div>
               </form>
             )}
+          </CardContent>
+        </Card>
+        <Card className="border-border/70">
+          <CardHeader>
+            <CardTitle>Homepage section links</CardTitle>
+            <CardDescription>
+              Paste any of these into a menu item URL to smooth-scroll to that section.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-wrap gap-2">
+            {HOME_SECTION_ANCHORS.map((anchor) => (
+              <span
+                key={anchor.id}
+                className="inline-flex items-center gap-2 rounded-lg border border-border/70 bg-muted/30 px-3 py-1.5 text-sm"
+              >
+                <code className="font-medium">#{anchor.id}</code>
+                <span className="text-xs text-muted-foreground">{anchor.label}</span>
+              </span>
+            ))}
           </CardContent>
         </Card>
       </main>

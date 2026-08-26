@@ -1,6 +1,8 @@
 import {
   BLOG_CONTENT_TYPES,
   BLOG_POST_STATUSES,
+  HERO_ALIGNMENTS,
+  HERO_HEIGHTS,
   type BlogAuthorItem,
   type BlogCategoryItem,
   type BlogCommentItem,
@@ -12,6 +14,8 @@ import {
   type BlogSectionContent,
   type BlogSource,
   type BlogTagItem,
+  type HeroAlignment,
+  type HeroHeight,
 } from "@/lib/cms/blog-types";
 import { estimateReadingMinutes, sanitizeBlogHtml } from "@/lib/cms/blog-sanitize";
 import { normalizeNullable, slugify } from "@/lib/cms/service-mappers";
@@ -355,6 +359,10 @@ type SectionRow = {
   archiveTitleLine2: string;
   archiveIntro: string;
   archiveHeroImage: string;
+  archiveHeroOverlay: number;
+  archiveHeroHeight: string;
+  archiveHeroAlign: string;
+  archiveShowCrumbs: boolean;
   postsPerPage: number;
   showSidebar: boolean;
   showSearch: boolean;
@@ -373,6 +381,23 @@ type SectionRow = {
   noIndex: boolean;
 };
 
+export function clampOverlay(value: number): number {
+  if (!Number.isFinite(value)) return 82;
+  return Math.min(95, Math.max(0, Math.round(value)));
+}
+
+export function normalizeHeroHeight(value: string): HeroHeight {
+  return (HERO_HEIGHTS as readonly string[]).includes(value)
+    ? (value as HeroHeight)
+    : "standard";
+}
+
+export function normalizeHeroAlignment(value: string): HeroAlignment {
+  return (HERO_ALIGNMENTS as readonly string[]).includes(value)
+    ? (value as HeroAlignment)
+    : "center";
+}
+
 export function mapBlogSection(row: SectionRow): BlogSectionContent {
   return {
     tagline: row.tagline,
@@ -387,6 +412,10 @@ export function mapBlogSection(row: SectionRow): BlogSectionContent {
     archiveTitle: [row.archiveTitleLine1, row.archiveTitleLine2],
     archiveIntro: row.archiveIntro,
     archiveHeroImage: row.archiveHeroImage,
+    archiveHeroOverlay: clampOverlay(row.archiveHeroOverlay),
+    archiveHeroHeight: normalizeHeroHeight(row.archiveHeroHeight),
+    archiveHeroAlign: normalizeHeroAlignment(row.archiveHeroAlign),
+    archiveShowCrumbs: row.archiveShowCrumbs,
     postsPerPage: row.postsPerPage,
     showSidebar: row.showSidebar,
     showSearch: row.showSearch,

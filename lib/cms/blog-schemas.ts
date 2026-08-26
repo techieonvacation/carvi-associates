@@ -3,6 +3,8 @@ import {
   BLOG_COMMENT_STATUSES,
   BLOG_CONTENT_TYPES,
   BLOG_POST_STATUSES,
+  HERO_ALIGNMENTS,
+  HERO_HEIGHTS,
 } from "@/lib/cms/blog-types";
 
 const optionalText = z.string().optional().nullable();
@@ -38,6 +40,10 @@ export const blogSectionSchema = z.object({
   archiveTitleLine2: z.string().min(1),
   archiveIntro: z.string().min(1),
   archiveHeroImage: z.string().min(1),
+  archiveHeroOverlay: z.number().int().min(0).max(95),
+  archiveHeroHeight: z.enum(HERO_HEIGHTS),
+  archiveHeroAlign: z.enum(HERO_ALIGNMENTS),
+  archiveShowCrumbs: z.boolean(),
   postsPerPage: z.number().int().min(3).max(48),
   showSidebar: z.boolean(),
   showSearch: z.boolean(),

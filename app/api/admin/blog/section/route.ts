@@ -20,6 +20,10 @@ function toPayload(row: {
   archiveTitleLine2: string;
   archiveIntro: string;
   archiveHeroImage: string;
+  archiveHeroOverlay: number;
+  archiveHeroHeight: string;
+  archiveHeroAlign: string;
+  archiveShowCrumbs: boolean;
   postsPerPage: number;
   showSidebar: boolean;
   showSearch: boolean;
@@ -60,6 +64,10 @@ export async function GET() {
         archiveTitleLine2: defaultBlogSection.archiveTitle[1],
         archiveIntro: defaultBlogSection.archiveIntro,
         archiveHeroImage: defaultBlogSection.archiveHeroImage,
+        archiveHeroOverlay: defaultBlogSection.archiveHeroOverlay,
+        archiveHeroHeight: defaultBlogSection.archiveHeroHeight,
+        archiveHeroAlign: defaultBlogSection.archiveHeroAlign,
+        archiveShowCrumbs: defaultBlogSection.archiveShowCrumbs,
         postsPerPage: defaultBlogSection.postsPerPage,
         showSidebar: defaultBlogSection.showSidebar,
         showSearch: defaultBlogSection.showSearch,
@@ -111,6 +119,10 @@ export async function PUT(request: Request) {
     archiveTitleLine2: parsed.data.archiveTitleLine2.trim(),
     archiveIntro: parsed.data.archiveIntro.trim(),
     archiveHeroImage: parsed.data.archiveHeroImage.trim(),
+    archiveHeroOverlay: parsed.data.archiveHeroOverlay,
+    archiveHeroHeight: parsed.data.archiveHeroHeight,
+    archiveHeroAlign: parsed.data.archiveHeroAlign,
+    archiveShowCrumbs: parsed.data.archiveShowCrumbs,
     postsPerPage: parsed.data.postsPerPage,
     showSidebar: parsed.data.showSidebar,
     showSearch: parsed.data.showSearch,

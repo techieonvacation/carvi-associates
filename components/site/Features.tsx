@@ -16,7 +16,7 @@ type FeaturesProps = {
  */
 export function Features({ features }: FeaturesProps) {
   return (
-    <section className="features-one relative z-[1] overflow-hidden bg-white pb-30 max-md:pb-25 max-sm:pb-20">
+    <section id="features" className="features-one relative z-[1] overflow-hidden bg-white pb-30 max-md:pb-25 max-sm:pb-20">
       <Container>
         <Reveal direction="down" duration={1300}>
           <div className="features-one__carousel grid grid-cols-1 gap-[30px] rounded-b-[15px] bg-white md:grid-cols-2 lg:grid-cols-3">

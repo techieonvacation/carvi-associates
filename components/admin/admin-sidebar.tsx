@@ -56,7 +56,7 @@ const items = [
   { href: "/admin/blog", label: "Blog", icon: Newspaper },
   { href: "/admin/working-process", label: "Working Process", icon: Waypoints },
   { href: "/admin/footer", label: "Footer", icon: PanelBottom },
-  { href: "/admin/header", label: "Header CTA", icon: Megaphone },
+  { href: "/admin/header", label: "Header & Logo", icon: Megaphone },
   { href: "/admin/socials", label: "Social Links", icon: Share2 },
 ];
 

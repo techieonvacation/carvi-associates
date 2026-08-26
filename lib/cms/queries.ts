@@ -4,7 +4,6 @@ import {
   defaultAbout,
   defaultBookAppointment,
   defaultFeatures,
-  defaultHeader,
   defaultHero,
   defaultHeroStats,
   defaultHeroTrust,
@@ -26,6 +25,7 @@ import {
   defaultWhyChoose,
   defaultWorkingProcess,
 } from "@/lib/cms/defaults";
+import { mapHeader } from "@/lib/cms/header-mappers";
 import { mapServiceRow } from "@/lib/cms/service-mappers";
 import type {
   AboutContent,
@@ -37,6 +37,7 @@ import type {
   FooterNavLink,
   FooterRecentPostItem,
   FooterSocialItem,
+  HeaderContent,
   HeroStat,
   HeroTrustItem,
   ImageFit,
@@ -93,9 +94,9 @@ export type SiteContent = {
     phoneHref: string;
     whatsappLabel: string;
     whatsappHref: string;
-    whatsappMarqueeText: string;
-    whatsappMarqueeSpeed: number;
-    showWhatsappMarquee: boolean;
+    whatsappIntroText: string;
+    whatsappLinkText: string;
+    showWhatsappNotice: boolean;
   };
   hero: {
     tagline: string;
@@ -115,10 +116,7 @@ export type SiteContent = {
     stats: HeroStat[];
     trust: HeroTrustItem[];
   };
-  header: {
-    contactCtaText: string;
-    contactCtaHref: string;
-  };
+  header: HeaderContent;
   partnerMarquee: {
     label: string;
     partners: PartnerMarqueeItem[];
@@ -1071,7 +1069,7 @@ export const getSiteContent = cache(async (): Promise<SiteContent> => {
           trust: parseHeroTrust(hero.trust),
         }
       : defaultHero,
-    header: header ?? defaultHeader,
+    header: mapHeader(header),
     partnerMarquee: {
       label: partnerSettings?.label ?? defaultPartnerMarqueeLabel,
       partners: partners.length

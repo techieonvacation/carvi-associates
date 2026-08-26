@@ -12,9 +12,9 @@ const topbarSchema = z.object({
   phoneHref: z.string().min(1),
   whatsappLabel: z.string().min(1),
   whatsappHref: z.string().url(),
-  whatsappMarqueeText: z.string().min(1).max(180),
-  whatsappMarqueeSpeed: z.number().int().min(5).max(120),
-  showWhatsappMarquee: z.boolean(),
+  whatsappIntroText: z.string().min(1).max(120),
+  whatsappLinkText: z.string().min(1).max(120),
+  showWhatsappNotice: z.boolean(),
 });
 
 export async function GET() {

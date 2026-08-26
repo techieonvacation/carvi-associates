@@ -70,6 +70,10 @@ export default async function BlogPage({ searchParams }: BlogRouteProps) {
         intro={section.archiveIntro}
         backgroundImageUrl={section.archiveHeroImage}
         crumbs={[{ label: "Home", href: "/" }, { label: "Blog" }]}
+        overlay={section.archiveHeroOverlay}
+        height={section.archiveHeroHeight}
+        align={section.archiveHeroAlign}
+        showCrumbs={section.archiveShowCrumbs}
       />
 
       <BlogArchive

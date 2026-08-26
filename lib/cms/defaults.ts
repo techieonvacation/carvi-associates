@@ -6,6 +6,7 @@ import type {
   FooterNavLink,
   FooterRecentPostItem,
   FooterSocialItem,
+  HeaderContent,
   HeroStat,
   HeroTrustItem,
   MarqueeContent,
@@ -17,6 +18,7 @@ import type {
   ProjectsSectionContent,
   ServiceItem,
   ServicesSectionContent,
+  SiteLogo,
   TeamContent,
   TeamMemberItem,
   WhyChooseContent,
@@ -27,10 +29,10 @@ import type {
 
 export const defaultNavItems = [
   { label: "Home", href: "/", sortOrder: 0, visible: true },
-  { label: "About Us", href: "#", sortOrder: 1, visible: true },
+  { label: "About Us", href: "#about-us", sortOrder: 1, visible: true },
   { label: "Knowledge Bank", href: "/insight", sortOrder: 2, visible: true },
-  { label: "Services", href: "#", sortOrder: 3, visible: true },
-  { label: "Contact", href: "#", sortOrder: 4, visible: true },
+  { label: "Services", href: "#services", sortOrder: 3, visible: true },
+  { label: "Contact", href: "#contact", sortOrder: 4, visible: true },
 ];
 
 export const defaultSocialLinks = [
@@ -46,12 +48,11 @@ export const defaultTopbar = {
   addressMapUrl: "https://www.google.com/maps",
   phone: "+91 5698 0036 420",
   phoneHref: "tel:+9156980036420",
-  whatsappLabel: "Join our WhatsApp Channel",
+  whatsappLabel: "Follow CARVI AND ASSOCIATES on WhatsApp",
   whatsappHref: "https://whatsapp.com/channel/0029VaExampleChannelId",
-  whatsappMarqueeText:
-    "Join our WhatsApp Channel for daily tax, GST & compliance updates",
-  whatsappMarqueeSpeed: 22,
-  showWhatsappMarquee: true,
+  whatsappIntroText: "For more updates follow 👉",
+  whatsappLinkText: "CARVI AND ASSOCIATES on Whatsapp",
+  showWhatsappNotice: true,
 };
 
 export const defaultHeroStats: HeroStat[] = [
@@ -111,9 +112,24 @@ export const defaultHero = {
   trust: defaultHeroTrust,
 };
 
-export const defaultHeader = {
+export const defaultLogo: SiteLogo = {
+  variant: "wordmark",
+  imageUrl: "",
+  darkImageUrl: "",
+  alt: "Carvi Associates",
+  href: "/",
+  markText: "C",
+  primaryText: "Carvi",
+  secondaryText: "Associates",
+  showMark: true,
+  heightDesktop: 46,
+  heightMobile: 36,
+};
+
+export const defaultHeader: HeaderContent = {
   contactCtaText: "Contact Us",
-  contactCtaHref: "#",
+  contactCtaHref: "#contact",
+  logo: defaultLogo,
 };
 
 export const defaultPartnerMarqueeLabel = "Trusted by Businesses Across India";

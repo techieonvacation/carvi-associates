@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { SmartLink } from "./SmartLink";
 import { SocialLinks } from "./SocialLinks";
 import { Logo } from "./Logo";
 import type { PublicNavItem } from "./DesktopMenu";
+import type { SiteLogo } from "@/lib/cms/types";
 
 type MobileMenuProps = {
   open: boolean;
   onClose: () => void;
   items: PublicNavItem[];
+  logo: SiteLogo;
   contact: {
     email: string;
     phone: string;
@@ -26,6 +28,7 @@ export function MobileMenu({
   open,
   onClose,
   items,
+  logo,
   contact,
   socials,
 }: MobileMenuProps) {
@@ -51,7 +54,7 @@ export function MobileMenu({
         </button>
 
         <div className="logo-box">
-          <Logo tone="dark" onClick={onClose} />
+          <Logo logo={logo} tone="dark" onClick={onClose} />
         </div>
 
         <div className="mobile-nav__container">
@@ -63,9 +66,9 @@ export function MobileMenu({
               if (!hasChildren) {
                 return (
                   <li key={item.label}>
-                    <Link href={item.href} onClick={onClose}>
+                    <SmartLink href={item.href} onClick={onClose}>
                       {item.label}
-                    </Link>
+                    </SmartLink>
                   </li>
                 );
               }
@@ -73,9 +76,9 @@ export function MobileMenu({
               return (
                 <li key={item.label} className="dropdown">
                   <div className="mobile-nav__row">
-                    <Link href={item.href} onClick={onClose}>
+                    <SmartLink href={item.href} onClick={onClose}>
                       {item.label}
-                    </Link>
+                    </SmartLink>
                     <button
                       type="button"
                       className={`mobile-nav__expander${isOpen ? " expanded" : ""}`}
@@ -93,9 +96,9 @@ export function MobileMenu({
                   <ul className={isOpen ? "expanded" : undefined}>
                     {item.children!.map((child) => (
                       <li key={child.label}>
-                        <Link href={child.href} onClick={onClose}>
+                        <SmartLink href={child.href} onClick={onClose}>
                           {child.label}
-                        </Link>
+                        </SmartLink>
                       </li>
                     ))}
                   </ul>

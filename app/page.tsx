@@ -52,7 +52,7 @@ export default async function Home() {
         <Blog blog={blog} />
         <Newsletter />
       </main>
-      <Footer footer={content.footer} />
+      <Footer footer={content.footer} logo={content.header.logo} />
     </div>
   );
 }

@@ -48,18 +48,18 @@ model SocialLink {
 }
 
 model TopbarSettings {
-  id                   String   @id @default("default")
-  email                String
-  address              String
-  addressMapUrl        String
-  phone                String
-  phoneHref            String
-  whatsappLabel        String
-  whatsappHref         String
-  whatsappMarqueeText  String   @default("Join our WhatsApp Channel for daily tax, GST & compliance updates")
-  whatsappMarqueeSpeed Int      @default(22)
-  showWhatsappMarquee  Boolean  @default(true)
-  updatedAt            DateTime @updatedAt
+  id                 String   @id @default("default")
+  email              String
+  address            String
+  addressMapUrl      String
+  phone              String
+  phoneHref          String
+  whatsappLabel      String
+  whatsappHref       String
+  whatsappIntroText  String   @default("For more updates follow 👉")
+  whatsappLinkText   String   @default("CARVI AND ASSOCIATES on Whatsapp")
+  showWhatsappNotice Boolean  @default(true)
+  updatedAt          DateTime @updatedAt
 }
 
 model HeroSettings {
@@ -84,10 +84,21 @@ model HeroSettings {
 }
 
 model HeaderSettings {
-  id             String   @id @default("default")
-  contactCtaText String   @default("Contact Us")
-  contactCtaHref String   @default("#")
-  updatedAt      DateTime @updatedAt
+  id                String   @id @default("default")
+  contactCtaText    String   @default("Contact Us")
+  contactCtaHref    String   @default("#")
+  logoVariant       String   @default("wordmark")
+  logoImageUrl      String   @default("")
+  logoDarkImageUrl  String   @default("")
+  logoAlt           String   @default("Carvi Associates")
+  logoHref          String   @default("/")
+  logoMarkText      String   @default("C")
+  logoPrimaryText   String   @default("Carvi")
+  logoSecondaryText String   @default("Associates")
+  showLogoMark      Boolean  @default(true)
+  logoHeightDesktop Int      @default(46)
+  logoHeightMobile  Int      @default(36)
+  updatedAt         DateTime @updatedAt
 }
 
 model PartnerMarqueeSettings {
@@ -612,38 +623,42 @@ enum BlogCommentStatus {
 }
 
 model BlogSectionSettings {
-  id                String   @id @default("default")
-  tagline           String   @default("Our Latest Blog")
-  titleLine1        String   @default("Today's Blog Industry Finance")
-  titleLine2        String   @default("Business Consulting.")
-  taglineBg         String   @default("#f4ebd8")
-  homeLimit         Int      @default(3)
-  homeCtaText       String   @default("View All Blogs")
-  homeCtaHref       String   @default("/blog")
-  showHomeCta       Boolean  @default(true)
-  isVisible         Boolean  @default(true)
-  archiveTagline    String   @default("Knowledge Desk")
-  archiveTitleLine1 String   @default("Insights On Tax, GST &")
-  archiveTitleLine2 String   @default("Business Compliance.")
-  archiveIntro      String   @default("Practical, plain-English notes on income tax, GST, company law and audit — written by the Carvi Associates team for founders, finance heads and growing businesses.")
-  archiveHeroImage  String   @default("/images/blog/blog-1-1.jpg")
-  postsPerPage      Int      @default(9)
-  showSidebar       Boolean  @default(true)
-  showSearch        Boolean  @default(true)
-  showCategories    Boolean  @default(true)
-  showTags          Boolean  @default(true)
-  showNewsletter    Boolean  @default(true)
-  allowComments     Boolean  @default(true)
-  moderateComments  Boolean  @default(true)
-  disclaimer        String   @default("This article is for general information only and is not professional advice. Tax and regulatory positions change frequently — please consult Carvi Associates before acting on anything you read here.")
-  seoTitle          String?
-  seoDescription    String?
-  seoKeywords       String?
-  canonicalUrl      String?
-  ogImageUrl        String?
-  twitterImageUrl   String?
-  noIndex           Boolean  @default(false)
-  updatedAt         DateTime @updatedAt
+  id                 String   @id @default("default")
+  tagline            String   @default("Our Latest Blog")
+  titleLine1         String   @default("Today's Blog Industry Finance")
+  titleLine2         String   @default("Business Consulting.")
+  taglineBg          String   @default("#f4ebd8")
+  homeLimit          Int      @default(3)
+  homeCtaText        String   @default("View All Blogs")
+  homeCtaHref        String   @default("/blog")
+  showHomeCta        Boolean  @default(true)
+  isVisible          Boolean  @default(true)
+  archiveTagline     String   @default("Knowledge Desk")
+  archiveTitleLine1  String   @default("Insights On Tax, GST &")
+  archiveTitleLine2  String   @default("Business Compliance.")
+  archiveIntro       String   @default("Practical, plain-English notes on income tax, GST, company law and audit — written by the Carvi Associates team for founders, finance heads and growing businesses.")
+  archiveHeroImage   String   @default("/images/blog/blog-1-1.jpg")
+  archiveHeroOverlay Int      @default(82)
+  archiveHeroHeight  String   @default("standard")
+  archiveHeroAlign   String   @default("center")
+  archiveShowCrumbs  Boolean  @default(true)
+  postsPerPage       Int      @default(9)
+  showSidebar        Boolean  @default(true)
+  showSearch         Boolean  @default(true)
+  showCategories     Boolean  @default(true)
+  showTags           Boolean  @default(true)
+  showNewsletter     Boolean  @default(true)
+  allowComments      Boolean  @default(true)
+  moderateComments   Boolean  @default(true)
+  disclaimer         String   @default("This article is for general information only and is not professional advice. Tax and regulatory positions change frequently — please consult Carvi Associates before acting on anything you read here.")
+  seoTitle           String?
+  seoDescription     String?
+  seoKeywords        String?
+  canonicalUrl       String?
+  ogImageUrl         String?
+  twitterImageUrl    String?
+  noIndex            Boolean  @default(false)
+  updatedAt          DateTime @updatedAt
 }
 
 model BlogAuthor {

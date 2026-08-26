@@ -26,7 +26,7 @@ export default async function InsightLayout({
       <main className="insight-scope bg-white">{children}</main>
 
       <div className="findox-scope">
-        <Footer footer={content.footer} />
+        <Footer footer={content.footer} logo={content.header.logo} />
       </div>
     </div>
   );

@@ -1,11 +1,5 @@
+import Link from "next/link";
 import { SocialLinks } from "./SocialLinks";
-
-/**
- * Roughly how many characters fill the widest marquee viewport at 14px. The
- * message is repeated to at least this length so short copy still covers the
- * track and the loop stays seamless.
- */
-const MIN_SEQUENCE_CHARS = 78;
 
 function WhatsAppIcon() {
   return (
@@ -18,9 +12,9 @@ function WhatsAppIcon() {
 type TopbarProps = {
   whatsappLabel: string;
   whatsappHref: string;
-  whatsappMarqueeText: string;
-  whatsappMarqueeSpeed: number;
-  showWhatsappMarquee: boolean;
+  whatsappIntroText: string;
+  whatsappLinkText: string;
+  showWhatsappNotice: boolean;
   socials: Array<{
     label: string;
     href: string;
@@ -31,51 +25,36 @@ type TopbarProps = {
 export function Topbar({
   whatsappLabel,
   whatsappHref,
-  whatsappMarqueeText,
-  whatsappMarqueeSpeed,
-  showWhatsappMarquee,
+  whatsappIntroText,
+  whatsappLinkText,
+  showWhatsappNotice,
   socials,
 }: TopbarProps) {
-  const message = whatsappMarqueeText || whatsappLabel;
-  const repeats = Math.max(2, Math.ceil(MIN_SEQUENCE_CHARS / Math.max(message.length, 1)));
+  const linkText = whatsappLinkText || whatsappLabel;
 
   return (
     <div className="topbar">
       <div className="findox-container">
         <div className="topbar__inner">
-          {showWhatsappMarquee ? (
+          {showWhatsappNotice ? (
             <div className="topbar__whatsapp">
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={whatsappLabel}
-                className="topbar__whatsapp__link"
-              >
-                <span className="topbar__whatsapp__icon">
-                  <WhatsAppIcon />
-                </span>
-                <span className="topbar__whatsapp__viewport" aria-hidden="true">
-                  <span
-                    className="topbar__whatsapp__track"
-                    style={
-                      {
-                        "--topbar-marquee-duration": `${whatsappMarqueeSpeed}s`,
-                      } as React.CSSProperties
-                    }
-                  >
-                    {[0, 1].map((duplicate) => (
-                      <span key={duplicate} className="topbar__whatsapp__sequence">
-                        {Array.from({ length: repeats }).map((_, repeat) => (
-                          <span key={repeat} className="topbar__whatsapp__text">
-                            {message}
-                          </span>
-                        ))}
-                      </span>
-                    ))}
-                  </span>
-                </span>
-              </a>
+              <span className="topbar__whatsapp__icon">
+                <WhatsAppIcon />
+              </span>
+              <p className="topbar__whatsapp__message">
+                {whatsappIntroText ? (
+                  <span className="topbar__whatsapp__intro">{whatsappIntroText}</span>
+                ) : null}
+                <Link
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={whatsappLabel}
+                  className="topbar__whatsapp__link"
+                >
+                  {linkText}
+                </Link>
+              </p>
             </div>
           ) : null}
 

@@ -7,6 +7,7 @@ import { MobileMenu } from "./MobileMenu";
 import { SearchPopup } from "./SearchPopup";
 import { FindoxButton } from "./FindoxButton";
 import { Logo } from "./Logo";
+import { AnchorScrollManager } from "./AnchorScrollManager";
 import { withKnowledgeBankDropdown } from "./nav-data";
 import type { SiteContent } from "@/lib/cms/queries";
 
@@ -19,12 +20,14 @@ function MainHeaderBar({
   onSearch,
   onMobile,
   navItems,
+  logo,
   contactCtaText,
   contactCtaHref,
 }: {
   onSearch: () => void;
   onMobile: () => void;
   navItems: HeaderProps["navItems"];
+  logo: HeaderProps["header"]["logo"];
   contactCtaText: string;
   contactCtaHref: string;
 }) {
@@ -38,7 +41,7 @@ function MainHeaderBar({
     <div className="findox-container">
       <div className="main-header__inner">
         <div className="main-header__logo logo-retina">
-          <Logo tone="light" />
+          <Logo logo={logo} tone="light" />
         </div>
         <div className="main-header__right">
           <nav className="main-header__nav main-menu" aria-label="Primary">
@@ -125,9 +128,9 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
         <Topbar
           whatsappLabel={topbar.whatsappLabel}
           whatsappHref={topbar.whatsappHref}
-          whatsappMarqueeText={topbar.whatsappMarqueeText}
-          whatsappMarqueeSpeed={topbar.whatsappMarqueeSpeed}
-          showWhatsappMarquee={topbar.showWhatsappMarquee}
+          whatsappIntroText={topbar.whatsappIntroText}
+          whatsappLinkText={topbar.whatsappLinkText}
+          showWhatsappNotice={topbar.showWhatsappNotice}
           socials={visibleSocials}
         />
         <header className="main-header">
@@ -135,6 +138,7 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
             onSearch={() => setSearchOpen(true)}
             onMobile={() => setMobileOpen(true)}
             navItems={navItems}
+            logo={header.logo}
             contactCtaText={header.contactCtaText}
             contactCtaHref={header.contactCtaHref}
           />
@@ -146,6 +150,7 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
           onSearch={() => setSearchOpen(true)}
           onMobile={() => setMobileOpen(true)}
           navItems={navItems}
+          logo={header.logo}
           contactCtaText={header.contactCtaText}
           contactCtaHref={header.contactCtaHref}
         />
@@ -155,6 +160,7 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
         open={mobileOpen}
         onClose={() => setMobileOpen(false)}
         items={visibleNavItems}
+        logo={header.logo}
         contact={{
           email: topbar.email,
           phone: topbar.phone,
@@ -163,6 +169,7 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
         socials={visibleSocials}
       />
       <SearchPopup open={searchOpen} onClose={() => setSearchOpen(false)} />
+      <AnchorScrollManager />
     </>
   );
 }

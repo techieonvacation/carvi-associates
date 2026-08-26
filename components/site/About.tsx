@@ -88,7 +88,7 @@ export function About({ about }: AboutProps) {
   const [textExpanded, setTextExpanded] = useState(false);
 
   return (
-    <section className="about-one relative bg-white pb-30 max-md:pb-25 max-sm:pb-20">
+    <section id="about-us" className="about-one relative bg-white pb-30 max-md:pb-25 max-sm:pb-20">
       <Container>
         <div className="grid grid-cols-1 gap-x-6 gap-y-[50px] lg:grid-cols-2">
           <Reveal direction="right" duration={1300}>

@@ -23,7 +23,7 @@ export default async function BlogLayout({ children }: { children: React.ReactNo
       <main className="blog-scope bg-white">{children}</main>
 
       <div className="findox-scope">
-        <Footer footer={content.footer} />
+        <Footer footer={content.footer} logo={content.header.logo} />
       </div>
     </div>
   );

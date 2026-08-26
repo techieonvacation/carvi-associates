@@ -80,6 +80,10 @@ export default async function CategoryArchivePage({ params, searchParams }: Cate
           { label: "Blog", href: "/blog" },
           { label: category.name },
         ]}
+        overlay={section.archiveHeroOverlay}
+        height={section.archiveHeroHeight}
+        align={section.archiveHeroAlign}
+        showCrumbs={section.archiveShowCrumbs}
       />
 
       <BlogArchive

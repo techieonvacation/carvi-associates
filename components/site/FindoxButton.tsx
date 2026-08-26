@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SmartLink } from "./SmartLink";
 import { cn } from "@/lib/utils";
 
 type CommonProps = {
@@ -46,16 +46,14 @@ export function FindoxButton(props: LinkProps | ButtonProps) {
 
   if ("href" in props) {
     return (
-      <Link
+      <SmartLink
         href={props.href}
         className={classes}
         onClick={props.onClick}
-        {...(props.external
-          ? { target: "_blank", rel: "noopener noreferrer" }
-          : {})}
+        external={props.external}
       >
         <Inner text={props.text} />
-      </Link>
+      </SmartLink>
     );
   }
 

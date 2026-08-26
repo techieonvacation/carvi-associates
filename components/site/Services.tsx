@@ -25,7 +25,7 @@ export function Services({ services }: ServicesProps) {
   }
 
   return (
-    <section className="services-one section-space bg-secondary py-30 max-md:py-25 max-sm:py-20">
+    <section id="services" className="services-one section-space bg-secondary py-30 max-md:py-25 max-sm:py-20">
       <Container>
         <SectionHeading
           align="center"

@@ -25,7 +25,7 @@ export function WorkingProcess({ workingProcess }: WorkingProcessProps) {
   }
 
   return (
-    <section className="working-process section-space bg-white py-30 max-md:py-25 max-sm:py-20">
+    <section id="process" className="working-process section-space bg-white py-30 max-md:py-25 max-sm:py-20">
       <Container>
         <SectionHeading
           align="center"

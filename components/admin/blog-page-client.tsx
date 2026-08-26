@@ -37,6 +37,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
 import {
   Table,
@@ -48,6 +49,7 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import type { HeroAlignment, HeroHeight } from "@/lib/cms/blog-types";
 import {
   BLOG_CONTENT_TYPE_META,
   type BlogAuthorItem,
@@ -72,6 +74,10 @@ type SectionForm = {
   archiveTitleLine2: string;
   archiveIntro: string;
   archiveHeroImage: string;
+  archiveHeroOverlay: number;
+  archiveHeroHeight: HeroHeight;
+  archiveHeroAlign: HeroAlignment;
+  archiveShowCrumbs: boolean;
   postsPerPage: number;
   showSidebar: boolean;
   showSearch: boolean;
@@ -91,6 +97,65 @@ type SectionForm = {
 };
 
 type AdminUser = { name: string; email: string; role: "ADMIN" | "MANAGER" };
+
+function BannerPreview({ section }: { section: SectionForm }) {
+  const padding =
+    section.archiveHeroHeight === "tall"
+      ? "py-16"
+      : section.archiveHeroHeight === "compact"
+        ? "py-8"
+        : "py-12";
+
+  return (
+    <div className="relative overflow-hidden rounded-xl border">
+      {section.archiveHeroImage ? (
+        <Image
+          src={section.archiveHeroImage}
+          alt=""
+          fill
+          unoptimized
+          className="object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-muted" />
+      )}
+      <div
+        className="absolute inset-0 bg-[#3a3020]"
+        style={{ opacity: section.archiveHeroOverlay / 100 }}
+      />
+      <div
+        className={`relative px-6 ${padding} ${
+          section.archiveHeroAlign === "center" ? "text-center" : "text-left"
+        }`}
+      >
+        <p className="text-xs font-semibold tracking-[0.2em] text-[#e3c9a0] uppercase">
+          {section.archiveTagline}
+        </p>
+        <p className="mt-3 text-2xl leading-tight font-bold text-white">
+          {section.archiveTitleLine1}
+          <br />
+          {section.archiveTitleLine2}
+        </p>
+        <p
+          className={`mt-3 line-clamp-2 max-w-lg text-sm text-white/75 ${
+            section.archiveHeroAlign === "center" ? "mx-auto" : ""
+          }`}
+        >
+          {section.archiveIntro}
+        </p>
+        {section.archiveShowCrumbs ? (
+          <p
+            className={`mt-4 text-xs text-white/70 ${
+              section.archiveHeroAlign === "center" ? "text-center" : "text-left"
+            }`}
+          >
+            Home / <span className="text-[#e3c9a0]">Blog</span>
+          </p>
+        ) : null}
+      </div>
+    </div>
+  );
+}
 
 export function BlogPageClient({ user }: { user: AdminUser }) {
   const [section, setSection] = useState<SectionForm | null>(null);
@@ -759,6 +824,7 @@ export function BlogPageClient({ user }: { user: AdminUser }) {
                     <Tabs defaultValue="home">
                       <TabsList>
                         <TabsTrigger value="home">Homepage</TabsTrigger>
+                        <TabsTrigger value="hero">Hero banner</TabsTrigger>
                         <TabsTrigger value="archive">Archive page</TabsTrigger>
                         <TabsTrigger value="comments">Comments</TabsTrigger>
                         <TabsTrigger value="seo">SEO</TabsTrigger>
@@ -861,7 +927,7 @@ export function BlogPageClient({ user }: { user: AdminUser }) {
                         </div>
                       </TabsContent>
 
-                      <TabsContent value="archive" className="mt-4 space-y-4">
+                      <TabsContent value="hero" className="mt-4 space-y-4">
                         <div className="grid gap-4 md:grid-cols-2">
                           <div className="space-y-2">
                             <Label>Banner eyebrow</Label>
@@ -869,18 +935,6 @@ export function BlogPageClient({ user }: { user: AdminUser }) {
                               value={section.archiveTagline}
                               onChange={(event) =>
                                 setSection({ ...section, archiveTagline: event.target.value })
-                              }
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label>Posts per page</Label>
-                            <Input
-                              type="number"
-                              min={3}
-                              max={48}
-                              value={section.postsPerPage}
-                              onChange={(event) =>
-                                setSection({ ...section, postsPerPage: Number(event.target.value) })
                               }
                             />
                           </div>
@@ -893,7 +947,7 @@ export function BlogPageClient({ user }: { user: AdminUser }) {
                               }
                             />
                           </div>
-                          <div className="space-y-2">
+                          <div className="space-y-2 md:col-span-2">
                             <Label>Banner title line 2</Label>
                             <Input
                               value={section.archiveTitleLine2}
@@ -920,6 +974,102 @@ export function BlogPageClient({ user }: { user: AdminUser }) {
                           value={section.archiveHeroImage}
                           onChange={(value) => setSection({ ...section, archiveHeroImage: value })}
                         />
+
+                        <div className="grid gap-5 md:grid-cols-3">
+                          <div className="space-y-2">
+                            <Label>Banner height</Label>
+                            <Select
+                              value={section.archiveHeroHeight}
+                              onValueChange={(value) =>
+                                setSection({ ...section, archiveHeroHeight: value as HeroHeight })
+                              }
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="compact">Compact</SelectItem>
+                                <SelectItem value="standard">Standard</SelectItem>
+                                <SelectItem value="tall">Tall</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-2">
+                            <Label>Text alignment</Label>
+                            <Select
+                              value={section.archiveHeroAlign}
+                              onValueChange={(value) =>
+                                setSection({
+                                  ...section,
+                                  archiveHeroAlign: value as HeroAlignment,
+                                })
+                              }
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                <SelectItem value="center">Centered</SelectItem>
+                                <SelectItem value="left">Left aligned</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </div>
+                          <div className="space-y-3">
+                            <div className="flex items-center justify-between">
+                              <Label>Image darkening</Label>
+                              <span className="text-sm font-medium text-muted-foreground">
+                                {section.archiveHeroOverlay}%
+                              </span>
+                            </div>
+                            <Slider
+                              min={0}
+                              max={95}
+                              step={1}
+                              value={section.archiveHeroOverlay}
+                              onValueChange={(value) =>
+                                setSection({
+                                  ...section,
+                                  archiveHeroOverlay: Array.isArray(value) ? value[0] : value,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-3 rounded-xl border border-border/70 bg-muted/20 px-4 py-3">
+                          <Switch
+                            checked={section.archiveShowCrumbs}
+                            onCheckedChange={(archiveShowCrumbs) =>
+                              setSection({ ...section, archiveShowCrumbs })
+                            }
+                          />
+                          <div>
+                            <Label>Show breadcrumbs</Label>
+                            <p className="text-xs text-muted-foreground">
+                              The Home / Blog trail under the banner title.
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label>Preview</Label>
+                          <BannerPreview section={section} />
+                        </div>
+                      </TabsContent>
+
+                      <TabsContent value="archive" className="mt-4 space-y-4">
+                        <div className="space-y-2 md:max-w-60">
+                          <Label>Posts per page</Label>
+                          <Input
+                            type="number"
+                            min={3}
+                            max={48}
+                            value={section.postsPerPage}
+                            onChange={(event) =>
+                              setSection({ ...section, postsPerPage: Number(event.target.value) })
+                            }
+                          />
+                        </div>
 
                         <div className="grid gap-3 sm:grid-cols-2">
                           {(

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { SmartLink } from "./SmartLink";
 import type { NavLink } from "./nav-data";
 
 export type PublicNavItem = NavLink;
@@ -14,12 +14,12 @@ export function DesktopMenu({ items }: { items: PublicNavItem[] }) {
             key={item.label}
             className={hasChildren ? "dropdown" : undefined}
           >
-            <Link href={item.href}>{item.label}</Link>
+            <SmartLink href={item.href}>{item.label}</SmartLink>
             {hasChildren ? (
               <ul>
                 {item.children!.map((child) => (
                   <li key={child.label}>
-                    <Link href={child.href}>{child.label}</Link>
+                    <SmartLink href={child.href}>{child.label}</SmartLink>
                   </li>
                 ))}
               </ul>

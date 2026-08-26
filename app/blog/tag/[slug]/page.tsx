@@ -75,6 +75,10 @@ export default async function TagArchivePage({ params, searchParams }: TagRouteP
           { label: "Blog", href: "/blog" },
           { label: tag.name },
         ]}
+        overlay={section.archiveHeroOverlay}
+        height={section.archiveHeroHeight}
+        align={section.archiveHeroAlign}
+        showCrumbs={section.archiveShowCrumbs}
       />
 
       <BlogArchive

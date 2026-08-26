@@ -18,14 +18,14 @@ export const KNOWLEDGE_BANK_CHILDREN: NavLink[] = [
 
 export const MENU: NavLink[] = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "#" },
+  { label: "About Us", href: "#about-us" },
   {
     label: "Knowledge Bank",
     href: "/insight",
     children: KNOWLEDGE_BANK_CHILDREN,
   },
-  { label: "Services", href: "#" },
-  { label: "Contact", href: "#" },
+  { label: "Services", href: "#services" },
+  { label: "Contact", href: "#contact" },
 ];
 
 export function withKnowledgeBankDropdown(

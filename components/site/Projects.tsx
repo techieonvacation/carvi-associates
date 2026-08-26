@@ -104,7 +104,7 @@ export function Projects({ projects }: ProjectsProps) {
   if (!section.isVisible || !items.length) return null;
 
   return (
-    <section className="projects-one projects projects--two relative pt-30 max-md:pt-25 max-sm:pt-20">
+    <section id="projects" className="projects-one projects projects--two relative pt-30 max-md:pt-25 max-sm:pt-20">
       <div
         className="projects-one__bg absolute top-0 left-0 h-93.75 w-full bg-cover bg-top max-xl:h-175 max-md:h-187.5 max-[430px]:h-200"
         style={{ backgroundImage: `url(${section.topBackgroundImageUrl})` }}
