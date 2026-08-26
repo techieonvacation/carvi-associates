@@ -25,7 +25,7 @@ export function BookAppointment({ bookAppointment }: BookAppointmentProps) {
   return (
     <section
       id="contact"
-      className="book-appointment section-space relative bg-[#2a2418] py-30 max-md:py-25 max-sm:py-20"
+      className="book-appointment section-space relative bg-[#222222] py-30 max-md:py-25 max-sm:py-20"
     >
       <div
         className="book-appointment__bg jarallax absolute inset-0 bg-scroll bg-top bg-cover bg-no-repeat md:bg-fixed"

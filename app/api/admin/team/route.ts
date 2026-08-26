@@ -10,6 +10,8 @@ function toPayload(row: {
   titleLine1: string;
   titleLine2: string;
   taglineBg: string;
+  backgroundImageUrl: string;
+  backgroundImageAlt: string;
   isVisible: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -24,6 +26,8 @@ function toPayload(row: {
     titleLine1: row.titleLine1,
     titleLine2: row.titleLine2,
     taglineBg: row.taglineBg,
+    backgroundImageUrl: row.backgroundImageUrl,
+    backgroundImageAlt: row.backgroundImageAlt,
     isVisible: row.isVisible,
     seoTitle: row.seoTitle,
     seoDescription: row.seoDescription,
@@ -44,6 +48,8 @@ export async function GET() {
         titleLine1: defaultTeam.title[0],
         titleLine2: defaultTeam.title[1],
         taglineBg: defaultTeam.taglineBg,
+        backgroundImageUrl: defaultTeam.backgroundImageUrl,
+        backgroundImageAlt: defaultTeam.backgroundImageAlt,
         isVisible: defaultTeam.isVisible,
         seoTitle: defaultTeam.seoTitle,
         seoDescription: defaultTeam.seoDescription,
@@ -71,7 +77,9 @@ export async function PUT(request: Request) {
     tagline: parsed.data.tagline.trim(),
     titleLine1: parsed.data.titleLine1.trim(),
     titleLine2: parsed.data.titleLine2.trim(),
-    taglineBg: parsed.data.taglineBg.trim() || "#f4ebd8",
+    taglineBg: parsed.data.taglineBg.trim() || defaultTeam.taglineBg,
+    backgroundImageUrl: parsed.data.backgroundImageUrl.trim(),
+    backgroundImageAlt: parsed.data.backgroundImageAlt.trim(),
     isVisible: parsed.data.isVisible,
     seoTitle: normalizeNullable(parsed.data.seoTitle),
     seoDescription: normalizeNullable(parsed.data.seoDescription),

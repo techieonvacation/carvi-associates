@@ -10,17 +10,21 @@ export function SocialLinks({
   socials: Social[];
   className?: string;
 }) {
+  const items = socials.filter((social) => BRAND_ICONS[social.icon]);
+
+  if (!items.length) return null;
+
   return (
     <div className={cn("social-links", className)}>
-      {socials.map((s) => (
+      {items.map((social) => (
         <a
-          key={s.label}
-          href={s.href}
+          key={`${social.icon}-${social.href}`}
+          href={social.href}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label={s.label}
+          aria-label={social.label}
         >
-          <span className="social-links__icon">{BRAND_ICONS[s.icon]}</span>
+          <span className="social-links__icon">{BRAND_ICONS[social.icon]}</span>
         </a>
       ))}
     </div>

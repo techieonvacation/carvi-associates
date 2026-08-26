@@ -1,5 +1,13 @@
 export const LOGO_VARIANTS = ["wordmark", "image"] as const;
 
+export const SOCIAL_ICON_OPTIONS = [
+  { value: "fa-facebook-f", label: "Facebook" },
+  { value: "fa-twitter", label: "X" },
+  { value: "fa-linkedin-in", label: "LinkedIn" },
+  { value: "fa-instagram", label: "Instagram" },
+  { value: "fa-whatsapp", label: "WhatsApp" },
+] as const;
+
 export type LogoVariant = (typeof LOGO_VARIANTS)[number];
 
 export type SiteLogo = {
@@ -19,6 +27,15 @@ export type SiteLogo = {
 export type HeaderContent = {
   contactCtaText: string;
   contactCtaHref: string;
+  showContactCta: boolean;
+  showSearch: boolean;
+  callTitle: string;
+  showCall: boolean;
+  showSidebar: boolean;
+  sidebarAbout: string;
+  sidebarContactTitle: string;
+  sidebarNewsletterTitle: string;
+  showSidebarNewsletter: boolean;
   logo: SiteLogo;
 };
 
@@ -256,6 +273,8 @@ export type TeamContent = {
   tagline: string;
   title: [string, string];
   taglineBg: string;
+  backgroundImageUrl: string;
+  backgroundImageAlt: string;
   isVisible: boolean;
   seoTitle: string | null;
   seoDescription: string | null;

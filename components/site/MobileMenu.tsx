@@ -16,6 +16,7 @@ type MobileMenuProps = {
     email: string;
     phone: string;
     phoneHref: string;
+    address: string;
   };
   socials: Array<{
     label: string;
@@ -109,18 +110,32 @@ export function MobileMenu({
         </div>
 
         <ul className="mobile-nav__contact">
-          <li>
-            <span className="mobile-nav__contact__icon">
-              <i className="icon-email" aria-hidden="true" />
-            </span>
-            <a href={`mailto:${contact.email}`}>{contact.email}</a>
-          </li>
-          <li>
-            <span className="mobile-nav__contact__icon">
-              <i className="icon-location" aria-hidden="true" />
-            </span>
-            <a href={contact.phoneHref}>{contact.phone}</a>
-          </li>
+          {contact.email ? (
+            <li>
+              <span className="mobile-nav__contact__icon">
+                <i className="icon-email" aria-hidden="true" />
+              </span>
+              <a href={`mailto:${contact.email}`}>{contact.email}</a>
+            </li>
+          ) : null}
+          {contact.phone ? (
+            <li>
+              <span className="mobile-nav__contact__icon">
+                <i className="icon-phone-call" aria-hidden="true" />
+              </span>
+              <a href={contact.phoneHref || `tel:${contact.phone.replace(/\s+/g, "")}`}>
+                {contact.phone}
+              </a>
+            </li>
+          ) : null}
+          {contact.address ? (
+            <li>
+              <span className="mobile-nav__contact__icon">
+                <i className="icon-location" aria-hidden="true" />
+              </span>
+              <span>{contact.address}</span>
+            </li>
+          ) : null}
         </ul>
 
         <SocialLinks socials={socials} />

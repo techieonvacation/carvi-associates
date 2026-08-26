@@ -7,6 +7,15 @@ export const LOGO_MAX_HEIGHT = 120;
 export type HeaderRow = {
   contactCtaText: string;
   contactCtaHref: string;
+  showContactCta: boolean;
+  showSearch: boolean;
+  callTitle: string;
+  showCall: boolean;
+  showSidebar: boolean;
+  sidebarAbout: string;
+  sidebarContactTitle: string;
+  sidebarNewsletterTitle: string;
+  showSidebarNewsletter: boolean;
   logoVariant: string;
   logoImageUrl: string;
   logoDarkImageUrl: string;
@@ -56,6 +65,16 @@ export function mapHeader(row: HeaderRow | null): HeaderContent {
   return {
     contactCtaText: row.contactCtaText,
     contactCtaHref: row.contactCtaHref,
+    showContactCta: row.showContactCta,
+    showSearch: row.showSearch,
+    callTitle: row.callTitle.trim() || defaultHeader.callTitle,
+    showCall: row.showCall,
+    showSidebar: row.showSidebar,
+    sidebarAbout: row.sidebarAbout.trim(),
+    sidebarContactTitle: row.sidebarContactTitle.trim() || defaultHeader.sidebarContactTitle,
+    sidebarNewsletterTitle:
+      row.sidebarNewsletterTitle.trim() || defaultHeader.sidebarNewsletterTitle,
+    showSidebarNewsletter: row.showSidebarNewsletter,
     logo: mapSiteLogo(row),
   };
 }

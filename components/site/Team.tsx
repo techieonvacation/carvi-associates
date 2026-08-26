@@ -1,129 +1,111 @@
 import Image from "next/image";
-import Link from "next/link";
-import { Share2 } from "lucide-react";
 import { Container } from "./Container";
 import { Carousel } from "./Carousel";
 import { Reveal } from "./Reveal";
 import { SectionHeading } from "./SectionHeading";
 import { SocialLinks } from "./SocialLinks";
-import type { TeamContent } from "@/lib/cms/types";
+import { SmartLink } from "./SmartLink";
+import type { TeamContent, TeamMemberItem } from "@/lib/cms/types";
 import "./css/team.css";
-
-type SiteSocial = { label: string; href: string; icon: string };
 
 type TeamProps = {
   team: TeamContent;
-  socialLinks: SiteSocial[];
 };
 
-/**
- * Team — the `.team-one` owl carousel of `.team-card`s (1 / 2 / 3 / 4 items
- * at 0 / 576 / 992 / 1200, matching the reference's owl-responsive config).
- * Each card is a transparent member cutout over a masked decorative blob,
- * a share button that fans a row of social links out on hover, and an
- * info panel that fills in with the base colour on card hover. Mirrors
- * Features.tsx: layout/type/colour as Tailwind, masks/pseudo-elements/hover
- * choreography in css/team.css.
- */
-export function Team({ team, socialLinks }: TeamProps) {
+function ShareIcon() {
+  return (
+    <svg viewBox="0 0 448 512" width="1em" height="1em" fill="currentColor" aria-hidden="true">
+      <path d="M352 224c53 0 96-43 96-96s-43-96-96-96-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47c-16.4-14.3-37.9-23-61.3-23-53 0-96 43-96 96s43 96 96 96c23.4 0 44.9-8.4 61.3-22.9l94.1 47c-.5 3.8-.7 7.8-.7 11.8 0 53 43 96 96 96s96-43 96-96-43-96-96-96c-23.4 0-44.9 8.4-61.3 22.9l-94.1-47c.5-3.8.7-7.8.7-11.8s-.2-8-.7-11.9l94.1-47C307.1 215.4 328.6 224 352 224z" />
+    </svg>
+  );
+}
+
+function MemberCard({ member }: { member: TeamMemberItem }) {
+  const socials = member.socials.filter((social) => social.href.trim());
+  const href = member.href.trim();
+
+  return (
+    <div className="team-card-two group h-full">
+      <div className="team-card-two__image">
+        <div className="team-card-two__image__inner relative aspect-[370/430]">
+          <Image
+            src={member.imageUrl}
+            alt={member.imageAlt || member.name}
+            fill
+            sizes="(max-width: 767px) 100vw, (max-width: 991px) 50vw, 33vw"
+          />
+        </div>
+      </div>
+      <div className="team-card-two__info">
+        {socials.length ? (
+          <div className="team-card-two__social">
+            <span className="team-card-two__social__icon">
+              <ShareIcon />
+            </span>
+            <SocialLinks socials={socials} />
+          </div>
+        ) : null}
+        <div className="team-card-two__info__inner">
+          <h3 className="team-card-two__name">
+            {href && href !== "#" ? (
+              <SmartLink href={href}>{member.name}</SmartLink>
+            ) : (
+              member.name
+            )}
+          </h3>
+          <p className="team-card-two__designation">{member.role}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function Team({ team }: TeamProps) {
   if (!team.isVisible || !team.members.length) {
     return null;
   }
 
   return (
-    <section id="team" className="team-one section-space bg-white py-30 max-md:py-25 max-sm:py-20">
-      <Container>
+    <section id="team" className="team-two section-space py-30 max-md:py-25 max-sm:py-20">
+      <div
+        className="team-two__bg"
+        style={
+          team.backgroundImageUrl
+            ? { backgroundImage: `url(${team.backgroundImageUrl})` }
+            : undefined
+        }
+        role={team.backgroundImageAlt ? "img" : undefined}
+        aria-label={team.backgroundImageAlt || undefined}
+        aria-hidden={team.backgroundImageAlt ? undefined : true}
+      />
+
+      <Container className="team-two__inner">
         <SectionHeading
           tagline={team.tagline}
           lines={[...team.title]}
           align="center"
           taglineBg={team.taglineBg}
+          light
         />
 
-        <div className="team-one__carousel mt-[60px]">
+        <div className="team-two__carousel">
           <Carousel
             autoplay={false}
             showDots
             showArrows={false}
             gapClassName="gap-[30px]"
-            itemClassName="basis-full sm:basis-[calc(50%-15px)] lg:basis-[calc(33.333%-20px)] xl:basis-[calc(25%-22.5px)]"
-            items={team.members.map((member, i) => {
-              const href = member.href || "#";
-              const socials =
-                member.socials.length > 0
-                  ? member.socials
-                  : socialLinks.map(({ label, href: socialHref, icon }) => ({
-                      label,
-                      href: socialHref,
-                      icon,
-                    }));
-
-              return (
-                <Reveal
-                  key={member.id}
-                  direction="up"
-                  duration={1300}
-                  delay={(i + 1) * 100}
-                  className="h-full"
-                >
-                  <div className="team-card group relative flex h-full flex-col">
-                    <div className="team-card__image relative aspect-[270/322] w-full overflow-hidden text-center">
-                      <span
-                        className="team-card__shape absolute bottom-0 left-0 z-0 h-[75%] w-full bg-muted"
-                        aria-hidden="true"
-                      />
-
-                      <Image
-                        src={member.imageUrl}
-                        alt={member.imageAlt || member.name}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                        className="team-card__photo relative z-[1] object-cover object-top"
-                      />
-
-                      <div
-                        className="team-card__overlay absolute inset-0 z-[1] h-0 w-full bg-accent/50 opacity-0 transition-all duration-500"
-                        aria-hidden="true"
-                      />
-
-                      <div className="team-card__social absolute right-0 bottom-0 z-[3] h-[45px] w-20">
-                        <span className="team-card__social__icon absolute right-0 bottom-0 flex size-[45px] cursor-pointer items-center justify-center rounded-tl-[20px] bg-accent text-white transition-all duration-500 hover:bg-primary hover:text-accent">
-                          <Share2 className="size-[18px]" aria-hidden="true" />
-                        </span>
-                        <SocialLinks socials={socials} />
-                      </div>
-                    </div>
-
-                    <div className="team-card__info relative z-[1] mt-auto flex min-h-[150px] flex-col justify-center overflow-hidden rounded-b-[50px] bg-white px-[25px] pt-[18px] pb-[22px] text-center">
-                      <h3 className="team-card__name mb-2 text-[22px] leading-[1.318] font-bold text-foreground capitalize transition-colors duration-500 group-hover:text-white sm:max-md:text-[19px]">
-                        <Link href={href}>{member.name}</Link>
-                      </h3>
-
-                      {/* Ornamental rule: two hairlines flanking a rotated
-                          square, mirroring the sec-title shape marks used
-                          across the site. Widens on card hover. */}
-                      <span className="team-card__rule" aria-hidden="true">
-                        <i />
-                        <b />
-                        <i />
-                      </span>
-
-                      <p className="team-card__designation m-0 capitalize text-muted-foreground transition-colors duration-500 group-hover:text-white">
-                        {member.role}
-                      </p>
-
-                      <Link href={href} className="team-card__profile">
-                        <span className="team-card__profile__text">View profile</span>
-                        <span className="team-card__profile__icon">
-                          <i className="icon-arrow-right-up" aria-hidden="true" />
-                        </span>
-                        <span className="sr-only">— {member.name}</span>
-                      </Link>
-                    </div>
-                  </div>
-                </Reveal>
-              );
-            })}
+            itemClassName="basis-full md:basis-[calc(50%-15px)] lg:basis-[calc(33.333%-20px)]"
+            items={team.members.map((member, index) => (
+              <Reveal
+                key={member.id}
+                direction="up"
+                duration={1300}
+                delay={(index + 1) * 100}
+                className="h-full"
+              >
+                <MemberCard member={member} />
+              </Reveal>
+            ))}
           />
         </div>
       </Container>

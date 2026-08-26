@@ -104,7 +104,7 @@ export async function PUT(request: Request) {
     secondaryButtonHref: parsed.data.secondaryButtonHref.trim() || "#",
     backgroundImageUrl: parsed.data.backgroundImageUrl.trim(),
     backgroundImageAlt: parsed.data.backgroundImageAlt.trim(),
-    taglineBg: parsed.data.taglineBg.trim() || "#f4ebd8",
+    taglineBg: parsed.data.taglineBg.trim() || "#ecf5f4",
     isVisible: parsed.data.isVisible,
     seoTitle: normalizeNullable(parsed.data.seoTitle),
     seoDescription: normalizeNullable(parsed.data.seoDescription),

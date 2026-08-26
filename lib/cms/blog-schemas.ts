@@ -85,7 +85,7 @@ export const blogCategorySchema = z.object({
   slug: z.union([z.literal(""), slug]).optional(),
   description: z.string().default(""),
   icon: z.string().default("icon-folder"),
-  accentColor: z.string().default("#5c6b45"),
+  accentColor: z.string().default("#006654"),
   imageUrl: optionalUrl,
   displayOrder: z.number().int().optional(),
   isFeatured: z.boolean(),

@@ -1,20 +1,20 @@
 .blog-scope {
   --findox-font: var(--font-sans), "DM Sans", sans-serif;
   --findox-heading-font: var(--font-sora), "Sora", sans-serif;
-  --findox-text: #6b5b40;
+  --findox-text: #636363;
   --findox-text-rgb: 107, 91, 64;
-  --findox-base: #5c6b45;
+  --findox-base: #006654;
   --findox-base-rgb: 92, 107, 69;
-  --findox-primary: #e3c9a0;
+  --findox-primary: #f5c835;
   --findox-primary-rgb: 227, 201, 160;
-  --findox-gray: #a89b80;
-  --findox-white: #fffdf8;
-  --findox-white3: #f4ebd8;
-  --findox-white4: #ede0c4;
-  --findox-black: #3a3020;
+  --findox-gray: #92918f;
+  --findox-white: #ffffff;
+  --findox-white3: #ecf5f4;
+  --findox-white4: #e2edec;
+  --findox-black: #131111;
   --findox-black-rgb: 58, 48, 32;
-  --findox-black4: #3a3020;
-  --findox-border-color: #cdae7c;
+  --findox-black4: #131111;
+  --findox-border-color: #dddddd;
   --findox-border-color-rgb: 205, 174, 124;
 }
 
@@ -314,7 +314,7 @@
   padding: 24px 26px;
   border-radius: 15px;
   background-color: var(--foreground);
-  color: #f4ebd8;
+  color: #ecf5f4;
   font-size: 14px;
   line-height: 1.7;
   overflow-x: auto;
@@ -363,7 +363,7 @@
   margin: 0;
 }
 .post-content tbody tr:nth-child(even) {
-  background-color: rgba(244, 235, 216, 0.32);
+  background-color: rgba(236, 245, 244, 0.32);
 }
 
 .post-faq__item {

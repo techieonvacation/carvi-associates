@@ -4,16 +4,24 @@ import { prisma } from "@/lib/prisma";
 import { requireSession } from "@/lib/api-auth";
 import { defaultTopbar } from "@/lib/cms/defaults";
 
+const optional = (schema: z.ZodType<string>) => z.union([z.literal(""), schema]);
+
 const topbarSchema = z.object({
-  email: z.string().email(),
-  address: z.string().min(1),
-  addressMapUrl: z.string().url(),
-  phone: z.string().min(1),
-  phoneHref: z.string().min(1),
-  whatsappLabel: z.string().min(1),
-  whatsappHref: z.string().url(),
-  whatsappIntroText: z.string().min(1).max(120),
-  whatsappLinkText: z.string().min(1).max(120),
+  email: optional(z.string().email()),
+  address: z.string().max(200),
+  addressMapUrl: optional(z.string().url()),
+  phone: z.string().max(40),
+  phoneHref: z.string().max(200),
+  openHours: z.string().max(80),
+  noteLabel: z.string().max(24),
+  noteText: z.string().max(120),
+  showNote: z.boolean(),
+  socialsTitle: z.string().max(40),
+  showSocials: z.boolean(),
+  whatsappLabel: z.string().min(1).max(160),
+  whatsappHref: optional(z.string().url()),
+  whatsappIntroText: z.string().max(120),
+  whatsappLinkText: z.string().max(120),
   showWhatsappNotice: z.boolean(),
 });
 
@@ -35,10 +43,17 @@ export async function PUT(request: Request) {
     );
   }
 
+  const data = Object.fromEntries(
+    Object.entries(parsed.data).map(([key, value]) => [
+      key,
+      typeof value === "string" ? value.trim() : value,
+    ]),
+  ) as typeof parsed.data;
+
   const topbar = await prisma.topbarSettings.upsert({
     where: { id: "default" },
-    update: parsed.data,
-    create: { id: "default", ...parsed.data },
+    update: data,
+    create: { id: "default", ...data },
   });
 
   return NextResponse.json({ topbar });

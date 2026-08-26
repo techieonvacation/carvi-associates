@@ -20,7 +20,7 @@
 .main-footer .footer-widget__text,
 .main-footer .footer-widget__blog__date,
 .main-footer .main-footer__copyright {
-  color: #faf5e9;
+  color: #ffffff;
 }
 
 .main-footer .footer-widget__title,
@@ -40,7 +40,7 @@
 .main-footer .footer-widget__blog__title a:hover,
 .main-footer .main-footer__page a:hover,
 .main-footer .footer-widget__links li:hover::before {
-  color: var(--findox-primary, #e3c9a0);
+  color: var(--findox-primary, #f5c835);
 }
 
 .main-footer .footer-widget__links li::before {
@@ -54,8 +54,8 @@
 
 .main-footer .social-links a:hover {
   color: var(--findox-base, #006654);
-  background-color: var(--findox-primary, #e3c9a0);
-  border-color: var(--findox-primary, #e3c9a0);
+  background-color: var(--findox-primary, #f5c835);
+  border-color: var(--findox-primary, #f5c835);
 }
 
 /* Link underline sweep — shared by the widget link lists, the blog

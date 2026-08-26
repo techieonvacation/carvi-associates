@@ -14,13 +14,17 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
-import type { TeamMemberItem } from "@/lib/cms/types";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { SOCIAL_ICON_OPTIONS } from "@/lib/cms/types";
+import type { TeamMemberItem, TeamMemberSocial } from "@/lib/cms/types";
 
 type SectionForm = {
   tagline: string;
   titleLine1: string;
   titleLine2: string;
   taglineBg: string;
+  backgroundImageUrl: string;
+  backgroundImageAlt: string;
   isVisible: boolean;
   seoTitle: string;
   seoDescription: string;
@@ -58,7 +62,9 @@ export function TeamPageClient({ user }: TeamPageProps) {
             tagline: sectionData.team.tagline ?? "",
             titleLine1: sectionData.team.titleLine1 ?? "",
             titleLine2: sectionData.team.titleLine2 ?? "",
-            taglineBg: sectionData.team.taglineBg ?? "#f4ebd8",
+            taglineBg: sectionData.team.taglineBg ?? "#ffffff",
+            backgroundImageUrl: sectionData.team.backgroundImageUrl ?? "",
+            backgroundImageAlt: sectionData.team.backgroundImageAlt ?? "",
             isVisible: sectionData.team.isVisible ?? true,
             seoTitle: sectionData.team.seoTitle ?? "",
             seoDescription: sectionData.team.seoDescription ?? "",
@@ -113,6 +119,54 @@ export function TeamPageClient({ user }: TeamPageProps) {
         deletedAt: null,
       },
     ]);
+  }
+
+  function updateSocial(
+    memberIndex: number,
+    socialIndex: number,
+    patch: Partial<TeamMemberSocial>,
+  ) {
+    setMembers((current) =>
+      current.map((member, index) =>
+        index === memberIndex
+          ? {
+              ...member,
+              socials: member.socials.map((social, position) =>
+                position === socialIndex ? { ...social, ...patch } : social,
+              ),
+            }
+          : member,
+      ),
+    );
+  }
+
+  function addSocial(memberIndex: number) {
+    setMembers((current) =>
+      current.map((member, index) =>
+        index === memberIndex
+          ? {
+              ...member,
+              socials: [
+                ...member.socials,
+                { label: SOCIAL_ICON_OPTIONS[0].label, href: "", icon: SOCIAL_ICON_OPTIONS[0].value },
+              ],
+            }
+          : member,
+      ),
+    );
+  }
+
+  function removeSocial(memberIndex: number, socialIndex: number) {
+    setMembers((current) =>
+      current.map((member, index) =>
+        index === memberIndex
+          ? {
+              ...member,
+              socials: member.socials.filter((_, position) => position !== socialIndex),
+            }
+          : member,
+      ),
+    );
   }
 
   function removeMember(index: number) {
@@ -185,7 +239,7 @@ export function TeamPageClient({ user }: TeamPageProps) {
             imageUrl: member.imageUrl,
             imageAlt: member.imageAlt,
             href: member.href || "#",
-            socials: member.socials ?? [],
+            socials: (member.socials ?? []).filter((social) => social.href.trim()),
             displayOrder: index,
             isVisible: member.isVisible,
             isActive: member.isActive,
@@ -255,6 +309,26 @@ export function TeamPageClient({ user }: TeamPageProps) {
                         />
                       </div>
                     </div>
+                    <ImageField
+                      label="Section background"
+                      value={section.backgroundImageUrl}
+                      onChange={(backgroundImageUrl) =>
+                        setSection({ ...section, backgroundImageUrl })
+                      }
+                    />
+                    <div className="space-y-2">
+                      <Label>Background alt text</Label>
+                      <Input
+                        value={section.backgroundImageAlt}
+                        onChange={(event) =>
+                          setSection({ ...section, backgroundImageAlt: event.target.value })
+                        }
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Leave empty to treat the background as decorative. Clear the image to
+                        fall back to a plain brand-green band.
+                      </p>
+                    </div>
                   </TabsContent>
                   <TabsContent value="content" className="mt-4 space-y-4">
                     <div className="grid gap-4 md:grid-cols-2">
@@ -320,7 +394,8 @@ export function TeamPageClient({ user }: TeamPageProps) {
             <div>
               <CardTitle>Team members</CardTitle>
               <CardDescription>
-                Photo, name, role, and profile link. Empty socials fall back to site social links.
+                Photo, name, role, profile link and social links. A member with no social link
+                shows no share button on the card.
               </CardDescription>
             </div>
             <div className="flex items-center gap-3">
@@ -395,6 +470,78 @@ export function TeamPageClient({ user }: TeamPageProps) {
                       value={member.imageUrl}
                       onChange={(imageUrl) => updateMember(index, { imageUrl })}
                     />
+                    <div className="space-y-3 rounded-lg border border-border/70 bg-background p-3">
+                      <div className="flex flex-wrap items-center justify-between gap-2">
+                        <div>
+                          <Label>Social links</Label>
+                          <p className="text-xs text-muted-foreground">
+                            The share button appears only while at least one link has a URL.
+                          </p>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          size="sm"
+                          onClick={() => addSocial(index)}
+                        >
+                          <Plus className="size-4" />
+                          Add link
+                        </Button>
+                      </div>
+                      {member.socials.length ? (
+                        member.socials.map((social, socialIndex) => (
+                          <div
+                            key={socialIndex}
+                            className="grid gap-3 md:grid-cols-[180px_1fr_auto]"
+                          >
+                            <Select
+                              value={social.icon}
+                              onValueChange={(icon) => {
+                                if (!icon) return;
+                                updateSocial(index, socialIndex, {
+                                  icon,
+                                  label:
+                                    SOCIAL_ICON_OPTIONS.find((option) => option.value === icon)
+                                      ?.label ?? social.label,
+                                });
+                              }}
+                            >
+                              <SelectTrigger>
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {SOCIAL_ICON_OPTIONS.map((option) => (
+                                  <SelectItem key={option.value} value={option.value}>
+                                    {option.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <Input
+                              placeholder="https://linkedin.com/in/…"
+                              value={social.href}
+                              onChange={(event) =>
+                                updateSocial(index, socialIndex, { href: event.target.value })
+                              }
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => removeSocial(index, socialIndex)}
+                              aria-label="Remove social link"
+                            >
+                              <Trash2 className="size-4 text-destructive" />
+                            </Button>
+                          </div>
+                        ))
+                      ) : (
+                        <p className="text-xs text-muted-foreground">
+                          No social links — this member&apos;s card renders without a share
+                          button.
+                        </p>
+                      )}
+                    </div>
                   </div>
                 ))
               )}

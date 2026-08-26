@@ -8,7 +8,7 @@ import type {
 export const defaultBlogSection: BlogSectionContent = {
   tagline: "Our Latest Blog",
   title: ["Today's Blog Industry Finance", "Business Consulting."],
-  taglineBg: "#f4ebd8",
+  taglineBg: "#ecf5f4",
   homeLimit: 3,
   homeCtaText: "View All Blogs",
   homeCtaHref: "/blog",
@@ -63,7 +63,7 @@ export const defaultBlogCategories: SeedCategory[] = [
     description:
       "Return filing, assessments, deductions, capital gains and the old-vs-new regime maths for individuals and businesses.",
     icon: "icon-salary",
-    accentColor: "#5c6b45",
+    accentColor: "#006654",
     displayOrder: 0,
     isFeatured: true,
     seoDescription:
@@ -75,7 +75,7 @@ export const defaultBlogCategories: SeedCategory[] = [
     description:
       "Registration, returns, input tax credit, e-invoicing and departmental notices under the Goods and Services Tax.",
     icon: "icon-bank",
-    accentColor: "#6b5b40",
+    accentColor: "#636363",
     displayOrder: 1,
     isFeatured: true,
     seoDescription:

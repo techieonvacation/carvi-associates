@@ -104,7 +104,7 @@ export function Services({ services }: ServicesProps) {
                         {/* Real text in an inner span (not directly on the h4) so the
                             transparent fill isn't clobbered by the `.findox-scope h4`
                             color rule — mirrors the reference's decoupled ::before glyph. */}
-                        <span className="text-stroke inline-block text-[40px] font-semibold [--stroke-color:#cdae7c] [writing-mode:sideways-lr] transition-colors duration-500 group-hover:[--stroke-color:#e3c9a0]">
+                        <span className="text-stroke inline-block text-[40px] font-semibold [--stroke-color:#dddddd] [writing-mode:sideways-lr] transition-colors duration-500 group-hover:[--stroke-color:#f5c835]">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                       </h4>

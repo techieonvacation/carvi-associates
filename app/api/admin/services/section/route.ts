@@ -80,7 +80,7 @@ export async function PUT(request: Request) {
     titleLine1: parsed.data.titleLine1.trim(),
     titleLine2: parsed.data.titleLine2.trim(),
     cardTagline: parsed.data.cardTagline.trim(),
-    taglineBg: parsed.data.taglineBg.trim() || "#fffdf8",
+    taglineBg: parsed.data.taglineBg.trim() || "#ffffff",
     isVisible: parsed.data.isVisible,
     seoTitle: normalizeNullable(parsed.data.seoTitle),
     seoDescription: normalizeNullable(parsed.data.seoDescription),

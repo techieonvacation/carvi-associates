@@ -1,249 +1,234 @@
-/* Team — advanced hover effects only (layout/type/colour are Tailwind). */
-
-/* Share button (bottom-right of the photo) fans a horizontal row of social
-   links out to its left on hover. Overrides the global `.social-links`
-   (flex row / 38px circles) with the tighter 35px, borderless variant. */
-.team-card__social .social-links {
-  gap: 8px;
-  flex-wrap: nowrap;
+.team-two {
+  position: relative;
+  background-color: var(--findox-white);
+}
+.team-two__bg {
+  width: 100%;
+  height: calc(100% - 478px);
   position: absolute;
-  top: calc(50% - 6px);
-  right: 90%;
+  top: 0px;
+  left: 0px;
+  background-color: var(--findox-base);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+}
+@media (max-width: 430px) {
+  .team-two__bg {
+    height: calc(100% - 400px);
+  }
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .team-two__bg {
+    height: calc(100% - 400px);
+  }
+}
+.team-two__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(var(--findox-base-rgb), 0.9);
+}
+.team-two__inner {
+  position: relative;
+  z-index: 1;
+}
+.team-two__carousel {
+  margin-top: 60px;
+}
+
+.team-card-two__image__inner {
+  position: relative;
+  overflow: hidden;
+  border: 10px solid var(--findox-white);
+  border-bottom: none;
+  border-radius: 500px 500px 0px 0px;
+}
+.team-card-two__image__inner::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transform: translateY(50%);
+  background: linear-gradient(
+    180deg,
+    rgba(199, 199, 199, 0) 63.97%,
+    rgba(var(--findox-primary-rgb), 0.8) 83.11%
+  );
+  transition: all 0.5s ease;
+}
+.team-card-two__image__inner img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: top center;
+  border-radius: inherit;
+}
+.team-card-two:hover .team-card-two__image__inner::after {
+  opacity: 1;
+  transform: translateY(0%);
+}
+.team-card-two__info {
+  width: calc(100% - 90px);
+  position: relative;
+  margin: -50px auto 0px;
+}
+@media (max-width: 412px) {
+  .team-card-two__info {
+    width: calc(100% - 50px);
+  }
+}
+@media (min-width: 768px) and (max-width: 991px) {
+  .team-card-two__info {
+    width: calc(100% - 70px);
+  }
+}
+@media (min-width: 992px) and (max-width: 1199px) {
+  .team-card-two__info {
+    width: calc(100% - 40px);
+  }
+}
+.team-card-two__info__inner {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  padding: 34px 25px 21px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: var(--findox-white);
+  border: 1px solid var(--findox-border-color);
+}
+@media (max-width: 360px) {
+  .team-card-two__info__inner {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+.team-card-two__info__inner::before {
+  content: "";
+  width: 100%;
+  height: 0%;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  z-index: -1;
+  background-color: var(--findox-base);
+  transition: all 500ms ease;
+}
+.team-card-two:hover .team-card-two__info__inner::before {
+  height: 100%;
+  top: 0px;
+}
+.team-card-two__social {
+  width: 46px;
+  height: 70px;
+  position: absolute;
+  top: -47px;
+  left: 50%;
+  z-index: 2;
+  transform: translateX(-50%);
+}
+.team-card-two__social__icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  font-size: 16px;
+  color: var(--findox-white);
+  border-radius: 50%;
+  background-color: var(--findox-base);
+  border: 3px solid var(--findox-white);
+  transition: all 500ms ease;
+}
+.team-card-two__social__icon svg {
+  width: 1em;
+  height: 1em;
+}
+.team-card-two__social__icon:hover {
+  color: var(--findox-base);
+  background-color: var(--findox-primary);
+}
+.team-card-two__social .social-links {
+  gap: 8px;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  margin: auto;
+  position: absolute;
+  top: -220%;
+  left: 0px;
+  right: 0px;
   z-index: 1;
   opacity: 0;
   visibility: hidden;
-  transform: translateX(-70%) translateY(-50%);
+  transform: translateY(-50%);
   transition: all 500ms ease;
 }
-.team-card__social .social-links a {
+.team-card-two__social .social-links a {
   width: 35px;
   height: 35px;
   border: none;
   background-color: var(--findox-white);
 }
-.team-card__social .social-links a:hover {
+.team-card-two__social .social-links a:hover {
   background-color: var(--findox-primary);
 }
-.team-card__social .social-links a .social-links__icon {
+.team-card-two__social .social-links a .social-links__icon {
   color: var(--findox-base);
 }
-.team-card__social:hover .social-links {
+.team-card-two__social:hover .social-links,
+.team-card-two__social:focus-within .social-links {
   opacity: 1;
   visibility: visible;
-  transform: translateX(0%) translateY(-50%);
+  transform: translateY(0%);
 }
-
-/* Uniform photo frame + hover colour wash over the fixed image area. */
-.team-card__image {
-  flex-shrink: 0;
-}
-.team-card__photo {
-  object-position: top center;
-}
-.team-card:hover .team-card__overlay {
-  height: 100%;
-  opacity: 1;
-}
-
-/* Decorative blob behind the cutout, masked to the reference blob shape,
-   with two accent/primary rings that solidify on hover. */
-.team-card__shape {
-  -webkit-mask: url('data:image/svg+xml;utf8,<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270.000000 242.000000"><g transform="translate(0.000000,242.000000) scale(0.050000,-0.050000)" stroke="none"> <path d="M3850 4821 c-382 -83 -750 -370 -1140 -891 -583 -777 -954 -975 -1692 -902 -384 39 -853 -161 -976 -414 -41 -85 -42 -110 -42 -1350 l0 -1264 2700 0 2700 0 0 1947 0 1947 -45 83 c-297 548 -1014 950 -1505 844z"/> </g> </svg>');
-  mask: url('data:image/svg+xml;utf8,<svg version="1.0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 270.000000 242.000000"><g transform="translate(0.000000,242.000000) scale(0.050000,-0.050000)" stroke="none"> <path d="M3850 4821 c-382 -83 -750 -370 -1140 -891 -583 -777 -954 -975 -1692 -902 -384 39 -853 -161 -976 -414 -41 -85 -42 -110 -42 -1350 l0 -1264 2700 0 2700 0 0 1947 0 1947 -45 83 c-297 548 -1014 950 -1505 844z"/> </g> </svg>');
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: top center;
-  mask-position: top center;
-  -webkit-mask-size: cover;
-  mask-size: cover;
-}
-.team-card__shape::before,
-.team-card__shape::after {
-  content: "";
-  width: 231px;
-  height: 236px;
-  position: absolute;
-  border-radius: 50%;
-  border: 20px solid;
+.team-card-two__name {
+  margin-bottom: 2px;
+  font-size: 22px;
+  color: var(--findox-black2);
+  font-weight: 700;
+  text-transform: capitalize;
+  line-height: 1.318;
   transition: all 500ms ease;
 }
-.team-card__shape::before {
-  left: -96px;
-  bottom: 50px;
-  z-index: 1;
-  border-color: rgba(var(--findox-base-rgb), 0.3);
+@media (max-width: 390px) {
+  .team-card-two__name {
+    font-size: 20px;
+  }
 }
-.team-card__shape::after {
-  top: -138px;
-  right: -43px;
-  border-color: rgba(var(--findox-primary-rgb), 0.3);
+@media (min-width: 768px) and (max-width: 991px) {
+  .team-card-two__name {
+    font-size: 20px;
+  }
 }
-.team-card:hover .team-card__shape::before {
-  border-color: var(--findox-base);
+@media (min-width: 992px) and (max-width: 1199px) {
+  .team-card-two__name {
+    font-size: 20px;
+  }
 }
-.team-card:hover .team-card__shape::after {
-  border-color: var(--findox-primary);
-}
-
-/* Info panel: base fill wipes up from the bottom on card hover. */
-.team-card__info {
-  box-shadow:
-    0 1px 2px rgba(58, 48, 32, 0.06),
-    0 6px 16px -8px rgba(58, 48, 32, 0.18);
-  transition: box-shadow 500ms ease;
-}
-.team-card:hover .team-card__info {
-  box-shadow:
-    0 2px 4px rgba(58, 48, 32, 0.08),
-    0 14px 30px -12px rgba(58, 48, 32, 0.3);
-}
-.team-card__info::before {
-  content: "";
-  width: 100%;
-  height: 0%;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  z-index: -1;
-  background-color: var(--findox-base);
-  transition: all 500ms ease;
-}
-.team-card:hover .team-card__info::before {
-  height: 100%;
-  top: 0;
-}
-
-/* Name underline sweep (self-hover on the link, same trick as Features). */
-.team-card__name a {
+.team-card-two__name a {
   color: inherit;
-  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0 95% / 0 1px no-repeat;
+  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0px 95%/0px 1px no-repeat;
   transition: all 500ms ease;
 }
-.team-card__name a:hover {
+.team-card-two__name a:hover {
   background-size: 100% 1px;
 }
-
-@media (min-width: 576px) and (max-width: 767px) {
-  .team-card__social .social-links {
-    right: 70%;
-  }
+.team-card-two__designation {
+  margin: 0px;
+  color: var(--findox-text);
+  text-transform: capitalize;
+  transition: all 500ms ease;
 }
-
-/* -------------------------------------------------------------
-   Info panel detail — the bottom of the card used to be just a
-   name over a role on flat white. It now carries an ornamental
-   rule and a "view profile" affordance that resolves on hover,
-   so the card has somewhere to go visually instead of stopping.
-   ------------------------------------------------------------- */
-
-/* Two hairlines flanking a rotated square (the sec-title shape mark in
-   pure CSS). The lines grow and the diamond flips to primary on hover. */
-.team-card__rule {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 0 auto 8px;
-  height: 7px;
-}
-.team-card__rule i {
-  display: block;
-  width: 18px;
-  height: 1px;
-  background-color: var(--findox-border-color);
-  transition: width 500ms ease, background-color 500ms ease;
-}
-.team-card__rule b {
-  display: block;
-  width: 5px;
-  height: 5px;
-  transform: rotate(45deg);
-  background-color: var(--findox-base);
-  transition: background-color 500ms ease, transform 500ms ease;
-}
-.team-card:hover .team-card__rule i {
-  width: 26px;
-  background-color: rgba(var(--findox-primary-rgb), 0.65);
-}
-.team-card:hover .team-card__rule b {
-  background-color: var(--findox-primary);
-  transform: rotate(135deg);
-}
-
-/* "View profile" row: collapsed to zero height until the card is hovered,
-   then it expands and slides up. `grid-template-rows` animates cleanly from
-   0fr to 1fr, so no fixed height has to be guessed for the label. */
-.team-card__profile {
-  display: grid;
-  grid-template-rows: 0fr;
-  justify-content: center;
-  margin-top: 0;
-  opacity: 0;
-  transform: translateY(6px);
-  transition: grid-template-rows 500ms ease, opacity 400ms ease,
-    transform 500ms ease, margin-top 500ms ease;
-}
-.team-card:hover .team-card__profile,
-.team-card__profile:focus-visible {
-  grid-template-rows: 1fr;
-  margin-top: 10px;
-  opacity: 1;
-  transform: translateY(0);
-}
-.team-card__profile > span:not(.sr-only) {
-  overflow: hidden;
-  min-height: 0;
-}
-.team-card__profile__text {
-  display: inline-block;
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--findox-primary);
-  line-height: 1.6;
-}
-.team-card__profile__icon {
-  display: none;
-}
-
-/* Wider cards have room for the label and the arrow side by side. */
-@media (min-width: 576px) {
-  .team-card__profile {
-    grid-template-columns: auto auto;
-    align-items: center;
-    gap: 8px;
-  }
-  .team-card__profile__icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background-color: rgba(var(--findox-primary-rgb), 0.22);
-    color: var(--findox-primary);
-    font-size: 8px;
-    transition: transform 500ms ease, background-color 500ms ease;
-  }
-  .team-card:hover .team-card__profile__icon {
-    background-color: var(--findox-primary);
-    color: var(--findox-base);
-  }
-}
-
-/* Keyboard users get the same reveal without needing a pointer. */
-.team-card__profile:focus-visible {
-  outline: 2px solid var(--findox-primary);
-  outline-offset: 4px;
-  border-radius: 6px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .team-card__rule i,
-  .team-card__rule b,
-  .team-card__profile,
-  .team-card__profile__icon {
-    transition: none;
-  }
+.team-card-two:hover .team-card-two__name,
+.team-card-two:hover .team-card-two__designation {
+  color: var(--findox-white);
 }

@@ -13,12 +13,22 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
+import { Textarea } from "@/components/ui/textarea";
 import { LOGO_MAX_HEIGHT, LOGO_MIN_HEIGHT } from "@/lib/cms/header-mappers";
 import type { LogoVariant } from "@/lib/cms/types";
 
 type HeaderForm = {
   contactCtaText: string;
   contactCtaHref: string;
+  showContactCta: boolean;
+  showSearch: boolean;
+  callTitle: string;
+  showCall: boolean;
+  showSidebar: boolean;
+  sidebarAbout: string;
+  sidebarContactTitle: string;
+  sidebarNewsletterTitle: string;
+  showSidebarNewsletter: boolean;
   logoVariant: LogoVariant;
   logoImageUrl: string;
   logoDarkImageUrl: string;
@@ -52,7 +62,7 @@ function LogoPreview({ form, tone, height }: { form: HeaderForm; tone: "light" |
     <div
       className={
         tone === "dark"
-          ? "flex min-h-28 items-center rounded-xl bg-[#2f3a24] px-5"
+          ? "flex min-h-28 items-center rounded-xl bg-[#131111] px-5"
           : "flex min-h-28 items-center rounded-xl bg-white px-5"
       }
     >
@@ -75,8 +85,8 @@ function LogoPreview({ form, tone, height }: { form: HeaderForm; tone: "light" |
                 height,
                 borderRadius: height * 0.22,
                 fontSize: height * 0.55,
-                backgroundColor: tone === "dark" ? "#e3c9a0" : "#5c6b45",
-                color: tone === "dark" ? "#2f3a24" : "#ffffff",
+                backgroundColor: tone === "dark" ? "#f5c835" : "#006654",
+                color: tone === "dark" ? "#131111" : "#ffffff",
               }}
             >
               {form.logoMarkText}
@@ -87,7 +97,7 @@ function LogoPreview({ form, tone, height }: { form: HeaderForm; tone: "light" |
               className="font-bold leading-none"
               style={{
                 fontSize: height * 0.48,
-                color: tone === "dark" ? "#ffffff" : "#3a3020",
+                color: tone === "dark" ? "#ffffff" : "#131111",
               }}
             >
               {form.logoPrimaryText}
@@ -98,7 +108,7 @@ function LogoPreview({ form, tone, height }: { form: HeaderForm; tone: "light" |
                 style={{
                   fontSize: height * 0.24,
                   letterSpacing: "0.22em",
-                  color: tone === "dark" ? "#e3c9a0" : "#5c6b45",
+                  color: tone === "dark" ? "#f5c835" : "#006654",
                 }}
               >
                 {form.logoSecondaryText}
@@ -325,15 +335,26 @@ export function HeaderPageClient({ user }: HeaderPageProps) {
 
             <Card className="border-border/70">
               <CardHeader>
-                <CardTitle>Header button</CardTitle>
-                <CardDescription>The primary call-to-action in the navigation bar.</CardDescription>
+                <CardTitle>Navigation bar</CardTitle>
+                <CardDescription>
+                  The call-to-action, search, phone block and sidebar toggle that sit to the
+                  right of the menu.
+                </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <Switch
+                    checked={form.showContactCta}
+                    onCheckedChange={(showContactCta) => setForm({ ...form, showContactCta })}
+                  />
+                  <Label>Show the call-to-action button</Label>
+                </div>
                 <div className="grid gap-5 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="contactCtaText">Button text</Label>
                     <Input
                       id="contactCtaText"
+                      maxLength={60}
                       value={form.contactCtaText}
                       onChange={(event) =>
                         setForm({ ...form, contactCtaText: event.target.value })
@@ -356,6 +377,106 @@ export function HeaderPageClient({ user }: HeaderPageProps) {
                       smoothly.
                     </p>
                   </div>
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center gap-3">
+                  <Switch
+                    checked={form.showSearch}
+                    onCheckedChange={(showSearch) => setForm({ ...form, showSearch })}
+                  />
+                  <Label>Show the search icon</Label>
+                </div>
+
+                <Separator />
+
+                <div className="flex items-center gap-3">
+                  <Switch
+                    checked={form.showCall}
+                    onCheckedChange={(showCall) => setForm({ ...form, showCall })}
+                  />
+                  <div>
+                    <Label>Show the phone block</Label>
+                    <p className="text-xs text-muted-foreground">
+                      Uses the phone number from Top Bar, and stays hidden while that field is
+                      empty.
+                    </p>
+                  </div>
+                </div>
+                <div className="space-y-2 md:max-w-sm">
+                  <Label htmlFor="callTitle">Phone block heading</Label>
+                  <Input
+                    id="callTitle"
+                    maxLength={60}
+                    value={form.callTitle}
+                    onChange={(event) => setForm({ ...form, callTitle: event.target.value })}
+                  />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-border/70">
+              <CardHeader>
+                <CardTitle>Sidebar panel</CardTitle>
+                <CardDescription>
+                  The slide-in panel opened by the round toggle at the end of the navigation
+                  bar. Contact details and social icons come from Top Bar and Social Links.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <Switch
+                    checked={form.showSidebar}
+                    onCheckedChange={(showSidebar) => setForm({ ...form, showSidebar })}
+                  />
+                  <Label>Show the sidebar toggle</Label>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="sidebarAbout">Intro paragraph</Label>
+                  <Textarea
+                    id="sidebarAbout"
+                    rows={3}
+                    maxLength={600}
+                    value={form.sidebarAbout}
+                    onChange={(event) => setForm({ ...form, sidebarAbout: event.target.value })}
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Leave empty to hide the paragraph.
+                  </p>
+                </div>
+                <div className="grid gap-5 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="sidebarContactTitle">Contact heading</Label>
+                    <Input
+                      id="sidebarContactTitle"
+                      maxLength={60}
+                      value={form.sidebarContactTitle}
+                      onChange={(event) =>
+                        setForm({ ...form, sidebarContactTitle: event.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="sidebarNewsletterTitle">Newsletter heading</Label>
+                    <Input
+                      id="sidebarNewsletterTitle"
+                      maxLength={60}
+                      value={form.sidebarNewsletterTitle}
+                      onChange={(event) =>
+                        setForm({ ...form, sidebarNewsletterTitle: event.target.value })
+                      }
+                    />
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Switch
+                    checked={form.showSidebarNewsletter}
+                    onCheckedChange={(showSidebarNewsletter) =>
+                      setForm({ ...form, showSidebarNewsletter })
+                    }
+                  />
+                  <Label>Show the newsletter subscribe form</Label>
                 </div>
               </CardContent>
             </Card>

@@ -14,7 +14,7 @@ export default async function InsightLayout({
 
   return (
     <div className="page-wrapper">
-      <div className="findox-scope findox-header-inflow">
+      <div className="findox-scope">
         <Header
           navItems={content.navItems}
           socialLinks={content.socialLinks}

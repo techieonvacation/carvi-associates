@@ -98,7 +98,7 @@ export async function PUT(request: Request) {
     titleLine1: parsed.data.titleLine1.trim(),
     titleLine2: parsed.data.titleLine2.trim(),
     description: parsed.data.description.trim(),
-    taglineBg: parsed.data.taglineBg.trim() || "#f4ebd8",
+    taglineBg: parsed.data.taglineBg.trim() || "#ecf5f4",
     imageUrl: parsed.data.imageUrl.trim(),
     imageAlt: parsed.data.imageAlt.trim(),
     shapeImageUrl: parsed.data.shapeImageUrl.trim(),

@@ -120,7 +120,7 @@ function BannerPreview({ section }: { section: SectionForm }) {
         <div className="absolute inset-0 bg-muted" />
       )}
       <div
-        className="absolute inset-0 bg-[#3a3020]"
+        className="absolute inset-0 bg-[#131111]"
         style={{ opacity: section.archiveHeroOverlay / 100 }}
       />
       <div
@@ -128,7 +128,7 @@ function BannerPreview({ section }: { section: SectionForm }) {
           section.archiveHeroAlign === "center" ? "text-center" : "text-left"
         }`}
       >
-        <p className="text-xs font-semibold tracking-[0.2em] text-[#e3c9a0] uppercase">
+        <p className="text-xs font-semibold tracking-[0.2em] text-[#f5c835] uppercase">
           {section.archiveTagline}
         </p>
         <p className="mt-3 text-2xl leading-tight font-bold text-white">
@@ -149,7 +149,7 @@ function BannerPreview({ section }: { section: SectionForm }) {
               section.archiveHeroAlign === "center" ? "text-center" : "text-left"
             }`}
           >
-            Home / <span className="text-[#e3c9a0]">Blog</span>
+            Home / <span className="text-[#f5c835]">Blog</span>
           </p>
         ) : null}
       </div>
@@ -1238,7 +1238,7 @@ function TaxonomyPanel({
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [icon, setIcon] = useState("icon-folder");
-  const [accentColor, setAccentColor] = useState("#5c6b45");
+  const [accentColor, setAccentColor] = useState("#006654");
   const [saving, setSaving] = useState(false);
 
   async function create(event: React.FormEvent<HTMLFormElement>) {

@@ -258,6 +258,8 @@ export const teamSectionSchema = z.object({
   titleLine1: z.string().min(1),
   titleLine2: z.string().min(1),
   taglineBg: z.string().min(1),
+  backgroundImageUrl: z.string().max(500),
+  backgroundImageAlt: z.string().max(160),
   isVisible: z.boolean(),
   seoTitle: optionalText,
   seoDescription: optionalText,

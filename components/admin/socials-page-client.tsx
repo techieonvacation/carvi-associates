@@ -17,6 +17,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SOCIAL_ICON_OPTIONS } from "@/lib/cms/types";
 
 type SocialItem = {
   label: string;
@@ -25,13 +26,6 @@ type SocialItem = {
   sortOrder: number;
   visible: boolean;
 };
-
-const iconOptions = [
-  { value: "fa-facebook-f", label: "Facebook" },
-  { value: "fa-twitter", label: "X" },
-  { value: "fa-linkedin-in", label: "LinkedIn" },
-  { value: "fa-instagram", label: "Instagram" },
-];
 
 type SocialsPageProps = {
   user: {
@@ -164,7 +158,7 @@ export function SocialsPageClient({ user }: SocialsPageProps) {
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          {iconOptions.map((option) => (
+                          {SOCIAL_ICON_OPTIONS.map((option) => (
                             <SelectItem key={option.value} value={option.value}>
                               {option.label}
                             </SelectItem>

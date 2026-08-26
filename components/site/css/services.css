@@ -32,7 +32,7 @@
   z-index: 1;
   opacity: 0;
   transform: translateX(100%);
-  background-color: var(--findox-primary, #e3c9a0);
+  background-color: var(--findox-primary, #f5c835);
   -webkit-mask-image: url("/images/shapes/service-card-shape-1-2.png");
   mask-image: url("/images/shapes/service-card-shape-1-2.png");
   -webkit-mask-repeat: no-repeat;
@@ -80,7 +80,7 @@
  * and makes the icon invisible until hover — reassert contrast here.
  */
 .services-one .service-card__btn {
-  background-color: var(--findox-base, #5c6b45);
+  background-color: var(--findox-base, #006654);
   color: #ffffff;
   z-index: 2;
 }
@@ -89,10 +89,10 @@
   color: #ffffff;
 }
 .services-one .service-card:hover .service-card__btn {
-  background-color: var(--findox-primary, #e3c9a0);
-  color: var(--findox-base, #5c6b45);
+  background-color: var(--findox-primary, #f5c835);
+  color: var(--findox-base, #006654);
 }
 .services-one .service-card:hover .service-card__btn i,
 .services-one .service-card:hover .service-card__btn i::before {
-  color: var(--findox-base, #5c6b45);
+  color: var(--findox-base, #006654);
 }

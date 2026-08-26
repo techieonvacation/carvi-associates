@@ -508,7 +508,7 @@ export function blogCategoryWriteData(
     slug,
     description: input.description.trim(),
     icon: input.icon.trim() || "icon-folder",
-    accentColor: input.accentColor.trim() || "#5c6b45",
+    accentColor: input.accentColor.trim() || "#006654",
     imageUrl: normalizeNullable(input.imageUrl),
     displayOrder,
     isFeatured: input.isFeatured,

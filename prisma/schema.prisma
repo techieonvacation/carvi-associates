@@ -54,6 +54,12 @@ model TopbarSettings {
   addressMapUrl      String
   phone              String
   phoneHref          String
+  openHours          String   @default("")
+  noteLabel          String   @default("Note")
+  noteText           String   @default("Top finance Advisor Service Solution!")
+  showNote           Boolean  @default(true)
+  socialsTitle       String   @default("follow us:")
+  showSocials        Boolean  @default(true)
   whatsappLabel      String
   whatsappHref       String
   whatsappIntroText  String   @default("For more updates follow 👉")
@@ -84,21 +90,30 @@ model HeroSettings {
 }
 
 model HeaderSettings {
-  id                String   @id @default("default")
-  contactCtaText    String   @default("Contact Us")
-  contactCtaHref    String   @default("#")
-  logoVariant       String   @default("wordmark")
-  logoImageUrl      String   @default("")
-  logoDarkImageUrl  String   @default("")
-  logoAlt           String   @default("Carvi Associates")
-  logoHref          String   @default("/")
-  logoMarkText      String   @default("C")
-  logoPrimaryText   String   @default("Carvi")
-  logoSecondaryText String   @default("Associates")
-  showLogoMark      Boolean  @default(true)
-  logoHeightDesktop Int      @default(46)
-  logoHeightMobile  Int      @default(36)
-  updatedAt         DateTime @updatedAt
+  id                     String   @id @default("default")
+  contactCtaText         String   @default("Contact Us")
+  contactCtaHref         String   @default("#")
+  showContactCta         Boolean  @default(true)
+  showSearch             Boolean  @default(true)
+  callTitle              String   @default("Get Contact Now")
+  showCall               Boolean  @default(true)
+  showSidebar            Boolean  @default(true)
+  sidebarAbout           String   @default("Carvi Associates is a Chartered Accountancy firm delivering audit, taxation, GST, compliance and advisory services that keep Indian businesses compliant and ready to scale.")
+  sidebarContactTitle    String   @default("Contact Us")
+  sidebarNewsletterTitle String   @default("Newsletter")
+  showSidebarNewsletter  Boolean  @default(true)
+  logoVariant            String   @default("wordmark")
+  logoImageUrl           String   @default("")
+  logoDarkImageUrl       String   @default("")
+  logoAlt                String   @default("Carvi Associates")
+  logoHref               String   @default("/")
+  logoMarkText           String   @default("C")
+  logoPrimaryText        String   @default("Carvi")
+  logoSecondaryText      String   @default("Associates")
+  showLogoMark           Boolean  @default(true)
+  logoHeightDesktop      Int      @default(46)
+  logoHeightMobile       Int      @default(36)
+  updatedAt              DateTime @updatedAt
 }
 
 model PartnerMarqueeSettings {
@@ -148,7 +163,7 @@ model AboutSettings {
   collageOneAlt   String   @default("Advisors reviewing a financial plan")
   collageTwoAlt   String   @default("Client consultation in progress")
   defaultTabId    String?
-  taglineBg       String   @default("#f4ebd8")
+  taglineBg       String   @default("#ecf5f4")
   tabs            Json     @default("[]")
   checklist       Json     @default("[]")
   updatedAt       DateTime @updatedAt
@@ -180,7 +195,7 @@ model ServicesSectionSettings {
   titleLine1      String
   titleLine2      String
   cardTagline     String
-  taglineBg       String   @default("#fffdf8")
+  taglineBg       String   @default("#ffffff")
   isVisible       Boolean  @default(true)
   seoTitle        String?
   seoDescription  String?
@@ -244,7 +259,7 @@ model BookAppointmentSettings {
   secondaryButtonHref String   @default("#")
   backgroundImageUrl  String
   backgroundImageAlt  String   @default("")
-  taglineBg           String   @default("#f4ebd8")
+  taglineBg           String   @default("#ecf5f4")
   isVisible           Boolean  @default(true)
   seoTitle            String?
   seoDescription      String?
@@ -262,7 +277,7 @@ model WhyChooseSettings {
   titleLine1       String
   titleLine2       String
   description      String
-  taglineBg        String   @default("#f4ebd8")
+  taglineBg        String   @default("#ecf5f4")
   imageUrl         String
   imageAlt         String   @default("Why choose Carvi Associates")
   shapeImageUrl    String   @default("/images/shapes/why-choose-shape-1-1.png")
@@ -299,20 +314,22 @@ model WhyChooseItem {
 }
 
 model TeamSettings {
-  id              String   @id @default("default")
-  tagline         String
-  titleLine1      String
-  titleLine2      String
-  taglineBg       String   @default("#f4ebd8")
-  isVisible       Boolean  @default(true)
-  seoTitle        String?
-  seoDescription  String?
-  seoKeywords     String?
-  canonicalUrl    String?
-  ogImageUrl      String?
-  twitterImageUrl String?
-  noIndex         Boolean  @default(false)
-  updatedAt       DateTime @updatedAt
+  id                 String   @id @default("default")
+  tagline            String
+  titleLine1         String
+  titleLine2         String
+  taglineBg          String   @default("#ffffff")
+  backgroundImageUrl String   @default("")
+  backgroundImageAlt String   @default("")
+  isVisible          Boolean  @default(true)
+  seoTitle           String?
+  seoDescription     String?
+  seoKeywords        String?
+  canonicalUrl       String?
+  ogImageUrl         String?
+  twitterImageUrl    String?
+  noIndex            Boolean  @default(false)
+  updatedAt          DateTime @updatedAt
 }
 
 model TeamMember {
@@ -340,7 +357,7 @@ model WorkingProcessSettings {
   tagline         String
   titleLine1      String
   titleLine2      String
-  taglineBg       String   @default("#f4ebd8")
+  taglineBg       String   @default("#ecf5f4")
   isVisible       Boolean  @default(true)
   seoTitle        String?
   seoDescription  String?
@@ -477,10 +494,10 @@ model MarqueeSettings {
   isVisible           Boolean  @default(true)
   showBandOne         Boolean  @default(true)
   showBandTwo         Boolean  @default(true)
-  bandOneBgColor      String   @default("#5c6b45")
-  bandOneTextColor    String   @default("#fffdf8")
-  bandTwoBgColor      String   @default("#e3c9a0")
-  bandTwoTextColor    String   @default("#5c6b45")
+  bandOneBgColor      String   @default("#006654")
+  bandOneTextColor    String   @default("#ffffff")
+  bandTwoBgColor      String   @default("#f5c835")
+  bandTwoTextColor    String   @default("#006654")
   bandOneDirection    String   @default("left")
   bandTwoDirection    String   @default("right")
   bandOneSpeedSeconds Int      @default(34)
@@ -525,7 +542,7 @@ model ProjectsSectionSettings {
   tagline                  String
   titleLine1               String
   titleLine2               String
-  taglineBg                String   @default("#fffdf8")
+  taglineBg                String   @default("#ffffff")
   topBackgroundImageUrl    String   @default("/images/shapes/projects-bg-shape-1-1.png")
   bottomBackgroundImageUrl String   @default("/images/shapes/projects-bg-shape-1-2.png")
   showFilters              Boolean  @default(true)
@@ -627,7 +644,7 @@ model BlogSectionSettings {
   tagline            String   @default("Our Latest Blog")
   titleLine1         String   @default("Today's Blog Industry Finance")
   titleLine2         String   @default("Business Consulting.")
-  taglineBg          String   @default("#f4ebd8")
+  taglineBg          String   @default("#ecf5f4")
   homeLimit          Int      @default(3)
   homeCtaText        String   @default("View All Blogs")
   homeCtaHref        String   @default("/blog")
@@ -691,7 +708,7 @@ model BlogCategory {
   slug           String     @unique
   description    String     @default("")
   icon           String     @default("icon-folder")
-  accentColor    String     @default("#5c6b45")
+  accentColor    String     @default("#006654")
   imageUrl       String?
   displayOrder   Int        @default(0)
   isFeatured     Boolean    @default(false)

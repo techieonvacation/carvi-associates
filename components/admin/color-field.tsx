@@ -33,7 +33,7 @@ export function ColorField({
         <Input
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          placeholder="#5c6b45"
+          placeholder="#006654"
           spellCheck={false}
         />
       </div>

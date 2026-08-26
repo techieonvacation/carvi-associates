@@ -56,7 +56,7 @@ export function PageBanner({
           />
         ) : null}
         <div
-          className="absolute inset-0 bg-[#3a3020]"
+          className="absolute inset-0 bg-[#131111]"
           style={{ opacity: overlay / 100 }}
           aria-hidden="true"
         />

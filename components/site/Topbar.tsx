@@ -10,11 +10,24 @@ function WhatsAppIcon() {
 }
 
 type TopbarProps = {
-  whatsappLabel: string;
-  whatsappHref: string;
-  whatsappIntroText: string;
-  whatsappLinkText: string;
-  showWhatsappNotice: boolean;
+  topbar: {
+    email: string;
+    address: string;
+    addressMapUrl: string;
+    phone: string;
+    phoneHref: string;
+    openHours: string;
+    noteLabel: string;
+    noteText: string;
+    showNote: boolean;
+    socialsTitle: string;
+    showSocials: boolean;
+    whatsappLabel: string;
+    whatsappHref: string;
+    whatsappIntroText: string;
+    whatsappLinkText: string;
+    showWhatsappNotice: boolean;
+  };
   socials: Array<{
     label: string;
     href: string;
@@ -22,44 +35,119 @@ type TopbarProps = {
   }>;
 };
 
-export function Topbar({
-  whatsappLabel,
-  whatsappHref,
-  whatsappIntroText,
-  whatsappLinkText,
-  showWhatsappNotice,
-  socials,
-}: TopbarProps) {
-  const linkText = whatsappLinkText || whatsappLabel;
+export function Topbar({ topbar, socials }: TopbarProps) {
+  const noteText = topbar.noteText.trim();
+  const noteLabel = topbar.noteLabel.trim();
+  const showNote = topbar.showNote && Boolean(noteText);
+
+  const whatsappHref = topbar.whatsappHref.trim();
+  const whatsappLinkText = topbar.whatsappLinkText.trim() || topbar.whatsappLabel.trim();
+  const showWhatsapp =
+    topbar.showWhatsappNotice && Boolean(whatsappHref) && Boolean(whatsappLinkText);
+
+  const openHours = topbar.openHours.trim();
+  const email = topbar.email.trim();
+  const phone = topbar.phone.trim();
+  const address = topbar.address.trim();
+  const addressMapUrl = topbar.addressMapUrl.trim();
+  const hasInfo = Boolean(openHours || email || phone || address);
+
+  const socialsTitle = topbar.socialsTitle.trim();
+  const showSocials = topbar.showSocials && socials.length > 0;
+
+  if (!showNote && !showWhatsapp && !hasInfo && !showSocials) return null;
 
   return (
     <div className="topbar">
       <div className="findox-container">
         <div className="topbar__inner">
-          {showWhatsappNotice ? (
-            <div className="topbar__whatsapp">
-              <span className="topbar__whatsapp__icon">
-                <WhatsAppIcon />
-              </span>
-              <p className="topbar__whatsapp__message">
-                {whatsappIntroText ? (
-                  <span className="topbar__whatsapp__intro">{whatsappIntroText}</span>
-                ) : null}
-                <Link
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={whatsappLabel}
-                  className="topbar__whatsapp__link"
-                >
-                  {linkText}
-                </Link>
-              </p>
-            </div>
-          ) : null}
+          <div className="topbar__left">
+            {showNote ? (
+              <div className="topbar__note">
+                {noteLabel ? <p className="topbar__note__title">{noteLabel}</p> : null}
+                <p className="topbar__note__text">{noteText}</p>
+              </div>
+            ) : null}
+
+            {showWhatsapp ? (
+              <div className="topbar__whatsapp">
+                <span className="topbar__whatsapp__icon">
+                  <WhatsAppIcon />
+                </span>
+                <p className="topbar__whatsapp__message">
+                  {topbar.whatsappIntroText.trim() ? (
+                    <span className="topbar__whatsapp__intro">
+                      {topbar.whatsappIntroText.trim()}
+                    </span>
+                  ) : null}
+                  <Link
+                    href={whatsappHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={topbar.whatsappLabel}
+                    className="topbar__whatsapp__link"
+                  >
+                    {whatsappLinkText}
+                  </Link>
+                </p>
+              </div>
+            ) : null}
+          </div>
 
           <div className="topbar__right">
-            <SocialLinks socials={socials} />
+            {hasInfo ? (
+              <ul className="topbar__info">
+                {openHours ? (
+                  <li>
+                    <span className="topbar__info__icon">
+                      <i className="icon-clock" aria-hidden="true" />
+                    </span>
+                    <span>{openHours}</span>
+                  </li>
+                ) : null}
+                {email ? (
+                  <li>
+                    <span className="topbar__info__icon">
+                      <i className="icon-email" aria-hidden="true" />
+                    </span>
+                    <a href={`mailto:${email}`}>{email}</a>
+                  </li>
+                ) : null}
+                {phone ? (
+                  <li>
+                    <span className="topbar__info__icon">
+                      <i className="icon-phone-call" aria-hidden="true" />
+                    </span>
+                    <a href={topbar.phoneHref.trim() || `tel:${phone.replace(/\s+/g, "")}`}>
+                      {phone}
+                    </a>
+                  </li>
+                ) : null}
+                {address ? (
+                  <li>
+                    <span className="topbar__info__icon">
+                      <i className="icon-location" aria-hidden="true" />
+                    </span>
+                    {addressMapUrl ? (
+                      <a href={addressMapUrl} target="_blank" rel="noopener noreferrer">
+                        {address}
+                      </a>
+                    ) : (
+                      <span>{address}</span>
+                    )}
+                  </li>
+                ) : null}
+              </ul>
+            ) : null}
+
+            {showSocials ? (
+              <div className="topbar__social">
+                {socialsTitle ? (
+                  <p className="topbar__social__title">{socialsTitle}</p>
+                ) : null}
+                <SocialLinks socials={socials} />
+              </div>
+            ) : null}
           </div>
         </div>
       </div>

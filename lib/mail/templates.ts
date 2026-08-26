@@ -3,13 +3,13 @@ import { FIRM } from "./config";
 export type MailRow = { label: string; value: string };
 
 const PALETTE = {
-  page: "#f4ebd8",
-  card: "#fffdf8",
-  ink: "#3a3020",
-  muted: "#6b5b40",
-  line: "#e4d5b4",
-  accent: "#5c6b45",
-  sand: "#e3c9a0",
+  page: "#ecf5f4",
+  card: "#ffffff",
+  ink: "#131111",
+  muted: "#636363",
+  line: "#dddddd",
+  accent: "#006654",
+  sand: "#f5c835",
 };
 
 function escapeHtml(value: string) {

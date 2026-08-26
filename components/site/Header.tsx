@@ -5,10 +5,12 @@ import { Topbar } from "./Topbar";
 import { DesktopMenu } from "./DesktopMenu";
 import { MobileMenu } from "./MobileMenu";
 import { SearchPopup } from "./SearchPopup";
+import { SidebarPanel } from "./SidebarPanel";
 import { FindoxButton } from "./FindoxButton";
 import { Logo } from "./Logo";
 import { AnchorScrollManager } from "./AnchorScrollManager";
 import { withKnowledgeBankDropdown } from "./nav-data";
+import type { PublicNavItem } from "./DesktopMenu";
 import type { SiteContent } from "@/lib/cms/queries";
 
 type HeaderProps = Pick<
@@ -16,36 +18,36 @@ type HeaderProps = Pick<
   "navItems" | "socialLinks" | "topbar" | "header"
 >;
 
-function MainHeaderBar({
-  onSearch,
-  onMobile,
-  navItems,
-  logo,
-  contactCtaText,
-  contactCtaHref,
-}: {
+type MainHeaderBarProps = {
+  navItems: PublicNavItem[];
+  header: HeaderProps["header"];
+  phone: string;
+  phoneHref: string;
   onSearch: () => void;
   onMobile: () => void;
-  navItems: HeaderProps["navItems"];
-  logo: HeaderProps["header"]["logo"];
-  contactCtaText: string;
-  contactCtaHref: string;
-}) {
-  const visibleItems = withKnowledgeBankDropdown(
-    navItems
-      .filter((item) => item.visible)
-      .map((item) => ({ label: item.label, href: item.href })),
-  );
+  onSidebar: () => void;
+};
+
+function MainHeaderBar({
+  navItems,
+  header,
+  phone,
+  phoneHref,
+  onSearch,
+  onMobile,
+  onSidebar,
+}: MainHeaderBarProps) {
+  const showCall = header.showCall && Boolean(phone);
 
   return (
     <div className="findox-container">
       <div className="main-header__inner">
         <div className="main-header__logo logo-retina">
-          <Logo logo={logo} tone="light" />
+          <Logo logo={header.logo} tone="light" />
         </div>
         <div className="main-header__right">
           <nav className="main-header__nav main-menu" aria-label="Primary">
-            <DesktopMenu items={visibleItems} />
+            <DesktopMenu items={navItems} />
           </nav>
 
           <button
@@ -59,20 +61,54 @@ function MainHeaderBar({
             <span />
           </button>
 
-          <button
-            type="button"
-            className="main-header__search search-toggler"
-            aria-label="Search"
-            onClick={onSearch}
-          >
-            <i className="icon-search" aria-hidden="true" />
-          </button>
+          {header.showSearch ? (
+            <button
+              type="button"
+              className="main-header__search search-toggler"
+              aria-label="Search"
+              onClick={onSearch}
+            >
+              <i className="icon-search" aria-hidden="true" />
+            </button>
+          ) : null}
 
-          <FindoxButton
-            href={contactCtaHref}
-            text={contactCtaText}
-            className="main-header__btn"
-          />
+          {header.showContactCta ? (
+            <FindoxButton
+              href={header.contactCtaHref}
+              text={header.contactCtaText}
+              className="main-header__btn"
+            />
+          ) : null}
+
+          {showCall ? (
+            <div className="main-header__call">
+              <span className="main-header__call__icon">
+                <i className="icon-phone-call" aria-hidden="true" />
+              </span>
+              <div className="main-header__call__content">
+                <h4 className="main-header__call__title">{header.callTitle}</h4>
+                <a
+                  href={phoneHref || `tel:${phone.replace(/\s+/g, "")}`}
+                  className="main-header__call__number"
+                >
+                  {phone}
+                </a>
+              </div>
+            </div>
+          ) : null}
+
+          {header.showSidebar ? (
+            <button
+              type="button"
+              className="sidebar-btn__toggler"
+              aria-label="Open sidebar"
+              onClick={onSidebar}
+            >
+              <span className="sidebar-btn__toggler__line" />
+              <span className="sidebar-btn__toggler__line" />
+              <span className="sidebar-btn__toggler__line" />
+            </button>
+          ) : null}
         </div>
       </div>
     </div>
@@ -82,6 +118,7 @@ function MainHeaderBar({
 export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
 
   const visibleNavItems = withKnowledgeBankDropdown(
@@ -98,6 +135,9 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
       icon: item.icon,
     }));
 
+  const phone = topbar.phone.trim();
+  const phoneHref = topbar.phoneHref.trim();
+
   useEffect(() => {
     const onScroll = () => setSticky(window.scrollY > 240);
     onScroll();
@@ -106,54 +146,44 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
   }, []);
 
   useEffect(() => {
-    const locked = mobileOpen || searchOpen;
+    const locked = mobileOpen || searchOpen || sidebarOpen;
     document.body.classList.toggle("findox-locked", locked);
     return () => document.body.classList.remove("findox-locked");
-  }, [mobileOpen, searchOpen]);
+  }, [mobileOpen, searchOpen, sidebarOpen]);
 
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setMobileOpen(false);
         setSearchOpen(false);
+        setSidebarOpen(false);
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  const bar = (
+    <MainHeaderBar
+      navItems={visibleNavItems}
+      header={header}
+      phone={phone}
+      phoneHref={phoneHref}
+      onSearch={() => setSearchOpen(true)}
+      onMobile={() => setMobileOpen(true)}
+      onSidebar={() => setSidebarOpen(true)}
+    />
+  );
+
   return (
     <>
       <div className="header">
-        <Topbar
-          whatsappLabel={topbar.whatsappLabel}
-          whatsappHref={topbar.whatsappHref}
-          whatsappIntroText={topbar.whatsappIntroText}
-          whatsappLinkText={topbar.whatsappLinkText}
-          showWhatsappNotice={topbar.showWhatsappNotice}
-          socials={visibleSocials}
-        />
-        <header className="main-header">
-          <MainHeaderBar
-            onSearch={() => setSearchOpen(true)}
-            onMobile={() => setMobileOpen(true)}
-            navItems={navItems}
-            logo={header.logo}
-            contactCtaText={header.contactCtaText}
-            contactCtaHref={header.contactCtaHref}
-          />
-        </header>
+        <Topbar topbar={topbar} socials={visibleSocials} />
+        <header className="main-header">{bar}</header>
       </div>
 
       <div className={`main-header sticky-header--clone${sticky ? " active" : ""}`}>
-        <MainHeaderBar
-          onSearch={() => setSearchOpen(true)}
-          onMobile={() => setMobileOpen(true)}
-          navItems={navItems}
-          logo={header.logo}
-          contactCtaText={header.contactCtaText}
-          contactCtaHref={header.contactCtaHref}
-        />
+        {bar}
       </div>
 
       <MobileMenu
@@ -162,13 +192,32 @@ export function Header({ navItems, socialLinks, topbar, header }: HeaderProps) {
         items={visibleNavItems}
         logo={header.logo}
         contact={{
-          email: topbar.email,
-          phone: topbar.phone,
-          phoneHref: topbar.phoneHref,
+          email: topbar.email.trim(),
+          phone,
+          phoneHref,
+          address: topbar.address.trim(),
         }}
         socials={visibleSocials}
       />
       <SearchPopup open={searchOpen} onClose={() => setSearchOpen(false)} />
+      {header.showSidebar ? (
+        <SidebarPanel
+          open={sidebarOpen}
+          onClose={() => setSidebarOpen(false)}
+          logo={header.logo}
+          about={header.sidebarAbout}
+          contactTitle={header.sidebarContactTitle}
+          newsletterTitle={header.sidebarNewsletterTitle}
+          showNewsletter={header.showSidebarNewsletter}
+          contact={{
+            email: topbar.email.trim(),
+            phone,
+            phoneHref,
+            address: topbar.address.trim(),
+          }}
+          socials={visibleSocials}
+        />
+      ) : null}
       <AnchorScrollManager />
     </>
   );

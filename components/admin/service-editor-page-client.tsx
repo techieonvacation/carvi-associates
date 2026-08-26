@@ -363,7 +363,7 @@ export function ServiceEditorPageClient({ user, serviceId }: ServiceEditorPagePr
                       </div>
                       <div className="space-y-2">
                         <Label>Accent color</Label>
-                        <Input {...register("accentColor")} placeholder="#cdae7c" />
+                        <Input {...register("accentColor")} placeholder="#dddddd" />
                       </div>
                     </TabsContent>
 

@@ -92,6 +92,12 @@ export type SiteContent = {
     addressMapUrl: string;
     phone: string;
     phoneHref: string;
+    openHours: string;
+    noteLabel: string;
+    noteText: string;
+    showNote: boolean;
+    socialsTitle: string;
+    showSocials: boolean;
     whatsappLabel: string;
     whatsappHref: string;
     whatsappIntroText: string;
@@ -703,6 +709,8 @@ function mapTeamSection(
     titleLine1: string;
     titleLine2: string;
     taglineBg: string;
+    backgroundImageUrl: string;
+    backgroundImageAlt: string;
     isVisible: boolean;
     seoTitle: string | null;
     seoDescription: string | null;
@@ -718,6 +726,8 @@ function mapTeamSection(
     tagline: row.tagline,
     title: [row.titleLine1, row.titleLine2],
     taglineBg: row.taglineBg || defaultTeam.taglineBg,
+    backgroundImageUrl: row.backgroundImageUrl.trim(),
+    backgroundImageAlt: row.backgroundImageAlt.trim(),
     isVisible: row.isVisible,
     seoTitle: row.seoTitle,
     seoDescription: row.seoDescription,
