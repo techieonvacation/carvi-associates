@@ -152,7 +152,7 @@
   margin: 0;
 }
 
-.findox-scope a {
+:where(.findox-scope) a {
   color: var(--findox-base);
   text-decoration: none;
   transition: all 400ms ease;

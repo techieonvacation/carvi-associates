@@ -56,9 +56,7 @@ export function PostCard({
               <i className="icon-tag" aria-hidden="true" />
             </span>
             {post.category ? (
-              <Link href={`/blog/category/${post.category.slug}`} className="hover:text-accent">
-                {post.category.name}
-              </Link>
+              <Link href={`/blog/category/${post.category.slug}`}>{post.category.name}</Link>
             ) : (
               <span>Insights</span>
             )}
@@ -67,14 +65,12 @@ export function PostCard({
             <span className="blog-card__meta__icon text-lg text-accent">
               <i className="icon-comment" aria-hidden="true" />
             </span>
-            <Link href={`${href}#comments`} className="hover:text-accent">
-              Comments ({post.commentCount})
-            </Link>
+            <Link href={`${href}#comments`}>Comments ({post.commentCount})</Link>
           </li>
         </ul>
 
         <h3 className="blog-card__title mb-6.75 text-[22px] leading-[1.272] font-bold text-foreground max-[375px]:text-xl lg:max-xl:text-xl">
-          <Link href={href} className="text-inherit hover:text-accent">
+          <Link href={href} className="text-inherit">
             {post.title}
           </Link>
         </h3>
@@ -90,8 +86,18 @@ export function PostCard({
         </Link>
       </div>
 
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/shapes/blog-card-shape-1-1.png"
+        alt=""
+        aria-hidden="true"
+        width={68}
+        height={68}
+        className="blog-card__shape pointer-events-none"
+      />
+
       <div
-        className="blog-card__border pointer-events-none absolute inset-0 rounded-[inherit] border border-border transition-colors duration-500"
+        className="blog-card__border pointer-events-none absolute inset-0 rounded-[inherit] border border-border"
         aria-hidden="true"
       />
     </div>

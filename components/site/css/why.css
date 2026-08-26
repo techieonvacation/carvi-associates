@@ -1,7 +1,7 @@
-/* WhyChooseUs — advanced effects only (layout/type/colour live in Tailwind). */
+.why-choose .sec-title {
+  margin-bottom: 11px;
+}
 
-/* Pointed mint (default) / yellow (hover) tail at the end of each list-item
-   pill — a clip-path shape Tailwind can't express. */
 .why-choose__item::after {
   content: "";
   width: 66px;
@@ -22,13 +22,37 @@
   clip-path: polygon(100% 0, 65% 52%, 100% 100%, 0 100%, 0 0);
 }
 
-/* Below 576px the reference collapses the two-layer hover crossfade into a
-   single pill that restyles on real :hover (the mirrored overlay is hidden
-   via max-sm:hidden in the markup). */
 @media (max-width: 575px) {
   .why-choose__item::after {
     display: none;
   }
+}
+
+.why-choose__item__link {
+  color: var(--findox-white);
+  background-color: var(--findox-base);
+}
+
+.why-choose__item__link:hover {
+  transform: rotate(45deg);
+}
+
+@media (max-width: 575px) {
+  .why-choose__item__link:hover {
+    color: var(--findox-base);
+    background-color: var(--findox-primary);
+  }
+}
+
+.why-choose__item__title a {
+  color: inherit;
+  background: linear-gradient(to right, currentcolor 0%, currentcolor 100%) 0px 95%/0px 1px no-repeat;
+  transition: all 500ms ease;
+}
+
+.why-choose__item__title a:hover {
+  background-size: 100% 1px;
+  color: var(--findox-base);
 }
 
 @keyframes flipInY {
@@ -51,7 +75,12 @@
   }
 }
 
-/* Blob mask on the feature image + the floating shape that pulses beside it. */
+@media (min-width: 992px) {
+  .why-choose__image__inner {
+    min-height: var(--why-frame-min);
+  }
+}
+
 .why-choose__image__img {
   -webkit-mask-image: url("/images/shapes/why-choose-image-shape-1-1.png");
   mask-image: url("/images/shapes/why-choose-image-shape-1-1.png");

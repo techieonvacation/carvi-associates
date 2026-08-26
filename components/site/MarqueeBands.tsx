@@ -48,7 +48,7 @@ function MarqueeItem({
       ) : null}
       {showText ? (
         <span
-          className="marquee-band__text font-heading font-bold leading-[1.192] whitespace-nowrap uppercase"
+          className="marquee-band__text font-heading font-bold whitespace-nowrap uppercase"
           data-outlined={outlined}
         >
           {item.text}
@@ -179,7 +179,7 @@ export function MarqueeBands({ marquee }: MarqueeBandsProps) {
 
   return (
     <section
-      className="marquee-bands my-20 max-[1199px]:my-14 max-md:my-10"
+      className="marquee-bands my-[94px] max-[1599px]:my-16 max-[1199px]:my-[37px] max-lg:my-5"
       aria-label={marquee.ariaLabel}
       data-layout={marquee.layout}
       data-pause-on-hover={marquee.pauseOnHover}

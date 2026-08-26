@@ -74,25 +74,12 @@
   background-size: 100% 1px;
 }
 
-/*
- * Corner CTA: accent circle + light arrow by default.
- * `.findox-scope a` forces brand-green link color, which matches `bg-accent`
- * and makes the icon invisible until hover — reassert contrast here.
- */
 .services-one .service-card__btn {
-  background-color: var(--findox-base, #006654);
-  color: #ffffff;
+  background-color: var(--findox-base);
+  color: var(--findox-white);
   z-index: 2;
 }
-.services-one .service-card__btn i,
-.services-one .service-card__btn i::before {
-  color: #ffffff;
-}
 .services-one .service-card:hover .service-card__btn {
-  background-color: var(--findox-primary, #f5c835);
-  color: var(--findox-base, #006654);
-}
-.services-one .service-card:hover .service-card__btn i,
-.services-one .service-card:hover .service-card__btn i::before {
-  color: var(--findox-base, #006654);
+  background-color: var(--findox-primary);
+  color: var(--findox-base);
 }

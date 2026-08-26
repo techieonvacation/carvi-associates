@@ -1,23 +1,7 @@
-/* MarqueeBands — two CMS-configurable ribbons carrying an infinitely scrolling
-   row of text and/or logo items.
-
-   Two layouts:
-   • stacked (default) — parallel ribbons, tilted together by the same small
-     angle. Reads as a deliberate band, not a collision.
-   • crossed — the ribbons counter-tilt and overlap into an X.
-
-   A tilted full-width band no longer reaches the viewport edges (the corners
-   pull inward and leak the page background through as triangles), so every
-   band is overscanned horizontally and the section clips the excess. */
-
 .marquee-bands {
-  --marquee-overscan: 6%;
-  /* Fluid type capped at the CMS size, so the ribbon stays readable at phone
-     width without a separate mobile setting. */
-  --marquee-font-size: clamp(15px, 3.4vw, var(--marquee-font-size-max));
+  --marquee-font-size: clamp(22px, 3.4vw, var(--marquee-font-size-max));
   position: relative;
   z-index: 1;
-  overflow: hidden;
 }
 
 .marquee-bands__stack {
@@ -25,21 +9,18 @@
 }
 
 .marquee-band {
-  width: calc(100% + var(--marquee-overscan) * 2);
-  margin-inline-start: calc(var(--marquee-overscan) * -1);
+  width: 100%;
   overflow: hidden;
   padding-block: var(--marquee-band-padding);
   background-color: var(--marquee-band-bg);
   color: var(--marquee-band-text);
 }
 
-/* Stacked: both bands lean the same way, so they stay parallel. */
 .marquee-bands[data-layout="stacked"] .marquee-band {
   position: relative;
   transform: skewY(calc(var(--marquee-skew) * -1));
 }
 
-/* Crossed: the overlay band leans the other way and sits on top. */
 .marquee-bands[data-layout="crossed"] .marquee-band[data-layer="base"] {
   position: relative;
   transform: skewY(calc(var(--marquee-skew) * -1));
@@ -48,18 +29,15 @@
 .marquee-bands[data-layout="crossed"] .marquee-band[data-layer="overlay"] {
   position: absolute;
   top: 0;
-  left: calc(var(--marquee-overscan) * -1);
+  left: 0;
   transform: skewY(var(--marquee-skew));
 }
 
-/* Below the tablet breakpoint the crossed ribbons stack instead of colliding —
-   an X at phone width leaves most of the copy unreadable. */
 @media (max-width: 991px) {
   .marquee-bands[data-layout="crossed"] .marquee-band[data-layer="overlay"] {
     position: relative;
     top: auto;
     left: auto;
-    margin-inline-start: calc(var(--marquee-overscan) * -1);
     transform: skewY(calc(var(--marquee-skew) * -1));
   }
 }
@@ -87,8 +65,6 @@
   animation-play-state: paused;
 }
 
-/* Trailing padding — not a track gap — keeps the two sequences exactly 50%
-   apart so the loop never jumps. */
 .marquee-band__sequence {
   display: flex;
   flex-shrink: 0;
@@ -106,13 +82,13 @@
 
 .marquee-band__text {
   font-size: var(--marquee-font-size);
-  letter-spacing: 0.02em;
+  line-height: 1.192;
   color: var(--marquee-band-text);
 }
 
 .marquee-band__text[data-outlined="true"] {
   color: transparent;
-  -webkit-text-stroke: 1.25px var(--marquee-band-text);
+  -webkit-text-stroke: 1px var(--marquee-band-text);
 }
 
 .marquee-bands .marquee-band__item .marquee-band__logo {
@@ -123,10 +99,10 @@
 }
 
 .marquee-bands .marquee-band__item .marquee-band__separator {
-  height: calc(var(--marquee-font-size) * 0.72);
+  height: calc(var(--marquee-font-size) * 1.086);
   width: auto;
+  max-width: none;
   flex-shrink: 0;
-  opacity: 0.75;
 }
 
 .marquee-band__link {
