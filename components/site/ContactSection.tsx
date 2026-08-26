@@ -11,7 +11,7 @@ import "./css/contact.css";
 
 type ContactSectionProps = {
   contact: ContactContent;
-  details: {
+  fallback: {
     phone: string;
     phoneHref: string;
     email: string;
@@ -24,7 +24,7 @@ type FieldProps = {
   id: string;
   name: string;
   type: "text" | "email" | "tel";
-  placeholder: string;
+  label: string;
   required?: boolean;
   autoComplete?: string;
   error?: string;
@@ -35,7 +35,7 @@ function Field({
   id,
   name,
   type,
-  placeholder,
+  label,
   required = true,
   autoComplete,
   error,
@@ -44,13 +44,13 @@ function Field({
   return (
     <div className={`form-one__control${full ? " form-one__control--full" : ""}`}>
       <label className="sr-only" htmlFor={id}>
-        {placeholder}
+        {label}
       </label>
       <input
         id={id}
         name={name}
         type={type}
-        placeholder={placeholder}
+        placeholder={label}
         required={required}
         autoComplete={autoComplete}
         aria-invalid={error ? true : undefined}
@@ -71,33 +71,39 @@ function InfoCard({
   text,
   href,
   external,
+  direction,
 }: {
   icon: string;
   title: string;
   text: string;
   href: string;
   external?: boolean;
+  direction: "left" | "right";
 }) {
   return (
-    <div className="contact-one__info__inner">
-      <span className="contact-one__info__icon">
-        <i className={icon} aria-hidden="true" />
-      </span>
-      <div className="contact-one__info__content">
-        <h4 className="contact-one__info__title">{title}</h4>
-        <a
-          href={href}
-          className="contact-one__info__text"
-          {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        >
-          {text}
-        </a>
-      </div>
-    </div>
+    <li>
+      <Reveal direction={direction} duration={1300}>
+        <div className="contact-one__info__inner">
+          <span className="contact-one__info__icon">
+            <i className={icon} aria-hidden="true" />
+          </span>
+          <div className="contact-one__info__content">
+            <h4 className="contact-one__info__title">{title}</h4>
+            <a
+              href={href}
+              className="contact-one__info__text"
+              {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+            >
+              {text}
+            </a>
+          </div>
+        </div>
+      </Reveal>
+    </li>
   );
 }
 
-export function ContactSection({ contact, details }: ContactSectionProps) {
+export function ContactSection({ contact, fallback }: ContactSectionProps) {
   const [state, formAction, pending] = useActionState(submitEnquiry, IDLE_ENQUIRY_STATE);
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -107,10 +113,16 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
 
   if (!contact.isVisible) return null;
 
-  const phone = details.phone.trim();
-  const email = details.email.trim();
-  const address = details.address.trim();
-  const addressMapUrl = details.addressMapUrl.trim();
+  const phone = contact.phoneText || fallback.phone.trim();
+  const phoneHref = contact.phoneHref || fallback.phoneHref.trim();
+  const email = contact.emailText || fallback.email.trim();
+  const location = contact.locationText || fallback.address.trim();
+  const locationUrl = contact.locationUrl || fallback.addressMapUrl.trim();
+
+  const showPhone = contact.showPhone && Boolean(phone);
+  const showEmail = contact.showEmail && Boolean(email);
+  const showLocation = contact.showLocation && Boolean(location);
+  const showSideImage = contact.showSideImage && Boolean(contact.sideImageUrl);
   const errors = state.errors ?? {};
 
   return (
@@ -119,14 +131,16 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
       className="contact-one section-space py-30 max-md:py-25 max-sm:py-20"
     >
       <div className="contact-one__bg" aria-hidden="true">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/images/shapes/contact-shape-1-1.png"
-          alt=""
-          width={909}
-          height={784}
-          className="contact-one__bg__shape"
-        />
+        {contact.showShape ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src="/images/shapes/contact-shape-1-1.png"
+            alt=""
+            width={909}
+            height={784}
+            className="contact-one__bg__shape"
+          />
+        ) : null}
       </div>
 
       <Container className="contact-one__inner">
@@ -139,48 +153,41 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
               light
             />
 
-            <ul className="contact-one__info">
-              {phone ? (
-                <li>
-                  <Reveal direction="right" duration={1300}>
-                    <InfoCard
-                      icon="icon-phone-call"
-                      title={contact.phoneTitle}
-                      text={phone}
-                      href={details.phoneHref.trim() || `tel:${phone.replace(/\s+/g, "")}`}
-                    />
-                  </Reveal>
-                </li>
-              ) : null}
-              {email ? (
-                <li>
-                  <Reveal direction="left" duration={1300}>
-                    <InfoCard
-                      icon="icon-mail"
-                      title={contact.emailTitle}
-                      text={email}
-                      href={`mailto:${email}`}
-                    />
-                  </Reveal>
-                </li>
-              ) : null}
-              {address ? (
-                <li>
-                  <Reveal direction="right" duration={1300}>
-                    <InfoCard
-                      icon="icon-round-arrow"
-                      title={contact.locationTitle}
-                      text={address}
-                      href={
-                        addressMapUrl ||
-                        `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`
-                      }
-                      external
-                    />
-                  </Reveal>
-                </li>
-              ) : null}
-            </ul>
+            {showPhone || showEmail || showLocation ? (
+              <ul className="contact-one__info">
+                {showPhone ? (
+                  <InfoCard
+                    icon="icon-phone-call"
+                    title={contact.phoneTitle}
+                    text={phone}
+                    href={phoneHref || `tel:${phone.replace(/\s+/g, "")}`}
+                    direction="right"
+                  />
+                ) : null}
+                {showEmail ? (
+                  <InfoCard
+                    icon="icon-mail"
+                    title={contact.emailTitle}
+                    text={email}
+                    href={`mailto:${email}`}
+                    direction="left"
+                  />
+                ) : null}
+                {showLocation ? (
+                  <InfoCard
+                    icon="icon-round-arrow"
+                    title={contact.locationTitle}
+                    text={location}
+                    href={
+                      locationUrl ||
+                      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`
+                    }
+                    external
+                    direction="right"
+                  />
+                ) : null}
+              </ul>
+            ) : null}
           </div>
 
           <Reveal direction="up" duration={1300} className="xl:col-span-7">
@@ -192,7 +199,7 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
                     id="contact-name"
                     name="name"
                     type="text"
-                    placeholder="Your Name *"
+                    label={contact.nameLabel}
                     autoComplete="name"
                     error={errors.name}
                     full
@@ -201,7 +208,7 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
                     id="contact-company"
                     name="company"
                     type="text"
-                    placeholder="Company Name"
+                    label={contact.companyLabel}
                     autoComplete="organization"
                     required={false}
                     error={errors.company}
@@ -211,7 +218,7 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
                     id="contact-email"
                     name="email"
                     type="email"
-                    placeholder="Your Mail *"
+                    label={contact.emailLabel}
                     autoComplete="email"
                     error={errors.email}
                   />
@@ -219,7 +226,7 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
                     id="contact-phone"
                     name="phone"
                     type="tel"
-                    placeholder="Your Mobile *"
+                    label={contact.mobileLabel}
                     autoComplete="tel"
                     error={errors.phone}
                   />
@@ -227,7 +234,7 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
                     id="contact-location"
                     name="location"
                     type="text"
-                    placeholder="Your Location *"
+                    label={contact.locationLabel}
                     autoComplete="address-level2"
                     error={errors.location}
                     full
@@ -263,6 +270,15 @@ export function ContactSection({ contact, details }: ContactSectionProps) {
           </Reveal>
         </div>
       </Container>
+
+      {showSideImage ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={contact.sideImageUrl}
+          alt={contact.sideImageAlt}
+          className="contact-one__image"
+        />
+      ) : null}
     </section>
   );
 }

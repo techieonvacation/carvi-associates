@@ -11,9 +11,26 @@ function toPayload(row: {
   titleLine2: string;
   taglineBg: string;
   phoneTitle: string;
+  phoneText: string;
+  phoneHref: string;
+  showPhone: boolean;
   emailTitle: string;
+  emailText: string;
+  showEmail: boolean;
   locationTitle: string;
+  locationText: string;
+  locationUrl: string;
+  showLocation: boolean;
+  nameLabel: string;
+  companyLabel: string;
+  emailLabel: string;
+  mobileLabel: string;
+  locationLabel: string;
   submitLabel: string;
+  sideImageUrl: string;
+  sideImageAlt: string;
+  showSideImage: boolean;
+  showShape: boolean;
   isVisible: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -29,9 +46,26 @@ function toPayload(row: {
     titleLine2: row.titleLine2,
     taglineBg: row.taglineBg,
     phoneTitle: row.phoneTitle,
+    phoneText: row.phoneText,
+    phoneHref: row.phoneHref,
+    showPhone: row.showPhone,
     emailTitle: row.emailTitle,
+    emailText: row.emailText,
+    showEmail: row.showEmail,
     locationTitle: row.locationTitle,
+    locationText: row.locationText,
+    locationUrl: row.locationUrl,
+    showLocation: row.showLocation,
+    nameLabel: row.nameLabel,
+    companyLabel: row.companyLabel,
+    emailLabel: row.emailLabel,
+    mobileLabel: row.mobileLabel,
+    locationLabel: row.locationLabel,
     submitLabel: row.submitLabel,
+    sideImageUrl: row.sideImageUrl,
+    sideImageAlt: row.sideImageAlt,
+    showSideImage: row.showSideImage,
+    showShape: row.showShape,
     isVisible: row.isVisible,
     seoTitle: row.seoTitle,
     seoDescription: row.seoDescription,
@@ -54,9 +88,26 @@ export async function GET() {
         titleLine2: defaultContact.title[1],
         taglineBg: defaultContact.taglineBg,
         phoneTitle: defaultContact.phoneTitle,
+        phoneText: defaultContact.phoneText,
+        phoneHref: defaultContact.phoneHref,
+        showPhone: defaultContact.showPhone,
         emailTitle: defaultContact.emailTitle,
+        emailText: defaultContact.emailText,
+        showEmail: defaultContact.showEmail,
         locationTitle: defaultContact.locationTitle,
+        locationText: defaultContact.locationText,
+        locationUrl: defaultContact.locationUrl,
+        showLocation: defaultContact.showLocation,
+        nameLabel: defaultContact.nameLabel,
+        companyLabel: defaultContact.companyLabel,
+        emailLabel: defaultContact.emailLabel,
+        mobileLabel: defaultContact.mobileLabel,
+        locationLabel: defaultContact.locationLabel,
         submitLabel: defaultContact.submitLabel,
+        sideImageUrl: defaultContact.sideImageUrl,
+        sideImageAlt: defaultContact.sideImageAlt,
+        showSideImage: defaultContact.showSideImage,
+        showShape: defaultContact.showShape,
         isVisible: defaultContact.isVisible,
         seoTitle: defaultContact.seoTitle,
         seoDescription: defaultContact.seoDescription,
@@ -90,9 +141,26 @@ export async function PUT(request: Request) {
     titleLine2: parsed.data.titleLine2.trim(),
     taglineBg: parsed.data.taglineBg.trim() || defaultContact.taglineBg,
     phoneTitle: parsed.data.phoneTitle.trim(),
+    phoneText: parsed.data.phoneText.trim(),
+    phoneHref: parsed.data.phoneHref.trim(),
+    showPhone: parsed.data.showPhone,
     emailTitle: parsed.data.emailTitle.trim(),
+    emailText: parsed.data.emailText.trim(),
+    showEmail: parsed.data.showEmail,
     locationTitle: parsed.data.locationTitle.trim(),
+    locationText: parsed.data.locationText.trim(),
+    locationUrl: parsed.data.locationUrl.trim(),
+    showLocation: parsed.data.showLocation,
+    nameLabel: parsed.data.nameLabel.trim(),
+    companyLabel: parsed.data.companyLabel.trim(),
+    emailLabel: parsed.data.emailLabel.trim(),
+    mobileLabel: parsed.data.mobileLabel.trim(),
+    locationLabel: parsed.data.locationLabel.trim(),
     submitLabel: parsed.data.submitLabel.trim(),
+    sideImageUrl: parsed.data.sideImageUrl.trim(),
+    sideImageAlt: parsed.data.sideImageAlt.trim(),
+    showSideImage: parsed.data.showSideImage,
+    showShape: parsed.data.showShape,
     isVisible: parsed.data.isVisible,
     seoTitle: normalizeNullable(parsed.data.seoTitle),
     seoDescription: normalizeNullable(parsed.data.seoDescription),

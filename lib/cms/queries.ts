@@ -660,9 +660,26 @@ function mapContactSection(row: {
   titleLine2: string;
   taglineBg: string;
   phoneTitle: string;
+  phoneText: string;
+  phoneHref: string;
+  showPhone: boolean;
   emailTitle: string;
+  emailText: string;
+  showEmail: boolean;
   locationTitle: string;
+  locationText: string;
+  locationUrl: string;
+  showLocation: boolean;
+  nameLabel: string;
+  companyLabel: string;
+  emailLabel: string;
+  mobileLabel: string;
+  locationLabel: string;
   submitLabel: string;
+  sideImageUrl: string;
+  sideImageAlt: string;
+  showSideImage: boolean;
+  showShape: boolean;
   isVisible: boolean;
   seoTitle: string | null;
   seoDescription: string | null;
@@ -677,9 +694,26 @@ function mapContactSection(row: {
     title: [row.titleLine1, row.titleLine2],
     taglineBg: row.taglineBg || defaultContact.taglineBg,
     phoneTitle: row.phoneTitle,
+    phoneText: row.phoneText.trim(),
+    phoneHref: row.phoneHref.trim(),
+    showPhone: row.showPhone,
     emailTitle: row.emailTitle,
+    emailText: row.emailText.trim(),
+    showEmail: row.showEmail,
     locationTitle: row.locationTitle,
+    locationText: row.locationText.trim(),
+    locationUrl: row.locationUrl.trim(),
+    showLocation: row.showLocation,
+    nameLabel: row.nameLabel,
+    companyLabel: row.companyLabel,
+    emailLabel: row.emailLabel,
+    mobileLabel: row.mobileLabel,
+    locationLabel: row.locationLabel,
     submitLabel: row.submitLabel,
+    sideImageUrl: row.sideImageUrl.trim(),
+    sideImageAlt: row.sideImageAlt.trim(),
+    showSideImage: row.showSideImage,
+    showShape: row.showShape,
     isVisible: row.isVisible,
     seoTitle: row.seoTitle,
     seoDescription: row.seoDescription,

@@ -48,7 +48,7 @@ export default async function Home() {
         <Blog blog={blog} />
         <ContactSection
           contact={content.contact}
-          details={{
+          fallback={{
             phone: content.topbar.phone,
             phoneHref: content.topbar.phoneHref,
             email: content.topbar.email,
