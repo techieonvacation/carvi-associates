@@ -23,6 +23,12 @@ import {
   GalleryHorizontal,
   Newspaper,
   MailPlus,
+  Search,
+  FileCode2,
+  Braces,
+  TerminalSquare,
+  Route,
+  Gauge,
 } from "lucide-react";
 import {
   Sidebar,
@@ -39,7 +45,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 
-const items = [
+const contentItems = [
   { href: "/admin", label: "Dashboard", icon: LayoutDashboard, exact: true },
   { href: "/admin/topbar", label: "Top Bar", icon: PanelTop },
   { href: "/admin/navigation", label: "Navigation", icon: Navigation },
@@ -60,6 +66,15 @@ const items = [
   { href: "/admin/socials", label: "Social Links", icon: Share2 },
 ];
 
+const seoItems = [
+  { href: "/admin/seo", label: "Global SEO", icon: Search, exact: true },
+  { href: "/admin/seo/pages", label: "Page SEO", icon: FileCode2 },
+  { href: "/admin/seo/structured-data", label: "Structured Data", icon: Braces },
+  { href: "/admin/seo/scripts", label: "Tracking & Scripts", icon: TerminalSquare },
+  { href: "/admin/seo/technical", label: "Technical SEO", icon: Route },
+  { href: "/admin/seo/audit", label: "SEO Health", icon: Gauge },
+];
+
 type AdminSidebarProps = {
   role: "ADMIN" | "MANAGER";
 };
@@ -68,8 +83,31 @@ export function AdminSidebar({ role }: AdminSidebarProps) {
   const pathname = usePathname();
   const navItems =
     role === "ADMIN"
-      ? [...items, { href: "/admin/users", label: "Users", icon: Users, exact: false }]
-      : items;
+      ? [...contentItems, { href: "/admin/users", label: "Users", icon: Users, exact: false }]
+      : contentItems;
+
+  function renderItem(item: {
+    href: string;
+    label: string;
+    icon: typeof LayoutDashboard;
+    exact?: boolean;
+  }) {
+    const active = item.exact ? pathname === item.href : pathname.startsWith(item.href);
+    const Icon = item.icon;
+    return (
+      <SidebarMenuItem key={item.href}>
+        <SidebarMenuButton
+          render={<Link href={item.href} />}
+          isActive={active}
+          tooltip={item.label}
+          className="transition-all duration-200 data-[active=true]:bg-primary/15 data-[active=true]:text-foreground"
+        >
+          <Icon className="size-4" />
+          <span>{item.label}</span>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  }
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border/80">
@@ -88,27 +126,13 @@ export function AdminSidebar({ role }: AdminSidebarProps) {
         <SidebarGroup>
           <SidebarGroupLabel>Content</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu>
-              {navItems.map((item) => {
-                const active = item.exact
-                  ? pathname === item.href
-                  : pathname.startsWith(item.href);
-                const Icon = item.icon;
-                return (
-                  <SidebarMenuItem key={item.href}>
-                    <SidebarMenuButton
-                      render={<Link href={item.href} />}
-                      isActive={active}
-                      tooltip={item.label}
-                      className="transition-all duration-200 data-[active=true]:bg-primary/15 data-[active=true]:text-foreground"
-                    >
-                      <Icon className="size-4" />
-                      <span>{item.label}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
+            <SidebarMenu>{navItems.map(renderItem)}</SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>SEO &amp; AEO</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>{seoItems.map(renderItem)}</SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

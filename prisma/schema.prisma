@@ -798,3 +798,452 @@ model BlogComment {
   @@index([status])
   @@index([deletedAt])
 }
+
+enum SeoOrganizationType {
+  ORGANIZATION
+  LOCAL_BUSINESS
+  PROFESSIONAL_SERVICE
+  ACCOUNTING_SERVICE
+  FINANCIAL_SERVICE
+  LEGAL_SERVICE
+  CORPORATION
+  CONSULTING_AGENCY
+}
+
+enum SeoTwitterCard {
+  SUMMARY
+  SUMMARY_LARGE_IMAGE
+  APP
+  PLAYER
+}
+
+enum SeoChangeFrequency {
+  ALWAYS
+  HOURLY
+  DAILY
+  WEEKLY
+  MONTHLY
+  YEARLY
+  NEVER
+}
+
+enum SeoImagePreview {
+  NONE
+  STANDARD
+  LARGE
+}
+
+enum SeoScriptPlacement {
+  HEAD
+  BODY_START
+  BODY_END
+}
+
+enum SeoScriptStrategy {
+  BEFORE_INTERACTIVE
+  AFTER_INTERACTIVE
+  LAZY_ONLOAD
+  WORKER
+}
+
+enum SeoScriptScope {
+  ALL
+  INCLUDE
+  EXCLUDE
+}
+
+enum SeoConsentCategory {
+  NECESSARY
+  ANALYTICS
+  MARKETING
+  PREFERENCES
+}
+
+enum SeoIntegrationProvider {
+  GOOGLE_ANALYTICS
+  GOOGLE_TAG_MANAGER
+  GOOGLE_ADS
+  GOOGLE_SEARCH_CONSOLE
+  GOOGLE_OPTIMIZE
+  BING_WEBMASTER
+  BING_UET
+  META_PIXEL
+  LINKEDIN_INSIGHT
+  TIKTOK_PIXEL
+  PINTEREST_TAG
+  X_PIXEL
+  HOTJAR
+  MICROSOFT_CLARITY
+  PLAUSIBLE
+  FATHOM
+  MATOMO
+  POSTHOG
+  YANDEX_METRICA
+  CRISP_CHAT
+  TAWK_TO
+  INTERCOM
+  CUSTOM
+}
+
+enum SeoScopeKind {
+  GLOBAL
+  PAGE
+}
+
+enum SeoRedirectMatch {
+  EXACT
+  PREFIX
+  REGEX
+}
+
+model SeoSettings {
+  id                        String              @id @default("default")
+  siteName                  String              @default("Carvi Associates")
+  siteShortName             String              @default("Carvi")
+  siteUrl                   String              @default("https://www.carviassociates.com")
+  defaultTitle              String              @default("Carvi Associates | Chartered Accountants")
+  titleTemplate             String              @default("%s | Carvi Associates")
+  applyTitleTemplate        Boolean             @default(true)
+  defaultDescription        String              @default("Carvi Associates — Chartered Accountants offering audit, tax, GST, compliance and advisory services for Indian businesses.")
+  defaultKeywords           String              @default("chartered accountants, audit, income tax, GST, ROC compliance, business advisory, India")
+  siteLanguage              String              @default("en")
+  siteLocale                String              @default("en_IN")
+  alternateLocales          Json                @default("[]")
+  applicationName           String              @default("Carvi Associates")
+  publisherName             String              @default("Carvi Associates")
+  authorName                String              @default("Carvi Associates")
+  generatorName             String              @default("")
+  copyrightText             String              @default("")
+  categoryMeta              String              @default("Finance")
+  referrerPolicy            String              @default("origin-when-cross-origin")
+  colorScheme               String              @default("light")
+  formatDetectionTelephone  Boolean             @default(false)
+  faviconUrl                String              @default("/images/favicons/favicon-32x32.png")
+  faviconSmallUrl           String              @default("/images/favicons/favicon-16x16.png")
+  appleTouchIconUrl         String              @default("/images/favicons/apple-touch-icon.png")
+  svgIconUrl                String              @default("")
+  maskIconUrl               String              @default("")
+  maskIconColor             String              @default("#006654")
+  themeColorLight           String              @default("#ffffff")
+  themeColorDark            String              @default("#0b1f1b")
+  indexingEnabled           Boolean             @default(true)
+  defaultNoIndex            Boolean             @default(false)
+  defaultNoFollow           Boolean             @default(false)
+  defaultNoArchive          Boolean             @default(false)
+  defaultNoSnippet          Boolean             @default(false)
+  defaultNoImageIndex       Boolean             @default(false)
+  maxSnippet                Int                 @default(-1)
+  maxImagePreview           SeoImagePreview     @default(LARGE)
+  maxVideoPreview           Int                 @default(-1)
+  robotsEnabled             Boolean             @default(true)
+  robotsUseCustom           Boolean             @default(false)
+  robotsCustomContent       String              @default("")
+  robotsExtraLines          String              @default("")
+  robotsHost                String              @default("")
+  robotsCrawlDelay          Int?
+  blockAiCrawlers           Boolean             @default(false)
+  allowedAiCrawlers         Json                @default("[]")
+  sitemapEnabled            Boolean             @default(true)
+  sitemapIncludeImages      Boolean             @default(true)
+  sitemapIncludeBlog        Boolean             @default(true)
+  sitemapIncludeServices    Boolean             @default(true)
+  sitemapIncludeCategories  Boolean             @default(true)
+  sitemapIncludeTags        Boolean             @default(false)
+  sitemapIncludeAuthors     Boolean             @default(true)
+  sitemapIncludePages       Boolean             @default(true)
+  sitemapDefaultChangeFreq  SeoChangeFrequency  @default(WEEKLY)
+  sitemapHomePriority       Float               @default(1)
+  sitemapPagePriority       Float               @default(0.7)
+  sitemapBlogPriority       Float               @default(0.9)
+  sitemapPostPriority       Float               @default(0.8)
+  sitemapServicePriority    Float               @default(0.8)
+  sitemapMaxUrls            Int                 @default(5000)
+  ogType                    String              @default("website")
+  ogSiteName                String              @default("Carvi Associates")
+  ogImageUrl                String              @default("")
+  ogImageAlt                String              @default("")
+  ogImageWidth              Int                 @default(1200)
+  ogImageHeight             Int                 @default(630)
+  twitterCard               SeoTwitterCard      @default(SUMMARY_LARGE_IMAGE)
+  twitterSite               String              @default("")
+  twitterCreator            String              @default("")
+  twitterImageUrl           String              @default("")
+  facebookAppId             String              @default("")
+  facebookPageUrl           String              @default("")
+  googleSiteVerification    String              @default("")
+  bingSiteVerification      String              @default("")
+  yandexVerification        String              @default("")
+  yahooVerification         String              @default("")
+  pinterestVerification     String              @default("")
+  facebookDomainVerification String             @default("")
+  baiduVerification         String              @default("")
+  nortonVerification        String              @default("")
+  customVerifications       Json                @default("[]")
+  organizationEnabled       Boolean             @default(true)
+  organizationType          SeoOrganizationType @default(ACCOUNTING_SERVICE)
+  organizationName          String              @default("Carvi Associates")
+  organizationLegalName     String              @default("Carvi & Associates")
+  organizationAlternateName String              @default("")
+  organizationDescription   String              @default("")
+  organizationLogoUrl       String              @default("")
+  organizationImageUrl      String              @default("")
+  foundingDate              String              @default("")
+  founderName               String              @default("")
+  contactEmail              String              @default("")
+  contactPhone              String              @default("")
+  faxNumber                 String              @default("")
+  priceRange                String              @default("$$")
+  currenciesAccepted        String              @default("INR")
+  paymentAccepted           String              @default("Cash, UPI, Bank Transfer")
+  streetAddress             String              @default("")
+  addressLocality           String              @default("")
+  addressRegion             String              @default("")
+  postalCode                String              @default("")
+  addressCountry            String              @default("IN")
+  latitude                  String              @default("")
+  longitude                 String              @default("")
+  hasMapUrl                 String              @default("")
+  areaServed                Json                @default("[]")
+  openingHours              Json                @default("[]")
+  sameAs                    Json                @default("[]")
+  contactPoints             Json                @default("[]")
+  knowsAbout                Json                @default("[]")
+  awards                    Json                @default("[]")
+  slogan                    String              @default("")
+  numberOfEmployees         Int?
+  taxId                     String              @default("")
+  vatId                     String              @default("")
+  registrationNumber        String              @default("")
+  aggregateRatingEnabled    Boolean             @default(false)
+  ratingValue               Float               @default(5)
+  reviewCount               Int                 @default(0)
+  websiteSchemaEnabled      Boolean             @default(true)
+  searchboxEnabled          Boolean             @default(false)
+  searchUrlTemplate         String              @default("/blog?q={search_term_string}")
+  breadcrumbsEnabled        Boolean             @default(true)
+  webPageSchemaEnabled      Boolean             @default(true)
+  aeoEnabled                Boolean             @default(true)
+  speakableEnabled          Boolean             @default(true)
+  speakableSelectors        Json                @default("[]")
+  faqSchemaEnabled          Boolean             @default(true)
+  qaPageEnabled             Boolean             @default(false)
+  llmsTxtEnabled            Boolean             @default(true)
+  llmsTxtAutoGenerate       Boolean             @default(true)
+  llmsTxtContent            String              @default("")
+  aiSummary                 String              @default("")
+  entityDefinition          String              @default("")
+  aiAnswerTargets           Json                @default("[]")
+  rssEnabled                Boolean             @default(true)
+  rssTitle                  String              @default("Carvi Associates — Knowledge Desk")
+  rssDescription            String              @default("")
+  rssItemLimit              Int                 @default(20)
+  manifestEnabled           Boolean             @default(true)
+  manifestName              String              @default("Carvi Associates")
+  manifestShortName         String              @default("Carvi")
+  manifestDescription       String              @default("")
+  manifestDisplay           String              @default("standalone")
+  manifestStartUrl          String              @default("/")
+  manifestBackgroundColor   String              @default("#ffffff")
+  manifestIcons             Json                @default("[]")
+  preconnectUrls            Json                @default("[]")
+  dnsPrefetchUrls           Json                @default("[]")
+  hreflangEnabled           Boolean             @default(false)
+  hreflangEntries           Json                @default("[]")
+  canonicalHost             String              @default("")
+  forceTrailingSlash        Boolean             @default(false)
+  redirectsEnabled          Boolean             @default(true)
+  indexNowEnabled           Boolean             @default(false)
+  indexNowKey               String              @default("")
+  customHeadHtml            String              @default("")
+  customBodyStartHtml       String              @default("")
+  customBodyEndHtml         String              @default("")
+  updatedAt                 DateTime            @updatedAt
+}
+
+model SeoPage {
+  id                 String              @id @default(cuid())
+  path               String              @unique
+  label              String              @default("")
+  title              String?
+  description        String?
+  keywords           String?
+  canonicalUrl       String?
+  ogTitle            String?
+  ogDescription      String?
+  ogImageUrl         String?
+  ogImageAlt         String?
+  ogType             String?
+  twitterTitle       String?
+  twitterDescription String?
+  twitterImageUrl    String?
+  twitterCard        SeoTwitterCard?
+  noIndex            Boolean             @default(false)
+  noFollow           Boolean             @default(false)
+  noArchive          Boolean             @default(false)
+  noSnippet          Boolean             @default(false)
+  noImageIndex       Boolean             @default(false)
+  maxSnippet         Int?
+  maxImagePreview    SeoImagePreview?
+  maxVideoPreview    Int?
+  breadcrumbLabel    String?
+  focusKeyword       String              @default("")
+  secondaryKeywords  String              @default("")
+  aiSummary          String              @default("")
+  speakableSelectors Json                @default("[]")
+  hreflangEntries    Json                @default("[]")
+  customJsonLd       Json?
+  includeInSitemap   Boolean             @default(true)
+  sitemapPriority    Float?
+  sitemapChangeFreq  SeoChangeFrequency?
+  sitemapLastMod     DateTime?
+  notes              String              @default("")
+  displayOrder       Int                 @default(0)
+  isActive           Boolean             @default(true)
+  deletedAt          DateTime?
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+
+  @@index([displayOrder])
+  @@index([deletedAt])
+  @@index([isActive, deletedAt])
+}
+
+model SeoRedirect {
+  id            String           @id @default(cuid())
+  source        String           @unique
+  destination   String
+  statusCode    Int              @default(308)
+  matchType     SeoRedirectMatch @default(EXACT)
+  preserveQuery Boolean          @default(true)
+  hitCount      Int              @default(0)
+  lastHitAt     DateTime?
+  notes         String           @default("")
+  isActive      Boolean          @default(true)
+  displayOrder  Int              @default(0)
+  deletedAt     DateTime?
+  createdAt     DateTime         @default(now())
+  updatedAt     DateTime         @updatedAt
+
+  @@index([isActive, deletedAt])
+  @@index([displayOrder])
+}
+
+model SeoScript {
+  id              String             @id @default(cuid())
+  name            String
+  description     String             @default("")
+  placement       SeoScriptPlacement @default(HEAD)
+  strategy        SeoScriptStrategy  @default(AFTER_INTERACTIVE)
+  scriptSrc       String             @default("")
+  inlineCode      String             @default("")
+  scriptType      String             @default("")
+  isAsync         Boolean            @default(false)
+  isDefer         Boolean            @default(false)
+  attributes      Json               @default("[]")
+  scope           SeoScriptScope     @default(ALL)
+  pathPatterns    Json               @default("[]")
+  consentCategory SeoConsentCategory @default(ANALYTICS)
+  isActive        Boolean            @default(true)
+  displayOrder    Int                @default(0)
+  deletedAt       DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([displayOrder])
+  @@index([isActive, deletedAt])
+}
+
+model SeoIntegration {
+  id           String                 @id @default(cuid())
+  provider     SeoIntegrationProvider
+  label        String                 @default("")
+  trackingId   String                 @default("")
+  secondaryId  String                 @default("")
+  config       Json                   @default("{}")
+  notes        String                 @default("")
+  isActive     Boolean                @default(true)
+  displayOrder Int                    @default(0)
+  deletedAt    DateTime?
+  createdAt    DateTime               @default(now())
+  updatedAt    DateTime               @updatedAt
+
+  @@index([provider])
+  @@index([displayOrder])
+  @@index([isActive, deletedAt])
+}
+
+model SeoRobotsRule {
+  id            String    @id @default(cuid())
+  userAgent     String
+  allowPaths    Json      @default("[]")
+  disallowPaths Json      @default("[]")
+  crawlDelay    Int?
+  notes         String    @default("")
+  isActive      Boolean   @default(true)
+  displayOrder  Int       @default(0)
+  deletedAt     DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([displayOrder])
+  @@index([isActive, deletedAt])
+}
+
+model SeoSitemapEntry {
+  id              String             @id @default(cuid())
+  url             String             @unique
+  changeFrequency SeoChangeFrequency @default(MONTHLY)
+  priority        Float              @default(0.5)
+  lastModified    DateTime?
+  imageUrls       Json               @default("[]")
+  notes           String             @default("")
+  isActive        Boolean            @default(true)
+  displayOrder    Int                @default(0)
+  deletedAt       DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@index([displayOrder])
+  @@index([isActive, deletedAt])
+}
+
+model SeoFaq {
+  id           String       @id @default(cuid())
+  question     String
+  answer       String
+  scope        SeoScopeKind @default(GLOBAL)
+  pagePath     String       @default("")
+  category     String       @default("")
+  keywords     String       @default("")
+  isSpeakable  Boolean      @default(true)
+  showOnPage   Boolean      @default(true)
+  displayOrder Int          @default(0)
+  isActive     Boolean      @default(true)
+  isVisible    Boolean      @default(true)
+  deletedAt    DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([displayOrder])
+  @@index([scope, pagePath])
+  @@index([isActive, deletedAt])
+}
+
+model SeoSchema {
+  id           String       @id @default(cuid())
+  name         String
+  schemaType   String       @default("Organization")
+  jsonLd       Json         @default("{}")
+  scope        SeoScopeKind @default(GLOBAL)
+  pagePath     String       @default("")
+  notes        String       @default("")
+  isActive     Boolean      @default(true)
+  displayOrder Int          @default(0)
+  deletedAt    DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@index([displayOrder])
+  @@index([scope, pagePath])
+  @@index([isActive, deletedAt])
+}

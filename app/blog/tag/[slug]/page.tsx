@@ -10,7 +10,9 @@ import {
   getBlogTags,
   getRecentBlogPosts,
 } from "@/lib/cms/blog-queries";
-import { SITE_NAME, absoluteUrl } from "@/lib/site-config";
+import { PageJsonLd } from "@/components/seo/site-json-ld";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { SITE_NAME } from "@/lib/site-config";
 
 type TagRouteProps = {
   params: Promise<{ slug: string }>;
@@ -25,22 +27,13 @@ export async function generateMetadata({ params }: TagRouteProps): Promise<Metad
     return { title: `Tag not found | ${SITE_NAME}`, robots: { index: false, follow: false } };
   }
 
-  const description =
-    tag.description || `Articles tagged "${tag.name}" from the ${SITE_NAME} knowledge desk.`;
-
-  return {
-    title: `${tag.name} | Blog | ${SITE_NAME}`,
-    description,
-    alternates: { canonical: absoluteUrl(`/blog/tag/${tag.slug}`) },
-    robots: { index: false, follow: true },
-    openGraph: {
-      type: "website",
-      title: `${tag.name} | Blog | ${SITE_NAME}`,
-      description,
-      url: absoluteUrl(`/blog/tag/${tag.slug}`),
-      siteName: SITE_NAME,
-    },
-  };
+  return buildMetadata({
+    path: `/blog/tag/${tag.slug}`,
+    fallbackTitle: `${tag.name} Articles`,
+    fallbackDescription:
+      tag.description || `Articles tagged "${tag.name}" from the ${SITE_NAME} knowledge desk.`,
+    entity: { noIndex: true },
+  });
 }
 
 export default async function TagArchivePage({ params, searchParams }: TagRouteProps) {
@@ -64,6 +57,20 @@ export default async function TagArchivePage({ params, searchParams }: TagRouteP
 
   return (
     <>
+      <PageJsonLd
+        path={`/blog/tag/${tag.slug}`}
+        title={`${tag.name} Articles`}
+        description={tag.description}
+        pageType="CollectionPage"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          { name: tag.name, path: `/blog/tag/${tag.slug}` },
+        ]}
+        includeGlobalNodes={false}
+        includeFaqs={false}
+      />
+
       <PageBanner
         tagline="Tag"
         titleLines={[tag.name]}

@@ -12,7 +12,11 @@ import {
   getBlogTags,
   getRecentBlogPosts,
 } from "@/lib/cms/blog-queries";
-import { SITE_NAME, absoluteUrl } from "@/lib/site-config";
+import { PageJsonLd } from "@/components/seo/site-json-ld";
+import { buildPersonNode } from "@/lib/seo/json-ld";
+import { buildMetadata, toAbsoluteUrl } from "@/lib/seo/metadata";
+import { getSeoSettings } from "@/lib/seo/queries";
+import { SITE_NAME } from "@/lib/site-config";
 
 type AuthorRouteProps = {
   params: Promise<{ slug: string }>;
@@ -27,24 +31,18 @@ export async function generateMetadata({ params }: AuthorRouteProps): Promise<Me
     return { title: `Author not found | ${SITE_NAME}`, robots: { index: false, follow: false } };
   }
 
-  const description =
-    author.bio ||
-    `Articles written by ${author.name}${author.role ? `, ${author.role}` : ""} at ${SITE_NAME}.`;
-
-  return {
-    title: `${author.name} | ${SITE_NAME}`,
-    description,
-    alternates: { canonical: absoluteUrl(`/blog/author/${author.slug}`) },
-    robots: { index: true, follow: true },
-    openGraph: {
-      type: "profile",
-      title: `${author.name} | ${SITE_NAME}`,
-      description,
-      url: absoluteUrl(`/blog/author/${author.slug}`),
-      siteName: SITE_NAME,
-      ...(author.avatarUrl ? { images: [{ url: absoluteUrl(author.avatarUrl) }] } : {}),
+  return buildMetadata({
+    path: `/blog/author/${author.slug}`,
+    fallbackTitle: author.name,
+    fallbackDescription:
+      author.bio ||
+      `Articles written by ${author.name}${author.role ? `, ${author.role}` : ""} at ${SITE_NAME}.`,
+    entity: {
+      imageUrl: author.avatarUrl || undefined,
+      ogType: "profile",
+      authors: [author.name],
     },
-  };
+  });
 }
 
 export default async function AuthorArchivePage({ params, searchParams }: AuthorRouteProps) {
@@ -54,7 +52,7 @@ export default async function AuthorArchivePage({ params, searchParams }: Author
   if (!author) notFound();
 
   const page = Math.max(1, Number(query.page ?? 1) || 1);
-  const [section, result, categories, tags, recentPosts] = await Promise.all([
+  const [section, result, categories, tags, recentPosts, settings] = await Promise.all([
     getBlogSection(),
     getBlogArchive({
       author: author.slug,
@@ -64,27 +62,37 @@ export default async function AuthorArchivePage({ params, searchParams }: Author
     getBlogCategories(),
     getBlogTags(),
     getRecentBlogPosts(4),
+    getSeoSettings(),
   ]);
 
-  const personJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
+  const authorPath = `/blog/author/${author.slug}`;
+  const personNode = buildPersonNode(settings, {
+    url: toAbsoluteUrl(settings, authorPath),
     name: author.name,
-    url: absoluteUrl(`/blog/author/${author.slug}`),
-    ...(author.role ? { jobTitle: author.role } : {}),
-    ...(author.bio ? { description: author.bio } : {}),
-    ...(author.avatarUrl ? { image: absoluteUrl(author.avatarUrl) } : {}),
-    worksFor: { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") },
-    sameAs: [author.linkedinUrl, author.twitterUrl, author.websiteUrl].filter(Boolean),
-  };
+    role: author.role,
+    bio: author.bio,
+    imageUrl: author.avatarUrl,
+    sameAs: [author.linkedinUrl, author.twitterUrl, author.websiteUrl].filter(
+      (value): value is string => Boolean(value),
+    ),
+  });
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify(personJsonLd).replace(/</g, "\\u003c"),
-        }}
+      <PageJsonLd
+        path={authorPath}
+        title={author.name}
+        description={author.bio}
+        imageUrl={author.avatarUrl || undefined}
+        pageType="ProfilePage"
+        primaryEntityId={`${toAbsoluteUrl(settings, authorPath)}#person`}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          { name: author.name, path: authorPath },
+        ]}
+        extraNodes={[personNode]}
+        includeFaqs={false}
       />
 
       <PageBanner

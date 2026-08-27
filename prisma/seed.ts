@@ -37,6 +37,12 @@ import {
   defaultBlogTags,
 } from "../lib/cms/blog-defaults";
 import { estimateReadingMinutes } from "../lib/cms/blog-sanitize";
+import {
+  defaultSeoFaqs,
+  defaultSeoPages,
+  defaultSeoRobotsRules,
+  defaultSeoSettings,
+} from "../lib/seo/defaults";
 
 const connectionString = process.env.DATABASE_URL;
 if (!connectionString) {
@@ -766,6 +772,51 @@ async function seedBlog() {
         skipDuplicates: true,
       });
     }
+  }
+
+  const existingSeoSettings = await prisma.seoSettings.findUnique({
+    where: { id: "default" },
+  });
+  if (!existingSeoSettings) {
+    await prisma.seoSettings.create({
+      data: {
+        id: "default",
+        ...(defaultSeoSettings as unknown as Record<string, unknown>),
+      } as never,
+    });
+  }
+
+  const seoRuleCount = await prisma.seoRobotsRule.count();
+  if (seoRuleCount === 0) {
+    await prisma.seoRobotsRule.createMany({
+      data: defaultSeoRobotsRules.map((rule) => ({
+        userAgent: rule.userAgent,
+        allowPaths: rule.allowPaths,
+        disallowPaths: rule.disallowPaths,
+        crawlDelay: rule.crawlDelay,
+        notes: rule.notes,
+        isActive: rule.isActive,
+        displayOrder: rule.displayOrder,
+      })),
+    });
+  }
+
+  const seoFaqCount = await prisma.seoFaq.count();
+  if (seoFaqCount === 0) {
+    await prisma.seoFaq.createMany({ data: defaultSeoFaqs });
+  }
+
+  const seoPageCount = await prisma.seoPage.count();
+  if (seoPageCount === 0) {
+    await prisma.seoPage.createMany({
+      data: defaultSeoPages.map((page) => ({
+        path: page.path,
+        label: page.label,
+        title: page.title,
+        description: page.description,
+        displayOrder: page.displayOrder,
+      })),
+    });
   }
 
   // A "Blog" entry in the primary nav, added only if the menu has no blog link.

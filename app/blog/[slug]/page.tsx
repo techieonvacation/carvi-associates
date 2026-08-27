@@ -24,7 +24,11 @@ import {
   getRecentBlogPosts,
   getRelatedPosts,
 } from "@/lib/cms/blog-queries";
-import { SITE_NAME, absoluteUrl } from "@/lib/site-config";
+import { PageJsonLd } from "@/components/seo/site-json-ld";
+import { buildArticleNode } from "@/lib/seo/json-ld";
+import { buildMetadata, toAbsoluteUrl } from "@/lib/seo/metadata";
+import { getSeoSettings } from "@/lib/seo/queries";
+import { SITE_NAME } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
 
 type ArticleRouteProps = {
@@ -39,38 +43,27 @@ export async function generateMetadata({ params }: ArticleRouteProps): Promise<M
     return { title: `Article not found | ${SITE_NAME}`, robots: { index: false, follow: false } };
   }
 
-  const url = absoluteUrl(`/blog/${post.slug}`);
-  const title = post.seoTitle || `${post.title} | ${SITE_NAME}`;
-  const description = post.seoDescription || post.excerpt;
-  const image = absoluteUrl(post.ogImageUrl || post.coverImageUrl);
-
-  return {
-    title,
-    description,
-    keywords: post.seoKeywords ?? post.tags.map((tag) => tag.name).join(", ") ?? undefined,
-    authors: post.author ? [{ name: post.author.name }] : undefined,
-    alternates: { canonical: post.canonicalUrl || url },
-    robots: post.noIndex ? { index: false, follow: false } : { index: true, follow: true },
-    openGraph: {
-      type: "article",
-      title,
-      description,
-      url,
-      siteName: SITE_NAME,
+  return buildMetadata({
+    path: `/blog/${post.slug}`,
+    fallbackTitle: post.title,
+    fallbackDescription: post.excerpt,
+    entity: {
+      title: post.seoTitle,
+      description: post.seoDescription || post.excerpt,
+      keywords: post.seoKeywords || post.tags.map((tag) => tag.name).join(", "),
+      canonicalUrl: post.canonicalUrl,
+      imageUrl: post.ogImageUrl || post.coverImageUrl,
+      imageAlt: post.coverImageAlt || post.title,
+      twitterImageUrl: post.twitterImageUrl,
+      noIndex: post.noIndex,
+      ogType: "article",
       publishedTime: toIsoDate(post.publishedAt),
       modifiedTime: toIsoDate(post.updatedAt ?? post.publishedAt),
       authors: post.author ? [post.author.name] : undefined,
       section: post.category?.name,
       tags: post.tags.map((tag) => tag.name),
-      images: [{ url: image, width: 1200, height: 630, alt: post.coverImageAlt || post.title }],
     },
-    twitter: {
-      card: "summary_large_image",
-      title,
-      description,
-      images: [absoluteUrl(post.twitterImageUrl || post.ogImageUrl || post.coverImageUrl)],
-    },
-  };
+  });
 }
 
 export default async function ArticlePage({ params }: ArticleRouteProps) {
@@ -79,88 +72,70 @@ export default async function ArticlePage({ params }: ArticleRouteProps) {
 
   if (!post) notFound();
 
-  const [section, related, comments, categories, tags, recentPosts] = await Promise.all([
+  const [section, related, comments, categories, tags, recentPosts, settings] = await Promise.all([
     getBlogSection(),
     getRelatedPosts(post, 3),
     getPostComments(post.id),
     getBlogCategories(),
     getBlogTags(),
     getRecentBlogPosts(4),
+    getSeoSettings(),
   ]);
 
-  const url = absoluteUrl(`/blog/${post.slug}`);
+  const url = toAbsoluteUrl(settings, `/blog/${post.slug}`);
   const commentsOpen = section.allowComments && post.allowComments;
   const headings = extractHeadings(post.contentHtml);
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BlogPosting",
-        "@id": `${url}#article`,
-        headline: post.title.slice(0, 110),
-        description: post.seoDescription || post.excerpt,
-        image: [absoluteUrl(post.ogImageUrl || post.coverImageUrl)],
-        datePublished: toIsoDate(post.publishedAt),
-        dateModified: toIsoDate(post.updatedAt ?? post.publishedAt),
-        inLanguage: "en-IN",
-        wordCount: post.readingMinutes * 200,
-        articleSection: post.category?.name,
-        keywords: post.tags.map((tag) => tag.name).join(", "),
-        mainEntityOfPage: { "@type": "WebPage", "@id": url },
-        author: post.author
-          ? {
-              "@type": "Person",
-              name: post.author.name,
-              jobTitle: post.author.role || undefined,
-              url: absoluteUrl(`/blog/author/${post.author.slug}`),
-            }
-          : { "@type": "Organization", name: SITE_NAME, url: absoluteUrl("/") },
-        publisher: {
-          "@type": "Organization",
-          name: SITE_NAME,
-          url: absoluteUrl("/"),
-          logo: { "@type": "ImageObject", url: absoluteUrl("/images/logo-dark.png") },
-        },
-      },
-      {
-        "@type": "BreadcrumbList",
-        itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
-          { "@type": "ListItem", position: 2, name: "Blog", item: absoluteUrl("/blog") },
-          ...(post.category
-            ? [
-                {
-                  "@type": "ListItem",
-                  position: 3,
-                  name: post.category.name,
-                  item: absoluteUrl(`/blog/category/${post.category.slug}`),
-                },
-              ]
-            : []),
-          { "@type": "ListItem", position: post.category ? 4 : 3, name: post.title, item: url },
-        ],
-      },
-      ...(post.faqs.length
-        ? [
-            {
-              "@type": "FAQPage",
-              mainEntity: post.faqs.map((faq) => ({
-                "@type": "Question",
-                name: faq.question,
-                acceptedAnswer: { "@type": "Answer", text: faq.answer },
-              })),
-            },
-          ]
-        : []),
-    ],
-  };
+  const articleNode = buildArticleNode(settings, {
+    url,
+    headline: post.title,
+    description: post.seoDescription || post.excerpt,
+    images: [post.ogImageUrl || post.coverImageUrl],
+    datePublished: toIsoDate(post.publishedAt),
+    dateModified: toIsoDate(post.updatedAt ?? post.publishedAt),
+    authorName: post.author?.name,
+    authorRole: post.author?.role,
+    authorUrl: post.author ? `/blog/author/${post.author.slug}` : undefined,
+    section: post.category?.name,
+    keywords: post.tags.map((tag) => tag.name),
+    wordCount: post.readingMinutes * 200,
+    commentCount: post.commentCount,
+    articleType: "BlogPosting",
+  });
+
+  const faqNode = post.faqs.length
+    ? {
+        "@type": "FAQPage",
+        "@id": `${url}#post-faq`,
+        mainEntity: post.faqs.map((faq) => ({
+          "@type": "Question",
+          name: faq.question,
+          acceptedAnswer: { "@type": "Answer", text: faq.answer },
+        })),
+      }
+    : null;
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
+      <PageJsonLd
+        path={`/blog/${post.slug}`}
+        title={post.seoTitle || post.title}
+        description={post.seoDescription || post.excerpt}
+        imageUrl={post.ogImageUrl || post.coverImageUrl}
+        pageType="ItemPage"
+        datePublished={toIsoDate(post.publishedAt)}
+        dateModified={toIsoDate(post.updatedAt ?? post.publishedAt)}
+        primaryEntityId={`${url}#article`}
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          ...(post.category
+            ? [{ name: post.category.name, path: `/blog/category/${post.category.slug}` }]
+            : []),
+          { name: post.title, path: `/blog/${post.slug}` },
+        ]}
+        extraNodes={[articleNode, faqNode]}
+        includeFaqs={false}
       />
 
       <PageBanner

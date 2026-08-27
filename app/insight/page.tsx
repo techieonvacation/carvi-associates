@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Container } from "@/components/site/Container";
+import { PageJsonLd } from "@/components/seo/site-json-ld";
+import { buildMetadata } from "@/lib/seo/metadata";
 import {
   ActsSection,
   CalculatorsSection,
@@ -42,11 +44,18 @@ export async function generateMetadata({
   const params = await searchParams;
   const filter = parseInsightFilter(params.filter);
   const label = categoryLabel(filter);
+  const isRoot = filter === "all";
 
-  return {
-    title: `${label} | Knowledge Bank | Carvi Associates`,
-    description: INTROS[filter],
-  };
+  return buildMetadata({
+    path: "/insight",
+    fallbackTitle: isRoot ? "Knowledge Bank" : `${label} | Knowledge Bank`,
+    fallbackDescription: INTROS[filter],
+    entity: {
+      description: INTROS[filter],
+      canonicalUrl: undefined,
+      noIndex: !isRoot,
+    },
+  });
 }
 
 function sectionsFor(filter: KnowledgeCategory) {
@@ -72,6 +81,17 @@ export default async function InsightRoute({ searchParams }: InsightRouteProps) 
 
   return (
     <>
+      <PageJsonLd
+        path="/insight"
+        title={filter === "all" ? "Knowledge Bank" : label}
+        description={INTROS[filter]}
+        pageType="CollectionPage"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Knowledge Bank", path: "/insight" },
+        ]}
+      />
+
       <InsightBanner
         tagline="Knowledge Bank"
         title={filter === "all" ? "Knowledge Bank" : label}

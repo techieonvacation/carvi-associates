@@ -1,9 +1,12 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { DM_Sans, Sora, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "./findox.css";
 import { cn } from "@/lib/utils";
-import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site-config";
+import { SeoScripts } from "@/components/seo/seo-scripts";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { getSeoSettings } from "@/lib/seo/queries";
+import { getRequestPathname } from "@/lib/seo/request";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -23,36 +26,34 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  // Every relative Open Graph / canonical URL resolves against this origin.
-  metadataBase: new URL(SITE_URL),
-  // No `template` on purpose: page-level titles come from CMS-authored SEO
-  // fields that already carry the brand suffix, and a template would double it.
-  title: "Carvi Associates | Finance, Business & Consulting",
-  description: SITE_DESCRIPTION,
-  openGraph: {
-    type: "website",
-    siteName: SITE_NAME,
-    locale: "en_IN",
-  },
-  twitter: { card: "summary_large_image" },
-  icons: {
-    icon: [
-      { url: "/images/favicons/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/images/favicons/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-    ],
-    apple: "/images/favicons/apple-touch-icon.png",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const pathname = await getRequestPathname("/");
+  return buildMetadata({ path: pathname });
+}
 
-export default function RootLayout({
+export async function generateViewport(): Promise<Viewport> {
+  const settings = await getSeoSettings();
+  return {
+    width: "device-width",
+    initialScale: 1,
+    themeColor: [
+      { media: "(prefers-color-scheme: light)", color: settings.themeColorLight },
+      { media: "(prefers-color-scheme: dark)", color: settings.themeColorDark },
+    ],
+    colorScheme: settings.colorScheme as Viewport["colorScheme"],
+  };
+}
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const [settings, pathname] = await Promise.all([getSeoSettings(), getRequestPathname("/")]);
+
   return (
     <html
-      lang="en"
+      lang={settings.siteLanguage || "en"}
       data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={cn(
@@ -64,8 +65,13 @@ export default function RootLayout({
         "font-sans",
       )}
     >
+      <head>
+        <SeoScripts placement="HEAD" pathname={pathname} />
+      </head>
       <body suppressHydrationWarning className="min-h-full flex flex-col">
+        <SeoScripts placement="BODY_START" pathname={pathname} />
         {children}
+        <SeoScripts placement="BODY_END" pathname={pathname} />
       </body>
     </html>
   );

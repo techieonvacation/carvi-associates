@@ -10,7 +10,9 @@ import {
   getBlogTags,
   getRecentBlogPosts,
 } from "@/lib/cms/blog-queries";
-import { SITE_NAME, absoluteUrl } from "@/lib/site-config";
+import { PageJsonLd } from "@/components/seo/site-json-ld";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { SITE_NAME } from "@/lib/site-config";
 
 type CategoryRouteProps = {
   params: Promise<{ slug: string }>;
@@ -25,27 +27,20 @@ export async function generateMetadata({ params }: CategoryRouteProps): Promise<
     return { title: `Topic not found | ${SITE_NAME}`, robots: { index: false, follow: false } };
   }
 
-  const title = category.seoTitle || `${category.name} Articles & Updates | ${SITE_NAME}`;
-  const description =
-    category.seoDescription ||
-    category.description ||
-    `${category.name} insights, guidance and compliance updates from ${SITE_NAME}.`;
-
-  return {
-    title,
-    description,
-    keywords: category.seoKeywords ?? undefined,
-    alternates: { canonical: absoluteUrl(`/blog/category/${category.slug}`) },
-    robots: category.noIndex ? { index: false, follow: false } : { index: true, follow: true },
-    openGraph: {
-      type: "website",
-      title,
-      description,
-      url: absoluteUrl(`/blog/category/${category.slug}`),
-      siteName: SITE_NAME,
-      ...(category.imageUrl ? { images: [{ url: absoluteUrl(category.imageUrl) }] } : {}),
+  return buildMetadata({
+    path: `/blog/category/${category.slug}`,
+    fallbackTitle: `${category.name} Articles & Updates`,
+    fallbackDescription:
+      category.description ||
+      `${category.name} insights, guidance and compliance updates from ${SITE_NAME}.`,
+    entity: {
+      title: category.seoTitle,
+      description: category.seoDescription,
+      keywords: category.seoKeywords,
+      imageUrl: category.imageUrl ?? undefined,
+      noIndex: category.noIndex,
     },
-  };
+  });
 }
 
 export default async function CategoryArchivePage({ params, searchParams }: CategoryRouteProps) {
@@ -69,6 +64,19 @@ export default async function CategoryArchivePage({ params, searchParams }: Cate
 
   return (
     <>
+      <PageJsonLd
+        path={`/blog/category/${category.slug}`}
+        title={category.seoTitle || `${category.name} Articles & Updates`}
+        description={category.seoDescription || category.description}
+        imageUrl={category.imageUrl ?? undefined}
+        pageType="CollectionPage"
+        breadcrumbs={[
+          { name: "Home", path: "/" },
+          { name: "Blog", path: "/blog" },
+          { name: category.name, path: `/blog/category/${category.slug}` },
+        ]}
+      />
+
       <PageBanner
         tagline="Category"
         titleLines={[category.name]}
