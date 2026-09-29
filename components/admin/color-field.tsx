@@ -25,7 +25,7 @@ export function ColorField({
       <div className="flex items-center gap-2">
         <input
           type="color"
-          value={/^#[0-9a-fA-F]{6}$/.test(value) ? value : "#000000"}
+          value={/^#[0-9a-fA-F]{6}$/.test(value) ? value : "#3a3020"}
           onChange={(event) => onChange(event.target.value)}
           aria-label={`${label} swatch`}
           className="size-9 shrink-0 cursor-pointer rounded-xl border border-input bg-transparent p-1"
@@ -33,7 +33,7 @@ export function ColorField({
         <Input
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          placeholder="#006654"
+          placeholder="#5c6b45"
           spellCheck={false}
         />
       </div>

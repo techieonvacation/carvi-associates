@@ -4,9 +4,9 @@ import "./css/client.css";
 
 /**
  * ClientLogos — the `.client-carousel` band. A centred uppercase headline
- * (yellow 330+/200+ counts) flanked by `//` shape marks and thin divider
+ * (tan 330+/200+ counts) flanked by `//` shape marks and thin divider
  * lines, above an autoplaying row of client logos that swap to a coloured
- * "-hover" variant inside a green pill on hover. Mirrors the reference owl
+ * "-hover" variant inside an olive pill on hover. Mirrors the reference owl
  * carousel (5 / 4 / 3 / 2 / 1 items at 1200 / 992 / 768 / 431 / 0, margin 40).
  */
 
@@ -18,7 +18,7 @@ const LOGOS = Array.from({ length: 8 }, () => ({
 
 export function ClientLogos() {
   return (
-    <section className="client-carousel relative bg-white">
+    <section className="client-carousel relative bg-background">
       <Container>
         <div className="client-carousel__content text-center">
           <h4 className="client-carousel__title m-0 text-[16px] leading-[1.625] font-medium text-muted-foreground uppercase">

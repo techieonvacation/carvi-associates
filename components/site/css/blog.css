@@ -5,7 +5,7 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  background: linear-gradient(180deg, #ecf5f4 14.98%, rgba(236, 245, 244, 0) 100%);
+  background: linear-gradient(180deg, var(--findox-white3) 14.98%, rgba(var(--findox-white3-rgb), 0) 100%);
   pointer-events: none;
 }
 

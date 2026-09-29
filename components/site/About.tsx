@@ -17,7 +17,7 @@ type AboutProps = {
 /**
  * The reference's inline check-mark + dot-grid icon (findox `about01/02/03`
  * tabs). Colours are handled in about.css: the checkmark path (first) and the
- * dot-grid paths (rest) swap green/yellow on `li:hover`.
+ * dot-grid paths (rest) swap olive/tan on `li:hover`.
  */
 function CheckIcon() {
   return (
@@ -88,7 +88,7 @@ export function About({ about }: AboutProps) {
   const [textExpanded, setTextExpanded] = useState(false);
 
   return (
-    <section id="about-us" className="about-one relative bg-white pb-30 max-md:pb-25 max-sm:pb-20">
+    <section id="about-us" className="about-one relative bg-background pb-30 max-md:pb-25 max-sm:pb-20">
       <Container>
         <div className="grid grid-cols-1 gap-x-6 gap-y-[50px] lg:grid-cols-2">
           <Reveal direction="right" duration={1300}>
@@ -169,7 +169,7 @@ export function About({ about }: AboutProps) {
                   type="button"
                   onClick={() => setTextExpanded((open) => !open)}
                   aria-expanded={textExpanded}
-                  className="about-one__read-more mt-3 inline-flex items-center gap-2 font-heading text-[15px] font-semibold text-accent capitalize transition-colors duration-300 hover:text-primary"
+                  className="about-one__read-more mt-3 inline-flex items-center gap-2 font-heading text-[15px] font-semibold text-accent capitalize transition-colors duration-300 hover:text-foreground"
                 >
                   {textExpanded ? "Read Less" : "Read More"}
                   <i

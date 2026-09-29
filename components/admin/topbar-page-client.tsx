@@ -96,7 +96,7 @@ export function TopbarPageClient({ user }: TopbarPageProps) {
               <CardHeader>
                 <CardTitle>Note strip</CardTitle>
                 <CardDescription>
-                  The yellow rotated badge and the sentence beside it, at the far left of the
+                  The tan rotated badge and the sentence beside it, at the far left of the
                   top bar.
                 </CardDescription>
               </CardHeader>
@@ -118,7 +118,7 @@ export function TopbarPageClient({ user }: TopbarPageProps) {
                       onChange={(event) => setForm({ ...form, noteLabel: event.target.value })}
                     />
                     <p className="text-xs text-muted-foreground">
-                      Rendered vertically inside the yellow badge.
+                      Rendered vertically inside the tan badge.
                     </p>
                   </div>
                   <div className="space-y-2">
@@ -295,7 +295,7 @@ export function TopbarPageClient({ user }: TopbarPageProps) {
               <CardHeader>
                 <CardTitle>Social strip</CardTitle>
                 <CardDescription>
-                  The green band on the right of the top bar. The icons themselves are managed
+                  The olive band on the right of the top bar. The icons themselves are managed
                   under Social Links.
                 </CardDescription>
               </CardHeader>

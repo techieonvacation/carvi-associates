@@ -1,6 +1,6 @@
 /* Footer — advanced effects only (layout is Tailwind). */
 
-/* Background photo tinted with the dark-green base colour (94% opacity),
+/* Background photo tinted with the olive base colour (94% opacity),
    letting a hint of the texture show through — matches the reference
    `.main-footer__bg::after` overlay. */
 .main-footer__bg::after {
@@ -12,7 +12,7 @@
 
 /*
  * Findox global rules force dark headings (`.findox-scope h2/h3`) and
- * brand-green links (`.findox-scope a`). Those lose contrast on the
+ * brand-olive links (`.findox-scope a`). Those lose contrast on the
  * olive footer — reassert light cream/white text here with higher
  * specificity so titles, lists, blog cards, and copyright stay readable.
  */
@@ -20,19 +20,19 @@
 .main-footer .footer-widget__text,
 .main-footer .footer-widget__blog__date,
 .main-footer .main-footer__copyright {
-  color: #ffffff;
+  color: var(--findox-white);
 }
 
 .main-footer .footer-widget__title,
 .main-footer .footer-widget__blog__title {
-  color: #ffffff;
+  color: var(--findox-white);
 }
 
 .main-footer a,
 .main-footer .footer-widget__links a,
 .main-footer .footer-widget__blog__title a,
 .main-footer .main-footer__page a {
-  color: #ffffff;
+  color: var(--findox-white);
 }
 
 .main-footer a:hover,
@@ -40,22 +40,22 @@
 .main-footer .footer-widget__blog__title a:hover,
 .main-footer .main-footer__page a:hover,
 .main-footer .footer-widget__links li:hover::before {
-  color: var(--findox-primary, #f5c835);
+  color: var(--findox-primary);
 }
 
 .main-footer .footer-widget__links li::before {
-  color: #ffffff;
+  color: var(--findox-white);
 }
 
 .main-footer .social-links a {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.55);
+  color: var(--findox-white);
+  border-color: rgba(var(--findox-white-rgb), 0.55);
 }
 
 .main-footer .social-links a:hover {
-  color: var(--findox-base, #006654);
-  background-color: var(--findox-primary, #f5c835);
-  border-color: var(--findox-primary, #f5c835);
+  color: var(--findox-base);
+  background-color: var(--findox-primary);
+  border-color: var(--findox-primary);
 }
 
 /* Link underline sweep — shared by the widget link lists, the blog

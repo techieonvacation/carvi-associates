@@ -11,10 +11,10 @@ type ServicesProps = {
 
 /**
  * Services — the "services-one" grid of six white service-card tiles on a
- * mint section background. Each card layers a masked white background shape
+ * tinted section background. Each card layers a masked white background shape
  * (service-card__bg) with a photo that wipes in from the left on hover
  * (service-card__bg__main as a CSS background — keeps hover art out of LCP
- * while matching the reference's background-size:cover reveal), a yellow
+ * while matching the reference's background-size:cover reveal), a tan
  * line-art icon + huge outline number above a divider tick, and a circular
  * findox-style arrow button pinned to the notch at the card's bottom-right
  * corner. Mirrors the reference `.services-one` / `.service-card` markup 1:1.
@@ -104,7 +104,7 @@ export function Services({ services }: ServicesProps) {
                         {/* Real text in an inner span (not directly on the h4) so the
                             transparent fill isn't clobbered by the `.findox-scope h4`
                             color rule — mirrors the reference's decoupled ::before glyph. */}
-                        <span className="text-stroke inline-block text-[40px] font-semibold [--stroke-color:#dddddd] [writing-mode:sideways-lr] transition-colors duration-500 group-hover:[--stroke-color:#f5c835]">
+                        <span className="text-stroke inline-block text-[40px] font-semibold [--stroke-color:var(--color-border)] [writing-mode:sideways-lr] transition-colors duration-500 group-hover:[--stroke-color:var(--color-primary)]">
                           {String(i + 1).padStart(2, "0")}
                         </span>
                       </h4>

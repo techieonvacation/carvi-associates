@@ -158,9 +158,9 @@ export default async function AdminDashboardPage() {
             const Icon = card.icon;
             return (
               <Link key={card.href} href={card.href} className="group">
-                <Card className="h-full border-border/70 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg">
+                <Card className="h-full border-border/70 transition-all duration-300 hover:-translate-y-1 hover:border-accent/40 hover:shadow-lg">
                   <CardHeader className="space-y-4">
-                    <div className="flex size-11 items-center justify-center rounded-xl bg-primary/12 text-primary transition-transform duration-300 group-hover:scale-105">
+                    <div className="flex size-11 items-center justify-center rounded-xl bg-secondary text-accent transition-transform duration-300 dark:text-primary group-hover:scale-105">
                       <Icon className="size-5" />
                     </div>
                     <div>
@@ -169,7 +169,7 @@ export default async function AdminDashboardPage() {
                     </div>
                   </CardHeader>
                   <CardContent>
-                    <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+                    <span className="inline-flex items-center gap-1 text-sm font-medium text-accent dark:text-primary">
                       Open
                       <ArrowUpRight className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </span>
@@ -198,7 +198,7 @@ export default async function AdminDashboardPage() {
             {user.role === "ADMIN" ? (
               <Link
                 href="/admin/users"
-                className="inline-flex items-center gap-2 text-sm font-medium text-primary"
+                className="inline-flex items-center gap-2 text-sm font-medium text-accent dark:text-primary"
               >
                 <Users className="size-4" />
                 Manage users

@@ -50,7 +50,7 @@
 .seo-faq__item[open] summary::after {
   content: "−";
   background: var(--color-accent);
-  color: #fff;
+  color: var(--color-accent-foreground);
 }
 
 .seo-faq__answer {

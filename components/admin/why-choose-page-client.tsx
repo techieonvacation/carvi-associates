@@ -82,7 +82,7 @@ export function WhyChoosePageClient({ user }: WhyChoosePageProps) {
             titleLine1: sectionData.whyChoose.titleLine1 ?? "",
             titleLine2: sectionData.whyChoose.titleLine2 ?? "",
             description: sectionData.whyChoose.description ?? "",
-            taglineBg: sectionData.whyChoose.taglineBg ?? "#ecf5f4",
+            taglineBg: sectionData.whyChoose.taglineBg ?? "#f4ebd8",
             imageUrl: sectionData.whyChoose.imageUrl ?? "",
             imageAlt: sectionData.whyChoose.imageAlt ?? "",
             shapeImageUrl: sectionData.whyChoose.shapeImageUrl ?? "",

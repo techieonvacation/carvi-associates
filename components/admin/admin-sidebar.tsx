@@ -100,7 +100,7 @@ export function AdminSidebar({ role }: AdminSidebarProps) {
           render={<Link href={item.href} />}
           isActive={active}
           tooltip={item.label}
-          className="transition-all duration-200 data-[active=true]:bg-primary/15 data-[active=true]:text-foreground"
+          className="transition-all duration-200 data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
         >
           <Icon className="size-4" />
           <span>{item.label}</span>

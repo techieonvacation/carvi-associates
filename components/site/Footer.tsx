@@ -14,7 +14,7 @@ type FooterProps = {
 };
 
 /**
- * Footer — dark-green `main-footer` band: a 4-column widget row (about +
+ * Footer — olive `main-footer` band: a 4-column widget row (about +
  * socials / links / explore / recent blog) over a tinted background photo,
  * a faint giant wordmark watermark, and a slim copyright bar. Mirrors the
  * reference's Bootstrap `col-xl-3 col-lg-* col-md-* col-sm-*` grid via

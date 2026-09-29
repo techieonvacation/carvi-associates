@@ -15,7 +15,7 @@ type WorkingProcessProps = {
  * WorkingProcess — the `.working-process` zig-zag 4-step timeline. At `lg`+
  * the columns alternate image-top/badge-top (`.working-process__card--two`'s
  * `flex-direction: column-reverse` in the reference), and a thin connecting
- * line — yellow start-dot on the left, arrow flourish on the right — runs
+ * line — tan start-dot on the left, arrow flourish on the right — runs
  * behind the "STEP 0N" badges. Below `lg` it drops to a plain 1/2 column
  * stack (see process.css for the line/dot/arrow geometry notes).
  */
@@ -25,7 +25,7 @@ export function WorkingProcess({ workingProcess }: WorkingProcessProps) {
   }
 
   return (
-    <section id="process" className="working-process section-space bg-white py-30 max-md:py-25 max-sm:py-20">
+    <section id="process" className="working-process section-space bg-background py-30 max-md:py-25 max-sm:py-20">
       <Container>
         <SectionHeading
           align="center"

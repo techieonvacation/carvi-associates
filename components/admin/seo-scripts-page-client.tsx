@@ -289,7 +289,7 @@ export function SeoScriptsPageClient({ user }: { user: AdminUser }) {
                                 <TableCell>
                                   <button
                                     type="button"
-                                    className="text-left font-medium hover:text-primary"
+                                    className="text-left font-medium hover:text-accent dark:hover:text-primary"
                                     onClick={() => startIntegration(item)}
                                   >
                                     {item.label || meta.label}
@@ -383,7 +383,7 @@ export function SeoScriptsPageClient({ user }: { user: AdminUser }) {
                           href={providerMeta.helpUrl}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1 hover:text-primary"
+                          className="inline-flex items-center gap-1 hover:text-accent dark:hover:text-primary"
                         >
                           Open {providerMeta.label} console
                           <ExternalLink className="size-3" />
@@ -571,7 +571,7 @@ export function SeoScriptsPageClient({ user }: { user: AdminUser }) {
                               <TableCell>
                                 <button
                                   type="button"
-                                  className="text-left font-medium hover:text-primary"
+                                  className="text-left font-medium hover:text-accent dark:hover:text-primary"
                                   onClick={() => startScript(item)}
                                 >
                                   {item.name}

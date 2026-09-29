@@ -1,17 +1,6 @@
 /* Insight / Knowledge Bank — effects only. Layout, type, colour and spacing
    stay in Tailwind; this file holds the shapes and transitions Tailwind cannot
-   express, and maps the findox button variables into the page scope. */
-
-.insight-scope {
-  --findox-font: var(--font-sans), "DM Sans", sans-serif;
-  --findox-heading-font: var(--font-sora), "Sora", sans-serif;
-  --findox-text: #636363;
-  --findox-base: #006654;
-  --findox-primary: #f5c835;
-  --findox-white: #ffffff;
-  --findox-black4: #131111;
-  --findox-border-color: #dddddd;
-}
+   express. */
 
 /* Ribbon tagline pill — the signature section label shape. */
 .insight-tagline {
@@ -24,9 +13,8 @@
 .insight-banner__bg {
   background-image: linear-gradient(
     118deg,
-    #131111 0%,
-    #0b352d 42%,
-    #006654 100%
+    var(--findox-black) 0%,
+    var(--findox-base) 100%
   );
 }
 .insight-banner__bg::after {
@@ -58,7 +46,7 @@
 .insight-card:hover {
   transform: translateY(-5px);
   border-color: var(--accent);
-  box-shadow: 0 22px 40px -22px rgba(19, 17, 17, 0.35);
+  box-shadow: 0 22px 40px -22px rgba(var(--findox-black-rgb), 0.35);
 }
 
 .insight-row {

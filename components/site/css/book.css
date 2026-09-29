@@ -1,6 +1,6 @@
 /* BookAppointment — advanced effects only (layout/type/colour live in Tailwind). */
 
-/* Green brand overlay over the parallax photo (jarallax `data-speed` bg).
+/* Olive brand overlay over the parallax photo (jarallax `data-speed` bg).
    Exact reference value: rgba(base, 0.93). */
 .book-appointment__bg::after {
   content: "";
@@ -9,7 +9,7 @@
   background-color: rgba(var(--findox-base-rgb), 0.93);
 }
 
-/* "Contact Now" button — yellow fill by default, wipes to white on hover. */
+/* "Contact Now" button — tan fill by default, wipes to cream on hover. */
 .book-appointment__btn-2::before {
   background-color: var(--findox-primary);
 }
@@ -45,7 +45,7 @@
   background-color: var(--findox-base);
 }
 
-/* Decorative yellow masked corner blobs (hidden below xl, like the source). */
+/* Decorative tan masked corner blobs (hidden below xl, like the source). */
 .book-appointment__shape-1,
 .book-appointment__shape-2 {
   position: absolute;

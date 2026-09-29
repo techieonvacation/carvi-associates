@@ -3,13 +3,13 @@ import { FIRM } from "./config";
 export type MailRow = { label: string; value: string };
 
 const PALETTE = {
-  page: "#ecf5f4",
-  card: "#ffffff",
-  ink: "#131111",
-  muted: "#636363",
-  line: "#dddddd",
-  accent: "#006654",
-  sand: "#f5c835",
+  page: "#faf5e9",
+  card: "#fffdf8",
+  ink: "#3a3020",
+  muted: "#6b5b40",
+  line: "#cdae7c",
+  accent: "#5c6b45",
+  sand: "#e3c9a0",
 };
 
 function escapeHtml(value: string) {
@@ -82,8 +82,8 @@ export function buildInternalEmail({
         <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:640px;background:${PALETTE.card};border:1px solid ${PALETTE.line};border-radius:14px;overflow:hidden;">
           <tr>
             <td style="background:${PALETTE.accent};padding:22px 28px;">
-              <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.72);">${escapeHtml(FIRM.name)}</p>
-              <p style="margin:6px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:1.3;color:#ffffff;font-weight:700;">${escapeHtml(heading)}</p>
+              <p style="margin:0;font-family:Helvetica,Arial,sans-serif;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,253,248,.72);">${escapeHtml(FIRM.name)}</p>
+              <p style="margin:6px 0 0;font-family:Georgia,'Times New Roman',serif;font-size:22px;line-height:1.3;color:${PALETTE.card};font-weight:700;">${escapeHtml(heading)}</p>
             </td>
           </tr>
           <tr>
@@ -104,7 +104,7 @@ export function buildInternalEmail({
           ${
             replyTo
               ? `<tr><td style="padding:20px 28px 0;">
-                  <a href="mailto:${escapeHtml(replyTo)}" style="display:inline-block;background:${PALETTE.accent};color:#ffffff;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:999px;">Reply to sender</a>
+                  <a href="mailto:${escapeHtml(replyTo)}" style="display:inline-block;background:${PALETTE.accent};color:${PALETTE.card};font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:12px 22px;border-radius:999px;">Reply to sender</a>
                 </td></tr>`
               : ""
           }
@@ -196,7 +196,7 @@ export function buildAcknowledgementEmail({
               <table role="presentation" cellpadding="0" cellspacing="0">
                 <tr>
                   <td style="padding-right:10px;">
-                    <a href="tel:${escapeHtml(FIRM.phone.replace(/\s/g, ""))}" style="display:inline-block;background:${PALETTE.accent};color:#ffffff;font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:11px 20px;border-radius:999px;">Call the team</a>
+                    <a href="tel:${escapeHtml(FIRM.phone.replace(/\s/g, ""))}" style="display:inline-block;background:${PALETTE.accent};color:${PALETTE.card};font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:11px 20px;border-radius:999px;">Call the team</a>
                   </td>
                   <td>
                     <a href="${escapeHtml(FIRM.site)}" style="display:inline-block;background:${PALETTE.sand};color:${PALETTE.ink};font-family:Helvetica,Arial,sans-serif;font-size:14px;font-weight:700;text-decoration:none;padding:11px 20px;border-radius:999px;">Visit website</a>

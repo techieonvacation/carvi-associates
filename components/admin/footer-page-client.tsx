@@ -371,7 +371,7 @@ export function FooterPageClient({ user }: FooterPageProps) {
                     {section.useSiteSocials ? (
                       <p className="text-sm text-muted-foreground">
                         Footer will use social links from{" "}
-                        <Link href="/admin/socials" className="text-primary underline">
+                        <Link href="/admin/socials" className="text-accent underline dark:text-primary">
                           Social Links
                         </Link>
                         . Turn off “Use site-wide socials” to manage footer-only icons below.

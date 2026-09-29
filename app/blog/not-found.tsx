@@ -3,7 +3,7 @@ import { Container } from "@/components/site/Container";
 
 export default function BlogNotFound() {
   return (
-    <section className="bg-white py-28 max-md:py-20">
+    <section className="bg-background py-28 max-md:py-20">
       <Container className="text-center">
         <p className="mb-3 text-[12px] font-bold tracking-[0.2em] text-accent uppercase">
           404 — Not found

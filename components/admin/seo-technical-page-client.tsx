@@ -293,7 +293,7 @@ export function SeoTechnicalPageClient({ user }: { user: AdminUser }) {
                               <TableCell>
                                 <button
                                   type="button"
-                                  className="text-left font-mono text-xs hover:text-primary"
+                                  className="text-left font-mono text-xs hover:text-accent dark:hover:text-primary"
                                   onClick={() => {
                                     setRedirectId(item.id);
                                     setRedirectForm({
@@ -566,7 +566,7 @@ export function SeoTechnicalPageClient({ user }: { user: AdminUser }) {
                               <TableCell>
                                 <button
                                   type="button"
-                                  className="text-left font-mono text-xs hover:text-primary"
+                                  className="text-left font-mono text-xs hover:text-accent dark:hover:text-primary"
                                   onClick={() => {
                                     setRuleId(item.id);
                                     setRuleForm({
@@ -755,7 +755,7 @@ export function SeoTechnicalPageClient({ user }: { user: AdminUser }) {
                               <TableCell>
                                 <button
                                   type="button"
-                                  className="text-left font-mono text-xs hover:text-primary"
+                                  className="text-left font-mono text-xs hover:text-accent dark:hover:text-primary"
                                   onClick={() => {
                                     setEntryId(item.id);
                                     setEntryForm({
@@ -959,7 +959,7 @@ export function SeoTechnicalPageClient({ user }: { user: AdminUser }) {
                         href={href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="rounded-full border border-border/70 px-4 py-1.5 text-xs font-medium transition-colors hover:border-primary hover:text-primary"
+                        className="rounded-full border border-border/70 px-4 py-1.5 text-xs font-medium transition-colors hover:border-accent hover:text-accent dark:hover:border-primary dark:hover:text-primary"
                       >
                         {href}
                       </a>

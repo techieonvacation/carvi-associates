@@ -1,6 +1,6 @@
 .team-two {
   position: relative;
-  background-color: var(--findox-white);
+  background-color: var(--findox-white2);
 }
 .team-two__bg {
   width: 100%;
@@ -55,7 +55,7 @@
   transform: translateY(50%);
   background: linear-gradient(
     180deg,
-    rgba(199, 199, 199, 0) 63.97%,
+    rgba(var(--findox-primary-rgb), 0) 63.97%,
     rgba(var(--findox-primary-rgb), 0.8) 83.11%
   );
   transition: all 0.5s ease;

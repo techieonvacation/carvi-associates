@@ -14,7 +14,7 @@ export function Blog({ blog }: { blog: BlogHomeContent }) {
   }
 
   return (
-    <section id="blog" className="blog-one blog-one--home1 relative overflow-hidden bg-white py-30 max-md:py-25 max-sm:py-20">
+    <section id="blog" className="blog-one blog-one--home1 relative overflow-hidden bg-background py-30 max-md:py-25 max-sm:py-20">
       <Container className="relative z-10">
         <Reveal direction="up">
           <SectionHeading

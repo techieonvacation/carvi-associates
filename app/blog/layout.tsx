@@ -20,7 +20,7 @@ export default async function BlogLayout({ children }: { children: React.ReactNo
         />
       </div>
 
-      <main className="blog-scope bg-white">{children}</main>
+      <main className="blog-scope bg-background">{children}</main>
 
       <div className="findox-scope">
         <Footer footer={content.footer} logo={content.header.logo} />

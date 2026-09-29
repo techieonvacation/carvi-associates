@@ -42,7 +42,7 @@ export function WhyChooseUs({ whyChoose }: WhyChooseUsProps) {
   return (
     <section
       id="why-choose-us"
-      className="why-choose section-space relative bg-white py-30 max-md:py-25 max-sm:py-20"
+      className="why-choose section-space relative bg-background py-30 max-md:py-25 max-sm:py-20"
     >
       <Container>
         <div className="grid grid-cols-1 gap-y-10 lg:grid-cols-2 lg:items-stretch lg:gap-x-6">

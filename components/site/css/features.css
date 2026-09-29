@@ -2,10 +2,10 @@
 
 /* Container floating white bar with soft drop shadow. */
 .features-one__carousel {
-  filter: drop-shadow(0 2px 9.6px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 2px 9.6px rgba(var(--findox-black-rgb), 0.1));
 }
 
-/* Yellow ribbon bar that wipes in along the card bottom on hover. */
+/* Tan ribbon bar that wipes in along the card bottom on hover. */
 .features-one__card::after {
   content: "";
   width: calc(100% - 60px);

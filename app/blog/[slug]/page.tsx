@@ -156,7 +156,7 @@ export default async function ArticlePage({ params }: ArticleRouteProps) {
         showCrumbs={section.archiveShowCrumbs}
       />
 
-      <article className="blog-article bg-white py-30 max-md:py-25 max-sm:py-20">
+      <article className="blog-article bg-background py-30 max-md:py-25 max-sm:py-20">
         <Container>
           <div
             className={cn(

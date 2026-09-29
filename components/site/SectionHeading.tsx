@@ -11,7 +11,7 @@ export function SectionHeading({
   tagline,
   lines,
   align = "left",
-  taglineBg = "#ecf5f4",
+  taglineBg = "var(--findox-white3)",
   titleColor,
   light = false,
   className,
@@ -30,7 +30,7 @@ export function SectionHeading({
       style={
         {
           "--tagline-bg": taglineBg,
-          ...(titleColor ? { "--title-color": titleColor } : light ? { "--title-color": "#ffffff" } : {}),
+          ...(titleColor ? { "--title-color": titleColor } : light ? { "--title-color": "var(--findox-white)" } : {}),
         } as React.CSSProperties
       }
     >

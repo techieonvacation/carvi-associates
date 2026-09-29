@@ -1,5 +1,5 @@
 /* WorkingProcess — advanced effects only (layout is Tailwind):
-   the zig-zag connecting-line network behind the step badges, the yellow
+   the zig-zag connecting-line network behind the step badges, the tan
    start-dot, and the arrow flourish after the last column. Hidden below
    `lg` (992px), where the grid drops to 1/2 columns and stacks normally.
 
@@ -16,7 +16,7 @@
 .working-process {
   --wp-gap: 30px; /* matches the row's gap-x-[30px] */
   --wp-badge-half: 18px; /* half of the h-9 step badge */
-  --wp-line-color: var(--findox-border-color, #dddddd);
+  --wp-line-color: var(--findox-border-color);
 }
 
 .working-process__image__overlay {
@@ -52,7 +52,7 @@
     left: calc(var(--wp-gap) / -2);
   }
 
-  /* Yellow dot + stub before column 1, at its own (down) badge height.
+  /* Tan dot + stub before column 1, at its own (down) badge height.
      This lives on a dedicated `__dot` anchor span (inset over the image)
      rather than the image's own ::before/::after — column 1's image also
      carries the `--right` riser on ::after, and an element only gets one
@@ -66,7 +66,7 @@
     width: 10px;
     height: 10px;
     border-radius: 999px;
-    background-color: var(--findox-primary, #f5c835);
+    background-color: var(--findox-primary);
     z-index: 1;
   }
   .working-process__dot::after {
@@ -100,8 +100,8 @@
     right: -42px;
     width: 9px;
     height: 9px;
-    border-top: 2px solid var(--findox-primary, #f5c835);
-    border-right: 2px solid var(--findox-primary, #f5c835);
+    border-top: 2px solid var(--findox-primary);
+    border-right: 2px solid var(--findox-primary);
     transform: rotate(45deg);
   }
 }

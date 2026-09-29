@@ -106,7 +106,7 @@ export async function PUT(request: Request) {
     tagline: parsed.data.tagline.trim(),
     titleLine1: parsed.data.titleLine1.trim(),
     titleLine2: parsed.data.titleLine2.trim(),
-    taglineBg: parsed.data.taglineBg.trim() || "#ecf5f4",
+    taglineBg: parsed.data.taglineBg.trim() || "#f4ebd8",
     homeLimit: parsed.data.homeLimit,
     homeCtaText: parsed.data.homeCtaText.trim(),
     homeCtaHref: parsed.data.homeCtaHref.trim() || "/blog",

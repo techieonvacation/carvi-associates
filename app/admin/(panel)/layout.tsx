@@ -21,7 +21,7 @@ export default async function AdminPanelLayout({
       <TooltipProvider>
         <SidebarProvider>
           <AdminSidebar role={user.role} />
-          <SidebarInset className="min-h-screen bg-[radial-gradient(circle_at_top,oklch(0.9631_0.0096_189.06/0.7),transparent_35%)]">
+          <SidebarInset className="min-h-screen bg-[radial-gradient(circle_at_top,color-mix(in_oklab,var(--secondary)_70%,transparent),transparent_35%)]">
             {children}
           </SidebarInset>
         </SidebarProvider>

@@ -1,23 +1,3 @@
-.blog-scope {
-  --findox-font: var(--font-sans), "DM Sans", sans-serif;
-  --findox-heading-font: var(--font-sora), "Sora", sans-serif;
-  --findox-text: #636363;
-  --findox-text-rgb: 107, 91, 64;
-  --findox-base: #006654;
-  --findox-base-rgb: 92, 107, 69;
-  --findox-primary: #f5c835;
-  --findox-primary-rgb: 227, 201, 160;
-  --findox-gray: #92918f;
-  --findox-white: #ffffff;
-  --findox-white3: #ecf5f4;
-  --findox-white4: #e2edec;
-  --findox-black: #131111;
-  --findox-black-rgb: 58, 48, 32;
-  --findox-black4: #131111;
-  --findox-border-color: #dddddd;
-  --findox-border-color-rgb: 205, 174, 124;
-}
-
 .blog-scope .findox-btn__text {
   color: var(--findox-black4);
 }
@@ -28,7 +8,7 @@
   font-size: 46px;
   font-weight: 700;
   line-height: 1.22;
-  color: #ffffff;
+  color: var(--findox-white);
 }
 @media (max-width: 991px) {
   .blog-banner__title {
@@ -76,7 +56,7 @@
   height: 50px;
   padding: 0 14px;
   border: 1px solid var(--findox-border-color);
-  background-color: #ffffff;
+  background-color: var(--card);
   font-family: var(--findox-heading-font);
   font-size: 16px;
   font-weight: 600;
@@ -87,7 +67,7 @@
 .blog-pagination__link--active {
   border-color: var(--accent);
   background-color: var(--accent);
-  color: #ffffff;
+  color: var(--accent-foreground);
 }
 .blog-pagination__link--disabled {
   opacity: 0.4;
@@ -97,7 +77,7 @@
 .post-toc {
   border: 1px solid var(--findox-border-color);
   border-radius: 20px;
-  background-color: #ffffff;
+  background-color: var(--card);
   padding: 28px 26px;
 }
 .post-toc__title {
@@ -250,7 +230,7 @@
   justify-content: center;
   border-radius: 50%;
   background-color: var(--accent);
-  color: #ffffff;
+  color: var(--accent-foreground);
   font-size: 12px;
   font-weight: 700;
 }
@@ -314,7 +294,7 @@
   padding: 24px 26px;
   border-radius: 15px;
   background-color: var(--foreground);
-  color: #ecf5f4;
+  color: var(--secondary);
   font-size: 14px;
   line-height: 1.7;
   overflow-x: auto;
@@ -336,7 +316,7 @@
   min-width: 520px;
   border-collapse: collapse;
   font-size: 16px;
-  background-color: #ffffff;
+  background-color: var(--card);
 }
 .post-content > table {
   display: block;
@@ -348,7 +328,7 @@
   text-align: left;
   padding: 15px 18px;
   background-color: var(--accent);
-  color: #ffffff;
+  color: var(--accent-foreground);
   font-family: var(--findox-heading-font);
   font-weight: 600;
   font-size: 15px;
@@ -363,7 +343,7 @@
   margin: 0;
 }
 .post-content tbody tr:nth-child(even) {
-  background-color: rgba(236, 245, 244, 0.32);
+  background-color: color-mix(in oklab, var(--secondary) 32%, transparent);
 }
 
 .post-faq__item {
@@ -418,21 +398,21 @@
   height: 42px;
   border-radius: 50%;
   border: 1px solid var(--findox-border-color);
-  background-color: #ffffff;
+  background-color: var(--card);
   color: var(--muted-foreground);
   transition: all 500ms ease;
 }
 .post-share__btn:hover {
   background-color: var(--accent);
   border-color: var(--accent);
-  color: #ffffff;
+  color: var(--accent-foreground);
 }
 
 .comment-item {
   list-style: none;
   border: 1px solid var(--findox-border-color);
   border-radius: 20px;
-  background-color: #ffffff;
+  background-color: var(--card);
   padding: 28px 30px;
 }
 @media (max-width: 575px) {
@@ -483,7 +463,7 @@
   height: 56px;
   padding: 0 20px;
   border: 1px solid var(--findox-border-color);
-  background-color: #ffffff;
+  background-color: var(--card);
   font-size: 16px;
   color: var(--foreground);
   outline: none;

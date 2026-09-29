@@ -43,7 +43,7 @@ export function BlogArchive({
   const showSidebar = section.showSidebar;
 
   return (
-    <section className="blog-archive bg-white py-30 max-md:py-25 max-sm:py-20">
+    <section className="blog-archive bg-background py-30 max-md:py-25 max-sm:py-20">
       <Container>
         <div
           className={cn(

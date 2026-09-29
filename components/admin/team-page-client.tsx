@@ -62,7 +62,7 @@ export function TeamPageClient({ user }: TeamPageProps) {
             tagline: sectionData.team.tagline ?? "",
             titleLine1: sectionData.team.titleLine1 ?? "",
             titleLine2: sectionData.team.titleLine2 ?? "",
-            taglineBg: sectionData.team.taglineBg ?? "#ffffff",
+            taglineBg: sectionData.team.taglineBg ?? "#fffdf8",
             backgroundImageUrl: sectionData.team.backgroundImageUrl ?? "",
             backgroundImageAlt: sectionData.team.backgroundImageAlt ?? "",
             isVisible: sectionData.team.isVisible ?? true,
@@ -326,7 +326,7 @@ export function TeamPageClient({ user }: TeamPageProps) {
                       />
                       <p className="text-xs text-muted-foreground">
                         Leave empty to treat the background as decorative. Clear the image to
-                        fall back to a plain brand-green band.
+                        fall back to a plain brand-olive band.
                       </p>
                     </div>
                   </TabsContent>

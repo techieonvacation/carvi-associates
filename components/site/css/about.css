@@ -30,7 +30,7 @@
   }
 }
 
-/* Dashed ring inset within the "37+" yellow badge dome. */
+/* Dashed ring inset within the "37+" tan badge dome. */
 .about-one__experience__year::after {
   content: "";
   width: calc(100% - 16px);
@@ -51,7 +51,7 @@
   min-height: 46px;
 }
 
-/* Green "flag" tucked under a tab button, revealed while active. */
+/* Olive "flag" tucked under a tab button, revealed while active. */
 .about-one .tab-btn::after {
   content: "";
   width: 56.49px;

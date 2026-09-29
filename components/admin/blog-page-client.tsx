@@ -119,7 +119,7 @@ function BannerPreview({ section }: { section: SectionForm }) {
         <div className="absolute inset-0 bg-muted" />
       )}
       <div
-        className="absolute inset-0 bg-[#131111]"
+        className="absolute inset-0 bg-[var(--findox-black4)]"
         style={{ opacity: section.archiveHeroOverlay / 100 }}
       />
       <div
@@ -127,7 +127,7 @@ function BannerPreview({ section }: { section: SectionForm }) {
           section.archiveHeroAlign === "center" ? "text-center" : "text-left"
         }`}
       >
-        <p className="text-xs font-semibold tracking-[0.2em] text-[#f5c835] uppercase">
+        <p className="text-xs font-semibold tracking-[0.2em] text-[var(--findox-primary)] uppercase">
           {section.archiveTagline}
         </p>
         <p className="mt-3 text-2xl leading-tight font-bold text-white">
@@ -148,7 +148,7 @@ function BannerPreview({ section }: { section: SectionForm }) {
               section.archiveHeroAlign === "center" ? "text-center" : "text-left"
             }`}
           >
-            Home / <span className="text-[#f5c835]">Blog</span>
+            Home / <span className="text-[var(--findox-primary)]">Blog</span>
           </p>
         ) : null}
       </div>
@@ -540,10 +540,10 @@ export function BlogPageClient({ user }: { user: AdminUser }) {
                                 <div className="min-w-0 max-w-[380px]">
                                   <p className="truncate font-medium">
                                     {post.isPinned ? (
-                                      <Pin className="mr-1 inline size-3 text-primary" />
+                                      <Pin className="mr-1 inline size-3 text-accent dark:text-primary" />
                                     ) : null}
                                     {post.isFeatured ? (
-                                      <Star className="mr-1 inline size-3 text-primary" />
+                                      <Star className="mr-1 inline size-3 text-accent dark:text-primary" />
                                     ) : null}
                                     {post.title}
                                   </p>
@@ -1236,7 +1236,7 @@ function TaxonomyPanel({
   const [slug, setSlug] = useState("");
   const [description, setDescription] = useState("");
   const [icon, setIcon] = useState("icon-folder");
-  const [accentColor, setAccentColor] = useState("#006654");
+  const [accentColor, setAccentColor] = useState("#5c6b45");
   const [saving, setSaving] = useState(false);
 
   async function create(event: React.FormEvent<HTMLFormElement>) {

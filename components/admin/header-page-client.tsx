@@ -80,8 +80,8 @@ function LogoPreview({
     <div
       className={
         tone === "dark"
-          ? "flex min-h-28 items-center rounded-xl bg-[#131111] px-5"
-          : "flex min-h-28 items-center rounded-xl bg-white px-5"
+          ? "flex min-h-28 items-center rounded-xl bg-[var(--findox-black4)] px-5"
+          : "flex min-h-28 items-center rounded-xl bg-[var(--findox-white)] px-5"
       }
     >
       <span className="inline-flex items-center" style={{ gap: height * 0.26 }}>
@@ -102,8 +102,8 @@ function LogoPreview({
               height,
               borderRadius: height * 0.22,
               fontSize: height * 0.55,
-              backgroundColor: tone === "dark" ? "#f5c835" : "#006654",
-              color: tone === "dark" ? "#131111" : "#ffffff",
+              backgroundColor: tone === "dark" ? "var(--findox-primary)" : "var(--findox-base)",
+              color: tone === "dark" ? "var(--findox-black4)" : "var(--findox-white)",
             }}
           >
             {form.logoMarkText}
@@ -116,7 +116,7 @@ function LogoPreview({
                 className="font-bold leading-none"
                 style={{
                   fontSize: primarySize,
-                  color: tone === "dark" ? "#ffffff" : "#131111",
+                  color: tone === "dark" ? "var(--findox-white)" : "var(--findox-black4)",
                 }}
               >
                 {primaryText}
@@ -128,7 +128,7 @@ function LogoPreview({
                 style={{
                   fontSize: secondarySize,
                   letterSpacing: "0.22em",
-                  color: tone === "dark" ? "#f5c835" : "#006654",
+                  color: tone === "dark" ? "var(--findox-primary)" : "var(--findox-base)",
                 }}
               >
                 {secondaryText}

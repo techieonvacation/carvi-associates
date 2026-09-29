@@ -164,7 +164,7 @@ model AboutSettings {
   collageOneAlt   String   @default("Advisors reviewing a financial plan")
   collageTwoAlt   String   @default("Client consultation in progress")
   defaultTabId    String?
-  taglineBg       String   @default("#ecf5f4")
+  taglineBg       String   @default("#f4ebd8")
   tabs            Json     @default("[]")
   checklist       Json     @default("[]")
   updatedAt       DateTime @updatedAt
@@ -196,7 +196,7 @@ model ServicesSectionSettings {
   titleLine1      String
   titleLine2      String
   cardTagline     String
-  taglineBg       String   @default("#ffffff")
+  taglineBg       String   @default("#fffdf8")
   isVisible       Boolean  @default(true)
   seoTitle        String?
   seoDescription  String?
@@ -260,7 +260,7 @@ model BookAppointmentSettings {
   secondaryButtonHref String   @default("#")
   backgroundImageUrl  String
   backgroundImageAlt  String   @default("")
-  taglineBg           String   @default("#ecf5f4")
+  taglineBg           String   @default("#f4ebd8")
   isVisible           Boolean  @default(true)
   seoTitle            String?
   seoDescription      String?
@@ -278,7 +278,7 @@ model WhyChooseSettings {
   titleLine1       String
   titleLine2       String
   description      String
-  taglineBg        String   @default("#ecf5f4")
+  taglineBg        String   @default("#f4ebd8")
   imageUrl         String
   imageAlt         String   @default("Why choose Carvi Associates")
   shapeImageUrl    String   @default("/images/shapes/why-choose-shape-1-1.png")
@@ -319,7 +319,7 @@ model TeamSettings {
   tagline            String
   titleLine1         String
   titleLine2         String
-  taglineBg          String   @default("#ffffff")
+  taglineBg          String   @default("#fffdf8")
   backgroundImageUrl String   @default("")
   backgroundImageAlt String   @default("")
   isVisible          Boolean  @default(true)
@@ -358,7 +358,7 @@ model ContactSettings {
   tagline         String   @default("Our Contact Now")
   titleLine1      String   @default("Request A Free Quote")
   titleLine2      String   @default("Get This Contact.")
-  taglineBg       String   @default("#ffffff")
+  taglineBg       String   @default("#fffdf8")
   phoneTitle      String   @default("Get Contact Now")
   phoneText       String   @default("")
   phoneHref       String   @default("")
@@ -397,7 +397,7 @@ model WorkingProcessSettings {
   tagline         String
   titleLine1      String
   titleLine2      String
-  taglineBg       String   @default("#ecf5f4")
+  taglineBg       String   @default("#f4ebd8")
   isVisible       Boolean  @default(true)
   seoTitle        String?
   seoDescription  String?
@@ -534,10 +534,10 @@ model MarqueeSettings {
   isVisible           Boolean  @default(true)
   showBandOne         Boolean  @default(true)
   showBandTwo         Boolean  @default(true)
-  bandOneBgColor      String   @default("#006654")
-  bandOneTextColor    String   @default("#ffffff")
-  bandTwoBgColor      String   @default("#f5c835")
-  bandTwoTextColor    String   @default("#006654")
+  bandOneBgColor      String   @default("#5c6b45")
+  bandOneTextColor    String   @default("#fffdf8")
+  bandTwoBgColor      String   @default("#e3c9a0")
+  bandTwoTextColor    String   @default("#5c6b45")
   bandOneDirection    String   @default("left")
   bandTwoDirection    String   @default("right")
   bandOneSpeedSeconds Int      @default(20)
@@ -616,7 +616,7 @@ model BlogSectionSettings {
   tagline            String   @default("Our Latest Blog")
   titleLine1         String   @default("Today's Blog Industry Finance")
   titleLine2         String   @default("Business Consulting.")
-  taglineBg          String   @default("#ecf5f4")
+  taglineBg          String   @default("#f4ebd8")
   homeLimit          Int      @default(3)
   homeCtaText        String   @default("View All Blogs")
   homeCtaHref        String   @default("/blog")
@@ -679,7 +679,7 @@ model BlogCategory {
   slug           String     @unique
   description    String     @default("")
   icon           String     @default("icon-folder")
-  accentColor    String     @default("#006654")
+  accentColor    String     @default("#5c6b45")
   imageUrl       String?
   displayOrder   Int        @default(0)
   isFeatured     Boolean    @default(false)
@@ -923,9 +923,9 @@ model SeoSettings {
   appleTouchIconUrl         String              @default("/images/favicons/apple-touch-icon.png")
   svgIconUrl                String              @default("")
   maskIconUrl               String              @default("")
-  maskIconColor             String              @default("#006654")
-  themeColorLight           String              @default("#ffffff")
-  themeColorDark            String              @default("#0b1f1b")
+  maskIconColor             String              @default("#5c6b45")
+  themeColorLight           String              @default("#faf5e9")
+  themeColorDark            String              @default("#211c13")
   indexingEnabled           Boolean             @default(true)
   defaultNoIndex            Boolean             @default(false)
   defaultNoFollow           Boolean             @default(false)
@@ -1043,7 +1043,7 @@ model SeoSettings {
   manifestDescription       String              @default("")
   manifestDisplay           String              @default("standalone")
   manifestStartUrl          String              @default("/")
-  manifestBackgroundColor   String              @default("#ffffff")
+  manifestBackgroundColor   String              @default("#faf5e9")
   manifestIcons             Json                @default("[]")
   preconnectUrls            Json                @default("[]")
   dnsPrefetchUrls           Json                @default("[]")

@@ -398,7 +398,7 @@ export function SeoPagesPageClient({ user, siteUrl }: { user: AdminUser; siteUrl
                           <TableCell>
                             <button
                               type="button"
-                              className="text-left font-medium hover:text-primary"
+                              className="text-left font-medium hover:text-accent dark:hover:text-primary"
                               onClick={() => startEdit(page)}
                             >
                               {page.path}

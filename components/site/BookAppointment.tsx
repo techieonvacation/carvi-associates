@@ -11,10 +11,10 @@ type BookAppointmentProps = {
 
 /**
  * BookAppointment — the dark "book-appointment" band between Services and
- * WhyChooseUs: a jarallax photo background under a heavy brand-green
+ * WhyChooseUs: a jarallax photo background under a heavy brand-olive
  * overlay, a centred light `sec-title` + copy + two CTAs (a white
- * "Get Started" pill and a yellow "Contact Now" pill that wipes to white
- * on hover), and two yellow masked corner blobs pinned to the section
+ * "Get Started" pill and a tan "Contact Now" pill that wipes to cream
+ * on hover), and two tan masked corner blobs pinned to the section
  * edges. Mirrors the reference `.book-appointment` section.
  */
 export function BookAppointment({ bookAppointment }: BookAppointmentProps) {
@@ -25,7 +25,7 @@ export function BookAppointment({ bookAppointment }: BookAppointmentProps) {
   return (
     <section
       id="contact"
-      className="book-appointment section-space relative bg-[#222222] py-30 max-md:py-25 max-sm:py-20"
+      className="book-appointment section-space relative bg-foreground py-30 max-md:py-25 max-sm:py-20"
     >
       <div
         className="book-appointment__bg jarallax absolute inset-0 bg-scroll bg-top bg-cover bg-no-repeat md:bg-fixed"

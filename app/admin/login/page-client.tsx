@@ -50,7 +50,7 @@ export default function AdminLoginPage() {
 
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background px-4">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,oklch(0.849_0.1596_90.56/0.18),transparent_40%),radial-gradient(circle_at_bottom_right,oklch(0.4555_0.0859_174.99/0.16),transparent_45%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_left,color-mix(in_oklab,var(--primary)_18%,transparent),transparent_40%),radial-gradient(circle_at_bottom_right,color-mix(in_oklab,var(--accent)_16%,transparent),transparent_45%)]" />
       <div className="pointer-events-none absolute -left-24 top-20 size-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="pointer-events-none absolute -right-16 bottom-10 size-80 rounded-full bg-accent/10 blur-3xl" />
 

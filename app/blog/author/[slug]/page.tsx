@@ -110,7 +110,7 @@ export default async function AuthorArchivePage({ params, searchParams }: Author
         showCrumbs={section.archiveShowCrumbs}
       />
 
-      <div className="bg-white pt-14 max-md:pt-10">
+      <div className="bg-background pt-14 max-md:pt-10">
         <Container>
           <AuthorCard author={author} linkToArchive={false} postCount={author.postCount} />
         </Container>

@@ -10,16 +10,16 @@ type FeaturesProps = {
 
 /**
  * Features — three icon cards on a floating white bar with a rounded
- * bottom edge, two-tone dividers, and hover effects (yellow ribbon wipe,
+ * bottom edge, two-tone dividers, and hover effects (tan ribbon wipe,
  * icon flip). Mirrors the reference `.features-one` owl row (1 / 2 / 3
  * items at 0 / 768 / 992).
  */
 export function Features({ features }: FeaturesProps) {
   return (
-    <section id="features" className="features-one relative z-[1] overflow-hidden bg-white pb-30 max-md:pb-25 max-sm:pb-20">
+    <section id="features" className="features-one relative z-[1] overflow-hidden bg-background pb-30 max-md:pb-25 max-sm:pb-20">
       <Container>
         <Reveal direction="down" duration={1300}>
-          <div className="features-one__carousel grid grid-cols-1 gap-[30px] rounded-b-[15px] bg-white md:grid-cols-2 lg:grid-cols-3">
+          <div className="features-one__carousel grid grid-cols-1 gap-[30px] rounded-b-[15px] bg-background md:grid-cols-2 lg:grid-cols-3">
             {features.map((feature, i) => (
               <div
                 key={feature.id ?? `${feature.title}-${i}`}

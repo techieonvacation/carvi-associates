@@ -58,7 +58,7 @@ export function WorkingProcessPageClient({ user }: WorkingProcessPageProps) {
             tagline: sectionData.workingProcess.tagline ?? "",
             titleLine1: sectionData.workingProcess.titleLine1 ?? "",
             titleLine2: sectionData.workingProcess.titleLine2 ?? "",
-            taglineBg: sectionData.workingProcess.taglineBg ?? "#ecf5f4",
+            taglineBg: sectionData.workingProcess.taglineBg ?? "#f4ebd8",
             isVisible: sectionData.workingProcess.isVisible ?? true,
             seoTitle: sectionData.workingProcess.seoTitle ?? "",
             seoDescription: sectionData.workingProcess.seoDescription ?? "",

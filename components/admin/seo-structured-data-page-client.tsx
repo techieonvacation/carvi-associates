@@ -268,7 +268,7 @@ export function SeoStructuredDataPageClient({ user }: { user: AdminUser }) {
                               <TableCell className="max-w-[420px]">
                                 <button
                                   type="button"
-                                  className="text-left font-medium hover:text-primary"
+                                  className="text-left font-medium hover:text-accent dark:hover:text-primary"
                                   onClick={() => startFaq(item)}
                                 >
                                   {item.question}
@@ -539,7 +539,7 @@ export function SeoStructuredDataPageClient({ user }: { user: AdminUser }) {
                               <TableCell>
                                 <button
                                   type="button"
-                                  className="text-left font-medium hover:text-primary"
+                                  className="text-left font-medium hover:text-accent dark:hover:text-primary"
                                   onClick={() => startSchema(item)}
                                 >
                                   {item.name}

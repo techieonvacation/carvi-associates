@@ -38,7 +38,7 @@ const emptyValues: FormValues = {
   secondaryButtonHref: "#",
   backgroundImageUrl: "/images/backgrounds/book-appointment-bg.jpg",
   backgroundImageAlt: "",
-  taglineBg: "#ecf5f4",
+  taglineBg: "#f4ebd8",
   isVisible: true,
   seoTitle: "",
   seoDescription: "",
@@ -85,7 +85,7 @@ export function BookAppointmentPageClient({ user }: BookAppointmentPageProps) {
         secondaryButtonHref: row.secondaryButtonHref ?? "#",
         backgroundImageUrl: row.backgroundImageUrl ?? "",
         backgroundImageAlt: row.backgroundImageAlt ?? "",
-        taglineBg: row.taglineBg ?? "#ecf5f4",
+        taglineBg: row.taglineBg ?? "#f4ebd8",
         isVisible: row.isVisible ?? true,
         seoTitle: row.seoTitle ?? "",
         seoDescription: row.seoDescription ?? "",
@@ -268,7 +268,7 @@ export function BookAppointmentPageClient({ user }: BookAppointmentPageProps) {
 
                   <TabsContent value="background" className="mt-4 space-y-3 text-sm text-muted-foreground">
                     <p>
-                      Decorative corner shapes and the green brand overlay are structural design
+                      Decorative corner shapes and the olive brand overlay are structural design
                       tokens managed in CSS so the public section stays visually identical.
                     </p>
                     <p>
